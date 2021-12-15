@@ -1,12 +1,14 @@
 import React from 'react';
-import {NavBar} from "../NavBar/NavBar";
-import styles from './Header.module.css'
+
+import styles from './Header.module.scss'
 
 
 export const Header = () => {
     return (
         <div className={styles.headerBlock}>
-            <NavBar/>
+<div className={styles.container}>
+    <h2>CardsApp</h2>
+</div>
         </div>
     )
 }
