@@ -1,4 +1,4 @@
-import preload from './../../assets/image/circles.svg'
+import preload from './../assets/svg/oval.svg'
 import React from "react";
 
 const Preloader = () => {

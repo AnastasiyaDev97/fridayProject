@@ -17,37 +17,29 @@ import Preloader from "./common/Preloader/Preloader";
 
 
 function App() {
-    const isInitialized=useSelector<RootReducerType,boolean>(state=>state.app.isInitialized)
-
-    const dispatch=useDispatch()
-    useEffect(()=>{
+    const isInitialized = useSelector<RootReducerType, boolean>(state => state.app.isInitialized)
+    const dispatch = useDispatch()
+    useEffect(() => {
         dispatch(initializeAppTC())
-    },[])
+    }, [])
 
-    if (!isInitialized) {
-        return (
-            <Preloader/>
-        )
-    }
-        return (
+
+
+    return (
         <div className={styles.appWrapper}>
-
-                <Header/>
+            <Header/>
             {!isInitialized ? <Preloader/> :
                 <div className={styles.mainBlock}>
-
-                <Routes>
-                <Route path={'/login'} element={<Login/>}/>
-                <Route path={'/registration'} element={<Registration/>}/>
-                <Route path={'/profile'} element={<Profile/>}/>
-                <Route path={'/404'} element={<NotFound/>}/>
-                <Route path={'*'} element={<Navigate to='/404'/>}/>
-                <Route path={'/password-recovery'} element={<PasswordRecovery/>}/>
-                <Route path={'/new-password'} element={<NewPassword/>}/>
-                <Route path={'/test-components'} element={<TestComponents/>}/>
-
-                </Routes>
-
+                    <Routes>
+                        <Route path={'/'} element={<Profile/>}/>
+                        <Route path={'/registration'} element={<Registration/>}/>
+                        <Route path={'/login'} element={<Login/>}/>
+                        <Route path={'/404'} element={<NotFound/>}/>
+                        <Route path={'*'} element={<Navigate to='/404'/>}/>
+                        <Route path={'/password-recovery'} element={<PasswordRecovery/>}/>
+                        <Route path={'/new-password'} element={<NewPassword/>}/>
+                        <Route path={'/test-components'} element={<TestComponents/>}/>
+                    </Routes>
                 </div>
             }
         </div>
