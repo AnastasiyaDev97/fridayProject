@@ -1,0 +1,50 @@
+@import "./../../sass/variables";
+
+.inputWrapper {
+  width: 100%;
+  position: relative;
+
+  .input {
+    font-size: inherit;
+    color: $formTextColor;
+    line-height: 26px;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+    border-radius: 10px;
+    min-width: 200px;
+    border: 1px solid #e7edf2;
+    background-color: $Text;
+    padding: 1rem 4em 1rem 2rem;
+    width: 100%;
+    font-family: $NunitoFont;
+    margin-bottom: 35px;
+
+    &:hover {
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+  .togglePassBtn {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-image: url('./../../assets/svg/login-eye.svg');
+    background-size: cover;
+    position: absolute;
+    content: '';
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 3em;
+    cursor: pointer;
+  }
+  .error {
+    position: absolute;
+    content: '';
+    left: 2rem;
+    top: 60px;
+    color:$Text;
+    font-family: $NunitoFont;
+  }
+}

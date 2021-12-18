@@ -19,6 +19,10 @@ export type ResponseLoginType = {
 type RegisterErrorResponse = {
     error?: string
 }
+type LogoutResponse = {
+    info?: string
+    error?: string
+}
 
 const instance = axios.create({
     baseURL: 'http://localhost:7542/2.0/',
@@ -38,9 +42,12 @@ export const authorizationAPI = {
             .then(res => {
                 return res.data
             })
-            .catch((e) => {
-                return  e.response ? e.response.data.error : (e.message + ', more details in the console')
 
+    },
+    logoutMe(){
+        return instance.delete<LogoutResponse>(`auth/me`)
+            .then(res => {
+                return res.data
             })
     },
     authMe() {

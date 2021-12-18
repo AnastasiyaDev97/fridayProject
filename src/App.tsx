@@ -7,7 +7,7 @@ import {NotFound} from "./Components/NotFound/NotFound";
 import {PasswordRecovery} from "./Components/PasswordRecovery/PasswordRecovery";
 import {NewPassword} from "./Components/NewPassword/NewPassword";
 import {TestComponents} from "./Components/TestComponents/TestComponents";
-import {Navigate, Route, Routes} from 'react-router-dom';
+import {Navigate,  Route, Routes} from 'react-router-dom';
 import {Header} from "./Components/Header/Header";
 import styles from './App.module.css'
 import {initializeAppTC} from "./store/reducers/app-reducer";
@@ -18,12 +18,11 @@ import Preloader from "./common/Preloader/Preloader";
 
 function App() {
     const isInitialized = useSelector<RootReducerType, boolean>(state => state.app.isInitialized)
+    const error = useSelector<RootReducerType, null | string>(state => state.app.error)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [])
-
-
 
     return (
         <div className={styles.appWrapper}>
@@ -42,6 +41,7 @@ function App() {
                     </Routes>
                 </div>
             }
+           <div className={styles.err}>{error}</div>
         </div>
     );
 }

@@ -11,7 +11,6 @@ export const registrationReducer = (state: InitialStateType = initialState, acti
     switch (action.type) {
 
         case "SET-REGISTER-STATUS":
-            debugger
             return {...state, ...action.payload}
         default:
             return state

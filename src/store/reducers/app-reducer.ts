@@ -41,10 +41,12 @@ export const setIsInitializedAC = () => ({
     type: 'INITIALIZE'
 } as const)
 
-export const setErrorText = (error: null | string) => ({
-    type: 'SET-ERROR',
-    payload: {error}
-} as const)
+export const setErrorText = (error: null | string) => {
+    return(
+        {type: 'SET-ERROR',
+            payload: {error}
+        } as const)
+}
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
@@ -65,9 +67,9 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
 
 
 export type ActionsType = ReturnType<typeof setAppStatusAC>
-   | ReturnType<typeof isAuthToggleAC>
-   | ReturnType<typeof setProfileAC>
-   | ReturnType<typeof setIsInitializedAC>
-   | ReturnType<typeof setErrorText>
-   | ReturnType<typeof registerStatusAC>
+    | ReturnType<typeof isAuthToggleAC>
+    | ReturnType<typeof setProfileAC>
+    | ReturnType<typeof setIsInitializedAC>
+    | ReturnType<typeof setErrorText>
+    | ReturnType<typeof registerStatusAC>
 

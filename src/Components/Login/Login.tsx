@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import SuperInputText from "../TestComponents/components/c1-SuperInputText/SuperInputText";
+import React from 'react';
 import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
 import SuperCheckbox from "../TestComponents/components/c3-SuperCheckbox/SuperCheckbox";
@@ -10,6 +9,7 @@ import {RequestStatusType} from "../../store/reducers/app-reducer";
 import {loginTC} from "../../store/reducers/login-reducer";
 import {Navigate, NavLink} from 'react-router-dom';
 import styles from './Login.module.scss'
+import {UniversalInput} from "../../common/components/Input/UniversalInput";
 
 type FormikErrorType = {
     email?: string
@@ -19,11 +19,9 @@ type FormikErrorType = {
 
 
 export const Login = () => {
-    let [passwordShown, setPasswordShown] = useState(false);
+
     const dispatch = useDispatch()
-    const toggleShowPassword = () => {
-        setPasswordShown(!passwordShown)
-    }
+
 
     const formik = useFormik({
         initialValues: {
@@ -48,6 +46,7 @@ export const Login = () => {
 
         },
     })
+
     let status = useSelector<RootReducerType, RequestStatusType>(state => state.app.status)
     let isLoggedIn = useSelector<RootReducerType, boolean>(state => state.login.isLoggedIn)
     if (isLoggedIn) {
@@ -63,19 +62,19 @@ export const Login = () => {
                 formik.handleSubmit(e)
             }}>
                 <div className={styles.inputsWrapper}>
+                    <UniversalInput validationErr={(formik.touched.email && formik.errors.email) || ''}
+                                    formikProps={formik.getFieldProps('email')}/>
+                    <UniversalInput validationErr={(formik.touched.password && formik.errors.password) || ''}
+                                    formikProps={formik.getFieldProps('password')} type='password'
+                                    isPassword={true}/>
 
-                    <SuperInputText
-                        className={formik.errors.email && styles.errInput}
-                        placeholder={(formik.touched.email && formik.errors.email) || 'Email'}
-                        {...formik.getFieldProps('email')}/>
-
-
-                    <div className={styles.inputWrapper}>
-                        <SuperInputText className={formik.errors.password && styles.errInput}
+                   {/* <div className={styles.inputWrapper}>
+                        <SuperInputText
+                            className={formik.touched.password &&formik.errors.password? styles.errInput :''}
                                         placeholder={(formik.touched.password && formik.errors.password) || 'Password'}
                                         type={passwordShown ? 'text' : 'password'} {...formik.getFieldProps('password')} />
                         <span className={styles.togglePassBtn} onClick={toggleShowPassword}></span>
-                    </div>
+                    </div>*/}
                 </div>
 
 

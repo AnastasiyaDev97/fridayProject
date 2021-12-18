@@ -47,3 +47,17 @@ export const loginTC=(loginAuthData:loginAuthDataType)=>{
              catchErrorHandler(dispatch, error)})
     }
 }
+
+export const logoutTC=()=>{
+    return (dispatch:Dispatch<ActionsType>)=>{
+        dispatch(setAppStatusAC('loading'))
+        authorizationAPI.logoutMe()
+            .then(()=>{
+                dispatch(setAppStatusAC('succeeded'))
+                dispatch(isAuthToggleAC(false))
+            })
+            .catch((err: AxiosError) =>{
+                const error = err.response?err.response.data.error: (err.message + ', more details in the console')
+                catchErrorHandler(dispatch, error)})
+    }
+}

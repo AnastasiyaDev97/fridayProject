@@ -14,10 +14,18 @@
   .container {
     max-width: 1140px;
     width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     h2 {
       font-family: $QuicksandFont;
       color: $Text;
+    }
+    .logout{
+      font-family: $QuicksandFont;
+      color: $Text;
+      cursor: pointer;
     }
   }
 }
