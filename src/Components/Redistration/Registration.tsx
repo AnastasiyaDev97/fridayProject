@@ -6,8 +6,7 @@ import {registerMeTC, registerStatusAC} from "../../store/reducers/registration-
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
 import styles from "../Login/Login.module.scss";
-import Preloader from "../../common/Preloader/Preloader";
-import {RequestStatusType} from "../../store/reducers/app-reducer";
+
 import {UniversalInput} from "../../common/components/Input/UniversalInput";
 
 type FormikErrorType = {

@@ -4,13 +4,18 @@ import {UniversalInput} from "../../common/components/Input/UniversalInput";
 import {NavLink} from "react-router-dom";
 import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
-import {authorizationAPI} from "../../dal/api";
+import {addEmailAC, sendPassword, SetResponseInfoAC} from "../../store/reducers/passwordRecovery-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {RootReducerType} from "../../store/store";
 
 type FormikErrorType = {
     email?: string
 }
 
 export const ForgotPassword = () => {
+    const dispatch = useDispatch()
+    const emailForRecovery = useSelector<RootReducerType, null | string>(state => state.passRecovery.emailForRecovery)
+    const responseInfo = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfo)
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -26,27 +31,41 @@ export const ForgotPassword = () => {
         },
 
         onSubmit: values => {
-            authorizationAPI.sendPassword(values.email)
-            formik.resetForm()
+            dispatch(sendPassword(values.email))
+
         },
     })
+    const toggleSensPassStatus = () => {
+        dispatch(SetResponseInfoAC(''))
+        dispatch(addEmailAC(''))
+    }
+
     return (
         <div className={styles.wrapper}>
-            <h2>Forgot your password?</h2>
-            <form className={styles.form} onSubmit={(e) => {
-                formik.handleSubmit(e)
-            }}>
-                <div className={styles.inputsWrapper}>
-                    <UniversalInput validationErr={(formik.touched.email && formik.errors.email) || ''}
-                                    formikProps={formik.getFieldProps('email')}/>
-                </div>
-                <div>
-                    Enter your email address and we will send you further instructions
-                </div>
-                <SuperButton className={styles.submitBtn} type="submit">Send instructions</SuperButton>
-            </form>
-            <div>Do you remember your password?</div>
-            <NavLink className={styles.registerLink} to='/login'>Try logging in</NavLink>
+
+            {responseInfo ? <div className={styles.sendMailBlock}>
+                    <h2>Check email</h2>
+                    <div>We've sent an Email with instructions to {emailForRecovery}</div>
+                    <SuperButton className={styles.sendMailBtn} type='button'
+                                 onClick={toggleSensPassStatus}>Ok</SuperButton></div>
+
+                : <>
+                    <h2>Forgot your password?</h2>
+                    <form className={styles.form} onSubmit={(e) => {
+                        formik.handleSubmit(e)
+                    }}>
+                        <div className={styles.inputsWrapper}>
+                            <UniversalInput validationErr={(formik.touched.email && formik.errors.email) || ''}
+                                            formikProps={formik.getFieldProps('email')}/>
+                        </div>
+                        <div>
+                            Enter your email address and we will send you further instructions
+                        </div>
+                        <SuperButton className={styles.submitBtn} type="submit">Send instructions</SuperButton>
+                    </form>
+                    <div>Do you remember your password?</div>
+                    <NavLink className={styles.registerLink} to='/login'>Try logging in</NavLink>
+                </>}
         </div>
     )
 }

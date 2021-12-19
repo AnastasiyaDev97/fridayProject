@@ -3,6 +3,7 @@ import {setProfileAC} from "./profile-reducer";
 import {Dispatch} from "redux";
 import {authorizationAPI} from "../../dal/api";
 import {registerStatusAC} from "./registration-reducer";
+import {addEmailAC, SetResponseInfoAC} from "./passwordRecovery-reducer";
 
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -42,8 +43,9 @@ export const setIsInitializedAC = () => ({
 } as const)
 
 export const setErrorText = (error: null | string) => {
-    return(
-        {type: 'SET-ERROR',
+    return (
+        {
+            type: 'SET-ERROR',
             payload: {error}
         } as const)
 }
@@ -72,4 +74,6 @@ export type ActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setIsInitializedAC>
     | ReturnType<typeof setErrorText>
     | ReturnType<typeof registerStatusAC>
+    | ReturnType<typeof SetResponseInfoAC>
+    | ReturnType<typeof addEmailAC>
 

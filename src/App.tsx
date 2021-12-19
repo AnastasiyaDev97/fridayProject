@@ -7,7 +7,7 @@ import {NotFound} from "./Components/NotFound/NotFound";
 import {ForgotPassword} from "./Components/ForgotPassword/ForgotPassword";
 import {NewPassword} from "./Components/NewPassword/NewPassword";
 import {TestComponents} from "./Components/TestComponents/TestComponents";
-import {Navigate, Route, Routes, useParams} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {Header} from "./Components/Header/Header";
 import styles from './App.module.css'
 import {initializeAppTC, RequestStatusType} from "./store/reducers/app-reducer";
@@ -26,8 +26,7 @@ function App() {
     }, [])
 
 
-    const params=useParams<'*'>()
-    const some = params['*']
+
    
 
     return (
