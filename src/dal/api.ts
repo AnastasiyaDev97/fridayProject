@@ -24,13 +24,20 @@ type LogoutResponse = {
     error?: string
 }
 
+type ResponseForgotPasswordType = {
+    answer: boolean
+    html: boolean
+    info: string
+    success: boolean
+}
+
+
 const instance = axios.create({
-    baseURL: 'http://localhost:7542/2.0/',
+    baseURL: 'https://neko-back.herokuapp.com/2.0',
     withCredentials: true,
 })
 export const authorizationAPI = {
     registerMe(email: string, password: string) {
-        debugger
         return instance.post<RegisterErrorResponse>(`auth/register`, {email, password})
             .then(res => {
                 console.log(res.data)
@@ -44,7 +51,7 @@ export const authorizationAPI = {
             })
 
     },
-    logoutMe(){
+    logoutMe() {
         return instance.delete<LogoutResponse>(`auth/me`)
             .then(res => {
                 return res.data
@@ -55,9 +62,19 @@ export const authorizationAPI = {
             .then(res => {
                 return res.data
             })
-          /*  .catch((e) => {
-                const err = e.response ? e.response.data.error : (e.message + ', more details in the console')
-                return err
-            })*/
+    },
+    sendPassword(email: string) {
+        const messageDataPassword = {
+            email,
+            from: 'test-front-admin <ai73a@yandex.by>',
+            message: `<div style="background-color: lime; padding: 15px">
+password recovery link: <a href='https://NastyaZ23.github.io/fridayProject/new-password/$token$'>
+link</a></div>`
+        }
+        return axios.post<ResponseForgotPasswordType>(`https://neko-back.herokuapp.com/2.0/auth/forgot`, messageDataPassword,
+            {withCredentials: true})
+            .then(res => {
+                return res.data
+            })
     }
 }

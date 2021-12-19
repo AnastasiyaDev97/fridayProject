@@ -3,7 +3,7 @@ import React from "react";
 
 const Preloader = () => {
     return (
-        <img src={preload} alt='waiting...'/>)
+        <img src={preload} alt='waiting...' style={{width:'90px'}}/>)
 }
 
 export default Preloader

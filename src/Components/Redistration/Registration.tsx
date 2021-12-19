@@ -19,7 +19,6 @@ type FormikErrorType = {
 
 export const Registration = () => {
     const dispatch = useDispatch()
-    let status = useSelector<RootReducerType, RequestStatusType>(state => state.app.status)
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -59,7 +58,9 @@ export const Registration = () => {
 
         },
     })
-
+const cancelHandler=()=>{
+    formik.resetForm()
+}
     let registerStatus = useSelector<RootReducerType, boolean>(state => state.register.registerStatus)
     if (registerStatus) {
         dispatch(registerStatusAC(false))
@@ -69,7 +70,6 @@ export const Registration = () => {
 
         <div className={styles.wrapper}>
             <h2>Sign up</h2>
-            {status === 'loading' && <Preloader/>}
             <form onSubmit={formik.handleSubmit} className={styles.form}>
                 <div className={styles.inputsWrapper}>
 
@@ -85,8 +85,8 @@ export const Registration = () => {
                 </div>
                 <div className={styles.row}>
                     <div className={styles.registrationBtns}>
-                        <SuperButton type='button'>Cancel</SuperButton>
-                        <SuperButton type="submit">Register</SuperButton>
+                        <SuperButton type='button' onClick={cancelHandler}>Cancel</SuperButton>
+                        <SuperButton type='submit'>Register</SuperButton>
                     </div>
                 </div>
             </form>

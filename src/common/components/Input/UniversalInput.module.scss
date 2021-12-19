@@ -6,17 +6,16 @@
 
   .input {
     font-size: inherit;
-    color: $formTextColor;
     line-height: 26px;
     box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
     border-radius: 10px;
     min-width: 200px;
     border: 1px solid #e7edf2;
-    background-color: $Text;
     padding: 1rem 4em 1rem 2rem;
     width: 100%;
     font-family: $NunitoFont;
     margin-bottom: 35px;
+    color: black;
 
     &:hover {
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
@@ -24,8 +23,10 @@
 
     &:focus {
       outline: none;
+      color: black;
     }
   }
+
   .togglePassBtn {
     display: block;
     width: 20px;
@@ -34,8 +35,8 @@
     background-size: cover;
     position: absolute;
     content: '';
-    top: 50%;
-    transform: translate(0, -50%);
+    top: 25%;
+
     right: 3em;
     cursor: pointer;
   }
