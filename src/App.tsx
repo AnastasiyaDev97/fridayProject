@@ -7,7 +7,7 @@ import {NotFound} from "./Components/NotFound/NotFound";
 import {ForgotPassword} from "./Components/ForgotPassword/ForgotPassword";
 import {NewPassword} from "./Components/NewPassword/NewPassword";
 import {TestComponents} from "./Components/TestComponents/TestComponents";
-import {Navigate,  Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes, useParams} from 'react-router-dom';
 import {Header} from "./Components/Header/Header";
 import styles from './App.module.css'
 import {initializeAppTC, RequestStatusType} from "./store/reducers/app-reducer";
@@ -25,6 +25,11 @@ function App() {
         dispatch(initializeAppTC())
     }, [])
 
+
+    const params=useParams<'*'>()
+    const some = params['*']
+   
+
     return (
         <div className={styles.appWrapper}>
             <Header/>
@@ -35,10 +40,10 @@ function App() {
                         <Route path={'/registration'} element={<Registration/>}/>
                         <Route path={'/login'} element={<Login/>}/>
                         <Route path={'/404'} element={<NotFound/>}/>
-                        <Route path={'*'} element={<Navigate to='/404'/>}/>
                         <Route path={'/forgot-password'} element={<ForgotPassword/>}/>
                         <Route path={'/new-password/*'} element={<NewPassword/>}/>
                         <Route path={'/test-components'} element={<TestComponents/>}/>
+                        <Route path={'*'} element={<Navigate to='/404'/>}/>
                     </Routes>}
                 </div>
 
