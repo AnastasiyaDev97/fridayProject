@@ -7,7 +7,10 @@ import {useFormik} from "formik";
 import {Navigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
-import {setNewPasswordTC, SetResponseInfoAC} from "../../store/reducers/passwordRecovery-reducer";
+import {
+    setNewPasswordTC,
+    SetResponseInfoNewPassAC
+} from "../../store/reducers/passwordRecovery-reducer";
 
 type FormikErrorType = {
     password?: string
@@ -18,7 +21,7 @@ export const NewPassword = () => {
     const params = useParams<'*'>()
     const some = params['*']
 
-    const responseInfo = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfo)
+    const responseInfoNewPass = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfoNewPass)
 
     const formik = useFormik({
         initialValues: {
@@ -46,8 +49,8 @@ export const NewPassword = () => {
             dispatch(setNewPasswordTC(newPassDataType))
         },
     })
-    if(responseInfo){
-        dispatch(SetResponseInfoAC(''))
+    if(responseInfoNewPass){
+        dispatch(SetResponseInfoNewPassAC(''))
        return <Navigate to='/login'/>
     }
     return (

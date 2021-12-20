@@ -6,15 +6,18 @@ import {catchErrorHandler} from "../../utils/error-utils";
 
 
 let initialState = {
-    responseInfo: '',
+    responseInfoForgotPass: '',
+    responseInfoNewPass:'',
     emailForRecovery: null as null | string
+
 }
 type InitialStateType = typeof initialState
 
 
 export const passwordRecoveryReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
-        case "SET-RESPONSE-INFO":
+        case "SET-RESPONSE-INFO-FORGOT-PASS":
+        case "SET-RESPONSE-INFO-NEW-PASS":
         case "ADD-EMAIL":
             return {...state, ...action.payload}
         default:
@@ -22,10 +25,15 @@ export const passwordRecoveryReducer = (state: InitialStateType = initialState, 
     }
 }
 
-export const SetResponseInfoAC = (responseInfo: string) =>
+export const SetResponseInfoForgotPassAC = (responseInfoForgotPass: string) =>
     ({
-        type: 'SET-RESPONSE-INFO',
-        payload: {responseInfo}
+        type: 'SET-RESPONSE-INFO-FORGOT-PASS',
+        payload: {responseInfoForgotPass}
+    } as const)
+export const SetResponseInfoNewPassAC = (responseInfoNewPass: string) =>
+    ({
+        type: 'SET-RESPONSE-INFO-NEW-PASS',
+        payload: {responseInfoNewPass}
     } as const)
 
 
@@ -41,7 +49,7 @@ export const sendPassword = (email: string) => {
         authorizationAPI.sendPassword(email)
             .then((res) => {
                 dispatch(addEmailAC(email))
-                res.info && dispatch(SetResponseInfoAC(res.info))
+                res.info && dispatch(SetResponseInfoForgotPassAC(res.info))
             })
             .catch((err: AxiosError) => {
                 const error = err.response ? err.response.data.error : (err.message + ', more details in the console')
@@ -58,7 +66,7 @@ export const setNewPasswordTC = (newPassData: newPassDataType) => {
         dispatch(setAppStatusAC('loading'))
         authorizationAPI.setNewPassword(newPassData)
             .then((res) => {
-                res.info && dispatch(SetResponseInfoAC(res.info))
+                res.info && dispatch(SetResponseInfoNewPassAC(res.info))
             })
             .catch((err: AxiosError) => {
                 const error = err.response ? err.response.data.error : (err.message + ', more details in the console')

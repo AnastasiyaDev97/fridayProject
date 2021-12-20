@@ -57,9 +57,9 @@ export const Registration = () => {
 
         },
     })
-const cancelHandler=()=>{
-    formik.resetForm()
-}
+    const cancelHandler = () => {
+        formik.resetForm()
+    }
     let registerStatus = useSelector<RootReducerType, boolean>(state => state.register.registerStatus)
     if (registerStatus) {
         dispatch(registerStatusAC(false))
@@ -77,9 +77,10 @@ const cancelHandler=()=>{
                     <UniversalInput validationErr={(formik.touched.password && formik.errors.password) || ''}
                                     formikProps={formik.getFieldProps('password')} type='password'
                                     isPassword={true}/>
-                    <UniversalInput validationErr={(formik.touched.confirmPassword && formik.errors.confirmPassword) || ''}
-                                    formikProps={formik.getFieldProps('confirmPassword')} type='password'
-                                    isPassword={true}/>
+                    <UniversalInput
+                        validationErr={(formik.touched.confirmPassword && formik.errors.confirmPassword) || ''}
+                        formikProps={formik.getFieldProps('confirmPassword')} type='password'
+                        isPassword={true}/>
 
                 </div>
                 <div className={styles.row}>

@@ -18,7 +18,7 @@
 
 .err{
   position: absolute;
-    color:white;
+    color:darkred;
     font-family:"Nunito Sans", Arial, sans-serif;
     font-size: 2rem;
     left: 50%;

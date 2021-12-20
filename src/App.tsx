@@ -14,7 +14,7 @@ import {initializeAppTC, RequestStatusType} from "./store/reducers/app-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./store/store";
 import Preloader from "./common/Preloader/Preloader";
-
+export type ComponentAuthType='register'|'login' |'forgotPass'|'newPass'
 
 function App() {
     let status = useSelector<RootReducerType, RequestStatusType>(state => state.app.status)
@@ -25,9 +25,6 @@ function App() {
         dispatch(initializeAppTC())
     }, [])
 
-
-
-   
 
     return (
         <div className={styles.appWrapper}>
@@ -45,7 +42,6 @@ function App() {
                         <Route path={'*'} element={<Navigate to='/404'/>}/>
                     </Routes>}
                 </div>
-
            <div className={styles.err}>{error}</div>
         </div>
     );

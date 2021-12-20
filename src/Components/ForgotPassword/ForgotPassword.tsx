@@ -4,7 +4,11 @@ import {UniversalInput} from "../../common/components/Input/UniversalInput";
 import {NavLink} from "react-router-dom";
 import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
-import {addEmailAC, sendPassword, SetResponseInfoAC} from "../../store/reducers/passwordRecovery-reducer";
+import {
+    addEmailAC,
+    sendPassword,
+    SetResponseInfoForgotPassAC
+} from "../../store/reducers/passwordRecovery-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
 
@@ -15,7 +19,7 @@ type FormikErrorType = {
 export const ForgotPassword = () => {
     const dispatch = useDispatch()
     const emailForRecovery = useSelector<RootReducerType, null | string>(state => state.passRecovery.emailForRecovery)
-    const responseInfo = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfo)
+    const responseInfoForgotPass = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfoForgotPass)
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -36,14 +40,14 @@ export const ForgotPassword = () => {
         },
     })
     const toggleSensPassStatus = () => {
-        dispatch(SetResponseInfoAC(''))
+        dispatch(SetResponseInfoForgotPassAC(''))
         dispatch(addEmailAC(''))
     }
 
     return (
         <div className={styles.wrapper}>
 
-            {responseInfo ? <div className={styles.sendMailBlock}>
+            {responseInfoForgotPass ? <div className={styles.sendMailBlock}>
                     <h2>Check email</h2>
                     <div>We've sent an Email with instructions to {emailForRecovery}</div>
                     <SuperButton className={styles.sendMailBtn} type='button'
