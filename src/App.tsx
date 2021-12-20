@@ -7,14 +7,14 @@ import {NotFound} from "./Components/NotFound/NotFound";
 import {ForgotPassword} from "./Components/ForgotPassword/ForgotPassword";
 import {NewPassword} from "./Components/NewPassword/NewPassword";
 import {TestComponents} from "./Components/TestComponents/TestComponents";
-import {Navigate,  Route, Routes} from 'react-router-dom';
+import {Navigate, Route, Routes} from 'react-router-dom';
 import {Header} from "./Components/Header/Header";
 import styles from './App.module.css'
 import {initializeAppTC, RequestStatusType} from "./store/reducers/app-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./store/store";
 import Preloader from "./common/Preloader/Preloader";
-
+export type ComponentAuthType='register'|'login' |'forgotPass'|'newPass'
 
 function App() {
     let status = useSelector<RootReducerType, RequestStatusType>(state => state.app.status)
@@ -24,6 +24,7 @@ function App() {
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [])
+
 
     return (
         <div className={styles.appWrapper}>
@@ -35,13 +36,12 @@ function App() {
                         <Route path={'/registration'} element={<Registration/>}/>
                         <Route path={'/login'} element={<Login/>}/>
                         <Route path={'/404'} element={<NotFound/>}/>
-                        <Route path={'*'} element={<Navigate to='/404'/>}/>
                         <Route path={'/forgot-password'} element={<ForgotPassword/>}/>
                         <Route path={'/new-password/*'} element={<NewPassword/>}/>
                         <Route path={'/test-components'} element={<TestComponents/>}/>
+                        <Route path={'*'} element={<Navigate to='/404'/>}/>
                     </Routes>}
                 </div>
-
            <div className={styles.err}>{error}</div>
         </div>
     );

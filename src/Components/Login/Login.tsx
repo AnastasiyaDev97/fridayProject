@@ -28,6 +28,7 @@ export const Login = () => {
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
+            const passwordRegex = /(?=.*[0-9])/
             if (!values.email) {
                 errors.email = 'Required';
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -35,6 +36,10 @@ export const Login = () => {
             }
             if (!values.password) {
                 errors.password = "Required";
+            } else if (values.password.length < 8) {
+                errors.password = "Password must be 8 characters long.";
+            } else if (!passwordRegex.test(values.password)) {
+                errors.password = "Invalid password. Must contain one number.";
             }
             return errors;
         },

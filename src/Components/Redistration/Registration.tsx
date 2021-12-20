@@ -6,8 +6,7 @@ import {registerMeTC, registerStatusAC} from "../../store/reducers/registration-
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
 import styles from "../Login/Login.module.scss";
-import Preloader from "../../common/Preloader/Preloader";
-import {RequestStatusType} from "../../store/reducers/app-reducer";
+
 import {UniversalInput} from "../../common/components/Input/UniversalInput";
 
 type FormikErrorType = {
@@ -58,9 +57,9 @@ export const Registration = () => {
 
         },
     })
-const cancelHandler=()=>{
-    formik.resetForm()
-}
+    const cancelHandler = () => {
+        formik.resetForm()
+    }
     let registerStatus = useSelector<RootReducerType, boolean>(state => state.register.registerStatus)
     if (registerStatus) {
         dispatch(registerStatusAC(false))
@@ -78,9 +77,10 @@ const cancelHandler=()=>{
                     <UniversalInput validationErr={(formik.touched.password && formik.errors.password) || ''}
                                     formikProps={formik.getFieldProps('password')} type='password'
                                     isPassword={true}/>
-                    <UniversalInput validationErr={(formik.touched.confirmPassword && formik.errors.confirmPassword) || ''}
-                                    formikProps={formik.getFieldProps('confirmPassword')} type='password'
-                                    isPassword={true}/>
+                    <UniversalInput
+                        validationErr={(formik.touched.confirmPassword && formik.errors.confirmPassword) || ''}
+                        formikProps={formik.getFieldProps('confirmPassword')} type='password'
+                        isPassword={true}/>
 
                 </div>
                 <div className={styles.row}>
