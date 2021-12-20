@@ -25,12 +25,17 @@ type LogoutResponse = {
 }
 
 type ResponseForgotPasswordType = {
-    answer: boolean
-    html: boolean
-    info: string
-    success: boolean
+    answer?: boolean
+    html?: boolean
+    info?: string
+    success?: boolean
+    error?: string
 }
 
+export type newPassDataType = {
+    password: string
+    resetPasswordToken: string
+}
 
 const instance = axios.create({
     baseURL: 'https://neko-back.herokuapp.com/2.0',
@@ -68,7 +73,7 @@ export const authorizationAPI = {
             email,
             from: 'test-front-admin <ai73a@yandex.by>',
             message: `<div style="background-color: lime; padding: 15px">
-password recovery link: <a href='https://NastyaZ23.github.io/fridayProject/new-password/$token$'>
+password recovery link: <a href='http://localhost:3000/fridayProject/new-password#/new-password/$token$'>
 link</a></div>`
         }
         return axios.post<ResponseForgotPasswordType>(`https://neko-back.herokuapp.com/2.0/auth/forgot`, messageDataPassword,
@@ -76,5 +81,16 @@ link</a></div>`
             .then(res => {
                 return res.data
             })
+    },
+    setNewPassword(newPassData:newPassDataType) {
+        return axios.post<LogoutResponse>(`https://neko-back.herokuapp.com/2.0/auth/set-new-password`,newPassData,
+            {withCredentials: true})
+            .then(res => {
+
+                return res.data
+            })
     }
 }
+
+/*
+<!--https://nastyaZ23.github.io/fridayProject-->*/
