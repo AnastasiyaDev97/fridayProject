@@ -73,7 +73,7 @@ export const authorizationAPI = {
             email,
             from: 'test-front-admin <ai73a@yandex.by>',
             message: `<div style="background-color: lime; padding: 15px">
-password recovery link: <a href='https://nastyaZ23.github.io/fridayProject/new-password#/new-password/$token$'>
+password recovery link: <a href='https://nastyaz23.github.io/fridayProject/#/new-password/$token$'>
 link</a></div>`
         }
         return axios.post<ResponseForgotPasswordType>(`https://neko-back.herokuapp.com/2.0/auth/forgot`, messageDataPassword,
@@ -86,7 +86,6 @@ link</a></div>`
         return axios.post<LogoutResponse>(`https://neko-back.herokuapp.com/2.0/auth/set-new-password`,newPassData,
             {withCredentials: true})
             .then(res => {
-
                 return res.data
             })
     }

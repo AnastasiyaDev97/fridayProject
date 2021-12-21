@@ -14,6 +14,8 @@ import {initializeAppTC, RequestStatusType} from "./store/reducers/app-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./store/store";
 import Preloader from "./common/Preloader/Preloader";
+import {Cards} from "./Components/Cards/Cards";
+import {Decks} from "./Components/Decks/Decks";
 export type ComponentAuthType='register'|'login' |'forgotPass'|'newPass'
 
 function App() {
@@ -40,6 +42,9 @@ function App() {
                         <Route path={'/new-password/*'} element={<NewPassword/>}/>
                         <Route path={'/test-components'} element={<TestComponents/>}/>
                         <Route path={'*'} element={<Navigate to='/404'/>}/>
+                        <Route path={'/cards'} element={<Cards/>}/>
+                        <Route path={'/decks'} element={<Decks/>}/>
+
                     </Routes>}
                 </div>
            <div className={styles.err}>{error}</div>
