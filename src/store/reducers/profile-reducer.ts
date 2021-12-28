@@ -1,12 +1,9 @@
-
 import {ResponseLoginType} from "../../dal/api";
 import {ActionsType} from "./app-reducer";
 
 
 const initialState = {
-    profile:{
-
-    }
+    profile: {}  as ResponseLoginType
 }
 
 type InitialStateType = typeof initialState
@@ -21,10 +18,10 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 
-
-export const setProfileAC = (profile: ResponseLoginType) => ({
+export const setProfileAC = (profile: ResponseLoginType ) => ({
     type: 'SET-PROFILE',
     payload: {
         profile,
     }
 } as const)
+

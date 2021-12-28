@@ -1,23 +1,19 @@
 import React from 'react';
 import {useFormik} from "formik";
-import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
-import {Navigate} from "react-router-dom";
-import {registerMeTC, registerStatusAC} from "../../store/reducers/registration-reducer";
+import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
+import {Navigate, useNavigate} from "react-router-dom";
+import {registerMeTC, registerStatusAC} from "../../../store/reducers/registration-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootReducerType} from "../../store/store";
+import {RootReducerType} from "../../../store/store";
 import styles from "../Login/Login.module.scss";
 
-import {UniversalInput} from "../../common/components/Input/UniversalInput";
-
-type FormikErrorType = {
-    email?: string
-    password?: string
-    confirmPassword?: string
-}
+import {UniversalInput} from "../../../common/components/Input/UniversalInput";
+import {validates} from "../../../utils/validates";
 
 
 export const Registration = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -25,29 +21,7 @@ export const Registration = () => {
             confirmPassword: '',
         },
         validate: (values) => {
-            const passwordRegex = /(?=.*[0-9])/
-            const errors: FormikErrorType = {};
-            if (!values.email) {
-                errors.email = 'Required';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
-            }
-            if (!values.password) {
-                errors.password = "Required";
-            } else if (values.password.length < 8) {
-                errors.password = "Password must be 8 characters long.";
-            } else if (!passwordRegex.test(values.password)) {
-                errors.password = "Invalid password. Must contain one number.";
-            }
-            if (!values.confirmPassword) {
-                errors.confirmPassword = "Required";
-            }
-            if (values.password && values.confirmPassword) {
-                if (values.password !== values.confirmPassword) {
-                    errors.confirmPassword = "Password not matched";
-                }
-            }
-            return errors;
+            validates(values)
         },
 
         onSubmit: values => {
@@ -59,6 +33,7 @@ export const Registration = () => {
     })
     const cancelHandler = () => {
         formik.resetForm()
+        navigate('/login')
     }
     let registerStatus = useSelector<RootReducerType, boolean>(state => state.register.registerStatus)
     if (registerStatus) {

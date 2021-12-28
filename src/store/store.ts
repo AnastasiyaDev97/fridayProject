@@ -6,7 +6,7 @@ import {loginReducer} from "./reducers/login-reducer";
 import {registrationReducer} from "./reducers/registration-reducer";
 import {profileReducer} from "./reducers/profile-reducer";
 import {passwordRecoveryReducer} from "./reducers/passwordRecovery-reducer";
-import {decksReducer} from "./reducers/decks-reducer";
+import {packsReducer} from "./reducers/packs-reducer";
 import {cardsReducer} from "./reducers/cards-reducer";
 
 
@@ -16,7 +16,7 @@ export const rootReducer = combineReducers({
     register: registrationReducer,
     profile: profileReducer,
     passRecovery:passwordRecoveryReducer,
-    decks:decksReducer,
+    packs:packsReducer,
     cards:cardsReducer,
 
 });

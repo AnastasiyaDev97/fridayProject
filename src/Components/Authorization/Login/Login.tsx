@@ -1,21 +1,16 @@
 import React from 'react';
-import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
+import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
-import SuperCheckbox from "../TestComponents/components/c3-SuperCheckbox/SuperCheckbox";
+import SuperCheckbox from "../../TestComponents/components/c3-SuperCheckbox/SuperCheckbox";
 
 import {useDispatch, useSelector} from "react-redux";
-import {RootReducerType} from "../../store/store";
+import {RootReducerType} from "../../../store/store";
 
-import {loginTC} from "../../store/reducers/login-reducer";
+import {loginTC} from "../../../store/reducers/login-reducer";
 import {Navigate, NavLink} from 'react-router-dom';
 import styles from './Login.module.scss'
-import {UniversalInput} from "../../common/components/Input/UniversalInput";
-
-type FormikErrorType = {
-    email?: string
-    password?: string
-    rememberMe?: boolean
-}
+import {UniversalInput} from "../../../common/components/Input/UniversalInput";
+import {validates} from "../../../utils/validates";
 
 
 export const Login = () => {
@@ -27,21 +22,7 @@ export const Login = () => {
             rememberMe: false,
         },
         validate: (values) => {
-            const errors: FormikErrorType = {};
-            const passwordRegex = /(?=.*[0-9])/
-            if (!values.email) {
-                errors.email = 'Required';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
-            }
-            if (!values.password) {
-                errors.password = "Required";
-            } else if (values.password.length < 8) {
-                errors.password = "Password must be 8 characters long.";
-            } else if (!passwordRegex.test(values.password)) {
-                errors.password = "Invalid password. Must contain one number.";
-            }
-            return errors;
+            validates(values)
         },
 
         onSubmit: values => {

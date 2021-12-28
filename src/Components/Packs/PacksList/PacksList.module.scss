@@ -1,0 +1,13 @@
+.listWrapper{
+  display: flex;
+  flex-direction: column;
+  background: darksalmon;
+  flex-basis: 77%;
+  padding: 30px;
+  .row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+}

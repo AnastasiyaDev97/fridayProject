@@ -55,6 +55,7 @@ export const logoutTC=()=>{
             .then(()=>{
                 dispatch(setAppStatusAC('succeeded'))
                 dispatch(isAuthToggleAC(false))
+
             })
             .catch((err: AxiosError) =>{
                 const error = err.response?err.response.data.error: (err.message + ', more details in the console')

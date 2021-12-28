@@ -1,20 +1,18 @@
 import React from 'react';
 import styles from "../Login/Login.module.scss";
-import {UniversalInput} from "../../common/components/Input/UniversalInput";
+import {UniversalInput} from "../../../common/components/Input/UniversalInput";
 import {NavLink} from "react-router-dom";
-import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
+import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
 import {
     addEmailAC,
     sendPassword,
     SetResponseInfoForgotPassAC
-} from "../../store/reducers/passwordRecovery-reducer";
+} from "../../../store/reducers/passwordRecovery-reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {RootReducerType} from "../../store/store";
+import {RootReducerType} from "../../../store/store";
+import {validates} from "../../../utils/validates";
 
-type FormikErrorType = {
-    email?: string
-}
 
 export const ForgotPassword = () => {
     const dispatch = useDispatch()
@@ -25,13 +23,7 @@ export const ForgotPassword = () => {
             email: '',
         },
         validate: (values) => {
-            const errors: FormikErrorType = {};
-            if (!values.email) {
-                errors.email = 'Required';
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-                errors.email = 'Invalid email address';
-            }
-            return errors;
+         validates(values)
         },
 
         onSubmit: values => {

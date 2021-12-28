@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import './App.module.css';
-import {Login} from "./Components/Login/Login";
+import {Login} from "./Components/Authorization/Login/Login";
 import {Profile} from "./Components/Profile/Profile";
-import {Registration} from "./Components/Redistration/Registration";
+import {Registration} from "./Components/Authorization/Redistration/Registration";
 import {NotFound} from "./Components/NotFound/NotFound";
-import {ForgotPassword} from "./Components/ForgotPassword/ForgotPassword";
-import {NewPassword} from "./Components/NewPassword/NewPassword";
+import {ForgotPassword} from "./Components/Authorization/ForgotPassword/ForgotPassword";
+import {NewPassword} from "./Components/Authorization/NewPassword/NewPassword";
 import {TestComponents} from "./Components/TestComponents/TestComponents";
 import {Navigate, Route, Routes} from 'react-router-dom';
 import {Header} from "./Components/Header/Header";
@@ -15,7 +15,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./store/store";
 import Preloader from "./common/Preloader/Preloader";
 import {Cards} from "./Components/Cards/Cards";
-import {Decks} from "./Components/Decks/Decks";
+import {Packs} from "./Components/Packs/Packs";
+
+
 export type ComponentAuthType='register'|'login' |'forgotPass'|'newPass'
 
 function App() {
@@ -34,16 +36,20 @@ function App() {
                 <div className={styles.mainBlock}>
                     {!isInitialized||status === 'loading' ? <Preloader/> :
                     <Routes>
-                        <Route path={'/'} element={<Profile/>}/>
+                        <Route path={'/'} element={<Navigate to='/profile'/>}/>
+                        <Route path={'/profile'} element={<Profile/>}/>
                         <Route path={'/registration'} element={<Registration/>}/>
-                        <Route path={'/login'} element={<Login/>}/>
                         <Route path={'/404'} element={<NotFound/>}/>
                         <Route path={'/forgot-password'} element={<ForgotPassword/>}/>
-                        <Route path={'/new-password/*'} element={<NewPassword/>}/>
+                        <Route path={'/new-password'} element={<NewPassword/>}>
+                            <Route path=":token" element={<NewPassword/>}/>
+                        </Route>
                         <Route path={'/test-components'} element={<TestComponents/>}/>
                         <Route path={'*'} element={<Navigate to='/404'/>}/>
                         <Route path={'/cards'} element={<Cards/>}/>
-                        <Route path={'/decks'} element={<Decks/>}/>
+                        <Route path={'/packs'} element={<Packs/>}/>
+                        <Route path={'/login'} element={<Login/>}/>
+
 
                     </Routes>}
                 </div>

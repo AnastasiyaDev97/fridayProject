@@ -1,9 +1,0 @@
-.navBarContainer{
-
-display: flex;
-    justify-content: flex-end;
-}
-.navBarContainer a{
-    padding: 0 20px;
-    text-decoration: none;
-}
