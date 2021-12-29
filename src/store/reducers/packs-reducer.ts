@@ -1,45 +1,81 @@
 import {ActionsType, setAppStatusAC} from "./app-reducer";
-import {Dispatch} from "redux";
-import {cardsAPI, PackType} from "../../dal/api";
+import {cardsAPI, getPacksResponseType} from "../../dal/api";
 
-import {AxiosError} from "axios";
 import {catchErrorHandler} from "../../utils/error-utils";
+import {AppDispatch, RootReducerType} from "../store";
 
+type initialStateType = getPacksResponseType & { mode: boolean }
 
 let initialState = {
-    packs: null as Array<PackType>|null
-}
-type InitialStateType = typeof initialState
+    /*    cardPacks: [] as Array<PackType>,
+        cardPacksTotalCount: 0,
+        maxCardsCount: 0,
+        minCardsCount: 0,
+        page: 0,
+        pageCount: 0,*/
+} as initialStateType
 
 
-export const packsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
+export const packsReducer = (state: initialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "SET-PACKS":
-            return {...state,packs:[...action.packs]}
+        case "CHANGE-PAGE":
+        case "SET-MAX-VALUE":
+        case "SET-MIN-VALUE":
+        case "TOGGLE-SHOW-CARDS-MODE":
+            return {...state, ...action.payload}
         default:
             return state
     }
 }
 
-export const setPacksAC = (packs: Array<PackType>) =>
+export const setPacksAC = (payload: getPacksResponseType) =>
     ({
         type: 'SET-PACKS',
-        packs
+        payload
     } as const)
 
-export const getPacksTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    cardsAPI.getPacks()
-        .then(res => {
-            dispatch(setPacksAC(res.cardPacks))
-        })
-        .catch((err: AxiosError) => {
-            const error = err.response ? err.response.data.error : (err.message + ', more details in the console')
-            catchErrorHandler(dispatch, error)
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('succeeded'))
+export const changePageAC = (page: number) =>
+    ({
+        type: 'CHANGE-PAGE',
+        payload: {page}
+    } as const)
 
-            }
-        )
+export const setMaxValue = (maxCardsCount: number) =>
+    ({
+        type: 'SET-MAX-VALUE',
+        payload: {maxCardsCount}
+    } as const)
+
+export const setMinValue = (minCardsCount: number) =>
+    ({
+        type: 'SET-MIN-VALUE',
+        payload: {minCardsCount}
+    } as const)
+
+export const toggleShowCardsModeAC = (mode: boolean) =>
+    ({
+        type: 'TOGGLE-SHOW-CARDS-MODE',
+        payload: {mode}
+    } as const)
+
+export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => RootReducerType) => {
+    const packs = getState().packs
+    const user_id = getState().profile.profile._id
+
+    try {
+        dispatch(setAppStatusAC('loading'))
+        const data = await cardsAPI.getPacks(packs.mode,user_id, {
+            min: packs.minCardsCount,
+            max: packs.maxCardsCount,
+            sortPacks: 'updated',
+            page: packs.page,
+            pageCount: 10
+        })
+        dispatch(setPacksAC(data))
+    } catch (err) {
+        catchErrorHandler(dispatch, err)
+    } finally {
+        dispatch(setAppStatusAC('succeeded'))
+    }
 }

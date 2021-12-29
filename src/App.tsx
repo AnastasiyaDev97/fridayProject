@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import './App.module.css';
 import {Login} from "./Components/Authorization/Login/Login";
 import {Profile} from "./Components/Profile/Profile";
 import {Registration} from "./Components/Authorization/Redistration/Registration";
@@ -27,14 +26,15 @@ function App() {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(initializeAppTC())
-    }, [])
+    }, [dispatch])
 
 
     return (
         <div className={styles.appWrapper}>
             <Header/>
                 <div className={styles.mainBlock}>
-                    {!isInitialized||status === 'loading' ? <Preloader/> :
+                    {status === 'loading' && <Preloader />}
+                    {!isInitialized ? <></> :
                     <Routes>
                         <Route path={'/'} element={<Navigate to='/profile'/>}/>
                         <Route path={'/profile'} element={<Profile/>}/>

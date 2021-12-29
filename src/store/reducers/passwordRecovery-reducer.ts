@@ -52,8 +52,7 @@ export const sendPassword = (email: string) => {
                 res.info && dispatch(SetResponseInfoForgotPassAC(res.info))
             })
             .catch((err: AxiosError) => {
-                const error = err.response ? err.response.data.error : (err.message + ', more details in the console')
-                catchErrorHandler(dispatch, error)
+                catchErrorHandler(dispatch, err)
             })
             .finally(() => {
                 dispatch(setAppStatusAC('succeeded'))
@@ -69,8 +68,7 @@ export const setNewPasswordTC = (newPassData: newPassDataType) => {
                 res.info && dispatch(SetResponseInfoNewPassAC(res.info))
             })
             .catch((err: AxiosError) => {
-                const error = err.response ? err.response.data.error : (err.message + ', more details in the console')
-                catchErrorHandler(dispatch, error)
+                catchErrorHandler(dispatch, err)
             })
             .finally(() => {
                 dispatch(setAppStatusAC('succeeded'))

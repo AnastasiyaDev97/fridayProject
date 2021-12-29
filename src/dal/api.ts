@@ -3,7 +3,7 @@ import {loginAuthDataType} from "../store/reducers/login-reducer";
 
 
 const instance = axios.create({
-    baseURL: /*'http://localhost:7542/2.0/'*/'https://neko-back.herokuapp.com/2.0',
+    baseURL: 'http://localhost:7542/2.0/'/*'https://neko-back.herokuapp.com/2.0'*/,
     withCredentials: true,
 })
 export const authorizationAPI = {
@@ -57,8 +57,9 @@ link</a></div>`
 }
 
 export const cardsAPI = {
-    getPacks() {
-        return instance.get<getPacksResponseType>(`cards/pack`)
+    getPacks(mode:boolean,user_id: string, getPacksQueryParams: getPacksQueryParamsType) {
+
+        return instance.get<getPacksResponseType>(`cards/pack`, {params: getPacksQueryParams})
             .then(res => {
                 return res.data
             })
@@ -100,8 +101,8 @@ type ResponseForgotPasswordType = {
     success?: boolean
     error?: string
 }
-type getPacksResponseType={
-    cardPacks:Array<PackType>
+export type getPacksResponseType = {
+    cardPacks: Array<PackType>
     cardPacksTotalCount: number
     maxCardsCount: number
     minCardsCount: number
@@ -109,11 +110,11 @@ type getPacksResponseType={
     pageCount: number
 
 }
-export type PackType={
+export type PackType = {
     cardsCount: number
-    created: Date
+    created: string
     name: string
-    updated: Date
+    updated: string
     user_id: string
     _id: string
 }
@@ -121,4 +122,13 @@ export type PackType={
 export type newPassDataType = {
     password: string
     resetPasswordToken: string
+}
+export type getPacksQueryParamsType = {
+    packName?: string
+    min?: number
+    max?: number
+    sortPacks?: string // не обязательно
+    page?: number // не обязательно
+    pageCount: number // не обязательно
+    user_id?: string
 }

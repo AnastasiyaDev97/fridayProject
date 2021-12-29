@@ -32,8 +32,7 @@ export const registerMeTC = (email: string, password: string) => (dispatch: Disp
             dispatch(registerStatusAC(true))
         })
         .catch((err: AxiosError) => {
-                const error = err.response ? err.response.data.error : (err.message + ', more details in the console')
-                catchErrorHandler(dispatch, error)
+                catchErrorHandler(dispatch, err)
                 dispatch(registerStatusAC(false))
             }
         )

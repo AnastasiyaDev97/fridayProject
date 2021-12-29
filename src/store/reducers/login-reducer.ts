@@ -34,6 +34,7 @@ export const isAuthToggleAC = (isLoggedIn: boolean) =>
     } as const)
 
 export const loginTC=(loginAuthData:loginAuthDataType)=>{
+    debugger
     return (dispatch:Dispatch<ActionsType>)=>{
         dispatch(setAppStatusAC('loading'))
         authorizationAPI.loginMe(loginAuthData)
@@ -43,8 +44,7 @@ export const loginTC=(loginAuthData:loginAuthDataType)=>{
                 dispatch(setProfileAC(res))
             })
             .catch((err: AxiosError) =>{
-                const error = err.response?err.response.data.error: (err.message + ', more details in the console')
-             catchErrorHandler(dispatch, error)})
+             catchErrorHandler(dispatch, err)})
     }
 }
 
@@ -58,7 +58,6 @@ export const logoutTC=()=>{
 
             })
             .catch((err: AxiosError) =>{
-                const error = err.response?err.response.data.error: (err.message + ', more details in the console')
-                catchErrorHandler(dispatch, error)})
+                catchErrorHandler(dispatch, err)})
     }
 }

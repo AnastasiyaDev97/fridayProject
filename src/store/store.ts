@@ -1,6 +1,6 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
+import thunk, { ThunkAction } from 'redux-thunk';
 
-import thunk from 'redux-thunk';
 import {appReducer} from "./reducers/app-reducer";
 import {loginReducer} from "./reducers/login-reducer";
 import {registrationReducer} from "./reducers/registration-reducer";
@@ -22,7 +22,8 @@ export const rootReducer = combineReducers({
 });
 export let store = createStore(rootReducer, applyMiddleware(thunk));
 export type RootReducerType = ReturnType<typeof rootReducer>;
-console.log(store)
+export type ThunkType<ReturnType = void> = ThunkAction<ReturnType, RootReducerType, unknown, any>
+export type AppDispatch = typeof store.dispatch
 
 
 // @ts-ignore

@@ -8,7 +8,8 @@ import {
     SetResponseInfoForgotPassAC,
     SetResponseInfoNewPassAC
 } from "./passwordRecovery-reducer";
-import {setPacksAC} from "./packs-reducer";
+import {changePageAC, setMaxValue, setMinValue, setPacksAC, toggleShowCardsModeAC} from "./packs-reducer";
+import {catchErrorHandler} from "../../utils/error-utils";
 
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -58,11 +59,13 @@ export const setErrorText = (error: null | string) => {
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     dispatch(setAppStatusAC('loading'))
     authorizationAPI.authMe()
-        .then(() => {
+        .then((res) => {
             dispatch(isAuthToggleAC(true))
+            dispatch(setProfileAC(res))
         })
-        .catch(() => {
+        .catch((err) => {
             dispatch(isAuthToggleAC(false))
+            catchErrorHandler(dispatch, err)
         })
         .finally(() => {
                 dispatch(setAppStatusAC('succeeded'))
@@ -82,4 +85,8 @@ export type ActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof addEmailAC>
     | ReturnType<typeof SetResponseInfoNewPassAC>
     | ReturnType<typeof setPacksAC>
+    | ReturnType<typeof changePageAC>
+    | ReturnType<typeof setMinValue>
+    | ReturnType<typeof setMaxValue>
+    | ReturnType<typeof toggleShowCardsModeAC>
 
