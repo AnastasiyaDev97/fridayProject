@@ -1,16 +1,21 @@
 import axios from "axios";
 import {loginAuthDataType} from "../store/reducers/login-reducer";
+import {instance} from "./apiConfig";
+import {
+    getPacksQueryParamsType,
+    getPacksResponseType,
+    LogoutResponse,
+    newPassDataType, RegisterErrorResponse,
+    ResponseForgotPasswordType, ResponseLoginType
+} from "./apiTypes";
+import {Nullable} from "../types/Nullable";
 
 
-const instance = axios.create({
-    baseURL: 'http://localhost:7542/2.0/'/*'https://neko-back.herokuapp.com/2.0'*/,
-    withCredentials: true,
-})
+
 export const authorizationAPI = {
     registerMe(email: string, password: string) {
         return instance.post<RegisterErrorResponse>(`auth/register`, {email, password})
             .then(res => {
-                console.log(res.data)
                 return res.data
             })
     },
@@ -57,8 +62,7 @@ link</a></div>`
 }
 
 export const cardsAPI = {
-    getPacks(mode:boolean,user_id: string, getPacksQueryParams: getPacksQueryParamsType) {
-
+    getPacks(getPacksQueryParams: Nullable<getPacksQueryParamsType>) {
         return instance.get<getPacksResponseType>(`cards/pack`, {params: getPacksQueryParams})
             .then(res => {
                 return res.data
@@ -68,67 +72,8 @@ export const cardsAPI = {
 /*
 <!--https://nastyaZ23.github.io/fridayProject-->*/
 
-// types
 
 
-export type ResponseLoginType = {
-    created: Date
-    email: string
-    isAdmin: boolean
-    name: string
-    publicCardPacksCount: number
-    rememberMe: boolean
-    token: string
-    tokenDeathTime: number
-    updated: Date
-    verified: boolean
-    __v: number
-    _id: string
-    error?: string
-}
-type RegisterErrorResponse = {
-    error?: string
-}
-type LogoutResponse = {
-    info?: string
-    error?: string
-}
 
-type ResponseForgotPasswordType = {
-    answer?: boolean
-    html?: boolean
-    info?: string
-    success?: boolean
-    error?: string
-}
-export type getPacksResponseType = {
-    cardPacks: Array<PackType>
-    cardPacksTotalCount: number
-    maxCardsCount: number
-    minCardsCount: number
-    page: number
-    pageCount: number
 
-}
-export type PackType = {
-    cardsCount: number
-    created: string
-    name: string
-    updated: string
-    user_id: string
-    _id: string
-}
 
-export type newPassDataType = {
-    password: string
-    resetPasswordToken: string
-}
-export type getPacksQueryParamsType = {
-    packName?: string
-    min?: number
-    max?: number
-    sortPacks?: string // не обязательно
-    page?: number // не обязательно
-    pageCount: number // не обязательно
-    user_id?: string
-}

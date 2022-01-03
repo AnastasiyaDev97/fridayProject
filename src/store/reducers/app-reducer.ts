@@ -8,7 +8,12 @@ import {
     SetResponseInfoForgotPassAC,
     SetResponseInfoNewPassAC
 } from "./passwordRecovery-reducer";
-import {changePageAC, setMaxValue, setMinValue, setPacksAC, toggleShowCardsModeAC} from "./packs-reducer";
+import {
+    changePageAC,
+    setNewMinMaxValues,
+    setPacksAC, setSortingFilter,
+    toggleShowCardsModeAC
+} from "./packs-reducer";
 import {catchErrorHandler} from "../../utils/error-utils";
 
 
@@ -86,7 +91,7 @@ export type ActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof SetResponseInfoNewPassAC>
     | ReturnType<typeof setPacksAC>
     | ReturnType<typeof changePageAC>
-    | ReturnType<typeof setMinValue>
-    | ReturnType<typeof setMaxValue>
+    | ReturnType<typeof setNewMinMaxValues>
     | ReturnType<typeof toggleShowCardsModeAC>
+    | ReturnType<typeof setSortingFilter>
 

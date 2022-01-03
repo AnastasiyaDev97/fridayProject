@@ -1,14 +1,15 @@
 import {Dispatch} from "redux";
 import {ActionsType, setAppStatusAC} from "./app-reducer";
-import {authorizationAPI, newPassDataType} from "../../dal/api";
+import {authorizationAPI} from "../../dal/api";
 import {AxiosError} from "axios";
 import {catchErrorHandler} from "../../utils/error-utils";
-
+import {Nullable} from "../../types/Nullable";
+import {newPassDataType} from "../../dal/apiTypes";
 
 let initialState = {
     responseInfoForgotPass: '',
     responseInfoNewPass:'',
-    emailForRecovery: null as null | string
+    emailForRecovery: null as Nullable<string>
 
 }
 type InitialStateType = typeof initialState

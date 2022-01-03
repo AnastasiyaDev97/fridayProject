@@ -15,6 +15,7 @@ import {validates} from "../../../utils/validates";
 
 
 export const NewPassword = () => {
+    console.log('newpass')
     const dispatch = useDispatch()
     const params = useParams<'*'>()
     const some = params['*']

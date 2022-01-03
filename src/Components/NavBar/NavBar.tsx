@@ -4,6 +4,7 @@ import styles from './NavBar.module.scss'
 
 
 export const NavBar = () => {
+    console.log('nav')
     return (
         <div className={styles.navBarContainer}>
 

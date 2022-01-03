@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 
 import styles from './Header.module.scss'
 import {useDispatch, useSelector} from "react-redux";
@@ -7,7 +7,8 @@ import {logoutTC} from "../../store/reducers/login-reducer";
 import {NavBar} from "../NavBar/NavBar";
 
 
-export const Header = () => {
+export const Header = memo(() => {
+    console.log('head')
     const dispatch = useDispatch();
     const logoutHandler = () => {
         dispatch(logoutTC())
@@ -24,4 +25,4 @@ export const Header = () => {
             </div>
         </div>
     )
-}
+})

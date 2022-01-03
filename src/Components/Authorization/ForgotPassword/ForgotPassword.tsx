@@ -1,4 +1,4 @@
-import React from 'react';
+import {memo, useCallback} from 'react';
 import styles from "../Login/Login.module.scss";
 import {UniversalInput} from "../../../common/components/Input/UniversalInput";
 import {NavLink} from "react-router-dom";
@@ -15,6 +15,7 @@ import {validates} from "../../../utils/validates";
 
 
 export const ForgotPassword = () => {
+    console.log('forgot')
     const dispatch = useDispatch()
     const emailForRecovery = useSelector<RootReducerType, null | string>(state => state.passRecovery.emailForRecovery)
     const responseInfoForgotPass = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfoForgotPass)
@@ -31,10 +32,10 @@ export const ForgotPassword = () => {
 
         },
     })
-    const toggleSensPassStatus = () => {
+    const toggleSensPassStatus = useCallback(() => {
         dispatch(SetResponseInfoForgotPassAC(''))
         dispatch(addEmailAC(''))
-    }
+    },[dispatch])
 
     return (
         <div className={styles.wrapper}>

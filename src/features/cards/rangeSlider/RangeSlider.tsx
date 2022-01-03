@@ -1,98 +1,46 @@
-import React, {useCallback, useEffect, useState, useRef} from "react";
-import classnames from "classnames";
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import {RootReducerType} from "../../../store/store";
 
-import "./RangeSlider.css";
-
-type sliderPropsType = {
-    min: number
-    max: number
-    onChange: ({min,max}:{min:number,max:number}) => void
+type SliderPropsType = {
+    minValueForRangeSlider: number
+    maxValueForRangeSlider: number
+    onChangeCardsCountsChange: (minValueForRangeSlider: number, maxValueForRangeSlider: number) => void
 }
 
-const MultiRangeSlider = ({min, max, onChange}: sliderPropsType) => {
-    const [minVal, setMinVal] = useState(min);
-    const [maxVal, setMaxVal] = useState(max);
-    const minValRef = useRef<HTMLInputElement>(null);
-    const maxValRef = useRef<HTMLInputElement>(null);
-    const range = useRef<HTMLInputElement>(null);
 
-    // Convert to percentage
-    const getPercent = useCallback(
-        (value) => Math.round(((value - min) / (max - min)) * 100),
-        [min, max]
-    );
+export default function RangeSlider(props: SliderPropsType) {
+    console.log('slider')
+    const maxCardsCount = useSelector<RootReducerType, number>((state) => state.packs.maxCardsCount)
+    const minCardsCount = useSelector<RootReducerType, number>((state) => state.packs.minCardsCount)
 
-    // Set width of the range to decrease from the left side
+    const [value, setValue] = useState<number[]>([minCardsCount, maxCardsCount]);
     useEffect(() => {
-        if (maxValRef.current) {
-            const minPercent = getPercent(minVal);
-            const maxPercent = getPercent(+maxValRef.current.value); // Preceding with '+' converts the value from type string to type number
-
-            if (range.current) {
-                range.current.style.left = `${minPercent}%`;
-                range.current.style.width = `${maxPercent - minPercent}%`;
+            let idOfTimeout = setTimeout(() => {
+                props.onChangeCardsCountsChange(value[0], value[1])
+            }, 0)
+            return () => {
+                clearTimeout(idOfTimeout)
             }
-        }
-    }, [minVal, getPercent]);
+        }, [value]
+    )
 
-    // Set width of the range to decrease from the right side
-    useEffect(() => {
-        if (minValRef.current) {
-            const minPercent = getPercent(+minValRef.current.value);
-            const maxPercent = getPercent(maxVal);
 
-            if (range.current) {
-                range.current.style.width = `${maxPercent - minPercent}%`;
-            }
-        }
-    }, [maxVal, getPercent]);
-
-    // Get min and max values when their state changes
-    useEffect(() => {
-        onChange({min: minVal, max: maxVal});
-    }, [minVal, maxVal, onChange]);
+    const onSliderChange = (event: Event, newValue: number | number[]) => {
+        setValue(newValue as number[]);
+    };
 
     return (
-        <div className="container">
-            <input
-                type="range"
-                min={min}
-                max={max}
-                value={minVal}
-                ref={minValRef}
-                onChange={(event) => {
-                    const value = Math.min(+event.target.value, maxVal - 1);
-                    setMinVal(value);
-                    event.target.value = value.toString();
-                }}
-                className={classnames("thumb thumb--zindex-3", {
-                    "thumb--zindex-5": minVal > max - 100
-                })}
+        <Box sx={{width: 300}}>
+            <Slider
+                value={value}
+                onChange={onSliderChange}
+                valueLabelDisplay="auto"
+                max={maxCardsCount}
             />
-            <input
-                type="range"
-                min={min}
-                max={max}
-                value={maxVal}
-                ref={maxValRef}
-                onChange={(event) => {
-                    const value = Math.max(+event.target.value, minVal + 1);
-                    setMaxVal(value);
-                    event.target.value = value.toString();
-                }}
-                className="thumb thumb--zindex-4"
-            />
-
-            <div className="slider">
-                <div className="slider__track"/>
-                <div ref={range} className="slider__range"/>
-                <div className="slider__left-value">{minVal}</div>
-                <div className="slider__right-value">{maxVal}</div>
-            </div>
-        </div>
+        </Box>
     );
-};
+}
 
-
-
-export default MultiRangeSlider;

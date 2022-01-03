@@ -1,18 +1,30 @@
-import {ResponseLoginType} from "../../dal/api";
+
 import {ActionsType} from "./app-reducer";
+import {ResponseLoginType} from "../../dal/apiTypes";
 
 
 const initialState = {
-    profile: {}  as ResponseLoginType
+    created: null,
+    email: '',
+    isAdmin: false,
+    name: '',
+    publicCardPacksCount: 0,
+    rememberMe: false,
+    token: '',
+    tokenDeathTime: 0,
+    updated: null,
+    verified: false,
+    __v: 0,
+    _id: '',
 }
 
-type InitialStateType = typeof initialState
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+
+export const profileReducer = (state: ResponseLoginType = initialState, action: ActionsType): ResponseLoginType => {
     switch (action.type) {
         case 'SET-PROFILE':
-            debugger
-            return {...state, ...action.payload}
+
+            return {...state, ...action.payload.profile}
         default:
             return state
     }

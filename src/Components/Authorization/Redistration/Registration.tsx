@@ -12,6 +12,7 @@ import {validates} from "../../../utils/validates";
 
 
 export const Registration = () => {
+    console.log('regis')
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const formik = useFormik({

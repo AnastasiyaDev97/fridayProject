@@ -1,4 +1,4 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, KeyboardEvent} from 'react'
+import React, {ChangeEvent, DetailedHTMLProps, FC, InputHTMLAttributes, KeyboardEvent, memo} from 'react'
 import s from './SuperInputText.module.css'
 import {useDispatch} from "react-redux";
 import {setErrorText} from "../../../../store/reducers/app-reducer";
@@ -15,7 +15,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё проп
     spanClassName?: string
 }
 
-const SuperInputText: React.FC<SuperInputTextPropsType> = (
+const SuperInputText: FC<SuperInputTextPropsType> = memo((
     {
         type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
         onChange, onChangeText,
@@ -26,6 +26,7 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
         ...restProps// все остальные пропсы попадут в объект restProps
     }
 ) => {
+    console.log('inpur')
     const dispatch=useDispatch()
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange // если есть пропс onChange
@@ -54,6 +55,6 @@ const SuperInputText: React.FC<SuperInputTextPropsType> = (
             />
         </>
     )
-}
+})
 
 export default SuperInputText

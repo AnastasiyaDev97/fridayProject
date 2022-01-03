@@ -14,6 +14,7 @@ import {validates} from "../../../utils/validates";
 
 
 export const Login = () => {
+    console.log('login')
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
