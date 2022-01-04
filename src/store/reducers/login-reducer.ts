@@ -1,9 +1,10 @@
 import {Dispatch} from "redux";
 import {authorizationAPI} from "../../dal/api";
-import {ActionsType, setAppStatusAC} from "./app-reducer";
+import {setAppStatusAC} from "./app-reducer";
 import {setProfileAC} from "./profile-reducer";
 import {AxiosError} from "axios";
 import {catchErrorHandler} from "../../utils/error-utils";
+import {ActionsType} from "./AC types/types";
 export type loginAuthDataType={
     email: string
     password:string
@@ -34,12 +35,11 @@ export const isAuthToggleAC = (isLoggedIn: boolean) =>
     } as const)
 
 export const loginTC=(loginAuthData:loginAuthDataType)=>{
-    debugger
     return (dispatch:Dispatch<ActionsType>)=>{
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC('loading',true))
         authorizationAPI.loginMe(loginAuthData)
             .then((res)=>{
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded',false))
                 dispatch(isAuthToggleAC(true))
                 dispatch(setProfileAC(res))
             })
@@ -50,10 +50,10 @@ export const loginTC=(loginAuthData:loginAuthDataType)=>{
 
 export const logoutTC=()=>{
     return (dispatch:Dispatch<ActionsType>)=>{
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC('loading',true))
         authorizationAPI.logoutMe()
             .then(()=>{
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded',false))
                 dispatch(isAuthToggleAC(false))
 
             })

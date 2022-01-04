@@ -8,6 +8,7 @@ import {profileReducer} from "./reducers/profile-reducer";
 import {passwordRecoveryReducer} from "./reducers/passwordRecovery-reducer";
 import {packsReducer} from "./reducers/packs-reducer";
 import {cardsReducer} from "./reducers/cards-reducer";
+import {ActionsType} from "./reducers/AC types/types";
 
 
 export const rootReducer = combineReducers({
@@ -22,7 +23,8 @@ export const rootReducer = combineReducers({
 });
 export let store = createStore(rootReducer, applyMiddleware(thunk));
 export type RootReducerType = ReturnType<typeof rootReducer>;
-export type ThunkType<ReturnType = void> = ThunkAction<ReturnType, RootReducerType, unknown, any>
+/*export type ThunkType<ReturnType = void> = ThunkAction<ReturnType, RootReducerType, unknown, any>*/
+export type ThunkType = ThunkAction<void, RootReducerType, unknown, ActionsType>
 export type AppDispatch = typeof store.dispatch
 
 

@@ -1,6 +1,4 @@
-import {ActionsType} from "./app-reducer";
-import {Dispatch} from "redux";
-
+import {ActionsType} from "./AC types/types";
 
 
 let initialState = {}

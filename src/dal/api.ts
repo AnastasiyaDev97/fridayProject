@@ -2,6 +2,7 @@ import axios from "axios";
 import {loginAuthDataType} from "../store/reducers/login-reducer";
 import {instance} from "./apiConfig";
 import {
+    addNewPackPayloadType,
     getPacksQueryParamsType,
     getPacksResponseType,
     LogoutResponse,
@@ -46,14 +47,16 @@ export const authorizationAPI = {
 password recovery link: <a href='https://nastyaz23.github.io/fridayProject/#new-password/$token$'>
 link</a></div>`
         }
-        return axios.post<ResponseForgotPasswordType>(`https://neko-back.herokuapp.com/2.0/auth/forgot`, messageDataPassword,
+        return axios.post<ResponseForgotPasswordType>(`https://neko-back.herokuapp.com/2.0/auth/forgot`
+            , messageDataPassword,
             {withCredentials: true})
             .then(res => {
                 return res.data
             })
     },
     setNewPassword(newPassData: newPassDataType) {
-        return axios.post<LogoutResponse>(`https://neko-back.herokuapp.com/2.0/auth/set-new-password`, newPassData,
+        return axios.post<LogoutResponse>(`https://neko-back.herokuapp.com/2.0/auth/set-new-password`
+            , newPassData,
             {withCredentials: true})
             .then(res => {
                 return res.data
@@ -68,6 +71,12 @@ export const cardsAPI = {
                 return res.data
             })
     },
+    addPack(newPackPayload:addNewPackPayloadType){
+        return instance.post(`cards/pack`, {newPackPayload})
+            .then(res => {
+                return res.data
+            })
+    }
 }
 /*
 <!--https://nastyaZ23.github.io/fridayProject-->*/

@@ -1,10 +1,11 @@
 import {Dispatch} from "redux";
-import {ActionsType, setAppStatusAC} from "./app-reducer";
+import {setAppStatusAC} from "./app-reducer";
 import {authorizationAPI} from "../../dal/api";
 import {AxiosError} from "axios";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {Nullable} from "../../types/Nullable";
 import {newPassDataType} from "../../dal/apiTypes";
+import {ActionsType} from "./AC types/types";
 
 let initialState = {
     responseInfoForgotPass: '',
@@ -46,7 +47,7 @@ export const addEmailAC = (emailForRecovery: string) =>
 
 export const sendPassword = (email: string) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC('loading',true))
         authorizationAPI.sendPassword(email)
             .then((res) => {
                 dispatch(addEmailAC(email))
@@ -56,14 +57,14 @@ export const sendPassword = (email: string) => {
                 catchErrorHandler(dispatch, err)
             })
             .finally(() => {
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded',false))
             })
     }
 }
 
 export const setNewPasswordTC = (newPassData: newPassDataType) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC('loading',true))
         authorizationAPI.setNewPassword(newPassData)
             .then((res) => {
                 res.info && dispatch(SetResponseInfoNewPassAC(res.info))
@@ -72,7 +73,7 @@ export const setNewPasswordTC = (newPassData: newPassDataType) => {
                 catchErrorHandler(dispatch, err)
             })
             .finally(() => {
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded',false))
             })
     }
 }

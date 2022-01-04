@@ -1,37 +1,46 @@
-import {ActionsType, setAppStatusAC} from "./app-reducer";
+import {setAppStatusAC} from "./app-reducer";
 import {cardsAPI} from "../../dal/api";
-
 import {catchErrorHandler} from "../../utils/error-utils";
-import {AppDispatch, RootReducerType} from "../store";
-import {getPacksQueryParamsType, getPacksResponseType, PackType} from "../../dal/apiTypes";
+import {AppDispatch, RootReducerType, ThunkType} from "../store";
+import {addNewPackPayloadType, getPacksQueryParamsType, getPacksResponseType} from "../../dal/apiTypes";
+import {ActionsType} from "./AC types/types";
 
-type initialStateType = getPacksResponseType & { isMyCardShouldShown: boolean,min:number,max:number,
-    sortPacks:sortingFilterType }
-export type sortingFilterType= '0updated'|'1updated'|'0created'|'1created'
 
+type initialStateType = getPacksResponseType & {
+    isOnlyMyCardShouldShown: boolean
+    min: number
+    max: number
+    sortPacks: string
+}
+export type sortingFilterType = '0updated' | '1updated' | '0created' | '1created'
+
+const INITIAL_CARDS_MAX_BORDER = 100
 let initialState = {
-    page:1,
-    /*cardPacks: [] as Array<PackType>,
-    cardPacksTotalCount: 0,
+    page: 1,
+    /*   cardPacks: [] as Array<PackType>,*/
+    /* cardPacksTotalCount: 0,*/
     maxCardsCount: 0,
     minCardsCount: 0,
-    page: 0,
     pageCount: 0,
-    isMyCardShouldShown: false,
-    min:number,
-    max:number*/
+    isOnlyMyCardShouldShown: false,
+    min: 0,
+    max: INITIAL_CARDS_MAX_BORDER,
+    sortPacks:'0updated',
 } as initialStateType
 
 
 export const packsReducer = (state: initialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "SET-PACKS":
+
+            console.log({...state, ...action.payload})
             return {...state, ...action.payload}
         case "CHANGE-PAGE":
         case "SET-RESPONSE-INFO-NEW-PASS":
         case "TOGGLE-SHOW-CARDS-MODE":
         case "SET-NEW-MIN-MAX-VALUE":
         case "SET-SORTING-FILTER":
+
             return {...state, ...action.payload}
         default:
             return state
@@ -59,10 +68,11 @@ export const setNewMinMaxValues = (min: number, max: number) => {
     } as const
 }
 
-export const setSortingFilter = (sortingFilter:sortingFilterType) => {
+export const setSortingFilter = (sortPacks: string) => {
+
     return {
         type: 'SET-SORTING-FILTER',
-        payload: {sortPacks:sortingFilter}
+        payload: {sortPacks}
     } as const
 }
 
@@ -73,7 +83,7 @@ export const toggleShowCardsModeAC = (isMyCardShouldShown: boolean) =>
     } as const)
 
 export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => RootReducerType) => {
-    const {min, max, page, isMyCardShouldShown,sortPacks} = getState().packs
+    const {min, max, page, isOnlyMyCardShouldShown, sortPacks} = getState().packs
     const user_id = getState().profile._id
 
     let paramsForQuery = {
@@ -85,7 +95,7 @@ export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => Ro
         user_id
     } as getPacksQueryParamsType
 
-    if (!isMyCardShouldShown) {
+    if (!isOnlyMyCardShouldShown) {
         paramsForQuery = {
             min,
             max,
@@ -95,13 +105,25 @@ export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => Ro
         }
     }
     try {
-        dispatch(setAppStatusAC('loading'))
+        dispatch(setAppStatusAC('loading',true))
         const data = await cardsAPI.getPacks(paramsForQuery)
         dispatch(setPacksAC(data))
 
     } catch (err) {
         catchErrorHandler(dispatch, err)
     } finally {
-        dispatch(setAppStatusAC('succeeded'))
+        dispatch(setAppStatusAC('succeeded',false))
     }
 }
+
+export const addPackTC=(newPackPayload:addNewPackPayloadType):ThunkType=>
+    async (dispatch)=>{
+        try {
+            dispatch(setAppStatusAC('loading',true))
+            await cardsAPI.addPack(newPackPayload)
+            await dispatch(getPacksTC())
+        }
+        catch (err){
+            catchErrorHandler(dispatch, err)
+        }
+    }

@@ -61,3 +61,9 @@ export type getPacksQueryParamsType = {
     pageCount?: number // не обязательно
     user_id?: string
 }
+
+export type addNewPackPayloadType={
+    name:string
+    deckCover?:string
+    private?:boolean
+}

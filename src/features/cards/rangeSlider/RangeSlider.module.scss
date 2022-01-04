@@ -1,9 +1,11 @@
-.rangeSliderWrapper{
-  position: relative;
-  .absoluteRange{
-    position: absolute;
-    top:0;
-   rigth: 0;
+.sliderWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 
+  .sliderValues {
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
   }
 }

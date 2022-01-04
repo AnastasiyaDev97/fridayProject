@@ -17,8 +17,8 @@ type TablePropsType = {
     headers: {
         cardsName: string
         cardsCount: string
-        lastUpdated: string
-        createdBy: string
+        updated: string
+        created: string
         actions: string
     }
     onSetSortingClick: (headerName: string) => void
@@ -28,39 +28,41 @@ export const Table = memo(({rows, headers, onSetSortingClick}: TablePropsType) =
         console.log('table')
         const userId = useSelector<RootReducerType, string>(state => state.profile._id)
         const CELL_FOR_BUTTONS = 4
-        const titles = Object.values(headers)
+        const titles = Object.entries(headers)
+
 
         return (
             <table className={s.table}>
                 <thead>
                 <tr>
-                    {titles.map((title, i) => {
-                            if (title === 'Last Updated' || title === 'Created By') {
-                                const onTitleClick = () => {
-                                    onSetSortingClick(title)
+                    {titles.map(([key, value], i) => {
+                            const onTitleClick = () => {
+                                if (key === 'updated' || key === 'created') {
+                                    onSetSortingClick(key)
                                 }
-                                return (
-                                    <th key={i} onClick={onTitleClick}>
-                                        {title}</th>)
                             }
-
                             return (
-                                <th key={i}>{title}</th>
-                            )
+                                <th key={i} onClick={onTitleClick} className={s.tableHeader}>
+                                    {value}</th>)
                         }
                     )}
                 </tr>
                 </thead>
                 <tbody>
-                {rows.map((row, i) => <tr key={i}>
+                {rows.map((row, i) =>{
+
+                    const CONDITION_FOR_DISABLE_BUTTON = (row.user_id !== userId)
+
+                    return(
+                 <tr key={i}>
                     {Object.values(row).map((value, i) => i !== CELL_FOR_BUTTONS &&
                         <td key={i}>{value}</td>)}
-                    <td className={s.btns}>{row.user_id === userId &&
-                    <><SuperButton>Delete</SuperButton><SuperButton>Edit</SuperButton></>
-                    }
+                    <td className={s.btns}>
+                        <SuperButton disabled={CONDITION_FOR_DISABLE_BUTTON}>Delete</SuperButton><SuperButton
+                            disabled={CONDITION_FOR_DISABLE_BUTTON}>Edit</SuperButton>
                         <SuperButton>Learn</SuperButton></td>
                 </tr>)
-                }
+                })}
                 </tbody>
             </table>
         )

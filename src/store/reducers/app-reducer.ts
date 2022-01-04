@@ -2,19 +2,8 @@ import {isAuthToggleAC} from "./login-reducer";
 import {setProfileAC} from "./profile-reducer";
 import {Dispatch} from "redux";
 import {authorizationAPI} from "../../dal/api";
-import {registerStatusAC} from "./registration-reducer";
-import {
-    addEmailAC,
-    SetResponseInfoForgotPassAC,
-    SetResponseInfoNewPassAC
-} from "./passwordRecovery-reducer";
-import {
-    changePageAC,
-    setNewMinMaxValues,
-    setPacksAC, setSortingFilter,
-    toggleShowCardsModeAC
-} from "./packs-reducer";
-import {catchErrorHandler} from "../../utils/error-utils";
+import {Nullable} from "../../types/Nullable";
+import {ActionsType} from "./AC types/types";
 
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -22,7 +11,8 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 const initialState = {
     status: 'idle' as RequestStatusType,
     isInitialized: false,
-    error: null as null | string
+    error: null as Nullable<string>,
+    isDisabled:false,
 }
 
 type InitialStateType = typeof initialState
@@ -30,9 +20,9 @@ type InitialStateType = typeof initialState
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
         case 'APP/SET-STATUS':
-        case "SET-ERROR":
+        case "APP/SET-ERROR":
             return {...state, ...action.payload}
-        case 'INITIALIZE': {
+        case 'APP/INITIALIZE': {
             return {...state, isInitialized: true}
         }
 
@@ -42,56 +32,44 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 }
 
 
-export const setAppStatusAC = (status: RequestStatusType) => ({
+export const setAppStatusAC = (status: RequestStatusType,isDisabled: boolean) => ({
     type: 'APP/SET-STATUS',
     payload: {
         status,
+        isDisabled,
     }
 } as const)
 
+
 export const setIsInitializedAC = () => ({
-    type: 'INITIALIZE'
+    type: 'APP/INITIALIZE'
 } as const)
 
-export const setErrorText = (error: null | string) => {
+export const setErrorText = (error: Nullable<string>) => {
     return (
         {
-            type: 'SET-ERROR',
+            type: 'APP/SET-ERROR',
             payload: {error}
         } as const)
 }
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
+    dispatch(setAppStatusAC('loading',true))
     authorizationAPI.authMe()
         .then((res) => {
             dispatch(isAuthToggleAC(true))
             dispatch(setProfileAC(res))
         })
-        .catch((err) => {
+        .catch(() => {
             dispatch(isAuthToggleAC(false))
-            catchErrorHandler(dispatch, err)
         })
         .finally(() => {
-                dispatch(setAppStatusAC('succeeded'))
+                dispatch(setAppStatusAC('succeeded',false))
                 dispatch(setIsInitializedAC())
             }
         )
 }
 
 
-export type ActionsType = ReturnType<typeof setAppStatusAC>
-    | ReturnType<typeof isAuthToggleAC>
-    | ReturnType<typeof setProfileAC>
-    | ReturnType<typeof setIsInitializedAC>
-    | ReturnType<typeof setErrorText>
-    | ReturnType<typeof registerStatusAC>
-    | ReturnType<typeof SetResponseInfoForgotPassAC>
-    | ReturnType<typeof addEmailAC>
-    | ReturnType<typeof SetResponseInfoNewPassAC>
-    | ReturnType<typeof setPacksAC>
-    | ReturnType<typeof changePageAC>
-    | ReturnType<typeof setNewMinMaxValues>
-    | ReturnType<typeof toggleShowCardsModeAC>
-    | ReturnType<typeof setSortingFilter>
+
 

@@ -1,6 +1,6 @@
 
-import {ActionsType} from "./app-reducer";
 import {ResponseLoginType} from "../../dal/apiTypes";
+import {ActionsType} from "./AC types/types";
 
 
 const initialState = {
