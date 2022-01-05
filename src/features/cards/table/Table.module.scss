@@ -21,6 +21,7 @@ table tbody tr:nth-child(2n) {
 
 table tbody tr:hover {
   background: rgba(102, 98, 98, .6);
+  cursor: pointer;
 }
 
 .tableHeader {

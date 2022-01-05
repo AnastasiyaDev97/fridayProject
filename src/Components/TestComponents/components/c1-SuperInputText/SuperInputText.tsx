@@ -2,6 +2,7 @@ import React, {ChangeEvent, DetailedHTMLProps, FC, InputHTMLAttributes, Keyboard
 import s from './SuperInputText.module.css'
 import {useDispatch} from "react-redux";
 import {setErrorText} from "../../../../store/reducers/app-reducer";
+import {Nullable} from "../../../../types/Nullable";
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
@@ -11,7 +12,7 @@ type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
     onChangeText?: (value: string) => void
     onEnter?: () => void
-    error?: string|null
+    error?: Nullable<string>
     spanClassName?: string
 }
 

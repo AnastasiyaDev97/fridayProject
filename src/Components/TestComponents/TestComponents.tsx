@@ -10,13 +10,13 @@ export const TestComponents = (props: TestComponentsPropsType) => {
     const [text, setText] = useState<string>('')
     const error = text ? '' : 'error'
 
-    const showAlert = () => {
+   /* const showAlert = () => {
         if (error) {
             alert('введите текст...')
         } else {
             alert(text)
         }
-    }
+    }*/
 
     const [checked, setChecked] = useState<boolean>(false)
     const testOnChange = (e: ChangeEvent<HTMLInputElement>) => setChecked(e.currentTarget.checked)
@@ -27,7 +27,7 @@ export const TestComponents = (props: TestComponentsPropsType) => {
                 <SuperInputText
                     value={text}
                     onChangeText={setText}
-                    onEnter={showAlert}
+                   /* onEnter={showAlert}*/
                     error={error}
                     // spanClassName={s.testSpanError}
                 />
@@ -44,8 +44,8 @@ export const TestComponents = (props: TestComponentsPropsType) => {
 
                 <SuperButton
                     red // пропсу с булевым значением не обязательно указывать true
-                    onClick={showAlert}>
-                    delete {/*название кнопки попадёт в children*/}
+                 /*   onClick={showAlert}>*/
+                   /* delete /!*название кнопки попадёт в children*!/*/>
                 </SuperButton>
 
                 <SuperButton disabled>

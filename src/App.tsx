@@ -47,7 +47,9 @@ function App() {
                             </Route>
                             <Route path={'/test-components'} element={<TestComponents/>}/>
                             <Route path={'*'} element={<Navigate to='/404'/>}/>
-                            <Route path={'/cards'} element={<Cards/>}/>
+                            <Route path={'/cards'} element={<Cards/>}>
+                                <Route path=":id" element={<Cards/>}/>
+                            </Route>
                             <Route path={'/packs'} element={<Packs/>}/>
                             <Route path={'/login'} element={<Login/>}/>
 

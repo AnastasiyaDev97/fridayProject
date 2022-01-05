@@ -62,8 +62,49 @@ export type getPacksQueryParamsType = {
     user_id?: string
 }
 
-export type addNewPackPayloadType={
-    name:string
-    deckCover?:string
-    private?:boolean
+export type addNewPackPayloadType = {
+    cardsPack: {
+        name: string
+        deckCover?: string
+        private?: boolean
+    }
+}
+export type updatePackPayloadType = {
+    cardsPack: {
+        _id: string
+        name?: string
+    }
+}
+
+export type getCardsResponseType = {
+    cards: Array<CardType>
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    packUserId: string
+}
+
+export type CardType = {
+    answer: string
+    question: string
+    cardsPack_id: string
+    grade: number
+    shots: number
+    user_id: string
+    created: string
+    updated: string
+    _id: string
+}
+
+export type getCardsQueryParamsType = {
+    cardAnswer?: string
+    cardQuestion?: string
+    cardsPack_id: string
+    min?: number
+    max?: number
+    sortCards?: string
+    page?: number
+    pageCount?: number
 }

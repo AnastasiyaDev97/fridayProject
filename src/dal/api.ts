@@ -2,12 +2,12 @@ import axios from "axios";
 import {loginAuthDataType} from "../store/reducers/login-reducer";
 import {instance} from "./apiConfig";
 import {
-    addNewPackPayloadType,
+    addNewPackPayloadType, getCardsQueryParamsType, getCardsResponseType,
     getPacksQueryParamsType,
     getPacksResponseType,
     LogoutResponse,
     newPassDataType, RegisterErrorResponse,
-    ResponseForgotPasswordType, ResponseLoginType
+    ResponseForgotPasswordType, ResponseLoginType, updatePackPayloadType
 } from "./apiTypes";
 import {Nullable} from "../types/Nullable";
 
@@ -64,20 +64,60 @@ link</a></div>`
     }
 }
 
-export const cardsAPI = {
+export const packsAPI = {
     getPacks(getPacksQueryParams: Nullable<getPacksQueryParamsType>) {
         return instance.get<getPacksResponseType>(`cards/pack`, {params: getPacksQueryParams})
             .then(res => {
                 return res.data
             })
     },
-    addPack(newPackPayload:addNewPackPayloadType){
-        return instance.post(`cards/pack`, {newPackPayload})
+    addPack(cardsPack:addNewPackPayloadType){
+        return instance.post(`cards/pack`, cardsPack)
             .then(res => {
                 return res.data
             })
-    }
+    },
+    deletePack(packId:string){
+        return instance.delete(`cards/pack/?id=${packId}`)
+            .then(res => {
+                return res.data
+            })
+    },
+    updatePack(cardsPack:updatePackPayloadType){
+        return instance.put(`cards/pack`,cardsPack)
+            .then(res => {
+                return res.data
+            })
+    },
 }
+
+export const cardsAPI = {
+    getCards(getCardsQueryParams: Nullable<getCardsQueryParamsType>) {
+        return instance.get<getCardsResponseType>(`cards/card`, {params: getCardsQueryParams})
+            .then(res => {
+                return res.data
+            })
+    },
+    /*addPack(cardsPack:addNewPackPayloadType){
+        return instance.post(`cards/pack`, cardsPack)
+            .then(res => {
+                return res.data
+            })
+    },
+    deletePack(packId:string){
+        return instance.delete(`cards/pack/?id=${packId}`)
+            .then(res => {
+                return res.data
+            })
+    },
+    updatePack(cardsPack:updatePackPayloadType){
+        return instance.put(`cards/pack`,cardsPack)
+            .then(res => {
+                return res.data
+            })
+    },*/
+}
+
 /*
 <!--https://nastyaZ23.github.io/fridayProject-->*/
 

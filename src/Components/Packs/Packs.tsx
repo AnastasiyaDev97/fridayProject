@@ -13,6 +13,7 @@ import {getCurrentPage} from "../../selectors/getCurrentPage";
 
 
 export const Packs = () => {
+
     const dispatch = useDispatch()
 
     const packs = useSelector<RootReducerType, Array<PackType>>(getPacks)

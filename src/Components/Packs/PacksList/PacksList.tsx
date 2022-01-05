@@ -8,6 +8,7 @@ import {useDispatch} from "react-redux";
 import {addPackTC, changePageAC, setSortingFilter} from "../../../store/reducers/packs-reducer";
 import {PackType} from "../../../dal/apiTypes";
 import {convertDateFormat} from "../../../utils/handles";
+import {useNavigate} from "react-router-dom";
 
 type PackListPropsType = {
     packs: Array<PackType>
@@ -20,8 +21,10 @@ type PackListPropsType = {
 
 
 export const PacksList = memo(({packs, currentPage, totalItemCount, pageSize, sortPacks}: PackListPropsType) => {
+
     console.log('packlist')
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [text, setText] = useState<string>('')
 
@@ -37,11 +40,11 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageSize, so
     const packsForTable = useMemo(() => {
             return packs.map(({
                                   cardsCount, created,
-                                  name, updated, user_id, ...rest
+                                  name, updated, user_id,_id, ...rest
                               }) => {
                     updated = convertDateFormat(updated)
                     created = convertDateFormat(created)
-                    return {name, cardsCount, updated, created, user_id}
+                    return {name, cardsCount, updated, created, user_id,_id}
                 }
             )
         }
@@ -58,9 +61,13 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageSize, so
            dispatch(setSortingFilter(sortPacks[0]==='0'?`1${headerName}`:`0${headerName}` ))
     }, [dispatch,sortPacks])
 
-    const onButtonClick=useCallback((text:string)=>{
-        dispatch(addPackTC({name:text}))
-    },[dispatch])
+    const onButtonClick=useCallback(()=>{
+        dispatch(addPackTC(text))
+    },[dispatch,text])
+
+    const handleOpenCardClick=(id:string)=>{
+        navigate(`/cards/${id}`)
+    }
 
 
     return (
@@ -70,10 +77,10 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageSize, so
                 <SuperInputText style={{width: '60%'}} value={text}
                                 onChangeText={setText} /*onEnter={}*/
                                 error={error}/>
-                <SuperButton style={{width: '35%'}} onClick={()=>onButtonClick(text)}>Add new pack</SuperButton>
+                <SuperButton style={{width: '35%'}} onClick={onButtonClick}>Add new pack</SuperButton>
             </div>
             <Table rows={packsForTable} headers={headersForPacks}
-                   onSetSortingClick={handleSetSortingClick}/>
+                   onSetSortingClick={handleSetSortingClick} onOpenCardClick={handleOpenCardClick}/>
             <Paginator totalItemCount={totalItemCount} pageSize={pageSize} currentPage={currentPage}
                        onChangePageClick={handleChangePageClick} portionSize={PORTION_SIZE}/>
         </div>
