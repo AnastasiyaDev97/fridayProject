@@ -9,6 +9,7 @@ import {getPacksTC,  toggleShowCardsModeAC} from "../../store/reducers/packs-red
 import {PackType} from "../../dal/apiTypes";
 import {getPacks} from "../../selectors/getPacks";
 import {getCurrentPage} from "../../selectors/getCurrentPage";
+import {setAppStatusAC} from "../../store/reducers/app-reducer";
 
 
 
@@ -20,8 +21,8 @@ export const Packs = () => {
     const currentPage = useSelector<RootReducerType, number>(getCurrentPage)
     const isLoggedIn = useSelector<RootReducerType, boolean>(state => state.login.isLoggedIn)
     const totalItemCount = useSelector<RootReducerType, number>((state) => state.packs.cardPacksTotalCount)
-    const pageSize = useSelector<RootReducerType, number>((state) => state.packs.pageCount)
-    const isMyCardShouldShown = useSelector<RootReducerType, boolean>((state) => state.packs.isOnlyMyCardShouldShown)
+    const pageCount = useSelector<RootReducerType, number>((state) => state.packs.pageCount)
+    const isOnlyMyCardShouldShown = useSelector<RootReducerType, boolean>((state) => state.packs.isOnlyMyCardShouldShown)
     const minValueForRangeSlider = useSelector<RootReducerType, number>((state) => state.packs.min)
     const maxValueForRangeSlider = useSelector<RootReducerType, number>((state) => state.packs.max)
     const sortPacks = useSelector<RootReducerType, string>((state) => state.packs.sortPacks)
@@ -29,17 +30,19 @@ export const Packs = () => {
 
 
     useEffect(() => {
+        dispatch(setAppStatusAC('loading', true))
         let idOfTimeout = setTimeout(() => {
             dispatch(getPacksTC())
         }, 1000)
         return () => {
             clearTimeout(idOfTimeout)
         }
-    }, [dispatch, currentPage, minValueForRangeSlider, maxValueForRangeSlider, isMyCardShouldShown,sortPacks])
+    }, [dispatch, currentPage, minValueForRangeSlider, maxValueForRangeSlider, isOnlyMyCardShouldShown,sortPacks])
 
 
-    const handleToggleShowCardsModeClick = useCallback((isMyCardShouldShown: boolean) => {
-        dispatch(toggleShowCardsModeAC(isMyCardShouldShown))
+    const handleToggleShowCardsModeClick = useCallback((isOnlyMyCardShouldShown: boolean) => {
+
+        dispatch(toggleShowCardsModeAC(isOnlyMyCardShouldShown))
     },[dispatch])
 
     if (!isLoggedIn) {
@@ -54,7 +57,7 @@ export const Packs = () => {
         <div className={s.wrapper}>
             <PacksParams minValueForRangeSlider={minValueForRangeSlider} maxValueForRangeSlider={maxValueForRangeSlider}
                          onToggleShowCardsModeClick={handleToggleShowCardsModeClick}/>
-            <PacksList packs={packs} currentPage={currentPage} totalItemCount={totalItemCount} pageSize={pageSize}
+            <PacksList packs={packs} currentPage={currentPage} totalItemCount={totalItemCount} pageCount={pageCount}
                        sortPacks={sortPacks}/>
         </div>
     )

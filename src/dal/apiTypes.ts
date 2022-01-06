@@ -108,3 +108,30 @@ export type getCardsQueryParamsType = {
     page?: number
     pageCount?: number
 }
+
+export type addNewCardPayloadType = {
+    card: {
+        cardsPack_id: string
+        question?: string
+        answer?: string
+        grade?: 0 | 1 | 2 | 3 | 4 | 5
+        shots?: number
+        answerImg?: string
+        questionImg?: string
+        questionVideo?: string
+        answerVideo?: string
+    }
+}
+export type updateCardPayloadType = {
+    card: {
+        _id: string
+        question?: string
+        answer?: string
+        grade?: 0 | 1 | 2 | 3 | 4 | 5
+        shots?: number
+        answerImg?: string
+        questionImg?: string
+        questionVideo?: string
+        answerVideo?: string
+    }
+}

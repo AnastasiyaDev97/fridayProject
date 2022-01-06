@@ -2,7 +2,7 @@ import {setAppStatusAC} from "./app-reducer";
 import {packsAPI} from "../../dal/api";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {AppDispatch, RootReducerType, ThunkType} from "../store";
-import {addNewPackPayloadType, getPacksQueryParamsType, getPacksResponseType} from "../../dal/apiTypes";
+import {getPacksQueryParamsType, getPacksResponseType} from "../../dal/apiTypes";
 import {ActionsType} from "./AC types/types";
 
 
@@ -32,6 +32,7 @@ let initialState = {
 export const packsReducer = (state: initialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "SET-PACKS":
+            return {...state, ...action.payload}
         case "CHANGE-PAGE":
         case "SET-RESPONSE-INFO-NEW-PASS":
         case "TOGGLE-SHOW-CARDS-MODE":
@@ -72,11 +73,13 @@ export const setSortingFilter = (sortPacks: string) => {
     } as const
 }
 
-export const toggleShowCardsModeAC = (isMyCardShouldShown: boolean) =>
-    ({
+export const toggleShowCardsModeAC = (isOnlyMyCardShouldShown: boolean) =>{
+    return({
         type: 'TOGGLE-SHOW-CARDS-MODE',
-        payload: {isMyCardShouldShown}
-    } as const)
+        payload: {isOnlyMyCardShouldShown}
+    }as const)
+}
+
 
 export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => RootReducerType) => {
     const {min, max, page, isOnlyMyCardShouldShown, sortPacks} = getState().packs
@@ -101,7 +104,6 @@ export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => Ro
         }
     }
     try {
-        dispatch(setAppStatusAC('loading', true))
         const data = await packsAPI.getPacks(paramsForQuery)
         dispatch(setPacksAC(data))
 

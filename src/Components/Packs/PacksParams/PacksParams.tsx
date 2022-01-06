@@ -8,7 +8,7 @@ import {RangeSlider} from "../../../features/cards/rangeSlider/RangeSlider";
 type PacksParamsPropsT = {
     minValueForRangeSlider: number
     maxValueForRangeSlider: number
-    onToggleShowCardsModeClick: (isMyCardShouldShown: boolean) => void
+    onToggleShowCardsModeClick: (isOnlyMyCardShouldShown: boolean) => void
 }
 
 export const PacksParams = memo((props: PacksParamsPropsT) => {

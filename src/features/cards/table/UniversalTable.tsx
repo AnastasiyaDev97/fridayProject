@@ -1,33 +1,42 @@
 import React, {memo, useCallback} from 'react';
-import s from './Table.module.scss'
+import s from './UniversalTable.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
 import SuperButton from "../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
 import {deletePackTC, updatePackTC} from '../../../store/reducers/packs-reducer';
 
 
+
+
 type TablePropsType = {
+    component:'packs'|'cards'
     rows: Array<{
-        name: string
-        cardsCount: number
+        name?: string
+        cardsCount?: number
         updated: string
-        created: string
-        user_id: string
+        created?: string
+        user_id?: string
         _id: string
+        question?:string
+        answer?:string
+        grade?:number
     }>
 
     headers: {
-        cardsName: string
-        cardsCount: string
+        name?: string
+        cardsCount?: string
         updated: string
-        created: string
-        actions: string
+        created?: string
+        actions?: string
+        question?:string
+        answer?:string
+        grade?:string
     }
     onSetSortingClick: (headerName: string) => void
-    onOpenCardClick: (id: string) => void
+    onTableRowClick?: (id: string) => void
 }
 
-export const Table = memo(({rows, headers, onSetSortingClick,onOpenCardClick}: TablePropsType) => {
+export const UniversalTable = memo(({rows, headers, onSetSortingClick,onTableRowClick,component}: TablePropsType) => {
         console.log('table')
         const dispatch = useDispatch()
 
@@ -35,9 +44,10 @@ export const Table = memo(({rows, headers, onSetSortingClick,onOpenCardClick}: T
         const CELL_FOR_BUTTONS = 4
         const titles = Object.entries(headers)
 
-        const handleDeletePackClick = useCallback((packId: string) => {
+        const handleDeletePackClick = (packId: string) => {
+            debugger
             dispatch(deletePackTC(packId))
-        }, [dispatch])
+        }
 
         const handleUpdatePackNameDoubleClick = useCallback((packId: string, newName: string) => {
             dispatch(updatePackTC(packId, newName))
@@ -49,9 +59,7 @@ export const Table = memo(({rows, headers, onSetSortingClick,onOpenCardClick}: T
                 <tr>
                     {titles.map(([key, value], i) => {
                             const onTitleClick = () => {
-                                if (key === 'updated' || key === 'created') {
                                     onSetSortingClick(key)
-                                }
                             }
                             return (
                                 <th key={i} onClick={onTitleClick} className={s.tableHeader}>
@@ -65,23 +73,25 @@ export const Table = memo(({rows, headers, onSetSortingClick,onOpenCardClick}: T
 
                     const CONDITION_FOR_DISABLE_BUTTON = (row.user_id !== userId)
 
-                    const onButtonClick = () => {
+                    const onDeleteButtonClick = () => {
+                        debugger
                         handleDeletePackClick(row._id)
                     }
 
-                    const onRowClick = () => {
-                        onOpenCardClick(row._id)
+                    const onOpenCardsClick = () => {
+                        if(onTableRowClick){
+                        onTableRowClick(row._id)}
                     }
 
                     return (
-                        <tr key={i} onClick={onRowClick}>
+                        <tr key={i} >
                             {Object.values(row).map((value, i) => i < CELL_FOR_BUTTONS &&
                                 <td key={i}>{value}</td>)}
-                            <td className={s.btns}>
+                            {component==='packs'&&<td className={s.btns}>
                                 <SuperButton disabled={CONDITION_FOR_DISABLE_BUTTON}
-                                             onClick={onButtonClick}>Delete</SuperButton><SuperButton
+                                             onClick={onDeleteButtonClick}>Delete</SuperButton><SuperButton
                                 disabled={CONDITION_FOR_DISABLE_BUTTON}>Edit</SuperButton>
-                                <SuperButton>Learn</SuperButton></td>
+                                <SuperButton onClick={onOpenCardsClick}>Learn</SuperButton></td>}
                         </tr>)
                 })}
                 </tbody>

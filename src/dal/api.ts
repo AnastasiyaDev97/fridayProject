@@ -2,12 +2,13 @@ import axios from "axios";
 import {loginAuthDataType} from "../store/reducers/login-reducer";
 import {instance} from "./apiConfig";
 import {
+    addNewCardPayloadType,
     addNewPackPayloadType, getCardsQueryParamsType, getCardsResponseType,
     getPacksQueryParamsType,
     getPacksResponseType,
     LogoutResponse,
     newPassDataType, RegisterErrorResponse,
-    ResponseForgotPasswordType, ResponseLoginType, updatePackPayloadType
+    ResponseForgotPasswordType, ResponseLoginType, updateCardPayloadType, updatePackPayloadType
 } from "./apiTypes";
 import {Nullable} from "../types/Nullable";
 
@@ -92,30 +93,31 @@ export const packsAPI = {
 }
 
 export const cardsAPI = {
-    getCards(getCardsQueryParams: Nullable<getCardsQueryParamsType>) {
+    getCards(getCardsQueryParams: getCardsQueryParamsType) {
         return instance.get<getCardsResponseType>(`cards/card`, {params: getCardsQueryParams})
             .then(res => {
                 return res.data
             })
     },
-    /*addPack(cardsPack:addNewPackPayloadType){
-        return instance.post(`cards/pack`, cardsPack)
+
+    addCard(card:addNewCardPayloadType){
+        return instance.post(`cards/card`, card)
             .then(res => {
                 return res.data
             })
     },
-    deletePack(packId:string){
-        return instance.delete(`cards/pack/?id=${packId}`)
+    deleteCard(id:string){
+        return instance.delete(`cards/card/?id=${id}`)
             .then(res => {
                 return res.data
             })
     },
-    updatePack(cardsPack:updatePackPayloadType){
-        return instance.put(`cards/pack`,cardsPack)
+    updateCard(card:updateCardPayloadType){
+        return instance.put(`cards/card`,card)
             .then(res => {
                 return res.data
             })
-    },*/
+    },
 }
 
 /*

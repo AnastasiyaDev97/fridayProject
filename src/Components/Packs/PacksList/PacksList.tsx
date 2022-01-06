@@ -1,40 +1,36 @@
 import s from './PacksList.module.scss'
-import React, {memo, useCallback, useMemo, useState} from 'react';
-import {Table} from "../../../features/cards/table/Table";
-import SuperInputText from "../../TestComponents/components/c1-SuperInputText/SuperInputText";
-import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
+import React, {memo, useCallback, useMemo} from 'react';
+import {UniversalTable} from "../../../features/cards/table/UniversalTable";
 import Paginator from "../../../features/cards/pagination/Pagination";
 import {useDispatch} from "react-redux";
 import {addPackTC, changePageAC, setSortingFilter} from "../../../store/reducers/packs-reducer";
 import {PackType} from "../../../dal/apiTypes";
 import {convertDateFormat} from "../../../utils/handles";
 import {useNavigate} from "react-router-dom";
+import {AddItem} from "../../../common/components/AddItem/AddItem";
+
 
 type PackListPropsType = {
     packs: Array<PackType>
     currentPage: number
     totalItemCount: number
-    pageSize: number
+    pageCount: number
     sortPacks: string
 }
 
 
-
-export const PacksList = memo(({packs, currentPage, totalItemCount, pageSize, sortPacks}: PackListPropsType) => {
+export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, sortPacks}: PackListPropsType) => {
 
     console.log('packlist')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const [text, setText] = useState<string>('')
 
-    const error = text ? '' : 'error'
+
     const PORTION_SIZE = 10
 
-
-
     const headersForPacks = {
-        cardsName: 'Name', cardsCount: 'Cards',
+        name: 'Name', cardsCount: 'Cards',
         updated: 'Last updated', created: 'Created by', actions: 'Actions'
     }
     const packsForTable = useMemo(() => {
@@ -61,9 +57,9 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageSize, so
            dispatch(setSortingFilter(sortPacks[0]==='0'?`1${headerName}`:`0${headerName}` ))
     }, [dispatch,sortPacks])
 
-    const onButtonClick=useCallback(()=>{
+    const handleAddPackButtonClick=useCallback((text:string)=>{
         dispatch(addPackTC(text))
-    },[dispatch,text])
+    },[dispatch])
 
     const handleOpenCardClick=(id:string)=>{
         navigate(`/cards/${id}`)
@@ -73,15 +69,12 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageSize, so
     return (
         <div className={s.listWrapper}>
             <h2>Packs List</h2>
-            <div className={s.row}>
-                <SuperInputText style={{width: '60%'}} value={text}
-                                onChangeText={setText} /*onEnter={}*/
-                                error={error}/>
-                <SuperButton style={{width: '35%'}} onClick={onButtonClick}>Add new pack</SuperButton>
-            </div>
-            <Table rows={packsForTable} headers={headersForPacks}
-                   onSetSortingClick={handleSetSortingClick} onOpenCardClick={handleOpenCardClick}/>
-            <Paginator totalItemCount={totalItemCount} pageSize={pageSize} currentPage={currentPage}
+
+                <AddItem title='Add new pack' onAddItemButtonClick={handleAddPackButtonClick}/>
+            <UniversalTable rows={packsForTable} headers={headersForPacks}
+                            onSetSortingClick={handleSetSortingClick} onTableRowClick={handleOpenCardClick}
+                            component={'packs'}/>
+            <Paginator totalItemCount={totalItemCount} pageCount={pageCount} currentPage={currentPage}
                        onChangePageClick={handleChangePageClick} portionSize={PORTION_SIZE}/>
         </div>
     )

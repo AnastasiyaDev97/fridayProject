@@ -4,17 +4,17 @@ import SuperButton from "../../../Components/TestComponents/components/c2-SuperB
 
 type PaginatorPropsType = {
     totalItemCount: number
-    pageSize: number
+    pageCount: number
     currentPage: number
     onChangePageClick: (currentPage: number) => void
     portionSize: number
 }
 
-let Paginator = memo(({totalItemCount, pageSize, currentPage, onChangePageClick, portionSize}: PaginatorPropsType) => {
+let Paginator = memo(({totalItemCount, pageCount, currentPage, onChangePageClick, portionSize}: PaginatorPropsType) => {
     console.log('paginat')
     let [portionNumber, setPortionNumber] = useState(1);
 
-    let pagesCount = Math.ceil(totalItemCount / pageSize);
+    let pagesCount = Math.ceil(totalItemCount / pageCount);
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);

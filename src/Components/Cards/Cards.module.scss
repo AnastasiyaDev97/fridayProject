@@ -1,0 +1,21 @@
+@import "../../common/sass/variables.scss";
+
+.wrapper {
+  width: 80%;
+  height: 100%;
+  position: relative;
+  margin: 0 100px;
+  display: flex;
+  background: $backgrForPacks;
+  padding: 30px;
+  flex-direction: column;
+  .input{
+    width: 90%;
+    align-self: center;
+    margin:20px 0 30px;
+  }
+}
+
+.cursor{
+  cursor: pointer;
+}
