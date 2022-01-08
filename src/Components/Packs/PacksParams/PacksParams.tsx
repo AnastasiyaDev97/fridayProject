@@ -1,27 +1,29 @@
 import s from './PacksParams.module.scss'
 import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
-import {useDispatch} from "react-redux";
-import {setNewMinMaxValues} from "../../../store/reducers/packs-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {setNewMinMaxValues, toggleShowUserPacksAC} from "../../../store/reducers/packs-reducer";
 import {memo, useCallback} from "react";
 import {RangeSlider} from "../../../features/cards/rangeSlider/RangeSlider";
+import {RootReducerType} from "../../../store/store";
 
 type PacksParamsPropsT = {
     minValueForRangeSlider: number
     maxValueForRangeSlider: number
-    onToggleShowCardsModeClick: (isOnlyMyCardShouldShown: boolean) => void
 }
 
 export const PacksParams = memo((props: PacksParamsPropsT) => {
     console.log('packparams')
     const dispatch = useDispatch()
 
+    const user_id=useSelector<RootReducerType, string>(state=>state.profile._id)
+
     const onShowMyCardsClick = useCallback(() => {
-        props.onToggleShowCardsModeClick(true)
-    }, [props.onToggleShowCardsModeClick])
+        dispatch(toggleShowUserPacksAC(user_id))
+    }, [dispatch,user_id])
 
     const onShowAllCardsClick = useCallback(() => {
-        props.onToggleShowCardsModeClick(false)
-    }, [props.onToggleShowCardsModeClick])
+        dispatch(toggleShowUserPacksAC(''))
+    }, [dispatch])
 
     const handleChangeCardsCountChange = useCallback((minValue: number, maxValue: number) => {
         dispatch(setNewMinMaxValues(minValue, maxValue))

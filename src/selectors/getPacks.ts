@@ -1,4 +1,5 @@
 import {RootReducerType} from "../store/store";
-import { PackType} from "../dal/apiTypes";
+import {PackType} from "../dal/packs/types";
 
-export const getPacks=(state:RootReducerType):Array<PackType>=>state.packs.cardPacks
+
+export const getPacks=(state:RootReducerType):PackType[]=>state.packs.cardPacks

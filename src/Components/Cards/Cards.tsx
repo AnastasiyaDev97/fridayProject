@@ -4,14 +4,12 @@ import Pagination from "../../features/cards/pagination/Pagination";
 import {convertDateFormat} from "../../utils/handles";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
-import {CardType} from "../../dal/apiTypes";
-import {addCardTC, changePageCardsAC, getCardsTC, setSortingFilterCards} from "../../store/reducers/cards-reducer";
+import {changePageCardsAC, getCardsTC, setSortingFilterCards} from "../../store/reducers/cards-reducer";
 import {UniversalTable} from "../../features/cards/table/UniversalTable";
-
 import {useNavigate, useParams} from "react-router-dom";
+import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
+import {CardType} from "../../dal/cards/types";
 import {setAppStatusAC} from "../../store/reducers/app-reducer";
-
-import {AddItem} from "../../common/components/AddItem/AddItem";
 
 
 export const Cards = () => {
@@ -36,7 +34,7 @@ export const Cards = () => {
     const cardsForTable = useMemo(() => {
             return cards.map(({
                                   question, answer,
-                                  updated, grade, _id, ...rest
+                                  updated, grade, _id
                               }) => {
                     updated = convertDateFormat(updated)
                     return {question, answer, updated, grade, _id}
@@ -72,11 +70,12 @@ export const Cards = () => {
         navigate(-1)
     }
 
-    const handleAddCardButtonClick = useCallback((text: string) => {
+    const handleAddCardButtonClick = useCallback(() => {
         if (params.id) {
-            dispatch(addCardTC(params.id, text))
+
         }
     }, [dispatch, params.id])
+
 
     if (!cards) {
         return <></>
@@ -84,7 +83,9 @@ export const Cards = () => {
     return (
         <div className={s.wrapper}>
             <h2 onClick={onTitleClick} className={s.cursor}>&#8592; Pack Name</h2>
-            <AddItem title='Add new card' onAddItemButtonClick={handleAddCardButtonClick}/>
+            <SuperButton style={{width: '35%'}} /*onClick={}*/>Add new card</SuperButton>
+
+
             <UniversalTable rows={cardsForTable} headers={headersForCards}
                             onSetSortingClick={handleSetSortingClick} component={'cards'}/>
             <Pagination totalItemCount={totalItemCount}

@@ -2,7 +2,14 @@ import {isAuthToggleAC} from "../login-reducer";
 import {setProfileAC} from "../profile-reducer";
 import {registerStatusAC} from "../registration-reducer";
 import {addEmailAC, SetResponseInfoForgotPassAC, SetResponseInfoNewPassAC} from "../passwordRecovery-reducer";
-import {changePageAC, setNewMinMaxValues, setPacksAC, setSortingFilter, toggleShowCardsModeAC} from "../packs-reducer";
+import {
+    changePageAC,
+    changeSearchPackNameAC,
+    setNewMinMaxValues,
+    setPacksAC,
+    setSortingFilter,
+    toggleShowCardsModeAC
+} from "../packs-reducer";
 import {setAppStatusAC, setErrorText, setIsInitializedAC} from "../app-reducer";
 import {changePageCardsAC, setCardsAC, setSortingFilterCards} from "../cards-reducer";
 
@@ -23,3 +30,4 @@ export type ActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setCardsAC>
     | ReturnType<typeof setSortingFilterCards>
     | ReturnType<typeof changePageCardsAC>
+    | ReturnType<typeof changeSearchPackNameAC>

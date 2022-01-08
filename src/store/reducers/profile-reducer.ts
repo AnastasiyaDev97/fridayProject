@@ -1,6 +1,6 @@
 
-import {ResponseLoginType} from "../../dal/apiTypes";
 import {ActionsType} from "./AC types/types";
+import {ResponseLoginType} from "../../dal/authorization/types";
 
 
 const initialState = {

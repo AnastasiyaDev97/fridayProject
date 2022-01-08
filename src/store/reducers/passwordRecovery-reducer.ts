@@ -1,11 +1,11 @@
 import {Dispatch} from "redux";
 import {setAppStatusAC} from "./app-reducer";
-import {authorizationAPI} from "../../dal/api";
 import {AxiosError} from "axios";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {Nullable} from "../../types/Nullable";
-import {newPassDataType} from "../../dal/apiTypes";
 import {ActionsType} from "./AC types/types";
+import {authorizationAPI} from "../../dal/authorization/authorization";
+import {newPassDataType} from "../../dal/packs/types";
 
 let initialState = {
     responseInfoForgotPass: '',

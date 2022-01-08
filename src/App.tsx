@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect} from 'react';
 import {Login} from "./Components/Authorization/Login/Login";
 import {Profile} from "./Components/Profile/Profile";
 import {Registration} from "./Components/Authorization/Redistration/Registration";
@@ -17,9 +17,11 @@ import {Cards} from "./Components/Cards/Cards";
 import {Packs} from "./Components/Packs/Packs";
 
 
+
 export type ComponentAuthType = 'register' | 'login' | 'forgotPass' | 'newPass'
 
-function App() {
+function App(){
+
     console.log('app')
         let status = useSelector<RootReducerType, RequestStatusType>(state => state.app.status)
         const isInitialized = useSelector<RootReducerType, boolean>(state => state.app.isInitialized)
@@ -53,13 +55,12 @@ function App() {
                             <Route path={'/packs'} element={<Packs/>}/>
                             <Route path={'/login'} element={<Login/>}/>
 
-
                         </Routes>}
                     </div>
                <div className={styles.err}>{error}</div>
             </div>
-        );
-
+        )
+}
 
     // let arr = [
     //     {id: 1, name: 'nasya', foo: 55},
@@ -81,6 +82,6 @@ function App() {
     //         </tbody>
     //     </table>
     // )
-}
+
 
 export default App;

@@ -1,9 +1,10 @@
 import {setAppStatusAC} from "./app-reducer";
-import {packsAPI} from "../../dal/api";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {AppDispatch, RootReducerType, ThunkType} from "../store";
-import {getPacksQueryParamsType, getPacksResponseType} from "../../dal/apiTypes";
 import {ActionsType} from "./AC types/types";
+import {Nullable} from "../../types/Nullable";
+import {packsAPI} from "../../dal/packs/packsAPI";
+import {getPacksQueryParamsType, getPacksResponseType} from "../../dal/packs/types";
 
 
 type initialStateType = getPacksResponseType & {
@@ -11,6 +12,8 @@ type initialStateType = getPacksResponseType & {
     min: number
     max: number
     sortPacks: string
+    packName:Nullable<string>
+    user_id:Nullable<string>
 }
 export type sortingFilterType = '0updated' | '1updated' | '0created' | '1created'
 
@@ -26,11 +29,15 @@ let initialState = {
     min: 0,
     max: INITIAL_CARDS_MAX_BORDER,
     sortPacks: '0updated',
+    packName:'',
+    user_id:null,
 } as initialStateType
 
 
 export const packsReducer = (state: initialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
+        case "PACKS/CHANGE-SEARCH-PACK-NAME":
+            return {...state, ...action.payload}
         case "SET-PACKS":
             return {...state, ...action.payload}
         case "CHANGE-PAGE":
@@ -66,7 +73,6 @@ export const setNewMinMaxValues = (min: number, max: number) => {
 }
 
 export const setSortingFilter = (sortPacks: string) => {
-
     return {
         type: 'SET-SORTING-FILTER',
         payload: {sortPacks}
@@ -81,29 +87,35 @@ export const toggleShowCardsModeAC = (isOnlyMyCardShouldShown: boolean) =>{
 }
 
 
-export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => RootReducerType) => {
-    const {min, max, page, isOnlyMyCardShouldShown, sortPacks} = getState().packs
-    const user_id = getState().profile._id
+export const changeSearchPackNameAC = (packName: string) =>{
+    return({
+        type: 'PACKS/CHANGE-SEARCH-PACK-NAME',
+        payload: {packName}
+    }as const)
+}
 
-    let paramsForQuery = {
+export const toggleShowUserPacksAC = (user_id: string) =>{
+    return({
+        type: 'PACKS/TOGGLE-SHOW-USER-PACKS',
+        payload: {user_id}
+    }as const)
+}
+
+export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => RootReducerType) => {
+    const {min, max, page, user_id, sortPacks,packName} = getState().packs
+
+    let paramsForQuery:getPacksQueryParamsType = {
         min,
         max,
         sortPacks,
         page,
         pageCount: 10,
-        user_id
-    } as getPacksQueryParamsType
-
-    if (!isOnlyMyCardShouldShown) {
-        paramsForQuery = {
-            min,
-            max,
-            sortPacks,
-            page,
-            pageCount: 10,
-        }
+        user_id,
+        packName
     }
+
     try {
+
         const data = await packsAPI.getPacks(paramsForQuery)
         dispatch(setPacksAC(data))
 

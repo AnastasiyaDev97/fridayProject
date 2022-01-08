@@ -1,9 +1,9 @@
 import {isAuthToggleAC} from "./login-reducer";
 import {setProfileAC} from "./profile-reducer";
 import {Dispatch} from "redux";
-import {authorizationAPI} from "../../dal/api";
 import {Nullable} from "../../types/Nullable";
 import {ActionsType} from "./AC types/types";
+import {authorizationAPI} from "../../dal/authorization/authorization";
 
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

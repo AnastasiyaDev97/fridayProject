@@ -1,0 +1,28 @@
+@import "../../sass/variables";
+
+.modalWrapper {
+  position: fixed;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: $backgrForPacks;
+  top: 0;
+  left: 0;
+
+
+  .modalBlock {
+    position: absolute;
+    padding: 20px;
+    background: white;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    color: black;
+    display: flex;
+    flex-direction: column;
+   .btn{
+     margin-bottom: 15px;
+     margin-top: 15px;
+   }
+
+  }
+}

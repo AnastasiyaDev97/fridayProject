@@ -2,7 +2,7 @@ import React from 'react';
 import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
-import {ResponseLoginType} from "../../dal/apiTypes";
+import {ResponseLoginType} from "../../dal/authorization/types";
 
 
 

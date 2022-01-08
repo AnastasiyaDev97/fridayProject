@@ -1,10 +1,11 @@
 import {Dispatch} from "redux";
-import {authorizationAPI} from "../../dal/api";
+
 import {setAppStatusAC} from "./app-reducer";
 import {setProfileAC} from "./profile-reducer";
 import {AxiosError} from "axios";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {ActionsType} from "./AC types/types";
+import {authorizationAPI} from "../../dal/authorization/authorization";
 export type loginAuthDataType={
     email: string
     password:string

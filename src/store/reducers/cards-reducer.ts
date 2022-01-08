@@ -1,9 +1,9 @@
 import {ActionsType} from "./AC types/types";
 import {AppDispatch,  ThunkType} from "../store";
-import { getCardsQueryParamsType, getCardsResponseType} from "../../dal/apiTypes";
 import {setAppStatusAC} from "./app-reducer";
-import {cardsAPI} from "../../dal/api";
 import {catchErrorHandler} from "../../utils/error-utils";
+import {getCardsQueryParamsType, getCardsResponseType} from "../../dal/cards/types";
+import {cardsAPI} from "../../dal/cards/cardsAPI";
 
 
 
@@ -53,6 +53,7 @@ export const changePageCardsAC = (page: number) => {
             payload: {page}
         }) as const
 }
+
 
 
 export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => async (dispatch: AppDispatch) => {

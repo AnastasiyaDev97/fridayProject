@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import {memo, useEffect, useState} from "react";
+import {memo, useState} from "react";
 import {useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
 import s from './RangeSlider.module.scss'
+import {UseSetTimeoutEffect} from "../../../common/hooks/customUseEffect";
 
 type SliderPropsType = {
     minValueForRangeSlider: number
@@ -20,16 +21,13 @@ export const RangeSlider = memo((props: SliderPropsType) => {
         const [value, setValue] = useState<number[]>([props.minValueForRangeSlider,
             props.maxValueForRangeSlider]);
 
-        useEffect(() => {
-                let idOfTimeout = setTimeout(() => {
-                    props.onChangeCardsCountsChange(value[0], value[1])
-                }, 0)
-                return () => {
-                    clearTimeout(idOfTimeout)
-                }
-            }, [value]
-        )
+        const changeCardsCount = () => {
+            console.log('changeCardCount')
+            props.onChangeCardsCountsChange(value[0], value[1])
+        }
 
+
+        UseSetTimeoutEffect(changeCardsCount, value, 500)
 
         const onSliderChange = (event: Event, newValue: number | number[]) => {
             setValue(newValue as number[]);
@@ -45,8 +43,8 @@ export const RangeSlider = memo((props: SliderPropsType) => {
                         max={maxCardsCount}
                     />
                     <div className={s.sliderValues}>
-                    <span>{minCardsCount}</span>
-                    <span>{maxCardsCount}</span>
+                        <span>{minCardsCount}</span>
+                        <span>{maxCardsCount}</span>
                     </div>
                 </div>
             </Box>

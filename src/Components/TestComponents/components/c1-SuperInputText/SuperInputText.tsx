@@ -14,6 +14,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё проп
     onEnter?: () => void
     error?: Nullable<string>
     spanClassName?: string
+
 }
 
 const SuperInputText: FC<SuperInputTextPropsType> = memo((
@@ -53,6 +54,7 @@ const SuperInputText: FC<SuperInputTextPropsType> = memo((
 
                 {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
             />
+
         </>
     )
 })

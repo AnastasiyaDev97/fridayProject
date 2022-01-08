@@ -1,3 +1,4 @@
+
 export const convertDateFormat = (dateAsString: string) => {
     let date = new Date(dateAsString)
     return `${addZeroToDate(date.getDate())}.${addZeroToDate(date.getMonth() + 1)}.${date.getFullYear()}`
@@ -9,3 +10,4 @@ export const addZeroToDate = (date: number) => {
     }
     return date
 }
+
