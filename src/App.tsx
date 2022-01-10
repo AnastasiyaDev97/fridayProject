@@ -40,10 +40,10 @@ function App(){
 
     const setModalDataCards=useCallback((modalAction:modalActionType,props: any)=>{
         setModalData(modalAction,'card',props)
-    },[])
+    },[setModalData])
     const setModalDataPacks=useCallback((modalAction:modalActionType,props: any)=>{
         setModalData(modalAction,'pack',props)
-    },[])
+    },[setModalData])
         return (
             <div className={styles.appWrapper}>
                 <Header/>
@@ -73,8 +73,6 @@ function App(){
             </div>
         )
 }
-
-  
 
 
 export default App;
