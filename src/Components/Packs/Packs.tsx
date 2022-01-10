@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import s from './Packs.module.scss'
 import {PacksParams} from "./PacksParams/PacksParams";
 import {PacksList} from "./PacksList/PacksList";
@@ -12,10 +12,14 @@ import {setAppStatusAC} from "../../store/reducers/app-reducer";
 import {Nullable} from "../../types/Nullable";
 import {PackType} from "../../dal/packs/types";
 
+import {modalActionType} from "../../common/components/Modal/ModalContainer/ModalContainer";
+type PacksT={
+    setModalData:(modalAction:modalActionType,props: any)=>void
+}
 
 
 
-export const Packs = () => {
+export const Packs:FC<PacksT> = ({setModalData}) => {
 
     const dispatch = useDispatch()
 
@@ -43,10 +47,6 @@ export const Packs = () => {
         sortPacks,packName])
 
 
-
-
-
-
     if (!isLoggedIn) {
         return <Navigate to='/login'/>
     }
@@ -59,7 +59,7 @@ export const Packs = () => {
         <div className={s.wrapper}>
             <PacksParams minValueForRangeSlider={minValueForRangeSlider} maxValueForRangeSlider={maxValueForRangeSlider}/>
             <PacksList packs={packs} currentPage={currentPage} totalItemCount={totalItemCount} pageCount={pageCount}
-                       sortPacks={sortPacks}/>
+                       sortPacks={sortPacks} setModalData={setModalData}/>
         </div>
     )
 }

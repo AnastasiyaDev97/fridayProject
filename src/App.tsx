@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Login} from "./Components/Authorization/Login/Login";
 import {Profile} from "./Components/Profile/Profile";
 import {Registration} from "./Components/Authorization/Redistration/Registration";
@@ -15,6 +15,8 @@ import {RootReducerType} from "./store/store";
 import Preloader from "./common/Preloader/Preloader";
 import {Cards} from "./Components/Cards/Cards";
 import {Packs} from "./Components/Packs/Packs";
+import { setModalPropsAC, setModalTypeAC} from "./store/reducers/modal-reducer";
+import {modalActionType, modalEntityType} from "./common/components/Modal/ModalContainer/ModalContainer";
 
 
 
@@ -31,7 +33,17 @@ function App(){
             dispatch(initializeAppTC())
         }, [dispatch])
 
+    const setModalData = useCallback((modalAction:modalActionType,modalEntity:modalEntityType, props: any) => {
+        dispatch(setModalTypeAC(modalAction,modalEntity))
+        dispatch(setModalPropsAC(props))
+    },[dispatch])
 
+    const setModalDataCards=useCallback((modalAction:modalActionType,props: any)=>{
+        setModalData(modalAction,'card',props)
+    },[])
+    const setModalDataPacks=useCallback((modalAction:modalActionType,props: any)=>{
+        setModalData(modalAction,'pack',props)
+    },[])
         return (
             <div className={styles.appWrapper}>
                 <Header/>
@@ -49,10 +61,10 @@ function App(){
                             </Route>
                             <Route path={'/test-components'} element={<TestComponents/>}/>
                             <Route path={'*'} element={<Navigate to='/404'/>}/>
-                            <Route path={'/cards'} element={<Cards/>}>
-                                <Route path=":id" element={<Cards/>}/>
+                            <Route path={'/cards'} element={<Cards setModalData={setModalDataCards}/>}>
+                                <Route path=":id" element={<Cards setModalData={setModalDataCards}/>}/>
                             </Route>
-                            <Route path={'/packs'} element={<Packs/>}/>
+                            <Route path={'/packs'} element={<Packs setModalData={setModalDataPacks}/>}/>
                             <Route path={'/login'} element={<Login/>}/>
 
                         </Routes>}
@@ -62,26 +74,7 @@ function App(){
         )
 }
 
-    // let arr = [
-    //     {id: 1, name: 'nasya', foo: 55},
-    //     {id: 2, name: 'narrsya', foo: 325},
-    //     {id: 3, name: 'nassrsrya', foo: 51},
-    //     {id: 4, name: 'neeee', foo: 35},
-    // ]
-    // return (
-    //     <table>
-    //         <thead>
-    //         <tr>
-    //             <th>fsf</th>
-    //             <th>sfs</th>
-    //             <th>sfsf</th>
-    //         </tr>
-    //         </thead>
-    //         <tbody>
-    //         {arr.map(row=><tr>{Object.values(row).map(value=><td>{value}</td>)}</tr>)}
-    //         </tbody>
-    //     </table>
-    // )
+  
 
 
 export default App;

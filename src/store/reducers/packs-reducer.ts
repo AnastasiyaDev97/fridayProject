@@ -143,6 +143,7 @@ export const addPackTC = (name: string): ThunkType =>
 export const deletePackTC = (packId: string): ThunkType =>
     async (dispatch) => {
         try {
+            debugger
             dispatch(setAppStatusAC('loading', true))
             await packsAPI.deletePack(packId)
             await dispatch(getPacksTC())

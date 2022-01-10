@@ -1,10 +1,17 @@
 import {instance} from "../apiConfig";
-import {addNewCardPayloadType, getCardsQueryParamsType, getCardsResponseType, updateCardPayloadType} from "./types";
+import {
+    addNewCardPayloadType,
+    getCardsQueryParamsType,
+    getCardsResponseType,
+    updateCardPayloadType,
+    updateCardRatingType
+} from "./types";
 
 export const cardsAPI = {
     getCards(getCardsQueryParams: getCardsQueryParamsType) {
         return instance.get<getCardsResponseType>(`cards/card`, {params: getCardsQueryParams})
             .then(res => {
+
                 return res.data
             })
     },
@@ -22,7 +29,15 @@ export const cardsAPI = {
             })
     },
     updateCard(card:updateCardPayloadType){
+
         return instance.put(`cards/card`,card)
+            .then(res => {
+
+                return res.data
+            })
+    },
+    updateCardGrade(grade: number,card_id: string){
+        return instance.put<updateCardRatingType>(`cards/grade`, {grade,card_id})
             .then(res => {
                 return res.data
             })

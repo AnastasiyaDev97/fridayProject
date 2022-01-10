@@ -1,10 +1,10 @@
 import React, {memo, MouseEvent} from 'react';
 import s from './UniversalTable.module.scss'
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
 import SuperButton from "../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
 
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 
 type TablePropsType = {
@@ -30,23 +30,26 @@ type TablePropsType = {
         question?: string
         answer?: string
         grade?: string
+
     }
     onSetSortingClick: (headerName: string) => void
     onDeleteButtonClick?: (packId: string) => void
     onUpdatePackClick?: (packId: string) => void
+    onLearnPackClick?: (packId: string) => void
 }
 
 export const UniversalTable = memo(({
                                         rows, headers, onSetSortingClick, component,
-                                        onDeleteButtonClick, onUpdatePackClick
+                                        onDeleteButtonClick, onUpdatePackClick, onLearnPackClick
                                     }: TablePropsType) => {
         console.log('table')
-        const dispatch = useDispatch()
         const navigate = useNavigate()
+    /*const params = useParams<'id'>()*/
 
         const userId = useSelector<RootReducerType, string>(state => state.profile._id)
         const CELL_FOR_BUTTONS = 4
         const titles = Object.entries(headers)
+
 
         return (
             <table className={s.table}>
@@ -64,13 +67,16 @@ export const UniversalTable = memo(({
                 </tr>
                 </thead>
                 <tbody>
+
                 {rows.map((row, i) => {
 
                     const CONDITION_FOR_DISABLE_BUTTON = (row.user_id !== userId)
 
-                    const onLearnButtonClick = () => {
-
+                    const onLearnButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+                        e.stopPropagation()
+                        onLearnPackClick!(row._id)
                     }
+
                     const onDeleteModalCallClick = (e: MouseEvent<HTMLButtonElement>) => {
                         e.stopPropagation()
                         onDeleteButtonClick!(row._id)
@@ -78,14 +84,21 @@ export const UniversalTable = memo(({
 
 
                     const onOpenCardClick = () => {
-                            if ((row.cardsCount! > 0) || (row.user_id === userId)) {
-                                navigate(`/cards/${row._id}`)
+                        if ((row.cardsCount! > 0) || (row.user_id === userId)) {
+                            navigate(`/cards/${row._id}`)
                         }
                     }
 
-                    const onUpdateButtonClick = () => {
+                    const onUpdateButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+                        e.stopPropagation()
                         onUpdatePackClick!(row._id)
                     }
+
+                  /*  const onDeleteCardButtonClick = (_id:string) => {
+                        if (params.id) {
+                            setModalData('delete', {params.id,_id})
+                        }
+                    }*/
 
                     return (
                         <tr key={i} onClick={onOpenCardClick}>
@@ -97,10 +110,15 @@ export const UniversalTable = memo(({
                                 <SuperButton
                                     disabled={CONDITION_FOR_DISABLE_BUTTON} onClick={onUpdateButtonClick}>
                                     Edit</SuperButton>
-                                <SuperButton /*onClick={}*/>Learn</SuperButton></td>}
+                                <SuperButton onClick={onLearnButtonClick}>Learn</SuperButton></td>}
+                            {/*{component==='cards'&& <td><SuperButton
+                                onClick={()=>handleDeleteButtonClick(_id)}>
+                                delete</SuperButton></td>}*/}
                         </tr>
                     )
                 })}
+
+
                 </tbody>
             </table>
         )

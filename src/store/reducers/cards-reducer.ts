@@ -2,13 +2,23 @@ import {ActionsType} from "./AC types/types";
 import {AppDispatch,  ThunkType} from "../store";
 import {setAppStatusAC} from "./app-reducer";
 import {catchErrorHandler} from "../../utils/error-utils";
-import {getCardsQueryParamsType, getCardsResponseType} from "../../dal/cards/types";
+import {getCardsQueryParamsType, getCardsResponseType, updateCardType} from "../../dal/cards/types";
 import {cardsAPI} from "../../dal/cards/cardsAPI";
 
 
 
 let initialState = {
-    cards: [],
+    cards: [
+        /*answer: string
+question: string
+cardsPack_id: string
+grade: number
+shots: number
+user_id: string
+created: string
+updated: string
+_id: string*/
+    ],
     cardsTotalCount: 0,
     maxGrade: 0,
     minGrade: 0,
@@ -24,12 +34,9 @@ type InitialStateType = getCardsResponseType & { sortCards: string }
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case 'CARDS/CHANGE-PAGE':
-            return {...state, ...action.payload}
         case "CARDS/SET-CARDS":
         case 'CARDS/SET-SORTING-FILTER':
-
             return {...state, ...action.payload}
-
         default:
             return state
     }
@@ -69,12 +76,13 @@ export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => asyn
     }
 }
 
-export const addCardTC = (cardsPack_id: string, question: string): ThunkType =>
+export const addCardTC = (cardsPack_id: string, question: string,answer:string): ThunkType =>
     async (dispatch) => {
         try {
             const card = {
                 cardsPack_id,
-                question
+                question,
+                answer,
             }
             dispatch(setAppStatusAC('loading', true))
             await cardsAPI.addCard({card})
@@ -95,16 +103,27 @@ export const deleteCardTC = (cardsPack_id: string,id: string): ThunkType =>
         }
     }
 
-export const updateCardTC = (cardsPack_id: string,id: string,newQuestion:string): ThunkType =>
+export const updateCardTC = (cardsPack_id: string,{_id,...rest}:updateCardType): ThunkType =>
     async (dispatch) => {
         try {
             const card = {
-                _id:id,
-                question:newQuestion,
+                _id,
+                rest
             }
             dispatch(setAppStatusAC('loading', true))
             await cardsAPI.updateCard({card})
             await dispatch(getCardsTC({cardsPack_id}))
+        } catch (err) {
+            catchErrorHandler(dispatch, err)
+        }
+    }
+
+export const updateCardRatingTC = (newGrade: number,card_id: string): ThunkType =>
+    async (dispatch) => {
+        try {
+            dispatch(setAppStatusAC('loading', true))
+            let {_id,grade,shots,cardsPack_id}=await cardsAPI.updateCardGrade(newGrade,card_id)
+            await dispatch(updateCardTC(cardsPack_id, {_id,grade,shots}))
         } catch (err) {
             catchErrorHandler(dispatch, err)
         }

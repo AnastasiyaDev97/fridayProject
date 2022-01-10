@@ -45,15 +45,26 @@ export type addNewCardPayloadType = {
     }
 }
 export type updateCardPayloadType = {
-    card: {
-        _id: string
-        question?: string
-        answer?: string
-        grade?: 0 | 1 | 2 | 3 | 4 | 5
-        shots?: number
-        answerImg?: string
-        questionImg?: string
-        questionVideo?: string
-        answerVideo?: string
-    }
+    card: updateCardType
+}
+
+export type updateCardType={
+    _id: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+}
+
+export type updateCardRatingType={
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
 }

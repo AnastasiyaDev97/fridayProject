@@ -16,8 +16,10 @@ export const packsAPI = {
             })
     },
     deletePack(packId:string){
+        debugger
         return instance.delete(`cards/pack/?id=${packId}`)
             .then(res => {
+                debugger
                 return res.data
             })
     },

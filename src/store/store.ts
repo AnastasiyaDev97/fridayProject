@@ -9,6 +9,7 @@ import {passwordRecoveryReducer} from "./reducers/passwordRecovery-reducer";
 import {packsReducer} from "./reducers/packs-reducer";
 import {cardsReducer} from "./reducers/cards-reducer";
 import {ActionsType} from "./reducers/AC types/types";
+import {modalReducer} from "./reducers/modal-reducer";
 
 
 export const rootReducer = combineReducers({
@@ -19,6 +20,7 @@ export const rootReducer = combineReducers({
     passRecovery:passwordRecoveryReducer,
     packs:packsReducer,
     cards:cardsReducer,
+    modals:modalReducer,
 
 });
 export let store = createStore(rootReducer, applyMiddleware(thunk));

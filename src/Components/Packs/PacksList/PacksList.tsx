@@ -2,7 +2,7 @@ import s from './PacksList.module.scss'
 import React, {memo, useCallback, useMemo, useState} from 'react';
 import {UniversalTable} from "../../../features/cards/table/UniversalTable";
 import Paginator from "../../../features/cards/pagination/Pagination";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {changePageAC, changeSearchPackNameAC, setSortingFilter} from "../../../store/reducers/packs-reducer";
 import {convertDateFormat} from "../../../utils/handles";
 import SuperInputText from "../../TestComponents/components/c1-SuperInputText/SuperInputText";
@@ -11,7 +11,13 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {UseSetTimeoutEffect} from "../../../common/hooks/customUseEffect";
 import {PackType} from "../../../dal/packs/types";
 
-import {ModalContainer} from "../../../common/components/Modal/ModalContainer/ModalContainer";
+import {
+    modalActionType,
+    ModalContainer,
+    modalEntityType
+} from "../../../common/components/Modal/ModalContainer/ModalContainer";
+import {RootReducerType} from "../../../store/store";
+
 
 /*import {faSearch} from '@fortawesome/free-solid-svg-icons';*/
 
@@ -21,21 +27,19 @@ type PackListPropsType = {
     totalItemCount: number
     pageCount: number
     sortPacks: string
+    setModalData:(modalAction:modalActionType,props: any)=>void
 }
 
-export type modalTypeT='addPack'|'deletePack'|'addCard'|'deleteCard'|''|'updatePack'
 
-
-export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, sortPacks}: PackListPropsType) => {
+export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, sortPacks,
+                                   setModalData}: PackListPropsType) => {
 
     const [text, setText] = useState<string>('')
-    const [modalType,setModalType]=useState<modalTypeT>('')
-    const [propsForModal,setPropsForModal]=useState<any>(null)
+
+    const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
 
     console.log('packlist')
     const dispatch = useDispatch()
-
-
 
     const portionSize = 10
 
@@ -47,11 +51,11 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
     const packsForTable = useMemo(() => {
             return packs.map(({
                                   cardsCount, user_name,
-                                  name, updated, user_id, _id, ...rest
+                                  name, updated, user_id, _id
                               }) => {
                     updated = convertDateFormat(updated)
 
-                    return {name, cardsCount, updated, user_name, user_id, _id}
+                    return {name, cardsCount, updated, user_name,user_id,_id}
                 }
             )
         }
@@ -70,28 +74,26 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
     }, [dispatch, sortPacks])
 
 
-
-
     function handleSearchPack() {
         dispatch(changeSearchPackNameAC(text))
     }
 
 
-    const handleCloseModalButtonClick=()=>{
-        setModalType('')
-    }
 
-    const handleAddPackButtonClick=()=>{
-        setModalType('addPack')
-    }
-    const handleDeleteButtonClick=(packId:string)=>{
-        setModalType('deletePack')
-        setPropsForModal(packId)
-    }
-    const handleUpdatePackClick=(packId: string)=>{
-        setModalType('updatePack')
-        setPropsForModal(packId)
-    }
+    const handleAddPackButtonClick = useCallback(() => {
+        setModalData('add',null)
+    },[])
+
+    const handleDeleteButtonClick = useCallback((packId: string) => {
+        setModalData('delete', packId)
+    },[])
+    const handleUpdatePackClick = useCallback((packId: string) => {
+        setModalData('update', packId)
+    },[])
+
+    const handleLearnPackClick = useCallback((packId: string) => {
+        setModalData('learn', packId)
+    },[])
 
     return (
         <div className={s.listWrapper} aria-disabled={true}>
@@ -104,12 +106,11 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
                                 onChangeText={setText} onEnter={handleSearchPack}/>
                 <SuperButton style={{width: '35%'}} onClick={handleAddPackButtonClick}>Add new pack</SuperButton>
             </div>
-            {modalType && <ModalContainer onCloseModalButtonClick={handleCloseModalButtonClick} type={modalType}
-                                          propsForModal={propsForModal}/>}
+            {modalEntity && <ModalContainer/>}
             <UniversalTable rows={packsForTable} headers={headersForPacks}
                             onSetSortingClick={handleSetSortingClick}
                             component={'packs'} onDeleteButtonClick={handleDeleteButtonClick}
-                            onUpdatePackClick={handleUpdatePackClick}/>
+                            onUpdatePackClick={handleUpdatePackClick} onLearnPackClick={handleLearnPackClick}/>
             <Paginator totalItemCount={totalItemCount} pageCount={pageCount} currentPage={currentPage}
                        onChangePageClick={handleChangePageClick} portionSize={portionSize}/>
         </div>
