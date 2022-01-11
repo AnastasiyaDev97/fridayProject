@@ -29,8 +29,10 @@ type CardsT = {
 export const Cards: FC<CardsT> = ({setModalData}) => {
 
     const dispatch = useDispatch()
+
     const params = useParams<'id'>()
     const cardsPack_id=params.id
+
     const navigate = useNavigate()
 
 
@@ -44,7 +46,7 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
     const PORTION_SIZE = 10
     const headersForCards = {
         question: 'Question', answer: 'Answer',
-        updated: 'Last updated', grade: 'Grade'
+        updated: 'Last updated', grade: 'Grade', actions: 'Actions'
     }
 
     const cardsForTable = useMemo(() => {
@@ -54,11 +56,7 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
                               }) => {
                     updated = convertDateFormat(updated)
                     let rating = <Rating grade={grade} />
-
-                let deleteCardButton=<SuperButton
-                    /*onClick={()=>onDeleteCardButtonClick(_id)}*/>
-                    delete</SuperButton>
-                    return {question, answer, updated, rating,_id}
+                    return {question, answer, updated, rating,_id,user_id}
                 }
             )
         }
@@ -77,11 +75,7 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
         }
     }, [dispatch, currentPage, sortCards])
 
-    /*const onDeleteCardButtonClick = (_id:string) => {
-        if (params.id) {
-            setModalData('delete', {params.id,_id})
-        }
-    }*/
+
     const handleSetSortingClick = useCallback((headerName: string) => {
         dispatch(setSortingFilterCards(sortCards[0] === '0' ? `1${headerName}` : `0${headerName}`))
     }, [dispatch, sortCards])
@@ -114,6 +108,19 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
      },[])*/
 
 
+  /*  const handleDeleteButtonClick = useCallback(() => {
+        setModalData('deleteCard', )
+    },[])*/
+
+
+    const handleDeleteButtonClick = useCallback((_id:string) => {
+            setModalData('delete', _id)
+    },[setModalData])
+
+    const handleUpdateCardClick = useCallback((_id:string) => {
+            setModalData('update', _id)
+    },[setModalData])
+
     if (!cards) {
         return <></>
     }
@@ -124,7 +131,9 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
             {modalEntity && <ModalContainer/>}
 
             <UniversalTable rows={cardsForTable} headers={headersForCards}
-                            onSetSortingClick={handleSetSortingClick} component={'cards'}/>
+                            onSetSortingClick={handleSetSortingClick} component={'cards'}
+                            onDeleteButtonClick={handleDeleteButtonClick}
+                            onUpdateButtonClick={handleUpdateCardClick}/>
             <Pagination totalItemCount={totalItemCount}
                         pageCount={pageCount}
                         currentPage={currentPage}

@@ -110,7 +110,7 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
             <UniversalTable rows={packsForTable} headers={headersForPacks}
                             onSetSortingClick={handleSetSortingClick}
                             component={'packs'} onDeleteButtonClick={handleDeleteButtonClick}
-                            onUpdatePackClick={handleUpdatePackClick} onLearnPackClick={handleLearnPackClick}/>
+                            onUpdateButtonClick={handleUpdatePackClick} onLearnPackClick={handleLearnPackClick}/>
             <Paginator totalItemCount={totalItemCount} pageCount={pageCount} currentPage={currentPage}
                        onChangePageClick={handleChangePageClick} portionSize={portionSize}/>
         </div>

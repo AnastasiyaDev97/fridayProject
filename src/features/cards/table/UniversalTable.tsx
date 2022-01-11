@@ -1,6 +1,6 @@
-import React, {memo, MouseEvent} from 'react';
+import React, {memo, MouseEvent, ReactNode} from 'react';
 import s from './UniversalTable.module.scss'
-import { useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
 import SuperButton from "../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
 
@@ -33,21 +33,21 @@ type TablePropsType = {
 
     }
     onSetSortingClick: (headerName: string) => void
-    onDeleteButtonClick?: (packId: string) => void
-    onUpdatePackClick?: (packId: string) => void
+    onDeleteButtonClick?: (id: string) => void
+    onUpdateButtonClick?: (id: string) => void
     onLearnPackClick?: (packId: string) => void
 }
 
 export const UniversalTable = memo(({
                                         rows, headers, onSetSortingClick, component,
-                                        onDeleteButtonClick, onUpdatePackClick, onLearnPackClick
+                                        onDeleteButtonClick, onUpdateButtonClick, onLearnPackClick
                                     }: TablePropsType) => {
         console.log('table')
         const navigate = useNavigate()
-    /*const params = useParams<'id'>()*/
+        /*const params = useParams<'id'>()*/
 
         const userId = useSelector<RootReducerType, string>(state => state.profile._id)
-        const CELL_FOR_BUTTONS = 4
+
         const titles = Object.entries(headers)
 
 
@@ -70,7 +70,7 @@ export const UniversalTable = memo(({
 
                 {rows.map((row, i) => {
 
-                    const CONDITION_FOR_DISABLE_BUTTON = (row.user_id !== userId)
+                    const CONDITION_FOR_DISABLE_BUTTON = row.user_id !== userId
 
                     const onLearnButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
                         e.stopPropagation()
@@ -89,28 +89,30 @@ export const UniversalTable = memo(({
                         }
                     }
 
-                    const onUpdateButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+                    const onUpdateModalCallClick = (e: MouseEvent<HTMLButtonElement>) => {
                         e.stopPropagation()
-                        onUpdatePackClick!(row._id)
+                        onUpdateButtonClick!(row._id)
                     }
 
-                  /*  const onDeleteCardButtonClick = (_id:string) => {
-                        if (params.id) {
-                            setModalData('delete', {params.id,_id})
-                        }
-                    }*/
 
                     return (
                         <tr key={i} onClick={onOpenCardClick}>
-                            {Object.values(row).map((value, i) => i < CELL_FOR_BUTTONS &&
-                                <td key={i}>{value}</td>)}
-                            {component === 'packs' && <td className={s.btns}>
+                            {Object.entries(row).map(([key, value], i) => {
+                                const conditionForHidingCell = (key !== "user_id") && (key !== "_id")
+                                if (conditionForHidingCell) {
+                                    return (
+                                        <td key={i}>{value}</td>
+                                    )
+                                }
+                            })}
+                             <td className={s.btns}>
                                 <SuperButton disabled={CONDITION_FOR_DISABLE_BUTTON}
                                              onClick={onDeleteModalCallClick}>Delete</SuperButton>
                                 <SuperButton
-                                    disabled={CONDITION_FOR_DISABLE_BUTTON} onClick={onUpdateButtonClick}>
+                                    disabled={CONDITION_FOR_DISABLE_BUTTON} onClick={onUpdateModalCallClick}>
                                     Edit</SuperButton>
-                                <SuperButton onClick={onLearnButtonClick}>Learn</SuperButton></td>}
+                                 {component === 'packs' &&
+                                 <SuperButton onClick={onLearnButtonClick}>Learn</SuperButton>}</td>
                             {/*{component==='cards'&& <td><SuperButton
                                 onClick={()=>handleDeleteButtonClick(_id)}>
                                 delete</SuperButton></td>}*/}

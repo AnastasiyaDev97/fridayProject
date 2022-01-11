@@ -7,7 +7,9 @@ import {useDispatch, useSelector} from "react-redux";
 import s from './ModalContainer.module.scss'
 import {setModalPropsAC, setModalTypeAC} from "../../../../store/reducers/modal-reducer";
 import {RootReducerType} from "../../../../store/store";
-import {addCardTC, deleteCardTC} from "../../../../store/reducers/cards-reducer";
+import {addCardTC, deleteCardTC, updateCardTC} from "../../../../store/reducers/cards-reducer";
+import {useParams} from "react-router-dom";
+import {updateCardType} from "../../../../dal/cards/types";
 
 export type modalActionType = 'delete' | 'add' | 'update' | 'learn' | ''
 export type modalEntityType = 'card' | 'pack' | ''
@@ -18,6 +20,9 @@ export const ModalContainer: FC<ModalContainerPropsType> = memo((
 ) => {
 
     const dispatch = useDispatch()
+
+    const params = useParams<'id'>()
+    const cardsPack_id=params.id
 
     const [name, setName] = useState('')
     const [question, setQuestion] = useState('')
@@ -45,9 +50,8 @@ export const ModalContainer: FC<ModalContainerPropsType> = memo((
         onCloseModalButtonClick()
     }
     const onDeleteCardButtonClick = () => {
-        const cardsPack_id = propsForModal.cardsPack_id
-        const _id = propsForModal._id
-        dispatch(deleteCardTC(cardsPack_id, _id))
+        if (cardsPack_id){
+        dispatch(deleteCardTC(cardsPack_id, propsForModal))}
         onCloseModalButtonClick()
     }
 
@@ -56,7 +60,10 @@ export const ModalContainer: FC<ModalContainerPropsType> = memo((
         onCloseModalButtonClick()
     }
     const onUpdateCardClick = () => {
-        /*dispatch(updatePackTC(propsForModal, name))*/
+
+        if (cardsPack_id){
+        dispatch(updateCardTC(cardsPack_id,{_id:propsForModal,question, answer}))
+        }
         onCloseModalButtonClick()
     }
 

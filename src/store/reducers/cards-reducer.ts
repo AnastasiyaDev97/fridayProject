@@ -95,6 +95,7 @@ export const addCardTC = (cardsPack_id: string, question: string,answer:string):
 export const deleteCardTC = (cardsPack_id: string,id: string): ThunkType =>
     async (dispatch) => {
         try {
+            debugger
             dispatch(setAppStatusAC('loading', true))
             await cardsAPI.deleteCard(id)
             await dispatch(getCardsTC({cardsPack_id}))
