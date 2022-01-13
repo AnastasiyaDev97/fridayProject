@@ -11,7 +11,6 @@ export const cardsAPI = {
     getCards(getCardsQueryParams: getCardsQueryParamsType) {
         return instance.get<getCardsResponseType>(`cards/card`, {params: getCardsQueryParams})
             .then(res => {
-
                 return res.data
             })
     },

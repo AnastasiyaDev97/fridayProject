@@ -21,7 +21,9 @@ type InitialStateType = {
 export const modalReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case 'MODAL/SET-MODAL-TYPE':
+            return {...state, ...action.payload}
         case 'MODAL/SET-MODAL-PROPS':
+debugger
             return {...state, ...action.payload}
 
         default:
@@ -36,7 +38,8 @@ export const setModalTypeAC = (modalAction: modalActionType, modalEntity: modalE
     }
 } as const)
 
-export const setModalPropsAC = (id:string) => ({
+export const setModalPropsAC = (id:string) => {
+    return{
     type: 'MODAL/SET-MODAL-PROPS',
     payload: {id}
-} as const)
+} as const}

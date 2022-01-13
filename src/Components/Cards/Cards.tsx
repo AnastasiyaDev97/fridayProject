@@ -112,7 +112,7 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
         <div className={s.wrapper}>
             <h2 onClick={onTitleClick} className={s.cursor}>&#8592; Pack Name</h2>
             <SuperButton onClick={handleAddCardButtonClick} className={s.btn}>Add new card</SuperButton>
-            {modalEntity && <ModalContainer cards={cards} /*cardsForLearn={cardsForLearn}*//>}
+            {modalEntity && <ModalContainer /*cards={cards} cardsForLearn={cardsForLearn}*/ />}
 
             <UniversalTable rows={cardsForTable} headers={headersForCards}
                             onSetSortingClick={handleSetSortingClick} component={'cards'}

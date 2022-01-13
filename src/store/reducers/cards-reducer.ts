@@ -1,23 +1,24 @@
 import {ActionsType} from "./AC types/types";
-import {AppDispatch,  ThunkType} from "../store";
+import {AppDispatch, ThunkType} from "../store";
 import {setAppStatusAC} from "./app-reducer";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {getCardsQueryParamsType, getCardsResponseType, updateCardType} from "../../dal/cards/types";
 import {cardsAPI} from "../../dal/cards/cardsAPI";
 
 
-
 let initialState = {
     cards: [
-        /*{answer: string
-question: string
-cardsPack_id: string
-grade: number
-shots: number
-user_id: string
-created: string
-updated: string
-_id: string}*/
+        {
+            answer: '',
+            question: '',
+            cardsPack_id: '',
+            grade: 0,
+            shots: 0,
+            user_id: '',
+            created: '',
+            updated: '',
+            _id: ''
+        }
     ],
     cardsTotalCount: 0,
     maxGrade: 0,
@@ -33,12 +34,15 @@ type InitialStateType = getCardsResponseType & { sortCards: string }
 
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
-        case 'CARDS/CHANGE-PAGE':
         case "CARDS/SET-CARDS":
+        case 'CARDS/CHANGE-PAGE':
         case 'CARDS/SET-SORTING-FILTER':
             return {...state, ...action.payload}
         case 'CARDS/SET-CARDS-RATING':
-            return {...state,cards:[...state.cards.map(card=>card._id===action._id?{...card,...action.payload}:card)]}
+            return {
+                ...state,
+                cards: [...state.cards.map(card => card._id === action._id ? {...card, ...action.payload} : card)]
+            }
         default:
             return state
     }
@@ -62,15 +66,16 @@ export const changePageCardsAC = (page: number) => {
             payload: {page}
         }) as const
 }
-export const setCardsRatingAC = (_id:string,grade:number,shots:number) => ({
+export const setCardsRatingAC = (_id: string, grade: number, shots: number) => ({
     type: 'CARDS/SET-CARDS-RATING',
     _id,
-    payload:{grade,shots}
+    payload: {grade, shots}
 } as const)
 
 
 export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => async (dispatch: AppDispatch) => {
     try {
+        debugger
         dispatch(setAppStatusAC('loading', true))
         const data = await cardsAPI.getCards(getCardsQueryParams)
         dispatch(setCardsAC(data))
@@ -82,7 +87,7 @@ export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => asyn
     }
 }
 
-export const addCardTC = (cardsPack_id: string, question: string,answer:string): ThunkType =>
+export const addCardTC = (cardsPack_id: string, question: string, answer: string): ThunkType =>
     async (dispatch) => {
         try {
             const card = {
@@ -98,7 +103,7 @@ export const addCardTC = (cardsPack_id: string, question: string,answer:string):
         }
     }
 
-export const deleteCardTC = (cardsPack_id: string,id: string): ThunkType =>
+export const deleteCardTC = (cardsPack_id: string, id: string): ThunkType =>
     async (dispatch) => {
         try {
             dispatch(setAppStatusAC('loading', true))
@@ -109,7 +114,7 @@ export const deleteCardTC = (cardsPack_id: string,id: string): ThunkType =>
         }
     }
 
-export const updateCardTC = (cardsPack_id: string,{_id,...rest}:updateCardType): ThunkType =>
+export const updateCardTC = (cardsPack_id: string, {_id, ...rest}: updateCardType): ThunkType =>
     async (dispatch) => {
         try {
             const card = {
@@ -124,12 +129,12 @@ export const updateCardTC = (cardsPack_id: string,{_id,...rest}:updateCardType):
         }
     }
 
-export const updateCardRatingTC = (newGrade: number,card_id: string): ThunkType =>
+export const updateCardRatingTC = (newGrade: number, card_id: string): ThunkType =>
     async (dispatch) => {
         try {
             dispatch(setAppStatusAC('loading', true))
-            let {_id,grade,shots}=await cardsAPI.updateCardGrade(newGrade,card_id)
-                dispatch(setCardsRatingAC(_id,grade,shots))
+            let {_id, grade, shots} = await cardsAPI.updateCardGrade(newGrade, card_id)
+            dispatch(setCardsRatingAC(_id, grade, shots))
         } catch (err) {
             catchErrorHandler(dispatch, err)
         }

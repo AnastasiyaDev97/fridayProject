@@ -16,28 +16,28 @@ import {PackType} from "../../../../dal/packs/types";
 export type modalActionType = 'delete' | 'add' | 'update' | 'learn' | ''
 export type modalEntityType = 'card' | 'pack' | ''
 type ModalContainerPropsType = {
-cards?:Array<CardType>
     pack?:PackType
 
 }
 
-export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack,cards}) => {
+export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack}) => {
 
     const dispatch = useDispatch()
 
     const params = useParams<'id'>()
     const cardsPack_id=params.id
     const id = useSelector<RootReducerType,string>(state => state.modals.id)
+    const cards = useSelector<RootReducerType, Array<CardType>>(state => state.cards.cards)
+    const modalAction=useSelector<RootReducerType, modalActionType>(state => state.modals.modalAction)
+    const card=cards.find(card=>card._id===id)
+    let cardsForLearn=cards.filter(card=>card.cardsPack_id===id)
 
 
-    const card=cards?.find(card=>card._id===id)
-    const cardsForLearn=cards?.filter(card=>card.cardsPack_id===id)
     console.log(cardsForLearn)
 
     const questionInitialValue=card?card.question:''
     const answerInitialValue=card?card.answer:''
     const nameInitialValue=pack?pack.name:''
-
 
 
     const [name, setName] = useState(nameInitialValue)
@@ -46,8 +46,6 @@ export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack,cards}) =>
     const [activeCardIndex,setActiveCardIndex] = useState(0)
 
 
-
-    const modalAction = useSelector<RootReducerType, modalActionType>(state => state.modals.modalAction)
     const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
 
 
@@ -84,9 +82,10 @@ export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack,cards}) =>
 
     const onCloseModalButtonClick = useCallback(() => {
         dispatch(setModalTypeAC('', ''))
-    }, [])
+    }, [dispatch])
 
     const onNextButtonClick = () => {
+
        setActiveCardIndex(activeCardIndex+1)
     }
 
@@ -112,11 +111,10 @@ export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack,cards}) =>
             }
         },
         'learn': {
-            title: `/*${cardsForLearn?cardsForLearn[activeCardIndex].answer:''}*/`, btn: {
-                title: 'Next', callback: onNextButtonClick
+            title: ` ${cardsForLearn[activeCardIndex].answer}`, btn: {
+                title: 'Next', callback:onNextButtonClick
             }
         },
-
     }
 
 
@@ -131,12 +129,13 @@ export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack,cards}) =>
     if (modalAction === 'update') {
         modalBody = modals.update
     }
+    if (modalAction === 'learn') {
+        modalBody = modals.learn
+    }
 
-     if (modalAction === 'learn') {
-         modalBody = modals.learn
-     }
     const conditionForUpdateAddCardModal = (modalEntity === 'card') && (modalAction !== 'delete')
     const conditionActivateInputName = (modalEntity === 'pack' && (modalAction === 'add'||modalAction === 'update'))
+
     return (
         <Modal modalBody={modalBody}>
 
@@ -154,7 +153,7 @@ export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack,cards}) =>
                 <SuperInputText className={s.input} value={answer} onChangeText={setAnswer}
                                 placeholder={'Your answer'}/>
             </>}
-
+           {/* {modalAction === 'learn' && <LearnPack/>}*/}
             <SuperButton onClick={onCloseModalButtonClick}>Cancel</SuperButton>
         </Modal>
     )

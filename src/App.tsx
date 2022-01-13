@@ -34,15 +34,19 @@ function App() {
          }, [dispatch])
 
      const setModalData = useCallback((modalAction:modalActionType,modalEntity:modalEntityType, id: string) => {
-         dispatch(setModalTypeAC(modalAction,modalEntity))
+        debugger
          dispatch(setModalPropsAC(id))
+         dispatch(setModalTypeAC(modalAction,modalEntity))
+         debugger
+
      },[dispatch])
 
-     const setModalDataCards=useCallback((modalAction:modalActionType,props: any)=>{
-         setModalData(modalAction,'card',props)
+     const setModalDataCards=useCallback((modalAction:modalActionType,id: string)=>{
+         setModalData(modalAction,'card',id)
      },[setModalData])
-     const setModalDataPacks=useCallback((modalAction:modalActionType,props: any)=>{
-         setModalData(modalAction,'pack',props)
+     const setModalDataPacks=useCallback((modalAction:modalActionType,id: string)=>{
+         debugger
+         setModalData(modalAction,'pack',id)
      },[setModalData])
 
 

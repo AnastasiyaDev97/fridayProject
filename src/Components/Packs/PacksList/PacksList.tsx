@@ -17,6 +17,7 @@ import {
     modalEntityType
 } from "../../../common/components/Modal/ModalContainer/ModalContainer";
 import {RootReducerType} from "../../../store/store";
+import {getCardsTC} from "../../../store/reducers/cards-reducer";
 
 
 /*import {faSearch} from '@fortawesome/free-solid-svg-icons';*/
@@ -90,14 +91,16 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
     const handleDeleteButtonClick = useCallback((packId: string) => {
         setModalData('delete', packId)
     },[setModalData])
+
     const handleUpdatePackClick = useCallback((packId: string) => {
         setModalData('update', packId)
     },[setModalData])
 
-    const handleLearnPackClick = useCallback((packId: string) => {
-
+    async function handleLearnPackClick (packId: string)  {
+        await dispatch(getCardsTC({cardsPack_id:packId}))
+        debugger
         setModalData('learn', packId)
-    },[setModalData])
+    }
 
     return (
         <div className={s.listWrapper} aria-disabled={true}>
