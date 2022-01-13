@@ -22,7 +22,7 @@ cards?:Array<CardType>
 }
 
 export const ModalContainer:FC<ModalContainerPropsType> = memo(({pack,cards}) => {
-debugger
+
     const dispatch = useDispatch()
 
     const params = useParams<'id'>()
