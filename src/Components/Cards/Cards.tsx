@@ -22,7 +22,7 @@ import {faRemoveFormat} from '@fortawesome/free-solid-svg-icons';
 */
 
 type CardsT = {
-    setModalData: (modalAction:modalActionType,props: any) => void
+    setModalData: (modalAction:modalActionType,id: string) => void
 }
 
 
@@ -63,6 +63,7 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
         , [cards])
 
 
+
     useEffect(() => {
         dispatch(setAppStatusAC('loading', true))
         let idOfTimeout = setTimeout(() => {
@@ -96,23 +97,6 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
     }, [setModalData,cardsPack_id])
 
 
-    /* const handleAddPackButtonClick = useCallback(() => {
-         setModalData('addCard',null)
-     },[])
-
-     const handleDeleteButtonClick = useCallback((packId: string) => {
-         setModalData('deleteCard', packId)
-     },[])
-     const handleUpdatePackClick = useCallback((packId: string) => {
-         setModalData('updateCard', packId)
-     },[])*/
-
-
-  /*  const handleDeleteButtonClick = useCallback(() => {
-        setModalData('deleteCard', )
-    },[])*/
-
-
     const handleDeleteButtonClick = useCallback((_id:string) => {
             setModalData('delete', _id)
     },[setModalData])
@@ -128,7 +112,7 @@ export const Cards: FC<CardsT> = ({setModalData}) => {
         <div className={s.wrapper}>
             <h2 onClick={onTitleClick} className={s.cursor}>&#8592; Pack Name</h2>
             <SuperButton onClick={handleAddCardButtonClick} className={s.btn}>Add new card</SuperButton>
-            {modalEntity && <ModalContainer/>}
+            {modalEntity && <ModalContainer cards={cards} /*cardsForLearn={cardsForLearn}*//>}
 
             <UniversalTable rows={cardsForTable} headers={headersForCards}
                             onSetSortingClick={handleSetSortingClick} component={'cards'}

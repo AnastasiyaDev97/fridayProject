@@ -2,18 +2,19 @@ import {ActionsType} from "./AC types/types";
 import {modalActionType, modalEntityType} from "../../common/components/Modal/ModalContainer/ModalContainer";
 
 
+
 /*export type modalTypeT='addCard'|''|'addPack'|'deleteCard'|'deletePack'|'updatePack'|'updateCard'|'learnPack'*/
 
 let initialState = {
     modalAction: '' as modalActionType,
     modalEntity: '' as modalEntityType,
-    propsForModal: null
+    id: ''
 }
 
 type InitialStateType = {
     modalAction: modalActionType
     modalEntity: modalEntityType
-    propsForModal: any
+    id:string
 }
 
 
@@ -35,7 +36,7 @@ export const setModalTypeAC = (modalAction: modalActionType, modalEntity: modalE
     }
 } as const)
 
-export const setModalPropsAC = (propsForModal: any) => ({
+export const setModalPropsAC = (id:string) => ({
     type: 'MODAL/SET-MODAL-PROPS',
-    payload: {propsForModal}
+    payload: {id}
 } as const)

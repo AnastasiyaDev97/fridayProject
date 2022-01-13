@@ -14,7 +14,7 @@ import {PackType} from "../../dal/packs/types";
 
 import {modalActionType} from "../../common/components/Modal/ModalContainer/ModalContainer";
 type PacksT={
-    setModalData:(modalAction:modalActionType,props: any)=>void
+    setModalData:(modalAction:modalActionType,id: string)=>void
 }
 
 

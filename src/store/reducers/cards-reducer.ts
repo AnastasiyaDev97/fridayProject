@@ -9,7 +9,7 @@ import {cardsAPI} from "../../dal/cards/cardsAPI";
 
 let initialState = {
     cards: [
-        /*answer: string
+        /*{answer: string
 question: string
 cardsPack_id: string
 grade: number
@@ -17,7 +17,7 @@ shots: number
 user_id: string
 created: string
 updated: string
-_id: string*/
+_id: string}*/
     ],
     cardsTotalCount: 0,
     maxGrade: 0,
@@ -37,6 +37,8 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
         case "CARDS/SET-CARDS":
         case 'CARDS/SET-SORTING-FILTER':
             return {...state, ...action.payload}
+        case 'CARDS/SET-CARDS-RATING':
+            return {...state,cards:[...state.cards.map(card=>card._id===action._id?{...card,...action.payload}:card)]}
         default:
             return state
     }
@@ -60,7 +62,11 @@ export const changePageCardsAC = (page: number) => {
             payload: {page}
         }) as const
 }
-
+export const setCardsRatingAC = (_id:string,grade:number,shots:number) => ({
+    type: 'CARDS/SET-CARDS-RATING',
+    _id,
+    payload:{grade,shots}
+} as const)
 
 
 export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => async (dispatch: AppDispatch) => {
@@ -95,7 +101,6 @@ export const addCardTC = (cardsPack_id: string, question: string,answer:string):
 export const deleteCardTC = (cardsPack_id: string,id: string): ThunkType =>
     async (dispatch) => {
         try {
-            debugger
             dispatch(setAppStatusAC('loading', true))
             await cardsAPI.deleteCard(id)
             await dispatch(getCardsTC({cardsPack_id}))
@@ -109,7 +114,7 @@ export const updateCardTC = (cardsPack_id: string,{_id,...rest}:updateCardType):
         try {
             const card = {
                 _id,
-                rest
+                ...rest
             }
             dispatch(setAppStatusAC('loading', true))
             await cardsAPI.updateCard({card})
@@ -123,8 +128,8 @@ export const updateCardRatingTC = (newGrade: number,card_id: string): ThunkType 
     async (dispatch) => {
         try {
             dispatch(setAppStatusAC('loading', true))
-            let {_id,grade,shots,cardsPack_id}=await cardsAPI.updateCardGrade(newGrade,card_id)
-            await dispatch(updateCardTC(cardsPack_id, {_id,grade,shots}))
+            let {_id,grade,shots}=await cardsAPI.updateCardGrade(newGrade,card_id)
+                dispatch(setCardsRatingAC(_id,grade,shots))
         } catch (err) {
             catchErrorHandler(dispatch, err)
         }

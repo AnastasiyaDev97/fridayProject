@@ -29,14 +29,13 @@ export const cardsAPI = {
             })
     },
     updateCard(card:updateCardPayloadType){
-
         return instance.put(`cards/card`,card)
             .then(res => {
-
                 return res.data
             })
     },
     updateCardGrade(grade: number,card_id: string){
+
         return instance.put<updateCardRatingType>(`cards/grade`, {grade,card_id})
             .then(res => {
                 return res.data

@@ -33,9 +33,9 @@ function App() {
              dispatch(initializeAppTC())
          }, [dispatch])
 
-     const setModalData = useCallback((modalAction:modalActionType,modalEntity:modalEntityType, props: any) => {
+     const setModalData = useCallback((modalAction:modalActionType,modalEntity:modalEntityType, id: string) => {
          dispatch(setModalTypeAC(modalAction,modalEntity))
-         dispatch(setModalPropsAC(props))
+         dispatch(setModalPropsAC(id))
      },[dispatch])
 
      const setModalDataCards=useCallback((modalAction:modalActionType,props: any)=>{
@@ -44,6 +44,9 @@ function App() {
      const setModalDataPacks=useCallback((modalAction:modalActionType,props: any)=>{
          setModalData(modalAction,'pack',props)
      },[setModalData])
+
+
+
          return (
              <div className={styles.appWrapper}>
                  <Header/>

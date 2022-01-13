@@ -27,7 +27,7 @@ type PackListPropsType = {
     totalItemCount: number
     pageCount: number
     sortPacks: string
-    setModalData:(modalAction:modalActionType,props: any)=>void
+    setModalData:(modalAction:modalActionType,id: string)=>void
 }
 
 
@@ -37,6 +37,7 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
     const [text, setText] = useState<string>('')
 
     const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
+    const id = useSelector<RootReducerType,string>(state => state.modals.id)
 
     console.log('packlist')
     const dispatch = useDispatch()
@@ -61,6 +62,8 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
         }
         , [packs])
 
+    const packForModal=packs.find(pack=>pack._id===id)
+
     UseSetTimeoutEffect(handleSearchPack, text, 2000)
 
     const handleChangePageClick = useCallback((page: number) => {
@@ -81,19 +84,20 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
 
 
     const handleAddPackButtonClick = useCallback(() => {
-        setModalData('add',null)
-    },[])
+        setModalData('add','')
+    },[setModalData])
 
     const handleDeleteButtonClick = useCallback((packId: string) => {
         setModalData('delete', packId)
-    },[])
+    },[setModalData])
     const handleUpdatePackClick = useCallback((packId: string) => {
         setModalData('update', packId)
-    },[])
+    },[setModalData])
 
     const handleLearnPackClick = useCallback((packId: string) => {
+
         setModalData('learn', packId)
-    },[])
+    },[setModalData])
 
     return (
         <div className={s.listWrapper} aria-disabled={true}>
@@ -106,7 +110,7 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
                                 onChangeText={setText} onEnter={handleSearchPack}/>
                 <SuperButton style={{width: '35%'}} onClick={handleAddPackButtonClick}>Add new pack</SuperButton>
             </div>
-            {modalEntity && <ModalContainer/>}
+            {modalEntity && <ModalContainer pack={packForModal}/>}
             <UniversalTable rows={packsForTable} headers={headersForPacks}
                             onSetSortingClick={handleSetSortingClick}
                             component={'packs'} onDeleteButtonClick={handleDeleteButtonClick}

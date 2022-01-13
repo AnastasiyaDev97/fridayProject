@@ -1,10 +1,10 @@
-import React, {memo, MouseEvent, ReactNode} from 'react';
+import React, {memo, MouseEvent} from 'react';
 import s from './UniversalTable.module.scss'
 import {useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
 import SuperButton from "../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
 
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 
 type TablePropsType = {
@@ -44,12 +44,11 @@ export const UniversalTable = memo(({
                                     }: TablePropsType) => {
         console.log('table')
         const navigate = useNavigate()
-        /*const params = useParams<'id'>()*/
+
 
         const userId = useSelector<RootReducerType, string>(state => state.profile._id)
 
         const titles = Object.entries(headers)
-
 
         return (
             <table className={s.table}>
@@ -113,9 +112,6 @@ export const UniversalTable = memo(({
                                     Edit</SuperButton>
                                  {component === 'packs' &&
                                  <SuperButton onClick={onLearnButtonClick}>Learn</SuperButton>}</td>
-                            {/*{component==='cards'&& <td><SuperButton
-                                onClick={()=>handleDeleteButtonClick(_id)}>
-                                delete</SuperButton></td>}*/}
                         </tr>
                     )
                 })}
