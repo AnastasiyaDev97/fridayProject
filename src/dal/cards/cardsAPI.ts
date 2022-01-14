@@ -37,7 +37,7 @@ export const cardsAPI = {
 
         return instance.put<updateCardRatingType>(`cards/grade`, {grade,card_id})
             .then(res => {
-                return res.data
+                return res.data.updatedGrade
             })
     },
 }

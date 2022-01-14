@@ -23,7 +23,7 @@ export const modalReducer = (state: InitialStateType = initialState, action: Act
         case 'MODAL/SET-MODAL-TYPE':
             return {...state, ...action.payload}
         case 'MODAL/SET-MODAL-PROPS':
-debugger
+
             return {...state, ...action.payload}
 
         default:

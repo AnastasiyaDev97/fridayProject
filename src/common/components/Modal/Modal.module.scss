@@ -12,17 +12,26 @@
   .modalBlock {
     position: absolute;
     padding: 20px;
-    background: white;
     left: 50%;
     transform: translate(-50%, -50%);
     top: 50%;
     color: black;
     display: flex;
     flex-direction: column;
-   .btn{
-     margin-bottom: 15px;
-     margin-top: 15px;
-   }
+    background: linear-gradient(to bottom, #99ff99 0%, #ffffcc 100%);
+    .buttons{
+      margin-bottom: 15px;
+      margin-top: 15px;
+      display: flex;
+      button{
+        width: 70px;
+        margin-right: 5px;
+        &:last-child{
+          margin-right: 0;
+        }
+      }
+    }
+
 
   }
 }

@@ -34,10 +34,8 @@ function App() {
          }, [dispatch])
 
      const setModalData = useCallback((modalAction:modalActionType,modalEntity:modalEntityType, id: string) => {
-        debugger
          dispatch(setModalPropsAC(id))
          dispatch(setModalTypeAC(modalAction,modalEntity))
-         debugger
 
      },[dispatch])
 
@@ -45,7 +43,6 @@ function App() {
          setModalData(modalAction,'card',id)
      },[setModalData])
      const setModalDataPacks=useCallback((modalAction:modalActionType,id: string)=>{
-         debugger
          setModalData(modalAction,'pack',id)
      },[setModalData])
 

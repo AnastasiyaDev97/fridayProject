@@ -35,10 +35,12 @@ type InitialStateType = getCardsResponseType & { sortCards: string }
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "CARDS/SET-CARDS":
+            return {...state, ...action.payload}
         case 'CARDS/CHANGE-PAGE':
         case 'CARDS/SET-SORTING-FILTER':
             return {...state, ...action.payload}
         case 'CARDS/SET-CARDS-RATING':
+
             return {
                 ...state,
                 cards: [...state.cards.map(card => card._id === action._id ? {...card, ...action.payload} : card)]
@@ -66,16 +68,16 @@ export const changePageCardsAC = (page: number) => {
             payload: {page}
         }) as const
 }
-export const setCardsRatingAC = (_id: string, grade: number, shots: number) => ({
-    type: 'CARDS/SET-CARDS-RATING',
-    _id,
-    payload: {grade, shots}
-} as const)
+export const setCardsRatingAC = (_id: string, grade: number, shots: number) => {
+    return({type: 'CARDS/SET-CARDS-RATING',
+        _id,
+        payload: {grade, shots}}) as const
+}
 
 
 export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => async (dispatch: AppDispatch) => {
     try {
-        debugger
+
         dispatch(setAppStatusAC('loading', true))
         const data = await cardsAPI.getCards(getCardsQueryParams)
         dispatch(setCardsAC(data))
@@ -137,5 +139,8 @@ export const updateCardRatingTC = (newGrade: number, card_id: string): ThunkType
             dispatch(setCardsRatingAC(_id, grade, shots))
         } catch (err) {
             catchErrorHandler(dispatch, err)
+        }
+        finally {
+            dispatch(setAppStatusAC('succeeded', false))
         }
     }

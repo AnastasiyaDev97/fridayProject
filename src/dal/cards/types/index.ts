@@ -61,6 +61,11 @@ export type updateCardType={
 }
 
 export type updateCardRatingType={
+    token: string
+    tokenDeathTime:number
+    updatedGrade:updatedGradeT
+}
+export type updatedGradeT={
     _id: string
     cardsPack_id: string
     card_id: string

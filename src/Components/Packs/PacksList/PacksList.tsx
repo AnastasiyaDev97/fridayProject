@@ -97,8 +97,8 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
     },[setModalData])
 
     async function handleLearnPackClick (packId: string)  {
-        await dispatch(getCardsTC({cardsPack_id:packId}))
-        debugger
+
+        await dispatch(getCardsTC({cardsPack_id:packId,max:100,pageCount:100}))
         setModalData('learn', packId)
     }
 
