@@ -1,6 +1,6 @@
 import styles from "./UniversalInput.module.scss"
 import SuperInputText from "../../../Components/TestComponents/components/c1-SuperInputText/SuperInputText";
-import React, {useState} from "react";
+import React, {FC, memo, useState} from "react";
 import {FieldInputProps} from "formik";
 
 type universalInputPropsType = {
@@ -10,20 +10,27 @@ type universalInputPropsType = {
     isPassword?: boolean
 }
 
-export const UniversalInput = (props: universalInputPropsType) => {
-    let [passwordShown, setPasswordShown] = useState(false);
+export const UniversalInput: FC<universalInputPropsType> = memo(({
+                                                                     validationErr, formikProps, type,
+                                                                     isPassword
+                                                                 }) => {
+    console.log('univ')
+    let [passwordShown, setPasswordShown] = useState<boolean>(false);
+
+    const typeForInput = !passwordShown && type ? 'password' : 'text'
+
     const toggleShowPassword = () => {
         setPasswordShown(!passwordShown)
     }
+
     return (
         <div className={styles.inputWrapper}>
             <SuperInputText className={styles.input}
-                            placeholder={props.formikProps.name}
-                            {...props.formikProps}
-                            type={!passwordShown && props.type ? 'password' : 'text'}/>
-            {props.isPassword && <span className={styles.togglePassBtn} onClick={toggleShowPassword}></span>}
-            <div className={styles.error}>{props.validationErr}</div>
-
+                            placeholder={formikProps.name}
+                            {...formikProps}
+                            type={typeForInput}/>
+            {isPassword && <span className={styles.togglePassBtn} onClick={toggleShowPassword}></span>}
+            <div className={styles.error}>{validationErr}</div>
         </div>
     )
-}
+})

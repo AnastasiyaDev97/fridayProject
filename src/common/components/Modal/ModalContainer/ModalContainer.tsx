@@ -43,17 +43,16 @@ export const ModalContainer: FC<ModalContainerPropsType> = memo(({pack}) => {
     const [answer, setAnswer] = useState<string>(answerInitialValue)
     const [activeCardIndex, setActiveCardIndex] = useState<number>(0)
     const [isActivePrevBtn, setIsActivePrevBtn] = useState<boolean>(true)
-    const [isActiveModalBtn, setIsActiveModalBtn] = useState<boolean>(true)
     const [prevCards, setIsPrevCards] = useState<CardType[]>([])
 
     const [activeCard, setActiveCard] = useState(cards[0])
 
-    let questionForLearn =activeCard.question
-    let answerForLearn =activeCard.answer
-    let activeCardId =activeCard._id
+    let questionForLearn = activeCard?activeCard.question:''
+    let answerForLearn = activeCard?activeCard.answer:''
+    let activeCardId = activeCard?activeCard._id:''
 
-    const limitLength = prevCards.length-1
-    const conditionForExecution=(prevCards.length > 0) && (activeCardIndex < limitLength)
+    const limitLength = prevCards.length - 1
+    const conditionForExecution = (prevCards.length > 0) && (activeCardIndex < limitLength)
 
     const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
 
@@ -64,36 +63,39 @@ export const ModalContainer: FC<ModalContainerPropsType> = memo(({pack}) => {
     }, [activeCardIndex])
 
 
-    const onSavePackButtonClick = () => {
+    const onSavePackButtonClick = useCallback(() => {
         dispatch(addPackTC(name))
         onCloseModalButtonClick()
-    }
-    const onSaveCardButtonClick = () => {
+    }, [dispatch, name])
+
+    const onSaveCardButtonClick = useCallback(() => {
         dispatch(addCardTC(id, question, answer))
         onCloseModalButtonClick()
-    }
-    const onDeletePackButtonClick = () => {
+    }, [dispatch, id, question, answer])
+
+    const onDeletePackButtonClick = useCallback(() => {
         dispatch(deletePackTC(id))
         onCloseModalButtonClick()
-    }
-    const onDeleteCardButtonClick = () => {
+    }, [dispatch, id])
+
+    const onDeleteCardButtonClick = useCallback(() => {
         if (cardsPack_id) {
             dispatch(deleteCardTC(cardsPack_id, id))
         }
         onCloseModalButtonClick()
-    }
+    }, [dispatch, cardsPack_id, id])
 
-    const onUpdatePackClick = () => {
+    const onUpdatePackClick = useCallback(() => {
         dispatch(updatePackTC(id, name))
         onCloseModalButtonClick()
-    }
-    const onUpdateCardClick = () => {
+    }, [dispatch, id, name])
 
+    const onUpdateCardClick = useCallback(() => {
         if (cardsPack_id) {
             dispatch(updateCardTC(cardsPack_id, {_id: id, question, answer}))
         }
         onCloseModalButtonClick()
-    }
+    }, [dispatch, cardsPack_id, id, question, answer])
 
     const onNextCardButtonClick = useCallback(() => {
         if (!isActivePrevBtn) {
@@ -102,93 +104,90 @@ export const ModalContainer: FC<ModalContainerPropsType> = memo(({pack}) => {
         let newCard = getCard(cards)
         setActiveCard(newCard)
         setIsPrevCards([newCard, ...prevCards])
-    }, [cards, isActivePrevBtn,prevCards])
+    }, [cards, isActivePrevBtn, prevCards])
 
-    const handlePrevCardButtonClick = useCallback(() => {
-
-
-        if (conditionForExecution) {
-            setActiveCard(prevCards[activeCardIndex])
-            setActiveCardIndex(activeCardIndex + 1)
+    const onPrevCardButtonClick = useCallback(() => {
+            if (conditionForExecution) {
+                setActiveCard(prevCards[activeCardIndex])
+                setActiveCardIndex(activeCardIndex + 1)
+            } else {
+                setIsActivePrevBtn(false)
+            }
         }
-        else{
-            setIsActivePrevBtn(false)
-        }
+        , [activeCard, activeCardIndex, prevCards, conditionForExecution])
+
+
+    const onCloseModalButtonClick = useCallback(() => {
+        dispatch(setModalTypeAC('', ''))
+    }, [dispatch])
+
+    const modals = {
+        'add': {
+            title: `Add new ${modalEntity}`, btn: {
+                title: 'Save', callback:
+                    modalEntity === 'card' ? onSaveCardButtonClick : onSavePackButtonClick
+            }
+        },
+        'delete': {
+            title: `Delete ${modalEntity}`, btn: {
+                title: 'Delete', callback:
+                    modalEntity === 'pack' ? onDeletePackButtonClick : onDeleteCardButtonClick
+            }
+        },
+
+        'update': {
+            title: `Update ${modalEntity}`, btn: {
+                title: 'Update', callback:
+                    modalEntity === 'pack' ? onUpdatePackClick : onUpdateCardClick
+            }
+        },
+        'learn': {
+            title: ` ${questionForLearn}`, btn: {
+                title: 'Prev', callback: onPrevCardButtonClick
+            }
+        },
     }
-, [activeCard, activeCardIndex, prevCards,conditionForExecution])
 
 
-const onCloseModalButtonClick = useCallback(() => {
-    dispatch(setModalTypeAC('', ''))
-}, [dispatch])
+    let modalBody;
+    if (modalAction === 'add') {
+        modalBody = modals.add
+    }
+    if (modalAction === 'delete') {
+        modalBody = modals.delete
+    }
 
-const modals = {
-    'add': {
-        title: `Add new ${modalEntity}`, btn: {
-            title: 'Save', callback:
-                modalEntity === 'card' ? onSaveCardButtonClick : onSavePackButtonClick
-        }
-    },
-    'delete': {
-        title: `Delete ${modalEntity}`, btn: {
-            title: 'Delete', callback:
-                modalEntity === 'pack' ? onDeletePackButtonClick : onDeleteCardButtonClick
-        }
-    },
+    if (modalAction === 'update') {
+        modalBody = modals.update
+    }
+    if (modalAction === 'learn') {
+        modalBody = modals.learn
+    }
 
-    'update': {
-        title: `Update ${modalEntity}`, btn: {
-            title: 'Update', callback:
-                modalEntity === 'pack' ? onUpdatePackClick : onUpdateCardClick
-        }
-    },
-    'learn': {
-        title: ` ${questionForLearn}`, btn: {
-            title: 'Next', callback: onNextCardButtonClick
-        }
-    },
-}
+    const conditionForUpdateAddCardModal = (modalEntity === 'card') && (modalAction !== 'delete')
+    const conditionActivateInputName = (modalEntity === 'pack' && (modalAction === 'add' || modalAction === 'update'))
 
+    return (
+        <Modal modalBody={modalBody} onCloseModalButtonClick={onCloseModalButtonClick}
+               onNextCardButtonClick={onNextCardButtonClick} modalAction={modalAction} isActivePrevBtn={isActivePrevBtn}>
 
-let modalBody;
-if (modalAction === 'add') {
-    modalBody = modals.add
-}
-if (modalAction === 'delete') {
-    modalBody = modals.delete
-}
-
-if (modalAction === 'update') {
-    modalBody = modals.update
-}
-if (modalAction === 'learn') {
-    modalBody = modals.learn
-}
-
-const conditionForUpdateAddCardModal = (modalEntity === 'card') && (modalAction !== 'delete')
-const conditionActivateInputName = (modalEntity === 'pack' && (modalAction === 'add' || modalAction === 'update'))
-
-return (
-    <Modal modalBody={modalBody} onCloseModalButtonClick={onCloseModalButtonClick}
-           isActiveModalBtn={isActiveModalBtn} isActivePrevBtn={isActivePrevBtn}
-           onPrevCardButtonClick={handlePrevCardButtonClick} modalAction={modalAction}>
-
-        {modalAction === 'delete' &&
-        <span className={s.span}>Do you really want to remove this `&{modalEntity}`?
+            {modalAction === 'delete' &&
+            <span className={s.span}>Do you really want to remove this `&{modalEntity}`?
                 <br/>All cards will be excluded from this course</span>}
 
-        {conditionActivateInputName &&
-        <SuperInputText className={s.input} value={name} onChangeText={setName}/>}
+            {conditionActivateInputName &&
+            <SuperInputText className={s.input} value={name} onChangeText={setName} placeholder={'Title'}/>}
 
-        {conditionForUpdateAddCardModal &&
-        <>
-            <SuperInputText className={s.input} value={question} onChangeText={setQuestion}
-                            placeholder={'Your question'}/>
-            <SuperInputText className={s.input} value={answer} onChangeText={setAnswer}
-                            placeholder={'Your answer'}/>
-        </>}
-        {modalAction === 'learn' && <LearnPackModal answer={answerForLearn} activeCardId={activeCardId}/>
-        }
-    </Modal>
-)
+            {conditionForUpdateAddCardModal &&
+            <>
+                <SuperInputText className={s.input} value={question} onChangeText={setQuestion}
+                                placeholder={'Your question'}/>
+                <SuperInputText className={s.input} value={answer} onChangeText={setAnswer}
+                                placeholder={'Your answer'}/>
+            </>}
+            {modalAction === 'learn' && <LearnPackModal answer={answerForLearn} activeCardId={activeCardId}
+                                                        onNextCardButtonClick={onNextCardButtonClick}/>
+            }
+        </Modal>
+    )
 })

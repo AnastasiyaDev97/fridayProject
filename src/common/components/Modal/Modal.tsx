@@ -13,11 +13,11 @@ export type ModalPropsType = {
             callback: () => void
         }
     }
-    onCloseModalButtonClick:()=>void
-    isActiveModalBtn:boolean
-    isActivePrevBtn:boolean
-    onPrevCardButtonClick:()=>void
-    modalAction:modalActionType
+    onCloseModalButtonClick: () => void
+
+    isActivePrevBtn: boolean
+    modalAction: modalActionType
+    onNextCardButtonClick: () => void
 }
 
 export const Modal: FC<ModalPropsType> = memo((
@@ -25,12 +25,13 @@ export const Modal: FC<ModalPropsType> = memo((
         children,
         modalBody,
         onCloseModalButtonClick,
-        isActiveModalBtn,
-        isActivePrevBtn,
-        onPrevCardButtonClick,
-        modalAction
+        modalAction,
+        onNextCardButtonClick,
+        isActivePrevBtn
     }
 ): Nullable<ReactElement> => {
+
+    const conditionForDisabledPrevBtn = modalAction === 'learn' ? !isActivePrevBtn : false
 
     if (modalBody) {
         return (
@@ -41,11 +42,13 @@ export const Modal: FC<ModalPropsType> = memo((
                     </h3>
                     {children}
                     <div className={s.buttons}>
-                    <SuperButton onClick={modalBody.btn.callback} className={s.btn} disabled={!isActiveModalBtn}>
-                        {modalBody.btn.title}</SuperButton>
-                    {modalAction==='learn'&& <SuperButton onClick={onPrevCardButtonClick}  disabled={!isActivePrevBtn}>
-                        Prev</SuperButton>}
-                    <SuperButton onClick={onCloseModalButtonClick} className={s.btn}>Cancel</SuperButton>
+                        <SuperButton onClick={modalBody.btn.callback} className={s.btn}
+                                     disabled={conditionForDisabledPrevBtn}>
+                            {modalBody.btn.title}</SuperButton>
+                        {modalAction === 'learn' &&
+                        <SuperButton onClick={onNextCardButtonClick}>
+                            Next</SuperButton>}
+                        <SuperButton onClick={onCloseModalButtonClick} className={s.btn}>Cancel</SuperButton>
                     </div>
                 </div>
             </div>

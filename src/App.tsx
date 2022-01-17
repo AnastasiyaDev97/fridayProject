@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect} from 'react';
 import {Login} from "./Components/Authorization/Login/Login";
-import {Profile} from "./Components/Profile/Profile";
 import {Registration} from "./Components/Authorization/Redistration/Registration";
 import {NotFound} from "./Components/NotFound/NotFound";
 import {ForgotPassword} from "./Components/Authorization/ForgotPassword/ForgotPassword";
@@ -14,9 +13,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "./store/store";
 import Preloader from "./common/Preloader/Preloader";
 import {Cards} from "./Components/Cards/Cards";
-import {Packs} from "./Components/Packs/Packs";
 import {setModalPropsAC, setModalTypeAC} from "./store/reducers/modal-reducer";
 import {modalActionType, modalEntityType} from "./common/components/Modal/ModalContainer/ModalContainer";
+import Profile from "./Components/Profile/Profile";
+import Packs from "./Components/Packs/Packs";
+
 
 
 
@@ -49,6 +50,7 @@ function App() {
 
 
          return (
+
              <div className={styles.appWrapper}>
                  <Header/>
                      <div className={styles.mainBlock}>

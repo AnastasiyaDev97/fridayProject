@@ -14,6 +14,7 @@ const SuperButton: FC<SuperButtonPropsType> = memo((
         ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
     }
 ) => {
+    debugger
     const finalClassName = `${s.btn} ${red ? s.red : s.default} ${className}`
     console.log('button')
     return (

@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useEffect, useMemo} from 'react';
+import React, {FC, memo, useCallback, useEffect, useMemo} from 'react';
 import s from './Cards.module.scss'
 import Pagination from "../../features/cards/pagination/Pagination";
 import {convertDateFormat} from "../../utils/handles";
@@ -22,107 +22,107 @@ import {faRemoveFormat} from '@fortawesome/free-solid-svg-icons';
 */
 
 type CardsT = {
-    setModalData: (modalAction:modalActionType,id: string) => void
+    setModalData: (modalAction: modalActionType, id: string) => void
 }
 
 
-export const Cards: FC<CardsT> = ({setModalData}) => {
+export const Cards: FC<CardsT> = memo(({setModalData}) => {
 
-    const dispatch = useDispatch()
+        const dispatch = useDispatch()
 
-    const params = useParams<'id'>()
-    const cardsPack_id=params.id
+        const params = useParams<'id'>()
+        const cardsPack_id = params.id
 
-    const navigate = useNavigate()
+        const navigate = useNavigate()
 
 
-    const cards = useSelector<RootReducerType, Array<CardType>>(state => state.cards.cards)
-    const sortCards = useSelector<RootReducerType, string>((state) => state.cards.sortCards)
-    const totalItemCount = useSelector<RootReducerType, number>((state) => state.cards.cardsTotalCount)
-    const pageCount = useSelector<RootReducerType, number>((state) => state.cards.pageCount)
-    const currentPage = useSelector<RootReducerType, number>((state) => state.cards.page)
-    const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
+        const cards = useSelector<RootReducerType, Array<CardType>>(state => state.cards.cards)
+        const sortCards = useSelector<RootReducerType, string>((state) => state.cards.sortCards)
+        const totalItemCount = useSelector<RootReducerType, number>((state) => state.cards.cardsTotalCount)
+        const pageCount = useSelector<RootReducerType, number>((state) => state.cards.pageCount)
+        const currentPage = useSelector<RootReducerType, number>((state) => state.cards.page)
+        const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
 
-    const PORTION_SIZE = 10
-    const headersForCards = {
-        question: 'Question', answer: 'Answer',
-        updated: 'Last updated', grade: 'Grade', actions: 'Actions'
-    }
-
-    const cardsForTable = useMemo(() => {
-            return cards.map(({
-                                  question, answer,
-                                  updated, grade, shots, _id,user_id
-                              }) => {
-                    updated = convertDateFormat(updated)
-                    let rating = <Rating grade={grade} />
-                    return {question, answer, updated, rating,_id,user_id}
-                }
-            )
+        const PORTION_SIZE = 10
+        const headersForCards = {
+            question: 'Question', answer: 'Answer',
+            updated: 'Last updated', grade: 'Grade', actions: 'Actions'
         }
-        , [cards])
 
-
-
-    useEffect(() => {
-        dispatch(setAppStatusAC('loading', true))
-        let idOfTimeout = setTimeout(() => {
-            if (cardsPack_id) {
-                dispatch(getCardsTC({cardsPack_id, page: currentPage, sortCards}))
+        const cardsForTable = useMemo(() => {
+                return cards.map(({
+                                      question, answer,
+                                      updated, grade, shots, _id, user_id
+                                  }) => {
+                        updated = convertDateFormat(updated)
+                        let rating = <Rating grade={grade}/>
+                        return {question, answer, updated, rating, _id, user_id}
+                    }
+                )
             }
-        }, 1000)
-        return () => {
-            clearTimeout(idOfTimeout)
+            , [cards])
+
+
+        useEffect(() => {
+            dispatch(setAppStatusAC('loading', true))
+            let idOfTimeout = setTimeout(() => {
+                if (cardsPack_id) {
+                    dispatch(getCardsTC({cardsPack_id, page: currentPage, sortCards}))
+                }
+            }, 1000)
+            return () => {
+                clearTimeout(idOfTimeout)
+            }
+        }, [dispatch, currentPage, sortCards])
+
+
+        const handleSetSortingClick = useCallback((headerName: string) => {
+            dispatch(setSortingFilterCards(sortCards[0] === '0' ? `1${headerName}` : `0${headerName}`))
+        }, [dispatch, sortCards])
+
+        const handleChangePageClick = useCallback((page: number) => {
+                dispatch(changePageCardsAC(page))
+            },
+            [dispatch])
+
+        const onTitleClick = () => {
+            navigate(-1)
         }
-    }, [dispatch, currentPage, sortCards])
+
+        const handleAddCardButtonClick = useCallback(() => {
+            if (cardsPack_id) {
+                setModalData('add', cardsPack_id)
+            }
+        }, [setModalData, cardsPack_id])
 
 
-    const handleSetSortingClick = useCallback((headerName: string) => {
-        dispatch(setSortingFilterCards(sortCards[0] === '0' ? `1${headerName}` : `0${headerName}`))
-    }, [dispatch, sortCards])
-
-    const handleChangePageClick = useCallback((page: number) => {
-            dispatch(changePageCardsAC(page))
-        },
-        [dispatch])
-
-    const onTitleClick = () => {
-        navigate(-1)
-    }
-
-    const handleAddCardButtonClick = useCallback(() => {
-        if (cardsPack_id) {
-            setModalData('add', cardsPack_id)
-        }
-    }, [setModalData,cardsPack_id])
-
-
-    const handleDeleteButtonClick = useCallback((_id:string) => {
+        const handleDeleteButtonClick = useCallback((_id: string) => {
             setModalData('delete', _id)
-    },[setModalData])
+        }, [setModalData])
 
-    const handleUpdateCardClick = useCallback((_id:string) => {
+        const handleUpdateCardClick = useCallback((_id: string) => {
             setModalData('update', _id)
-    },[setModalData])
+        }, [setModalData])
 
-    if (!cards) {
-        return <></>
+        if (!cards) {
+            return <></>
+        }
+        return (
+            <div className={s.wrapper}>
+                <h2 onClick={onTitleClick} className={s.cursor}>&#8592; Pack Name</h2>
+                <SuperButton onClick={handleAddCardButtonClick} className={s.btn}>Add new card</SuperButton>
+                {modalEntity && <ModalContainer />}
+
+                <UniversalTable rows={cardsForTable} headers={headersForCards}
+                                onSetSortingClick={handleSetSortingClick} component={'cards'}
+                                onDeleteButtonClick={handleDeleteButtonClick}
+                                onUpdateButtonClick={handleUpdateCardClick}/>
+                <Pagination totalItemCount={totalItemCount}
+                            pageCount={pageCount}
+                            currentPage={currentPage}
+                            onChangePageClick={handleChangePageClick}
+                            portionSize={PORTION_SIZE}/>
+            </div>
+        )
     }
-    return (
-        <div className={s.wrapper}>
-            <h2 onClick={onTitleClick} className={s.cursor}>&#8592; Pack Name</h2>
-            <SuperButton onClick={handleAddCardButtonClick} className={s.btn}>Add new card</SuperButton>
-            {modalEntity && <ModalContainer /*cards={cards} cardsForLearn={cardsForLearn}*/ />}
-
-            <UniversalTable rows={cardsForTable} headers={headersForCards}
-                            onSetSortingClick={handleSetSortingClick} component={'cards'}
-                            onDeleteButtonClick={handleDeleteButtonClick}
-                            onUpdateButtonClick={handleUpdateCardClick}/>
-            <Pagination totalItemCount={totalItemCount}
-                        pageCount={pageCount}
-                        currentPage={currentPage}
-                        onChangePageClick={handleChangePageClick}
-                        portionSize={PORTION_SIZE}/>
-        </div>
-    )
-}
+)

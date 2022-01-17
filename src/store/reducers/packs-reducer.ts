@@ -15,7 +15,7 @@ type initialStateType = getPacksResponseType & {
     packName:Nullable<string>
     user_id:Nullable<string>
 }
-export type sortingFilterType = '0updated' | '1updated' | '0created' | '1created'
+
 
 const INITIAL_CARDS_MAX_BORDER = 100
 let initialState = {

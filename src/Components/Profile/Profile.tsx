@@ -1,22 +1,31 @@
 import React from 'react';
-import {Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
 import {ResponseLoginType} from "../../dal/authorization/types";
+import {withRedirect} from "../../common/hoc/withRedirect";
+import s from './Profile.module.scss'
 
 
 
-export const Profile=()=>{
+ const Profile=()=>{
     console.log('profile')
-    let isLoggedIn = useSelector<RootReducerType, boolean>(state => state.login.isLoggedIn)
     const profile=useSelector<RootReducerType, ResponseLoginType>(state=>state.profile)
 
-    if (!isLoggedIn) {
-        return <Navigate to='/login'/>
-    }
     return(
-        <div>
-            {profile.email}
+        <div className={s.profileWrapper}>
+            <div className={s.avatarBlock}>
+                <img alt='avatar' className={s.avatar}/>
+                <input type={'file'} className={s.inputNone}/>
+                <button className={s.addPhotoBtn}>Add photo</button>
+            </div>
+            <div className={s.profileInfo}>
+                <span>name</span>
+                <span>{profile.email}</span>
+                <span></span>
+            </div>
+
         </div>
     )
 }
+
+export default withRedirect(Profile)

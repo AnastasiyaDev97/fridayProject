@@ -1,10 +1,9 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, memo, useEffect} from 'react';
 import s from './Packs.module.scss'
 import {PacksParams} from "./PacksParams/PacksParams";
 import {PacksList} from "./PacksList/PacksList";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
-import {Navigate} from "react-router-dom";
 import {getPacksTC} from "../../store/reducers/packs-reducer";
 import {getPacks} from "../../selectors/getPacks";
 import {getCurrentPage} from "../../selectors/getCurrentPage";
@@ -13,19 +12,18 @@ import {Nullable} from "../../types/Nullable";
 import {PackType} from "../../dal/packs/types";
 
 import {modalActionType} from "../../common/components/Modal/ModalContainer/ModalContainer";
+import {withRedirect} from "../../common/hoc/withRedirect";
 type PacksT={
     setModalData:(modalAction:modalActionType,id: string)=>void
 }
 
 
-
-export const Packs:FC<PacksT> = ({setModalData}) => {
+const Packs:FC<PacksT> = memo(({setModalData}) => {
 
     const dispatch = useDispatch()
 
     const packs = useSelector<RootReducerType, Array<PackType>>(getPacks)
     const currentPage = useSelector<RootReducerType, number>(getCurrentPage)
-    const isLoggedIn = useSelector<RootReducerType, boolean>(state => state.login.isLoggedIn)
     const totalItemCount = useSelector<RootReducerType, number>((state) => state.packs.cardPacksTotalCount)
     const pageCount = useSelector<RootReducerType, number>((state) => state.packs.pageCount)
     const minValueForRangeSlider = useSelector<RootReducerType, number>((state) => state.packs.min)
@@ -47,10 +45,6 @@ export const Packs:FC<PacksT> = ({setModalData}) => {
         sortPacks,packName])
 
 
-    if (!isLoggedIn) {
-        return <Navigate to='/login'/>
-    }
-
     if (!packs) {
         return <></>
     }
@@ -62,4 +56,6 @@ export const Packs:FC<PacksT> = ({setModalData}) => {
                        sortPacks={sortPacks} setModalData={setModalData}/>
         </div>
     )
-}
+})
+
+export default withRedirect(Packs)

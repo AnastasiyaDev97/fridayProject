@@ -7,13 +7,32 @@
     color: black;
     font-family: "Nunito Sans", Arial, sans-serif;
     font-size: 16px;
+    font-weight: bold;
     .btn {
       width: 70px;
+      margin-left: 20px;
+      padding-top: .3rem;
+      padding-bottom: .3rem;
+      font-weight: normal;
+      border-radius: 0;
     }
 
     .answer {
-
-
+      margin-left: 30px;
+    }
+  }
+  .buttonsBlock{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    button{
+      font-weight: normal;
+      border-radius: 0;
+      width: 100px;
+      padding-top: .2rem;
+      padding-bottom: .2rem;
+      margin-right: 5px;
     }
   }
 }

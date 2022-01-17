@@ -34,6 +34,7 @@ export const Login = () => {
     })
 
     let isLoggedIn = useSelector<RootReducerType, boolean>(state => state.login.isLoggedIn)
+
     if (isLoggedIn) {
         return <Navigate to='/'/>
     }
