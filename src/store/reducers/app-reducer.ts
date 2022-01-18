@@ -12,7 +12,6 @@ const initialState = {
     status: 'idle' as RequestStatusType,
     isInitialized: false,
     error: null as Nullable<string>,
-    isDisabled:false,
 }
 
 type InitialStateType = typeof initialState
@@ -32,11 +31,10 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 }
 
 
-export const setAppStatusAC = (status: RequestStatusType,isDisabled: boolean) => ({
+export const setAppStatusAC = (status: RequestStatusType) => ({
     type: 'APP/SET-STATUS',
     payload: {
         status,
-        isDisabled,
     }
 } as const)
 
@@ -54,7 +52,7 @@ export const setErrorText = (error: Nullable<string>) => {
 }
 
 export const initializeAppTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading',true))
+    dispatch(setAppStatusAC('loading'))
     authorizationAPI.authMe()
         .then((res) => {
             dispatch(isAuthToggleAC(true))
@@ -64,7 +62,7 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
             dispatch(isAuthToggleAC(false))
         })
         .finally(() => {
-                dispatch(setAppStatusAC('succeeded',false))
+                dispatch(setAppStatusAC('succeeded'))
                 dispatch(setIsInitializedAC())
             }
         )

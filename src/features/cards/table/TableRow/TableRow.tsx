@@ -22,7 +22,8 @@ type TableRowT={
     onUpdateButtonClick?: (id: string) => void
     onLearnPackClick?: (packId: string) => void
 }
-export const TableRow:FC<TableRowT>=memo(({item,component,onDeleteButtonClick,onUpdateButtonClick,onLearnPackClick})=>{
+export const TableRow:FC<TableRowT>=memo(({item,component,onDeleteButtonClick,onUpdateButtonClick,
+                                              onLearnPackClick})=>{
 
     const navigate = useNavigate()
     const userId = useSelector<RootReducerType, string>(state => state.profile._id)
@@ -31,7 +32,6 @@ export const TableRow:FC<TableRowT>=memo(({item,component,onDeleteButtonClick,on
 
     const onLearnButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation()
-
         onLearnPackClick!(item._id)
     }
 
@@ -39,7 +39,6 @@ export const TableRow:FC<TableRowT>=memo(({item,component,onDeleteButtonClick,on
         e.stopPropagation()
         onDeleteButtonClick!(item._id)
     }
-
 
     const onOpenCardClick = () => {
         if ((item.cardsCount! > 0) || (item.user_id === userId)) {

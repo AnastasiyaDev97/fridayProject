@@ -38,37 +38,37 @@ export const UniversalTable = memo(({
                                         rows, headers, onSetSortingClick, component,
                                         onDeleteButtonClick, onUpdateButtonClick, onLearnPackClick
                                     }: TablePropsType) => {
-    console.log('table')
+        console.log('table')
 
 
-    const titles = Object.entries(headers)
+        const titles = Object.entries(headers)
 
-    return (
-        <table className={s.table}>
-            <thead>
-            <tr>
-                {titles.map(([key, value], i) => {
-                        const onTitleClick = () => {
-                            onSetSortingClick(key)
+        return (
+            <table className={s.table}>
+                <thead>
+                <tr>
+                    {titles.map(([key, value], i) => {
+                            const onTitleClick = () => {
+                                onSetSortingClick(key)
+                            }
+                            return (
+                                <th key={i} onClick={onTitleClick} className={s.tableHeader}>
+                                    {value}</th>)
                         }
-                        return (
-                            <th key={i} onClick={onTitleClick} className={s.tableHeader}>
-                                {value}</th>)
-                    }
-                )}
-            </tr>
-            </thead>
-            <tbody>
+                    )}
+                </tr>
+                </thead>
+                <tbody>
 
-            {rows.map((row, i) => {
-                return (<TableRow key={row._id} item={row} component={component}
-                                  onDeleteButtonClick={onDeleteButtonClick}
-                                  onUpdateButtonClick={onUpdateButtonClick} onLearnPackClick={onLearnPackClick}/>)
-            })}
+                {rows.map((row) => {
+                    return (<TableRow key={row._id} item={row} component={component}
+                                      onDeleteButtonClick={onDeleteButtonClick}
+                                      onUpdateButtonClick={onUpdateButtonClick} onLearnPackClick={onLearnPackClick}/>)
+                })}
                 </tbody>
-                </table>
-                )
-            }
-            )
+            </table>
+        )
+    }
+)
 
 

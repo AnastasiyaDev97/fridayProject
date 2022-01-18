@@ -78,14 +78,14 @@ export const setCardsRatingAC = (_id: string, grade: number, shots: number) => {
 export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => async (dispatch: AppDispatch) => {
     try {
 
-        dispatch(setAppStatusAC('loading', true))
+        dispatch(setAppStatusAC('loading'))
         const data = await cardsAPI.getCards(getCardsQueryParams)
         dispatch(setCardsAC(data))
 
     } catch (err) {
         catchErrorHandler(dispatch, err)
     } finally {
-        dispatch(setAppStatusAC('succeeded', false))
+        dispatch(setAppStatusAC('succeeded'))
     }
 }
 
@@ -97,7 +97,7 @@ export const addCardTC = (cardsPack_id: string, question: string, answer: string
                 question,
                 answer,
             }
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             await cardsAPI.addCard({card})
             await dispatch(getCardsTC({cardsPack_id}))
         } catch (err) {
@@ -108,7 +108,7 @@ export const addCardTC = (cardsPack_id: string, question: string, answer: string
 export const deleteCardTC = (cardsPack_id: string, id: string): ThunkType =>
     async (dispatch) => {
         try {
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             await cardsAPI.deleteCard(id)
             await dispatch(getCardsTC({cardsPack_id}))
         } catch (err) {
@@ -123,7 +123,7 @@ export const updateCardTC = (cardsPack_id: string, {_id, ...rest}: updateCardTyp
                 _id,
                 ...rest
             }
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             await cardsAPI.updateCard({card})
             await dispatch(getCardsTC({cardsPack_id}))
         } catch (err) {
@@ -134,13 +134,13 @@ export const updateCardTC = (cardsPack_id: string, {_id, ...rest}: updateCardTyp
 export const updateCardRatingTC = (newGrade: number, card_id: string): ThunkType =>
     async (dispatch) => {
         try {
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             let {_id, grade, shots} = await cardsAPI.updateCardGrade(newGrade, card_id)
             dispatch(setCardsRatingAC(_id, grade, shots))
         } catch (err) {
             catchErrorHandler(dispatch, err)
         }
         finally {
-            dispatch(setAppStatusAC('succeeded', false))
+            dispatch(setAppStatusAC('succeeded'))
         }
     }

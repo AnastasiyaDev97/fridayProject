@@ -37,10 +37,10 @@ export const isAuthToggleAC = (isLoggedIn: boolean) =>
 
 export const loginTC=(loginAuthData:loginAuthDataType)=>{
     return (dispatch:Dispatch<ActionsType>)=>{
-        dispatch(setAppStatusAC('loading',true))
+        dispatch(setAppStatusAC('loading'))
         authorizationAPI.loginMe(loginAuthData)
             .then((res)=>{
-                dispatch(setAppStatusAC('succeeded',false))
+                dispatch(setAppStatusAC('succeeded'))
                 dispatch(isAuthToggleAC(true))
                 dispatch(setProfileAC(res))
             })
@@ -51,10 +51,10 @@ export const loginTC=(loginAuthData:loginAuthDataType)=>{
 
 export const logoutTC=()=>{
     return (dispatch:Dispatch<ActionsType>)=>{
-        dispatch(setAppStatusAC('loading',true))
+        dispatch(setAppStatusAC('loading'))
         authorizationAPI.logoutMe()
             .then(()=>{
-                dispatch(setAppStatusAC('succeeded',false))
+                dispatch(setAppStatusAC('succeeded'))
                 dispatch(isAuthToggleAC(false))
 
             })

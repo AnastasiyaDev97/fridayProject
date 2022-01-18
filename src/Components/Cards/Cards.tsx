@@ -16,10 +16,7 @@ import {
     modalEntityType
 } from "../../common/components/Modal/ModalContainer/ModalContainer";
 import {Rating} from "./Rating/Rating";
-/*
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faRemoveFormat} from '@fortawesome/free-solid-svg-icons';
-*/
+
 
 type CardsT = {
     setModalData: (modalAction: modalActionType, id: string) => void
@@ -52,7 +49,7 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
         const cardsForTable = useMemo(() => {
                 return cards.map(({
                                       question, answer,
-                                      updated, grade, shots, _id, user_id
+                                      updated, grade, _id, user_id
                                   }) => {
                         updated = convertDateFormat(updated)
                         let rating = <Rating grade={grade}/>
@@ -64,7 +61,7 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
 
 
         useEffect(() => {
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             let idOfTimeout = setTimeout(() => {
                 if (cardsPack_id) {
                     dispatch(getCardsTC({cardsPack_id, page: currentPage, sortCards}))

@@ -1,9 +1,9 @@
 import {instance} from "../apiConfig";
-
 import {loginAuthDataType} from "../../store/reducers/login-reducer";
 import axios from "axios";
 import {LogoutResponse, RegisterErrorResponse, ResponseForgotPasswordType, ResponseLoginType} from "./types";
 import {newPassDataType} from "../packs/types";
+
 
 
 export const authorizationAPI = {

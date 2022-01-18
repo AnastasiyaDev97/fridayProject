@@ -7,7 +7,6 @@ import {changePageAC, changeSearchPackNameAC, setSortingFilter} from "../../../s
 import {convertDateFormat} from "../../../utils/handles";
 import SuperInputText from "../../TestComponents/components/c1-SuperInputText/SuperInputText";
 import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {UseSetTimeoutEffect} from "../../../common/hooks/customUseEffect";
 import {PackType} from "../../../dal/packs/types";
 
@@ -19,8 +18,6 @@ import {
 import {RootReducerType} from "../../../store/store";
 import {getCardsTC} from "../../../store/reducers/cards-reducer";
 
-
-/*import {faSearch} from '@fortawesome/free-solid-svg-icons';*/
 
 type PackListPropsType = {
     packs: Array<PackType>
@@ -83,7 +80,6 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
     }
 
 
-
     const handleAddPackButtonClick = useCallback(() => {
         setModalData('add','')
     },[setModalData])
@@ -97,7 +93,6 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
     },[setModalData])
 
     async function handleLearnPackClick (packId: string)  {
-
         await dispatch(getCardsTC({cardsPack_id:packId,max:100,pageCount:100}))
         setModalData('learn', packId)
     }
@@ -108,7 +103,6 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
             <h2>Packs List</h2>
 
             <div className={s.row}>
-                {/*<FontAwesomeIcon icon={faSearch}/>*/}
                 <SuperInputText style={{width: '60%'}} value={text}
                                 onChangeText={setText} onEnter={handleSearchPack}/>
                 <SuperButton style={{width: '35%'}} onClick={handleAddPackButtonClick}>Add new pack</SuperButton>

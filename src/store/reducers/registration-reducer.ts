@@ -27,7 +27,7 @@ export const registerStatusAC = (registerStatus: boolean) =>
     } as const)
 
 export const registerMeTC = (email: string, password: string) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading',true))
+    dispatch(setAppStatusAC('loading'))
     authorizationAPI.registerMe(email, password)
         .then(() => {
             dispatch(registerStatusAC(true))
@@ -38,6 +38,6 @@ export const registerMeTC = (email: string, password: string) => (dispatch: Disp
             }
         )
         .finally(() => {
-            dispatch(setAppStatusAC('succeeded',false))
+            dispatch(setAppStatusAC('succeeded'))
         })
 }

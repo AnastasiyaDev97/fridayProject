@@ -5,28 +5,18 @@ import {addNewPackPayloadType, getPacksQueryParamsType, getPacksResponseType, up
 export const packsAPI = {
     getPacks(getPacksQueryParams: Nullable<getPacksQueryParamsType>) {
         return instance.get<getPacksResponseType>(`cards/pack`, {params: getPacksQueryParams})
-            .then(res => {
-                return res.data
-            })
+            .then(res => res.data)
     },
-    addPack(cardsPack:addNewPackPayloadType){
+    addPack(cardsPack: addNewPackPayloadType) {
         return instance.post(`cards/pack`, cardsPack)
-            .then(res => {
-                return res.data
-            })
+            .then(res => res.data)
     },
-    deletePack(packId:string){
-        debugger
-        return instance.delete(`cards/pack/?id=${packId}`)
-            .then(res => {
-                debugger
-                return res.data
-            })
+    deletePack(packId: string) {
+       return instance.delete(`cards/pack/?id=${packId}`)
+            .then(res => res.data)
     },
-    updatePack(cardsPack:updatePackPayloadType){
-        return instance.put(`cards/pack`,cardsPack)
-            .then(res => {
-                return res.data
-            })
+    updatePack(cardsPack: updatePackPayloadType) {
+        return instance.put(`cards/pack`, cardsPack)
+            .then(res => res.data)
     },
 }

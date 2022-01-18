@@ -1,8 +1,7 @@
-import {Nullable} from "../../../types/Nullable";
-
 
 export type ResponseLoginType = {
-    created: Nullable<Date>
+    avatar:string
+    created: string
     email: string
     isAdmin: boolean
     name: string
@@ -10,7 +9,7 @@ export type ResponseLoginType = {
     rememberMe: boolean
     token: string
     tokenDeathTime: number
-    updated: Nullable<Date>
+    updated: string
     verified: boolean
     __v: number
     _id: string

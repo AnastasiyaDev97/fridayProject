@@ -35,4 +35,5 @@ export type ActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setModalTypeAC>
     | ReturnType<typeof setModalPropsAC>
     | ReturnType<typeof setCardsRatingAC>
+ /*   | ReturnType<typeof updateProfileAC>*/
 

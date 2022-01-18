@@ -47,7 +47,7 @@ export const addEmailAC = (emailForRecovery: string) =>
 
 export const sendPassword = (email: string) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setAppStatusAC('loading',true))
+        dispatch(setAppStatusAC('loading'))
         authorizationAPI.sendPassword(email)
             .then((res) => {
                 dispatch(addEmailAC(email))
@@ -57,14 +57,14 @@ export const sendPassword = (email: string) => {
                 catchErrorHandler(dispatch, err)
             })
             .finally(() => {
-                dispatch(setAppStatusAC('succeeded',false))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 }
 
 export const setNewPasswordTC = (newPassData: newPassDataType) => {
     return (dispatch: Dispatch<ActionsType>) => {
-        dispatch(setAppStatusAC('loading',true))
+        dispatch(setAppStatusAC('loading'))
         authorizationAPI.setNewPassword(newPassData)
             .then((res) => {
                 res.info && dispatch(SetResponseInfoNewPassAC(res.info))
@@ -73,7 +73,7 @@ export const setNewPasswordTC = (newPassData: newPassDataType) => {
                 catchErrorHandler(dispatch, err)
             })
             .finally(() => {
-                dispatch(setAppStatusAC('succeeded',false))
+                dispatch(setAppStatusAC('succeeded'))
             })
     }
 }

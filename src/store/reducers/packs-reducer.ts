@@ -37,9 +37,7 @@ let initialState = {
 export const packsReducer = (state: initialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "PACKS/CHANGE-SEARCH-PACK-NAME":
-            return {...state, ...action.payload}
         case "SET-PACKS":
-            return {...state, ...action.payload}
         case "CHANGE-PAGE":
         case "SET-RESPONSE-INFO-NEW-PASS":
         case "TOGGLE-SHOW-CARDS-MODE":
@@ -122,7 +120,7 @@ export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => Ro
     } catch (err) {
         catchErrorHandler(dispatch, err)
     } finally {
-        dispatch(setAppStatusAC('succeeded', false))
+        dispatch(setAppStatusAC('succeeded'))
     }
 }
 
@@ -132,7 +130,7 @@ export const addPackTC = (name: string): ThunkType =>
             const cardsPack = {
                 name,
             }
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             await packsAPI.addPack({cardsPack})
             await dispatch(getPacksTC())
         } catch (err) {
@@ -143,8 +141,7 @@ export const addPackTC = (name: string): ThunkType =>
 export const deletePackTC = (packId: string): ThunkType =>
     async (dispatch) => {
         try {
-            debugger
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             await packsAPI.deletePack(packId)
             await dispatch(getPacksTC())
         } catch (err) {
@@ -159,7 +156,7 @@ export const updatePackTC = (packId: string,newName:string): ThunkType =>
                 _id:packId,
                 name:newName,
             }
-            dispatch(setAppStatusAC('loading', true))
+            dispatch(setAppStatusAC('loading'))
             await packsAPI.updatePack({cardsPack})
             await dispatch(getPacksTC())
         } catch (err) {

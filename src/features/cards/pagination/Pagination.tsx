@@ -1,4 +1,4 @@
-import React, {memo, useCallback, useState} from "react";
+import React, {FC, memo, useCallback, useState} from "react";
 import styles from './Pagination.module.scss'
 import SuperButton from "../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
 
@@ -10,7 +10,7 @@ type PaginatorPropsType = {
     portionSize: number
 }
 
-let Paginator = memo(({totalItemCount, pageCount, currentPage, onChangePageClick, portionSize}: PaginatorPropsType) => {
+const Paginator:FC<PaginatorPropsType> = memo(({totalItemCount, pageCount, currentPage, onChangePageClick, portionSize}) => {
     console.log('paginat')
     let [portionNumber, setPortionNumber] = useState(1);
 
@@ -29,6 +29,7 @@ let Paginator = memo(({totalItemCount, pageCount, currentPage, onChangePageClick
     },[portionNumber])
 
     return <div className={styles.paginator}>
+
         {portionNumber > 1 &&
         <SuperButton
             style={styleForBtn} onClick={() => {

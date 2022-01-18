@@ -34,7 +34,7 @@ const Packs:FC<PacksT> = memo(({setModalData}) => {
 
 
     useEffect(() => {
-        dispatch(setAppStatusAC('loading', true))
+        dispatch(setAppStatusAC('loading'))
         let idOfTimeout = setTimeout(() => {
             dispatch(getPacksTC())
         }, 1000)
