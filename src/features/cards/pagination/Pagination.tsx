@@ -10,48 +10,63 @@ type PaginatorPropsType = {
     portionSize: number
 }
 
-const Paginator:FC<PaginatorPropsType> = memo(({totalItemCount, pageCount, currentPage, onChangePageClick, portionSize}) => {
-    console.log('paginat')
-    let [portionNumber, setPortionNumber] = useState(1);
+const START_VALUE_PORTION_NUMBER = 1
+
+const Paginator: FC<PaginatorPropsType> = memo(({
+                                                    totalItemCount, pageCount, currentPage, onChangePageClick,
+                                                    portionSize
+                                                }) => {
+
+    let [portionNumber, setPortionNumber] = useState(START_VALUE_PORTION_NUMBER);
 
     let pagesCount = Math.ceil(totalItemCount / pageCount);
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
-    }
     let portionCount = Math.ceil(pagesCount / portionSize);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
     const styleForBtn = {padding: '5px', margin: '0 5px', fontWeight: 'bold'}
+    const conditionForShowButton = portionNumber > START_VALUE_PORTION_NUMBER
+    let pages = [];
 
-    const onSuperButtonClick = useCallback(() => {
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
+    }
+
+    const onButtonNextPageClick = useCallback(() => {
         setPortionNumber(portionNumber + 1)
-    },[portionNumber])
+    }, [portionNumber])
 
-    return <div className={styles.paginator}>
+    const onButtonPrevPageClick = useCallback(() => {
+        setPortionNumber(portionNumber - 1)
+    }, [portionNumber])
 
-        {portionNumber > 1 &&
-        <SuperButton
-            style={styleForBtn} onClick={() => {
-            setPortionNumber(portionNumber - 1)
-        }}>&#8592;</SuperButton>}
+    return (
+        <div className={styles.paginator}>
 
-        {pages
-            .filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
-            .map((page) => {
+            {conditionForShowButton &&
+            <SuperButton
+                style={styleForBtn} onClick={onButtonPrevPageClick}>&#8592;</SuperButton>}
 
-                const onSpanClick = () => {
-                    onChangePageClick(page)
-                }
+            {pages
+                .filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
+                .map((page) => {
 
-                return <span key={page}
-                             className={page === currentPage ? `${styles.pageNum} ${styles.activePage}` : styles.pageNum}
-                             onClick={onSpanClick}>{page}</span>
-            })}
-        {portionCount > portionNumber &&
-        <SuperButton style={styleForBtn}
-                     onClick={onSuperButtonClick}>&#8594;</SuperButton>}
-    </div>
+                    const classNameForPage = (page === currentPage ? `${styles.pageNum} ${styles.activePage}`
+                        : styles.pageNum)
+
+                    const onSpanClick = () => {
+                        onChangePageClick(page)
+                    }
+
+                    return <span key={page}
+                                 className={classNameForPage}
+                                 onClick={onSpanClick}>{page}</span>
+                })}
+
+            {portionCount > portionNumber &&
+            <SuperButton style={styleForBtn}
+                         onClick={onButtonNextPageClick}>&#8594;</SuperButton>}
+        </div>
+    )
 })
 
 export default Paginator;

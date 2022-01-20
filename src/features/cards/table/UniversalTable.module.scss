@@ -5,18 +5,24 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 30px;
+  table-layout: fixed;
 }
 
 table thead tr {
-  color: #ffffff;
+  color: $Text;
   font-weight: bold;
   background: $activeLinkBcgr;
+  width: 100%;
 }
 
 table tbody tr:nth-child(2n) {
   position: relative;
   background: $backgr;
 
+}
+
+table tbody tr {
+  width: 100%;
 }
 
 table tbody tr:hover {
@@ -30,24 +36,59 @@ table tbody tr:hover {
 
 th {
   padding: 19px;
-  max-width: 300px;
+  max-width: 150px;
+
+  .value {
+    position: relative;
+
+    &:after {
+      @include triangle;
+      border-bottom: 8px solid $buttonBackground;
+      right: -20px;
+      top: 0;
+    }
+
+    &:before {
+      @include triangle;
+      border-top: 8px solid $buttonBackground;
+      right: -20px;
+      bottom: 0;
+    }
+  }
+
 }
 
 td {
+
+  max-width: 150px;
   padding: 13px;
-  text-align: center;
-  max-width: 220px;
-  overflow: hidden;
+
+  &:last-child {
+    width: 220px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .cell {
+    height: 36px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    line-height: 1.8;
+  }
+
 }
 
 .btns {
   display: flex;
   justify-content: space-between;
+  width: 220px;
 
   & button {
     font-weight: normal;
     border-radius: 0;
     width: 60px;
+    margin-right: 5px;
     padding-top: .5rem;
     padding-bottom: .5rem;
   }

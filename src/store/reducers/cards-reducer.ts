@@ -1,23 +1,21 @@
 import {ActionsType} from "./AC types/types";
-import {AppDispatch, ThunkType} from "../store";
-import {setAppStatusAC} from "./app-reducer";
-import {catchErrorHandler} from "../../utils/error-utils";
-import {getCardsQueryParamsType, getCardsResponseType, updateCardType} from "../../dal/cards/types";
-import {cardsAPI} from "../../dal/cards/cardsAPI";
+import {getCardsResponseType} from "../../dal/cards/types";
+import {EMPTY_STRING} from "../../constants";
+
 
 
 let initialState = {
     cards: [
         {
-            answer: '',
-            question: '',
-            cardsPack_id: '',
+            answer: EMPTY_STRING,
+            question: EMPTY_STRING,
+            cardsPack_id: EMPTY_STRING,
             grade: 0,
             shots: 0,
-            user_id: '',
-            created: '',
-            updated: '',
-            _id: ''
+            user_id: EMPTY_STRING,
+            created: EMPTY_STRING,
+            updated: EMPTY_STRING,
+            _id: EMPTY_STRING,
         }
     ],
     cardsTotalCount: 0,
@@ -25,7 +23,7 @@ let initialState = {
     minGrade: 0,
     page: 1,
     pageCount: 0,
-    packUserId: '',
+    packUserId: EMPTY_STRING,
     sortCards: '0updated'
 } as InitialStateType
 
@@ -35,7 +33,6 @@ type InitialStateType = getCardsResponseType & { sortCards: string }
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "CARDS/SET-CARDS":
-            return {...state, ...action.payload}
         case 'CARDS/CHANGE-PAGE':
         case 'CARDS/SET-SORTING-FILTER':
             return {...state, ...action.payload}
@@ -69,78 +66,12 @@ export const changePageCardsAC = (page: number) => {
         }) as const
 }
 export const setCardsRatingAC = (_id: string, grade: number, shots: number) => {
-    return({type: 'CARDS/SET-CARDS-RATING',
+    return ({
+        type: 'CARDS/SET-CARDS-RATING',
         _id,
-        payload: {grade, shots}}) as const
+        payload: {grade, shots}
+    }) as const
 }
 
 
-export const getCardsTC = (getCardsQueryParams: getCardsQueryParamsType) => async (dispatch: AppDispatch) => {
-    try {
 
-        dispatch(setAppStatusAC('loading'))
-        const data = await cardsAPI.getCards(getCardsQueryParams)
-        dispatch(setCardsAC(data))
-
-    } catch (err) {
-        catchErrorHandler(dispatch, err)
-    } finally {
-        dispatch(setAppStatusAC('succeeded'))
-    }
-}
-
-export const addCardTC = (cardsPack_id: string, question: string, answer: string): ThunkType =>
-    async (dispatch) => {
-        try {
-            const card = {
-                cardsPack_id,
-                question,
-                answer,
-            }
-            dispatch(setAppStatusAC('loading'))
-            await cardsAPI.addCard({card})
-            await dispatch(getCardsTC({cardsPack_id}))
-        } catch (err) {
-            catchErrorHandler(dispatch, err)
-        }
-    }
-
-export const deleteCardTC = (cardsPack_id: string, id: string): ThunkType =>
-    async (dispatch) => {
-        try {
-            dispatch(setAppStatusAC('loading'))
-            await cardsAPI.deleteCard(id)
-            await dispatch(getCardsTC({cardsPack_id}))
-        } catch (err) {
-            catchErrorHandler(dispatch, err)
-        }
-    }
-
-export const updateCardTC = (cardsPack_id: string, {_id, ...rest}: updateCardType): ThunkType =>
-    async (dispatch) => {
-        try {
-            const card = {
-                _id,
-                ...rest
-            }
-            dispatch(setAppStatusAC('loading'))
-            await cardsAPI.updateCard({card})
-            await dispatch(getCardsTC({cardsPack_id}))
-        } catch (err) {
-            catchErrorHandler(dispatch, err)
-        }
-    }
-
-export const updateCardRatingTC = (newGrade: number, card_id: string): ThunkType =>
-    async (dispatch) => {
-        try {
-            dispatch(setAppStatusAC('loading'))
-            let {_id, grade, shots} = await cardsAPI.updateCardGrade(newGrade, card_id)
-            dispatch(setCardsRatingAC(_id, grade, shots))
-        } catch (err) {
-            catchErrorHandler(dispatch, err)
-        }
-        finally {
-            dispatch(setAppStatusAC('succeeded'))
-        }
-    }

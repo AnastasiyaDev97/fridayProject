@@ -7,8 +7,7 @@ import {
     changeSearchPackNameAC,
     setNewMinMaxValues,
     setPacksAC,
-    setSortingFilter,
-    toggleShowCardsModeAC
+    setSortingFilter, toggleShowUserPacksAC,
 } from "../packs-reducer";
 import {setAppStatusAC, setErrorText, setIsInitializedAC} from "../app-reducer";
 import {changePageCardsAC, setCardsAC, setCardsRatingAC, setSortingFilterCards} from "../cards-reducer";
@@ -26,7 +25,6 @@ export type ActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setPacksAC>
     | ReturnType<typeof changePageAC>
     | ReturnType<typeof setNewMinMaxValues>
-    | ReturnType<typeof toggleShowCardsModeAC>
     | ReturnType<typeof setSortingFilter>
     | ReturnType<typeof setCardsAC>
     | ReturnType<typeof setSortingFilterCards>
@@ -35,5 +33,5 @@ export type ActionsType = ReturnType<typeof setAppStatusAC>
     | ReturnType<typeof setModalTypeAC>
     | ReturnType<typeof setModalPropsAC>
     | ReturnType<typeof setCardsRatingAC>
- /*   | ReturnType<typeof updateProfileAC>*/
+    | ReturnType<typeof toggleShowUserPacksAC>
 

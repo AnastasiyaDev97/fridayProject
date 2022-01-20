@@ -1,17 +1,16 @@
-import {ReactElement} from "react";
+import {FC, memo, ReactElement} from "react";
 
 type RatingProps = {
     grade: number
 }
 
 
-export const Rating = ({grade}: RatingProps) => {
+export const Rating: FC<RatingProps> = memo(({grade}) => {
     const STAR_COUNT = 5
     let rating: ReactElement[] = []
 
     for (let i = 0; i < STAR_COUNT; i++) {
-
-        rating = [...rating, <Star selected={grade > i} />]
+        rating = [...rating, <Star selected={grade > i}/>]
     }
 
     return (
@@ -19,14 +18,14 @@ export const Rating = ({grade}: RatingProps) => {
             {rating}
         </div>
     )
-}
+})
 
 type starPropsType = {
     selected: boolean
 }
 
-function Star({selected}: starPropsType) {
+export const Star = memo(({selected}: starPropsType) => {
     return (
-        <span>{selected ?<b>Star </b>:"Star "}</span>
+        <span>{selected ? <b>Star </b> : "Star "}</span>
     )
-}
+})

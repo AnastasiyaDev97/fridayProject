@@ -1,9 +1,11 @@
 import React, {FC, memo, MouseEvent} from "react";
-import s from "../UniversalTable.module.scss";
-import SuperButton from "../../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
+import style from "../UniversalTable.module.scss";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
+import SuperButton from "../../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
 import {RootReducerType} from "../../../../store/store";
+import {COMPONENT_NAME} from "../../../../enum/ComponentName";
+
 
 type TableRowT={
     item:{
@@ -17,7 +19,7 @@ type TableRowT={
         answer?: string
         grade?: number
     }
-    component: 'packs' | 'cards'
+    component: string
     onDeleteButtonClick?: (id: string) => void
     onUpdateButtonClick?: (id: string) => void
     onLearnPackClick?: (packId: string) => void
@@ -57,17 +59,17 @@ export const TableRow:FC<TableRowT>=memo(({item,component,onDeleteButtonClick,on
                 const conditionForHidingCell = (key !== "user_id") && (key !== "_id")
                 if (conditionForHidingCell) {
                     return (
-                        <td key={i}>{value}</td>
+                        <td key={i}><div className={style.cell}>{value}</div></td>
                     )
                 }
             })}
-            <td className={s.btns}>
+            <td className={style.btns}>
                 <SuperButton disabled={CONDITION_FOR_DISABLE_BUTTON}
                              onClick={onDeleteModalCallClick}>Delete</SuperButton>
                 <SuperButton
                     disabled={CONDITION_FOR_DISABLE_BUTTON} onClick={onUpdateModalCallClick}>
                     Edit</SuperButton>
-                {component === 'packs' &&
+                {component === COMPONENT_NAME.PACKS &&
                 <SuperButton onClick={onLearnButtonClick} disabled={item.cardsCount! === 0}>Learn</SuperButton>}</td>
         </tr>
     )

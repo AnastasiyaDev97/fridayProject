@@ -1,10 +1,11 @@
 import React, {memo} from 'react';
-import s from './UniversalTable.module.scss'
+import style from './UniversalTable.module.scss'
 import {TableRow} from "./TableRow/TableRow";
+import {EMPTY_STRING} from "../../../constants";
 
 
 type TablePropsType = {
-    component: 'packs' | 'cards'
+    component: string
     rows: Array<{
         name?: string
         cardsCount?: number
@@ -38,22 +39,24 @@ export const UniversalTable = memo(({
                                         rows, headers, onSetSortingClick, component,
                                         onDeleteButtonClick, onUpdateButtonClick, onLearnPackClick
                                     }: TablePropsType) => {
-        console.log('table')
 
-
-        const titles = Object.entries(headers)
+        const titlesOfHeaders = Object.entries(headers)
 
         return (
-            <table className={s.table}>
+            <table className={style.table}>
                 <thead>
                 <tr>
-                    {titles.map(([key, value], i) => {
+                    {titlesOfHeaders.map(([key, value], i) => {
+
+                            const classNameForSpanValue = key !== 'actions' ? style.value : EMPTY_STRING
+
                             const onTitleClick = () => {
                                 onSetSortingClick(key)
                             }
+
                             return (
-                                <th key={i} onClick={onTitleClick} className={s.tableHeader}>
-                                    {value}</th>)
+                                <th key={i} onClick={onTitleClick} className={style.tableHeader}>
+                                    <span className={classNameForSpanValue}>{value}</span></th>)
                         }
                     )}
                 </tr>
@@ -61,9 +64,9 @@ export const UniversalTable = memo(({
                 <tbody>
 
                 {rows.map((row) => {
-                    return (<TableRow key={row._id} item={row} component={component}
-                                      onDeleteButtonClick={onDeleteButtonClick}
-                                      onUpdateButtonClick={onUpdateButtonClick} onLearnPackClick={onLearnPackClick}/>)
+                    return <TableRow key={row._id} item={row} component={component}
+                                     onDeleteButtonClick={onDeleteButtonClick}
+                                     onUpdateButtonClick={onUpdateButtonClick} onLearnPackClick={onLearnPackClick}/>
                 })}
                 </tbody>
             </table>

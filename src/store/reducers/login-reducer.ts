@@ -1,15 +1,9 @@
-import {Dispatch} from "redux";
-
-import {setAppStatusAC} from "./app-reducer";
-import {setProfileAC} from "./profile-reducer";
-import {AxiosError} from "axios";
-import {catchErrorHandler} from "../../utils/error-utils";
 import {ActionsType} from "./AC types/types";
-import {authorizationAPI} from "../../dal/authorization/authorization";
-export type loginAuthDataType={
+
+export type loginAuthDataType = {
     email: string
-    password:string
-    rememberMe:boolean
+    password: string
+    rememberMe: boolean
 }
 
 let initialState = {
@@ -18,47 +12,19 @@ let initialState = {
 type InitialStateType = typeof initialState
 
 
-export const loginReducer = (state: InitialStateType=initialState, action: ActionsType) => {
+export const loginReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
-        case "TOGGLE-IS-AUTH":
-            return {...state,...action.payload}
+        case "LOGIN/TOGGLE-IS-AUTH":
+            return {...state, ...action.payload}
         default:
             return state
     }
 }
 
-export const isAuthToggleAC = (isLoggedIn: boolean) =>
-    ({
-        type: 'TOGGLE-IS-AUTH',
-        payload: {
-            isLoggedIn
-        }
-    } as const)
-
-export const loginTC=(loginAuthData:loginAuthDataType)=>{
-    return (dispatch:Dispatch<ActionsType>)=>{
-        dispatch(setAppStatusAC('loading'))
-        authorizationAPI.loginMe(loginAuthData)
-            .then((res)=>{
-                dispatch(setAppStatusAC('succeeded'))
-                dispatch(isAuthToggleAC(true))
-                dispatch(setProfileAC(res))
-            })
-            .catch((err: AxiosError) =>{
-             catchErrorHandler(dispatch, err)})
+export const isAuthToggleAC = (isLoggedIn: boolean) => ({
+    type: 'LOGIN/TOGGLE-IS-AUTH',
+    payload: {
+        isLoggedIn
     }
-}
+} as const)
 
-export const logoutTC=()=>{
-    return (dispatch:Dispatch<ActionsType>)=>{
-        dispatch(setAppStatusAC('loading'))
-        authorizationAPI.logoutMe()
-            .then(()=>{
-                dispatch(setAppStatusAC('succeeded'))
-                dispatch(isAuthToggleAC(false))
-
-            })
-            .catch((err: AxiosError) =>{
-                catchErrorHandler(dispatch, err)})
-    }
-}

@@ -1,9 +1,4 @@
-import {setAppStatusAC} from "./app-reducer";
-import {Dispatch} from "redux";
-import {AxiosError} from "axios";
-import {catchErrorHandler} from "../../utils/error-utils";
-import { ActionsType } from "./AC types/types";
-import {authorizationAPI} from "../../dal/authorization/authorization";
+import {ActionsType} from "./AC types/types";
 
 
 let initialState = {registerStatus: false}
@@ -26,18 +21,4 @@ export const registerStatusAC = (registerStatus: boolean) =>
         payload: {registerStatus}
     } as const)
 
-export const registerMeTC = (email: string, password: string) => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    authorizationAPI.registerMe(email, password)
-        .then(() => {
-            dispatch(registerStatusAC(true))
-        })
-        .catch((err: AxiosError) => {
-                catchErrorHandler(dispatch, err)
-                dispatch(registerStatusAC(false))
-            }
-        )
-        .finally(() => {
-            dispatch(setAppStatusAC('succeeded'))
-        })
-}
+

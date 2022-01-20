@@ -3,3 +3,9 @@
   padding: 8px;
   width: 40%;
 }
+.cursor{
+  cursor: pointer;
+  &:hover{
+    color:grey;
+  }
+}

@@ -1,17 +1,22 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import styles from './NavBar.module.scss'
+import {EMPTY_STRING} from "../../constants";
+import {PATH} from "../../enum/Path";
 
 
 export const NavBar = () => {
-    console.log('nav')
+
+    const classNameForLink = ({isActive}: { isActive: boolean }) => isActive ? `${styles.active}` : EMPTY_STRING
+    const NavLinkDataArray = [
+        {navlinkPath: PATH.PROFILE, title: 'Profile'},
+        {navlinkPath: PATH.PACKS, title: 'Packs List'},
+    ]
     return (
         <div className={styles.navBarContainer}>
 
-                <NavLink to='/profile' className={({isActive}) => isActive ? `${styles.active}` : ``}>Profile</NavLink>
-
-
-                <NavLink to='/packs' className={({isActive}) => isActive ? `${styles.active}` : ``}>Packs List</NavLink>
+            {NavLinkDataArray.map(({navlinkPath, title}) =>
+                <NavLink key={title} to={navlinkPath} className={classNameForLink}>{title}</NavLink>)}
 
         </div>
     )

@@ -15,7 +15,7 @@ type SliderPropsType = {
 
 export const RangeSlider:FC<SliderPropsType> = memo(({minValueForRangeSlider,maxValueForRangeSlider,
                                                          onChangeCardsCountsChange}) => {
-        console.log('slider')
+
         const maxCardsCount = useSelector<RootReducerType, number>((state) => state.packs.maxCardsCount)
         const minCardsCount = useSelector<RootReducerType, number>((state) => state.packs.minCardsCount)
 

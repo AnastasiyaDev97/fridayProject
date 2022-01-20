@@ -1,0 +1,30 @@
+@import "../../common/sass/variables";
+
+.notFoundBackgr{
+  position: fixed;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: $backgrForPacks;
+  top: 0;
+  left: 0;
+  z-index: 5;
+
+  .notFoundBlock{
+    position: absolute;
+    padding: 80px 130px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    color: black;
+    display: flex;
+    font-family: $NunitoFont;
+    font-weight: bold;
+    flex-direction: column;
+    background: linear-gradient(to bottom, #99ff99 0%, #ffffcc 100%);
+
+    .link{
+      text-decoration: none;
+      color:$Text;
+    }
+  }
+}

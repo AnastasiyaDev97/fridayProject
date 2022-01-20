@@ -1,7 +1,7 @@
 import {ButtonHTMLAttributes, DetailedHTMLProps, FC, memo} from 'react'
-import s from './SuperButton.module.scss'
+import style from './SuperButton.module.scss'
 
-// тип пропсов обычной кнопки, children в котором храниться название кнопки там уже описан
+
 type DefaultButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 type SuperButtonPropsType = DefaultButtonPropsType & {
@@ -14,9 +14,8 @@ const SuperButton: FC<SuperButtonPropsType> = memo((
         ...restProps// все остальные пропсы попадут в объект restProps, там же будет children
     }
 ) => {
-    debugger
-    const finalClassName = `${s.btn} ${red ? s.red : s.default} ${className}`
-    console.log('button')
+    const finalClassName = `${style.btn} ${red ? style.red : style.default} ${className}`
+
     return (
         <button
             className={finalClassName}

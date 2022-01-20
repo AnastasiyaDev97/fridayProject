@@ -16,7 +16,10 @@ import {
     modalEntityType
 } from "../../../common/components/Modal/ModalContainer/ModalContainer";
 import {RootReducerType} from "../../../store/store";
-import {getCardsTC} from "../../../store/reducers/cards-reducer";
+import {EMPTY_STRING} from "../../../constants";
+import {MODAL_ACTION} from "../../../enum/ModalAction";
+import {getCardsTC} from "../../../store/thunks/cards";
+import {COMPONENT_NAME} from "../../../enum/ComponentName";
 
 
 type PackListPropsType = {
@@ -25,23 +28,23 @@ type PackListPropsType = {
     totalItemCount: number
     pageCount: number
     sortPacks: string
-    setModalData:(modalAction:modalActionType,id: string)=>void
+    setModalData: (modalAction: modalActionType, id: string) => void
 }
 
 
-export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, sortPacks,
-                                   setModalData}: PackListPropsType) => {
+export const PacksList = memo(({
+                                   packs, currentPage, totalItemCount, pageCount, sortPacks,
+                                   setModalData
+                               }: PackListPropsType) => {
 
-    const [text, setText] = useState<string>('')
-
-    const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
-    const id = useSelector<RootReducerType,string>(state => state.modals.id)
-
-    console.log('packlist')
     const dispatch = useDispatch()
 
-    const portionSize = 10
+    const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
+    const id = useSelector<RootReducerType, string>(state => state.modals.id)
 
+    const [text, setText] = useState<string>(EMPTY_STRING)
+
+    const portionSize = 10
     const headersForPacks = {
         name: 'Name', cardsCount: 'Cards',
         updated: 'Last updated', user_name: 'Created by', actions: 'Actions'
@@ -54,13 +57,16 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
                               }) => {
                     updated = convertDateFormat(updated)
 
-                    return {name, cardsCount, updated, user_name,user_id,_id}
-                }
+                    return {name, cardsCount, updated, user_name, user_id, _id}}
             )
         }
         , [packs])
 
-    const packForModal=packs.find(pack=>pack._id===id)
+    const packForModal = packs.find(pack => pack._id === id)
+
+    const handleSearchPack=useCallback(()=> {
+        dispatch(changeSearchPackNameAC(text))
+    },[dispatch,text])
 
     UseSetTimeoutEffect(handleSearchPack, text, 2000)
 
@@ -69,37 +75,29 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
         },
         [dispatch])
 
-
     const handleSetSortingClick = useCallback((headerName: string) => {
         dispatch(setSortingFilter(sortPacks[0] === '0' ? `1${headerName}` : `0${headerName}`))
     }, [dispatch, sortPacks])
 
-
-    function handleSearchPack() {
-        dispatch(changeSearchPackNameAC(text))
-    }
-
-
     const handleAddPackButtonClick = useCallback(() => {
-        setModalData('add','')
-    },[setModalData])
+        setModalData(MODAL_ACTION.ADD, EMPTY_STRING)
+    }, [setModalData])
 
     const handleDeleteButtonClick = useCallback((packId: string) => {
-        setModalData('delete', packId)
-    },[setModalData])
+        setModalData(MODAL_ACTION.DELETE, packId)
+    }, [setModalData])
 
     const handleUpdatePackClick = useCallback((packId: string) => {
-        setModalData('update', packId)
-    },[setModalData])
+        setModalData(MODAL_ACTION.UPDATE, packId)
+    }, [setModalData])
 
-    async function handleLearnPackClick (packId: string)  {
-        await dispatch(getCardsTC({cardsPack_id:packId,max:100,pageCount:100}))
-        setModalData('learn', packId)
+    async function handleLearnPackClick(packId: string) {
+        await dispatch(getCardsTC({cardsPack_id: packId, max: 100, pageCount: 100}))
+        setModalData(MODAL_ACTION.LEARN, packId)
     }
 
     return (
         <div className={s.listWrapper} aria-disabled={true}>
-
             <h2>Packs List</h2>
 
             <div className={s.row}>
@@ -107,10 +105,12 @@ export const PacksList = memo(({packs, currentPage, totalItemCount, pageCount, s
                                 onChangeText={setText} onEnter={handleSearchPack}/>
                 <SuperButton style={{width: '35%'}} onClick={handleAddPackButtonClick}>Add new pack</SuperButton>
             </div>
+
             {modalEntity && <ModalContainer pack={packForModal}/>}
+
             <UniversalTable rows={packsForTable} headers={headersForPacks}
                             onSetSortingClick={handleSetSortingClick}
-                            component={'packs'} onDeleteButtonClick={handleDeleteButtonClick}
+                            component={COMPONENT_NAME.PACKS} onDeleteButtonClick={handleDeleteButtonClick}
                             onUpdateButtonClick={handleUpdatePackClick} onLearnPackClick={handleLearnPackClick}/>
             <Paginator totalItemCount={totalItemCount} pageCount={pageCount} currentPage={currentPage}
                        onChangePageClick={handleChangePageClick} portionSize={portionSize}/>

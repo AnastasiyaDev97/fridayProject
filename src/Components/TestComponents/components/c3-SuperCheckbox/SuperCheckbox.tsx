@@ -1,7 +1,7 @@
 import React, {ChangeEvent, DetailedHTMLProps, FC, InputHTMLAttributes, memo} from 'react'
 import s from './SuperCheckbox.module.css'
+import {EMPTY_STRING} from "../../../../constants";
 
-// тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 type SuperCheckboxPropsType = DefaultInputPropsType & {
@@ -22,10 +22,9 @@ const SuperCheckbox: FC<SuperCheckboxPropsType> = memo((
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
         onChange&&onChange(e)
         onChangeChecked&&onChangeChecked(e.currentTarget.checked)
-        // сделайте так чтоб работал onChange и onChangeChecked
     }
 
-    const finalInputClassName = `${s.checkbox} ${className ? className : ''}`
+    const finalInputClassName = `${s.checkbox} ${className ? className : EMPTY_STRING}`
 
     return (
         <label className={s.labelForCheckBox}>

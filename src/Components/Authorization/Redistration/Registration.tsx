@@ -1,26 +1,35 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useFormik} from "formik";
 import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
 import {Navigate, useNavigate} from "react-router-dom";
-import {registerMeTC, registerStatusAC} from "../../../store/reducers/registration-reducer";
+import { registerStatusAC} from "../../../store/reducers/registration-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
 import styles from "../Login/Login.module.scss";
-
 import {UniversalInput} from "../../../common/components/Input/UniversalInput";
 import {validates} from "../../../utils/validates";
+import {EMPTY_STRING} from "../../../constants";
+import {registerMeTC} from "../../../store/thunks/registration";
+import {PATH} from "../../../enum/Path";
+import {FORMIK_FIELDS_NAME} from "../../../enum/FormikFieldNames";
+import {INPUT_TYPE} from "../../../enum/InputType";
+import {BUTTON_TYPE} from "../../../enum/ButtonTyoe";
 
 
 export const Registration = () => {
-    console.log('regis')
     const dispatch = useDispatch()
+
     const navigate = useNavigate()
+
+    let registerStatus = useSelector<RootReducerType, boolean>(state => state.register.registerStatus)
+
     const formik = useFormik({
         initialValues: {
-            email: '',
-            password: '',
-            confirmPassword: '',
+            email: EMPTY_STRING,
+            password: EMPTY_STRING,
+            confirmPassword: EMPTY_STRING,
         },
+
         validate: (values) => {
             validates(values)
         },
@@ -28,41 +37,41 @@ export const Registration = () => {
         onSubmit: values => {
             dispatch(registerMeTC(values.email, values.password))
             formik.resetForm()
-
-
         },
     })
-    const cancelHandler = () => {
+
+    const onCancelButtonClick = useCallback(() => {
         formik.resetForm()
-        navigate('/login')
-    }
-    let registerStatus = useSelector<RootReducerType, boolean>(state => state.register.registerStatus)
+        navigate(PATH.LOGIN)
+    },[formik,navigate])
+
     if (registerStatus) {
         dispatch(registerStatusAC(false))
-        return <Navigate to={'/login'}/>
+        return <Navigate to={PATH.LOGIN}/>
     }
-    return (
 
+    return (
         <div className={styles.wrapper}>
             <h2>Sign up</h2>
             <form onSubmit={formik.handleSubmit} className={styles.form}>
                 <div className={styles.inputsWrapper}>
 
-                    <UniversalInput validationErr={(formik.touched.email && formik.errors.email) || ''}
-                                    formikProps={formik.getFieldProps('email')}/>
-                    <UniversalInput validationErr={(formik.touched.password && formik.errors.password) || ''}
-                                    formikProps={formik.getFieldProps('password')} type='password'
+                    <UniversalInput validationErr={(formik.touched.email && formik.errors.email) || EMPTY_STRING}
+                                    formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.EMAIL)}/>
+                    <UniversalInput validationErr={(formik.touched.password && formik.errors.password) || EMPTY_STRING}
+                                    formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
+                                    type={INPUT_TYPE.PASSWORD}
                                     isPassword={true}/>
                     <UniversalInput
-                        validationErr={(formik.touched.confirmPassword && formik.errors.confirmPassword) || ''}
-                        formikProps={formik.getFieldProps('confirmPassword')} type='password'
+                        validationErr={(formik.touched.confirmPassword && formik.errors.confirmPassword) || EMPTY_STRING}
+                        formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.CONFIRM_PASSWORD)} type={INPUT_TYPE.PASSWORD}
                         isPassword={true}/>
-
                 </div>
+
                 <div className={styles.row}>
                     <div className={styles.registrationBtns}>
-                        <SuperButton type='button' onClick={cancelHandler}>Cancel</SuperButton>
-                        <SuperButton type='submit'>Register</SuperButton>
+                        <SuperButton type={BUTTON_TYPE.BUTTON} onClick={onCancelButtonClick}>Cancel</SuperButton>
+                        <SuperButton type={BUTTON_TYPE.SUBMIT}>Register</SuperButton>
                     </div>
                 </div>
             </form>

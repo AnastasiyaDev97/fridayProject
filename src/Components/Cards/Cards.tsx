@@ -1,10 +1,10 @@
 import React, {FC, memo, useCallback, useEffect, useMemo} from 'react';
-import s from './Cards.module.scss'
+import style from './Cards.module.scss'
 import Pagination from "../../features/cards/pagination/Pagination";
 import {convertDateFormat} from "../../utils/handles";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
-import {changePageCardsAC, getCardsTC, setSortingFilterCards} from "../../store/reducers/cards-reducer";
+import {changePageCardsAC, setSortingFilterCards} from "../../store/reducers/cards-reducer";
 import {UniversalTable} from "../../features/cards/table/UniversalTable";
 import {useNavigate, useParams} from "react-router-dom";
 import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
@@ -16,12 +16,15 @@ import {
     modalEntityType
 } from "../../common/components/Modal/ModalContainer/ModalContainer";
 import {Rating} from "./Rating/Rating";
+import {STATUS} from "../../enum/StatusType";
+import {getCardsTC} from "../../store/thunks/cards";
+import {MODAL_ACTION} from "../../enum/ModalAction";
+import {COMPONENT_NAME} from "../../enum/ComponentName";
 
 
 type CardsT = {
     setModalData: (modalAction: modalActionType, id: string) => void
 }
-
 
 export const Cards: FC<CardsT> = memo(({setModalData}) => {
 
@@ -32,7 +35,6 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
 
         const navigate = useNavigate()
 
-
         const cards = useSelector<RootReducerType, Array<CardType>>(state => state.cards.cards)
         const sortCards = useSelector<RootReducerType, string>((state) => state.cards.sortCards)
         const totalItemCount = useSelector<RootReducerType, number>((state) => state.cards.cardsTotalCount)
@@ -41,11 +43,10 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
         const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
 
         const PORTION_SIZE = 10
-        const headersForCards = {
+        const headersForTable = {
             question: 'Question', answer: 'Answer',
             updated: 'Last updated', grade: 'Grade', actions: 'Actions'
         }
-
         const cardsForTable = useMemo(() => {
                 return cards.map(({
                                       question, answer,
@@ -59,14 +60,15 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
             }
             , [cards])
 
-
         useEffect(() => {
-            dispatch(setAppStatusAC('loading'))
+            dispatch(setAppStatusAC(STATUS.LOADING))
+
             let idOfTimeout = setTimeout(() => {
                 if (cardsPack_id) {
                     dispatch(getCardsTC({cardsPack_id, page: currentPage, sortCards}))
                 }
             }, 1000)
+
             return () => {
                 clearTimeout(idOfTimeout)
             }
@@ -74,44 +76,43 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
 
 
         const handleSetSortingClick = useCallback((headerName: string) => {
-            dispatch(setSortingFilterCards(sortCards[0] === '0' ? `1${headerName}` : `0${headerName}`))
+            dispatch(setSortingFilterCards(sortCards[0] === '0' ? `1${headerName}`  : `0${headerName}`))
         }, [dispatch, sortCards])
 
         const handleChangePageClick = useCallback((page: number) => {
-                dispatch(changePageCardsAC(page))
-            },
+                dispatch(changePageCardsAC(page))},
             [dispatch])
 
-        const onTitleClick = () => {
+        const onTitleGoBackClick = () => {
             navigate(-1)
         }
 
         const handleAddCardButtonClick = useCallback(() => {
             if (cardsPack_id) {
-                setModalData('add', cardsPack_id)
+                setModalData(MODAL_ACTION.ADD, cardsPack_id)
             }
         }, [setModalData, cardsPack_id])
 
 
         const handleDeleteButtonClick = useCallback((_id: string) => {
-            setModalData('delete', _id)
+            setModalData(MODAL_ACTION.DELETE, _id)
         }, [setModalData])
 
         const handleUpdateCardClick = useCallback((_id: string) => {
-            setModalData('update', _id)
+            setModalData(MODAL_ACTION.UPDATE, _id)
         }, [setModalData])
 
         if (!cards) {
             return <></>
         }
         return (
-            <div className={s.wrapper}>
-                <h2 onClick={onTitleClick} className={s.cursor}>&#8592; Pack Name</h2>
-                <SuperButton onClick={handleAddCardButtonClick} className={s.btn}>Add new card</SuperButton>
+            <div className={style.wrapper}>
+                <h2 onClick={onTitleGoBackClick} className={style.cursor}>&#8592; Pack Name</h2>
+                <SuperButton onClick={handleAddCardButtonClick} className={style.btn}>Add new card</SuperButton>
                 {modalEntity && <ModalContainer />}
 
-                <UniversalTable rows={cardsForTable} headers={headersForCards}
-                                onSetSortingClick={handleSetSortingClick} component={'cards'}
+                <UniversalTable rows={cardsForTable} headers={headersForTable}
+                                onSetSortingClick={handleSetSortingClick} component={COMPONENT_NAME.CARDS}
                                 onDeleteButtonClick={handleDeleteButtonClick}
                                 onUpdateButtonClick={handleUpdateCardClick}/>
                 <Pagination totalItemCount={totalItemCount}

@@ -1,15 +1,10 @@
-import {isAuthToggleAC} from "./login-reducer";
-import {setProfileAC} from "./profile-reducer";
-import {Dispatch} from "redux";
 import {Nullable} from "../../types/Nullable";
 import {ActionsType} from "./AC types/types";
-import {authorizationAPI} from "../../dal/authorization/authorization";
+import {STATUS} from "../../enum/StatusType";
 
-
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
-    status: 'idle' as RequestStatusType,
+    status: STATUS.IDLE,
     isInitialized: false,
     error: null as Nullable<string>,
 }
@@ -31,7 +26,7 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 }
 
 
-export const setAppStatusAC = (status: RequestStatusType) => ({
+export const setAppStatusAC = (status: string) => ({
     type: 'APP/SET-STATUS',
     payload: {
         status,
@@ -43,30 +38,13 @@ export const setIsInitializedAC = () => ({
     type: 'APP/INITIALIZE'
 } as const)
 
-export const setErrorText = (error: Nullable<string>) => {
-    return (
-        {
-            type: 'APP/SET-ERROR',
-            payload: {error}
-        } as const)
-}
+export const setErrorText = (error: Nullable<string>) => ({
+    type: 'APP/SET-ERROR',
+    payload: {error}
+} as const)
 
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-    dispatch(setAppStatusAC('loading'))
-    authorizationAPI.authMe()
-        .then((res) => {
-            dispatch(isAuthToggleAC(true))
-            dispatch(setProfileAC(res))
-        })
-        .catch(() => {
-            dispatch(isAuthToggleAC(false))
-        })
-        .finally(() => {
-                dispatch(setAppStatusAC('succeeded'))
-                dispatch(setIsInitializedAC())
-            }
-        )
-}
+
+
 
 
 

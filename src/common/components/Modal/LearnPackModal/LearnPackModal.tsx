@@ -1,21 +1,25 @@
 import {FC, memo, useCallback, useState} from "react";
 import s from './LearnPackModal.module.scss'
 import SuperButton from "../../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
-import {updateCardRatingTC} from "../../../../store/reducers/cards-reducer";
 import {useDispatch} from "react-redux";
+import {updateCardRatingTC} from "../../../../store/thunks/cards";
 
 type LearnPackModalT = {
     answer: string
     activeCardId: string
-    onNextCardButtonClick:()=>void
+    onNextCardButtonClick: () => void
 }
 
-export const LearnPackModal: FC<LearnPackModalT> = memo(({answer, activeCardId,onNextCardButtonClick}) => {
+export const LearnPackModal: FC<LearnPackModalT> = memo(({answer, activeCardId, onNextCardButtonClick}) => {
     const dispatch = useDispatch()
 
     const [isAnswerShow, setIsAnswerShow] = useState<boolean>(false)
 
-    const BtnShowTitle = isAnswerShow ? 'Hide' : 'Show'
+    const BtnTitle = {
+        Hide: 'Hide',
+        Show: 'Show'
+    }
+    const BtnShowTitle = isAnswerShow ? BtnTitle.Hide : BtnTitle.Show
 
     const onToggleShowAnswerClick = useCallback(() => {
         setIsAnswerShow(!isAnswerShow)
@@ -24,7 +28,7 @@ export const LearnPackModal: FC<LearnPackModalT> = memo(({answer, activeCardId,o
     const onRateButtonClick = useCallback((grade: number) => {
         dispatch(updateCardRatingTC(grade, activeCardId))
         onNextCardButtonClick()
-    }, [dispatch, activeCardId,onNextCardButtonClick])
+    }, [dispatch, activeCardId, onNextCardButtonClick])
 
     const markButtons = [
         {name: 'I know', callback: () => onRateButtonClick(5),},
@@ -41,12 +45,12 @@ export const LearnPackModal: FC<LearnPackModalT> = memo(({answer, activeCardId,o
                 <SuperButton onClick={onToggleShowAnswerClick} className={s.btn}>{BtnShowTitle}</SuperButton>
                 {isAnswerShow && <span className={s.answer}>{answer}</span>}
             </div>
+
             <div className={s.buttonsBlock}>
                 {markButtons.map(({name, callback}, i) => {
                     return <SuperButton key={i} onClick={callback}>{name}</SuperButton>
                 })}
             </div>
-
         </div>
     )
 })

@@ -27,9 +27,9 @@ export type getPacksQueryParamsType = {
     packName?: Nullable<string>
     min?: number
     max?: number
-    sortPacks?: string // не обязательно
-    page?: number // не обязательно
-    pageCount?: number // не обязательно
+    sortPacks?: string
+    page?: number
+    pageCount?: number
     user_id?: Nullable<string>
 }
 
