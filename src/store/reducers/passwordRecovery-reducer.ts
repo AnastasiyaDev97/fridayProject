@@ -26,11 +26,11 @@ export const SetResponseInfoForgotPassAC = (responseInfoForgotPass: string) => (
     type: 'SET-RESPONSE-INFO-FORGOT-PASS',
     payload: {responseInfoForgotPass}
 } as const)
+
 export const SetResponseInfoNewPassAC = (responseInfoNewPass: string) => ({
     type: 'SET-RESPONSE-INFO-NEW-PASS',
     payload: {responseInfoNewPass}
 } as const)
-
 
 export const addEmailAC = (emailForRecovery: string) => ({
     type: 'ADD-EMAIL',

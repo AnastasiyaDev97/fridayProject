@@ -1,7 +1,7 @@
-import { useCallback} from 'react';
+import React, { useCallback} from 'react';
 import styles from "../Login/Login.module.scss";
 import {UniversalInput} from "../../../common/components/Input/UniversalInput";
-import {NavLink} from "react-router-dom";
+import { NavLink, useNavigate} from "react-router-dom";
 import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
 import {useFormik} from "formik";
 import {
@@ -17,8 +17,11 @@ import {BUTTON_TYPE} from "../../../enum/ButtonTyoe";
 import {sendPassword} from "../../../store/thunks/passwordRecovery";
 
 
+
 export const ForgotPassword = () => {
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
     const emailForRecovery = useSelector<RootReducerType, null | string>(state => state.passRecovery.emailForRecovery)
     const responseInfoForgotPass = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfoForgotPass)
@@ -33,13 +36,13 @@ export const ForgotPassword = () => {
 
         onSubmit: values => {
             dispatch(sendPassword(values.email))
-
         },
     })
 
     const onButtonTogglePasswordStatusClick = useCallback(() => {
         dispatch(SetResponseInfoForgotPassAC(EMPTY_STRING))
         dispatch(addEmailAC(EMPTY_STRING))
+
     },[dispatch])
 
     return (

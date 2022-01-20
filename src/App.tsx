@@ -22,9 +22,6 @@ import {PATH} from "./enum/Path";
 import {MODAL_ENTITY} from "./enum/ModalEntity";
 
 
-/*export type ComponentAuthType = 'register' | 'login' | 'forgotPass' | 'newPass'*/
-
-
 function App() {
     const dispatch = useDispatch()
 

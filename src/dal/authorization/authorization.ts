@@ -1,6 +1,5 @@
 import {instance} from "../apiConfig";
 import {loginAuthDataType} from "../../store/reducers/login-reducer";
-import axios from "axios";
 import {LogoutResponse, RegisterErrorResponse, ResponseForgotPasswordType, ResponseLoginType} from "./types";
 import {newPassDataType} from "../packs/types";
 
@@ -40,7 +39,7 @@ export const authorizationAPI = {
 password recovery link: <a href='https://nastyaz23.github.io/fridayProject/#new-password/$token$'>
 link</a></div>`
         }
-        return axios.post<ResponseForgotPasswordType>(`https://neko-back.herokuapp.com/2.0/auth/forgot`
+        return instance.post<ResponseForgotPasswordType>(`auth/forgot`
             , messageDataPassword,
             {withCredentials: true})
             .then(res => {
@@ -48,7 +47,7 @@ link</a></div>`
             })
     },
     setNewPassword(newPassData: newPassDataType) {
-            return axios.post<LogoutResponse>(`https://neko-back.herokuapp.com/2.0/auth/set-new-password`
+            return instance.post<LogoutResponse>(`auth/set-new-password`
             , newPassData,
             {withCredentials: true})
             .then(res => {

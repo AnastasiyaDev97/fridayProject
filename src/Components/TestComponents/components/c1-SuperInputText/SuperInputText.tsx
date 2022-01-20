@@ -22,8 +22,8 @@ const SuperInputText: FC<SuperInputTextPropsType> = memo((
         onKeyPress, onEnter,
         error,
         className,
-        value
-        /*...restProps// все остальные пропсы попадут в объект restProps*/
+        /*value*/
+        ...restProps// все остальные пропсы попадут в объект restProps
     }
 ) => {
     const dispatch=useDispatch()
@@ -51,7 +51,7 @@ const SuperInputText: FC<SuperInputTextPropsType> = memo((
                 onChange={onChangeCallback}
                 onKeyPress={onKeyPressCallback}
                 className={finalInputClassName}
-                value={value}
+                {...restProps}
             />
 
         </>
