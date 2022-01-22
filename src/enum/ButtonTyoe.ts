@@ -1,4 +1,4 @@
-export const BUTTON_TYPE:{[key:string]:"button" | "submit" | "reset" | undefined}={
-    SUBMIT:'submit',
-    BUTTON:'button',
+export enum BUTTON_TYPE{
+    SUBMIT='submit',
+    BUTTON='button',
 }

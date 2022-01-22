@@ -9,6 +9,7 @@ import {isAuthToggleAC, loginAuthDataType} from "../reducers/login-reducer";
 export const loginTC = (loginAuthData: loginAuthDataType) =>
     async (dispatch: AppDispatch) => {
         try {
+
             dispatch(setAppStatusAC(STATUS.LOADING))
             let res = await authorizationAPI.loginMe(loginAuthData)
 

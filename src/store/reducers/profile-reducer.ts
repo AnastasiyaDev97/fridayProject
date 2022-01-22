@@ -4,7 +4,7 @@ import {EMPTY_STRING, profileInitializeAvatarURL} from "../../constants";
 
 
 const initialState = {
-    avatar:profileInitializeAvatarURL,
+    avatar: profileInitializeAvatarURL,
     created: EMPTY_STRING,
     email: EMPTY_STRING,
     isAdmin: false,
@@ -20,10 +20,10 @@ const initialState = {
 }
 
 
-
 export const profileReducer = (state: ResponseLoginType = initialState, action: ActionsType): ResponseLoginType => {
     switch (action.type) {
         case 'SET-PROFILE':
+            debugger
             return {...state, ...action.payload.profile}
         default:
             return state
@@ -31,12 +31,13 @@ export const profileReducer = (state: ResponseLoginType = initialState, action: 
 }
 
 
-export const setProfileAC = (profile: ResponseLoginType ) => ({
+export const setProfileAC = (profile: ResponseLoginType) => ({
         type: 'SET-PROFILE',
         payload: {
-            profile,
-        }
-    } as const)
+            profile,}
+    }
+) as const
+
 
 
 

@@ -22,11 +22,13 @@
 
 .err {
     position: absolute;
-    color: darkred;
+    color: rgba(254, 254, 255, 0.7);
     font-family: "Nunito Sans", Arial, sans-serif;
-    font-size: 2rem;
+    font-size: 1.2rem;
     left: 50%;
     transform: translate(-50%, 50%);
-    top: 50px;
+    top: 70px;
     font-weight: 700;
+    padding: 10px 30px;
+    background: rgba(208, 41, 41, 0.3);
 }

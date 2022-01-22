@@ -1,12 +1,12 @@
-import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent, useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
 import {withRedirect} from "../../common/hoc/withRedirect";
 import style from './Profile.module.scss'
 import SuperInputText from "../TestComponents/components/c1-SuperInputText/SuperInputText";
 import {EditableSpan} from "../../common/components/EditableSpan/EditableSpan";
-import {updatePackTC} from "../../store/thunks/packs";
 import {EMPTY_STRING} from "../../constants";
+import {updateProfileTC} from "../../store/thunks/profile";
 
 
 const Profile = () => {
@@ -20,47 +20,53 @@ const Profile = () => {
     const [avatarURL, setAvatarURL] = useState<string>(EMPTY_STRING)
     const [isInputActive, setIsInputActive] = useState<boolean>(false)
 
-    const onChangePhotoClick = () => {
+    const onActivateInputForURLClick = () => {
         setIsInputActive(true)
     }
 
-    const onInputForURLChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onInputForURLChange =useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setAvatarURL(e.currentTarget.value)
-    }
+    },[])
 
-    const onAddNewPhotoClick = () => {
-        dispatch(updatePackTC(name, avatarURL))
+    const onAddNewPhotoClick = useCallback(() => {
+        dispatch(updateProfileTC(name, avatarURL))
         setIsInputActive(false)
         setAvatarURL(EMPTY_STRING)
-    }
+    },[dispatch,name,avatarURL])
 
-    const onInputForURLKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    const onInputForURLKeyPress = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onAddNewPhotoClick()
         }
-    }
+    },[onAddNewPhotoClick])
 
     const onUpdateTitle = (newTitle: string) => {
         if (newTitle !== name) {
-            dispatch(updatePackTC(newTitle, avatarURL))
+            dispatch(updateProfileTC(newTitle, avatarURL))
         }
     }
+
+    const onCloseInputBlur = useCallback(() => {
+        setIsInputActive(false)
+    }, [setIsInputActive])
 
     return (
         <div className={style.profileWrapper}>
             <div className={style.avatarBlock}>
 
                 <div className={style.avatarWrapper}>
-                    <div className={style.tooltip} onClick={onChangePhotoClick}>Change Photo</div>
+                    <div className={style.tooltip} onClick={onActivateInputForURLClick}>Change Photo</div>
                     <img alt='avatar' className={style.avatar} src={avatar}/>
                 </div>
 
                 {isInputActive &&
 
-                <div className={style.inputForURL}><SuperInputText className={style.input} value={avatarURL}
-                                                                   onChange={onInputForURLChange}
-                                                                   onKeyPress={onInputForURLKeyPress}
-                                                                   autoFocus placeholder={'Add URL'}/>
+                <div className={style.inputForURL}>
+                    <SuperInputText className={style.input} value={avatarURL}
+                                    onChange={onInputForURLChange}
+                                    onKeyPress={onInputForURLKeyPress}
+                                    autoFocus placeholder={'Add URL'}
+                                    onBlur={onCloseInputBlur}/>
 
                     <span className={style.addPhotoURlBtn} onClick={onAddNewPhotoClick}/></div>}
             </div>

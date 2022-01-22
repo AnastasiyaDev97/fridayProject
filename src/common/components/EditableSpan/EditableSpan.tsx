@@ -33,7 +33,7 @@ export const EditableSpan: FC<editableSpanPropsType> = memo(({title, updateTitle
 
     return (
         isEdit ?
-            <h2 onDoubleClick={onActivateInputModeDblClick} className={style.cursor}>{name}</h2>
+            <span onDoubleClick={onActivateInputModeDblClick} className={style.span}>{name}</span>
             : <SuperInputText value={name} onBlur={onInputActivateSpanModeBlur} autoFocus
                               onChange={onInputUpdateTitleChange}
                               className={style.input} onKeyPress={onInputActivateModePress}/>

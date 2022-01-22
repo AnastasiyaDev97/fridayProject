@@ -1,6 +1,6 @@
-export const STATUS={
-    LOADING:'loading',
-    IDLE:'idle',
-    SUCCEEDED:'succeeded',
-    FAILED:'failed',
+export const STATUS = {
+    LOADING: 'loading',
+    IDLE: 'idle',
+    SUCCEEDED: 'succeeded',
+    FAILED: 'failed',
 }

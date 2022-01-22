@@ -1,19 +1,20 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useFormik} from "formik";
 import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperButton";
 import {Navigate, useNavigate} from "react-router-dom";
-import { registerStatusAC} from "../../../store/reducers/registration-reducer";
+import {registerStatusAC} from "../../../store/reducers/registration-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
 import styles from "../Login/Login.module.scss";
 import {UniversalInput} from "../../../common/components/Input/UniversalInput";
-import {validates} from "../../../utils/validates";
+
 import {EMPTY_STRING} from "../../../constants";
 import {registerMeTC} from "../../../store/thunks/registration";
 import {PATH} from "../../../enum/Path";
 import {FORMIK_FIELDS_NAME} from "../../../enum/FormikFieldNames";
 import {INPUT_TYPE} from "../../../enum/InputType";
 import {BUTTON_TYPE} from "../../../enum/ButtonTyoe";
+import {AuthData, validates} from "../../../utils/validates";
 
 
 export const Registration = () => {
@@ -30,8 +31,10 @@ export const Registration = () => {
             confirmPassword: EMPTY_STRING,
         },
 
-        validate: (values) => {
-            validates(values)
+        validate: values => {
+            const errors: AuthData = {};
+            validates(values, errors)
+            return errors;
         },
 
         onSubmit: values => {
@@ -40,13 +43,18 @@ export const Registration = () => {
         },
     })
 
+    useEffect(() => {
+        return () => {
+            dispatch(registerStatusAC(false))
+        }
+    })
+
     const onCancelButtonClick = useCallback(() => {
         formik.resetForm()
         navigate(PATH.LOGIN)
-    },[formik,navigate])
+    }, [formik, navigate])
 
     if (registerStatus) {
-        dispatch(registerStatusAC(false))
         return <Navigate to={PATH.LOGIN}/>
     }
 
@@ -64,7 +72,8 @@ export const Registration = () => {
                                     isPassword={true}/>
                     <UniversalInput
                         validationErr={(formik.touched.confirmPassword && formik.errors.confirmPassword) || EMPTY_STRING}
-                        formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.CONFIRM_PASSWORD)} type={INPUT_TYPE.PASSWORD}
+                        formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.CONFIRM_PASSWORD)}
+                        type={INPUT_TYPE.PASSWORD}
                         isPassword={true}/>
                 </div>
 

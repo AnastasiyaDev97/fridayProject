@@ -6,23 +6,20 @@ import {useFormik} from "formik";
 import {Navigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../../store/store";
-import {
-    SetResponseInfoNewPassAC
-} from "../../../store/reducers/passwordRecovery-reducer";
-import {validates} from "../../../utils/validates";
 import {EMPTY_STRING} from "../../../constants";
 import {setNewPasswordTC} from "../../../store/thunks/passwordRecovery";
 import {PATH} from "../../../enum/Path";
 import {FORMIK_FIELDS_NAME} from "../../../enum/FormikFieldNames";
 import {INPUT_TYPE} from "../../../enum/InputType";
 import {BUTTON_TYPE} from "../../../enum/ButtonTyoe";
+import {AuthData, validateNewPasswordForm} from "../../../utils/validates";
 
 
 export const NewPassword = () => {
     const dispatch = useDispatch()
 
-    const params = useParams<'*'>()
-    const some = params['*']
+    const {token} = useParams<string>()
+
 
     const responseInfoNewPass = useSelector<RootReducerType, string>(state => state.passRecovery.responseInfoNewPass)
 
@@ -31,21 +28,24 @@ export const NewPassword = () => {
             password: EMPTY_STRING,
         },
 
-        validate: (values) => {
-            validates(values)
+        validate: values => {
+            const errors: AuthData = {};
+            validateNewPasswordForm(values, errors)
+            return errors;
+
         },
 
         onSubmit: values => {
             let newPassDataType = {
                 password: values.password,
-                resetPasswordToken: some || EMPTY_STRING
+                resetPasswordToken: token || EMPTY_STRING
             }
             dispatch(setNewPasswordTC(newPassDataType))
+            formik.resetForm()
         },
     })
 
     if (responseInfoNewPass) {
-        dispatch(SetResponseInfoNewPassAC(''))
         return <Navigate to={PATH.LOGIN}/>
     }
 

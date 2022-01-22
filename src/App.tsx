@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect} from 'react';
-import {Login} from "./Components/Authorization/Login/Login";
 import {Registration} from "./Components/Authorization/Redistration/Registration";
 import {NotFound} from "./Components/NotFound/NotFound";
 import {ForgotPassword} from "./Components/Authorization/ForgotPassword/ForgotPassword";
@@ -20,6 +19,8 @@ import {Nullable} from "./types/Nullable";
 import {STATUS} from "./enum/StatusType";
 import {PATH} from "./enum/Path";
 import {MODAL_ENTITY} from "./enum/ModalEntity";
+import {Login} from "./Components/Authorization/Login/Login";
+import {setErrorText} from "./store/reducers/app-reducer";
 
 
 function App() {
@@ -33,6 +34,14 @@ function App() {
     useEffect(() => {
         dispatch(initializeAppTC())
     }, [dispatch])
+
+    useEffect(() => {
+        if (error) {
+            setTimeout(() => {
+                dispatch(setErrorText(null))
+            }, 3000)
+        }
+    }, [error,dispatch])
 
     const setModalData = useCallback((modalAction: modalActionType, modalEntity: modalEntityType, id: string) => {
         dispatch(setModalPropsAC(id))
@@ -77,11 +86,11 @@ function App() {
                     </Routes>
                 }
             </div>
-            <div className={styles.err}>{error}</div>
+            {error && <div className={styles.err}>{error}</div>}
+
         </div>
     )
 }
-
 
 export default App;
 

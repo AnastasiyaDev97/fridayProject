@@ -1,4 +1,4 @@
-export const INPUT_TYPE:{[key:string]:"password" | "text"|undefined} = {
-    PASSWORD: 'password',
-    TEXT: 'text'
+export enum INPUT_TYPE {
+    PASSWORD= 'password',
+    TEXT= 'text'
 }
