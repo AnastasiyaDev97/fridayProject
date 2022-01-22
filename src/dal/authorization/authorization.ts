@@ -38,7 +38,7 @@ export const authorizationAPI = {
             email,
             from: 'test-front-admin <ai73a@yandex.by>',
             message: `<div style="background-color: lime; padding: 15px">
-password recovery link: <a href='http://nastyaz23.github.io/#/new-password/$token$'<!--https://nastyaz23.github.io/fridayProject/#new-password/$token$-->'>
+password recovery link: <a href='http://nastyaz23.github.io/fridayProject/#/new-password/$token$'<!--https://nastyaz23.github.io/fridayProject/#new-password/$token$-->'>
 link</a></div>`
 
            /* http://localhost:3000/#/new-password/$token$*/
