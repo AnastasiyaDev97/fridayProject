@@ -16,14 +16,13 @@ import {FORMIK_FIELDS_NAME} from "../../../enum/FormikFieldNames";
 import {loginTC} from "../../../store/thunks/login";
 
 
-
 export const Login = () => {
     const dispatch = useDispatch()
 
     const formik = useFormik({
         initialValues: {
-            email: EMPTY_STRING,
-            password: EMPTY_STRING,
+            email: process.env.REACT_APP_EMAIL as string,
+            password: process.env.REACT_APP_PASSWORD as string,
             rememberMe: false
         },
         validate: values => {
