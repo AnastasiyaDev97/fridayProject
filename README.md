@@ -15,8 +15,10 @@ Web app for learning.
 Thanks to the application, you can study on your own topics or study the cards of other users. The functionality allows you to evaluate the question and, based on the assessment, the frequency of displaying this question changes, which allows you to fix questions that you don't know. You can delete, edit questions and topics themselves.
 
 
-![Video-Gif720p](./src/common/assets/images/app.gif)
+<!-- ![Video-Gif720p](./src/common/assets/images/app.gif) -->
 
+<br/>
+<br/>
 
 On the profile page you can change your profile photo and username, as well as information about the number of your cards.
 
@@ -54,7 +56,7 @@ Also implemented the processes of registration, authorization, password recovery
 ## Launch of the project ⏯
 
 <br/>
-<br/>
+
 To start the project, you need to enter the folder - 📂 fridayProject and type the command in the terminal:
 
 ```javascript
@@ -62,7 +64,7 @@ yarn
 ```
 
 <br/>
-<br/>
+
 
 Type command in terminal:
 
@@ -71,7 +73,7 @@ yarn start
 ```
 
 <br/>
-<br/>
+
 
 <h3>Project technologies</h3>
 <p>
