@@ -82,7 +82,7 @@ yarn start
   <img alt="Sass" src="https://img.shields.io/badge/-Sass-CC6699?style=flat-square&logo=sass&logoColor=white" />
   <img alt="git" src="https://img.shields.io/badge/-Git-F05032?style=flat-square&logo=git&logoColor=white" />
   <img alt="html5" src="https://img.shields.io/badge/-HTML5-DDA0DD?style=flat-square&logo=html5&logoColor=white" />
- <img alt="typeScript" src="https://img.shields.io/badge/-TypeScript-20B2AA?style=flat-square&logo=typeScript&logoColor=white" /> 
+ <img alt="typeScript" src="https://img.shields.io/badge/-TypeScript-45b8d8?style=flat-square&logo=typeScript&logoColor=white" /> 
  <img alt="reactRouter" src="https://img.shields.io/badge/-ReactRouter-32CD32?style=flat-square&logo=reactRouter&logoColor=white" /> 
  <img alt="axios" src="https://img.shields.io/badge/-Axios-DC143C?style=flat-square&logoColor=white" /> 
  <img alt="materialUI" src="https://img.shields.io/badge/-materialUI-0000FF?style=flat-square&logoColor=white" /> 
