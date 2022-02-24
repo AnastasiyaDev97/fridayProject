@@ -1,27 +1,29 @@
 {
   "files": {
-    "main.css": "/fridayProject/static/css/main.f1f3175e.chunk.css",
-    "main.js": "/fridayProject/static/js/main.4c4550c4.chunk.js",
-    "main.js.map": "/fridayProject/static/js/main.4c4550c4.chunk.js.map",
+    "main.css": "/fridayProject/static/css/main.357bb0b9.chunk.css",
+    "main.js": "/fridayProject/static/js/main.d73c0fea.chunk.js",
+    "main.js.map": "/fridayProject/static/js/main.d73c0fea.chunk.js.map",
     "runtime-main.js": "/fridayProject/static/js/runtime-main.b6481aa9.js",
     "runtime-main.js.map": "/fridayProject/static/js/runtime-main.b6481aa9.js.map",
-    "static/js/2.e3621dec.chunk.js": "/fridayProject/static/js/2.e3621dec.chunk.js",
-    "static/js/2.e3621dec.chunk.js.map": "/fridayProject/static/js/2.e3621dec.chunk.js.map",
+    "static/js/2.a92a8512.chunk.js": "/fridayProject/static/js/2.a92a8512.chunk.js",
+    "static/js/2.a92a8512.chunk.js.map": "/fridayProject/static/js/2.a92a8512.chunk.js.map",
     "static/js/3.a05e192c.chunk.js": "/fridayProject/static/js/3.a05e192c.chunk.js",
     "static/js/3.a05e192c.chunk.js.map": "/fridayProject/static/js/3.a05e192c.chunk.js.map",
     "index.html": "/fridayProject/index.html",
-    "static/css/main.f1f3175e.chunk.css.map": "/fridayProject/static/css/main.f1f3175e.chunk.css.map",
-    "static/js/2.e3621dec.chunk.js.LICENSE.txt": "/fridayProject/static/js/2.e3621dec.chunk.js.LICENSE.txt",
+    "static/css/main.357bb0b9.chunk.css.map": "/fridayProject/static/css/main.357bb0b9.chunk.css.map",
+    "static/js/2.a92a8512.chunk.js.LICENSE.txt": "/fridayProject/static/js/2.a92a8512.chunk.js.LICENSE.txt",
     "static/media/Profile.module.scss": "/fridayProject/static/media/add_icon.0f475272.svg",
     "static/media/App.module.css": "/fridayProject/static/media/bck1.c7a28a19.jpg",
+    "static/media/fullStar.7f2d8fc4.svg": "/fridayProject/static/media/fullStar.7f2d8fc4.svg",
     "static/media/UniversalInput.module.scss": "/fridayProject/static/media/login-eye.182cf644.svg",
     "static/media/Login.module.scss": "/fridayProject/static/media/mail.973cb4fb.svg",
-    "static/media/oval.c2cdedba.svg": "/fridayProject/static/media/oval.c2cdedba.svg"
+    "static/media/oval.c2cdedba.svg": "/fridayProject/static/media/oval.c2cdedba.svg",
+    "static/media/star.7b90f6ab.svg": "/fridayProject/static/media/star.7b90f6ab.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.b6481aa9.js",
-    "static/js/2.e3621dec.chunk.js",
-    "static/css/main.f1f3175e.chunk.css",
-    "static/js/main.4c4550c4.chunk.js"
+    "static/js/2.a92a8512.chunk.js",
+    "static/css/main.357bb0b9.chunk.css",
+    "static/js/main.d73c0fea.chunk.js"
   ]
 }
