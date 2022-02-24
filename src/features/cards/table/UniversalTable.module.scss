@@ -12,8 +12,6 @@ table thead tr {
   color: $Text;
   font-weight: bold;
   background: $activeLinkBcgr;
-  width: 100%;
-
 
 }
 
@@ -21,10 +19,6 @@ table tbody tr:nth-child(2n) {
   position: relative;
   background: $backgr;
 
-}
-
-table tbody tr {
-  width: 100%;
 }
 
 table tbody tr:hover {
@@ -38,7 +32,6 @@ table tbody tr:hover {
 
 th {
   padding: 19px;
-  max-width: 150px;
 
 
   .value {
@@ -62,14 +55,12 @@ th {
 }
 
 td {
-
-  max-width: 150px;
-  padding: 13px 5px;
+  padding: 13px 0px;
+ 
 
   &:last-child {
-    width: 220px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
   }
 
   .cell {
@@ -77,19 +68,19 @@ td {
     overflow: hidden;
     text-align: center;
     line-height: 1.8;
+    margin: 0 25px;
   }
-
 }
 
 .btns {
-  width: 220px;
 
   & button {
     font-weight: normal;
     border-radius: 0;
-    width: 60px;
     margin-right: 5px;
     padding-top: .5rem;
     padding-bottom: .5rem;
+    cursor:pointer;
+    min-width:58px;
   }
 }

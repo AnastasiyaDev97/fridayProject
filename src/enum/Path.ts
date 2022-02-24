@@ -8,4 +8,7 @@ export enum PATH {
     PACKS = '/packs',
     LOGIN = '/login',
     START = '/',
+    TOKEN = ':token',
+    ANY = '*',
+    ID = ':id'
 }

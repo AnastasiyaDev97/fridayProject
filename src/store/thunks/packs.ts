@@ -6,9 +6,11 @@ import {STATUS} from "../../enum/StatusType";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {setPacksAC} from "../reducers/packs-reducer";
 import {pageCountNumber} from "../../constants";
+import { Nullable } from "src/types/Nullable";
 
-export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => RootReducerType) => {
-    const {min, max, page, user_id, sortPacks, packName} = getState().packs
+export const getPacksTC = (actualPackName?:Nullable<string>) => 
+async (dispatch: AppDispatch, getState: () => RootReducerType) => {
+    const {min, max, page, user_id, sortPacks} = getState().packs
     let paramsForQuery: getPacksQueryParamsType = {
         min,
         max,
@@ -16,9 +18,8 @@ export const getPacksTC = () => async (dispatch: AppDispatch, getState: () => Ro
         page,
         pageCount: pageCountNumber,
         user_id,
-        packName
+        packName:actualPackName
     }
-
     try {
         const data = await packsAPI.getPacks(paramsForQuery)
         dispatch(setAppStatusAC(STATUS.LOADING))

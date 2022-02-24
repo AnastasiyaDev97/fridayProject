@@ -1,4 +1,6 @@
 import {FC, memo, ReactElement} from "react";
+import star from './../../../common/assets/svg/star.svg'
+import fullStar from './../../../common/assets/svg/fullStar.svg'
 
 type RatingProps = {
     grade: number
@@ -26,6 +28,6 @@ type starPropsType = {
 
 export const Star = memo(({selected}: starPropsType) => {
     return (
-        <span>{selected ? <b>Star </b> : "Star "}</span>
+         <img src={selected?fullStar:star} alt='rating' />
     )
 })

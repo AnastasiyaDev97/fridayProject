@@ -31,8 +31,9 @@ let initialState = {
 
 export const packsReducer = (state: initialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
-        case "PACKS/CHANGE-SEARCH-PACK-NAME":
         case "PACKS/SET-PACKS":
+            return {...state, ...action.payload}
+        case "PACKS/CHANGE-SEARCH-PACK-NAME":
         case "PACKS/CHANGE-PAGE":
         case "SET-RESPONSE-INFO-NEW-PASS":
         case "PACKS/TOGGLE-SHOW-USER-PACKS":

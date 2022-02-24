@@ -23,7 +23,6 @@ const initialState = {
 export const profileReducer = (state: ResponseLoginType = initialState, action: ActionsType): ResponseLoginType => {
     switch (action.type) {
         case 'SET-PROFILE':
-            debugger
             return {...state, ...action.payload.profile}
         default:
             return state

@@ -17,6 +17,7 @@ import {EMPTY_STRING} from "../../../constants";
 import {getCardsTC} from "../../../store/thunks/cards";
 import {COMPONENT_NAME} from "../../../enum/ComponentName";
 import { modalActionType, modalEntityType } from 'src/enum/Modals';
+import { Nullable } from 'src/types/Nullable';
 
 
 type PackListPropsType = {
@@ -26,12 +27,13 @@ type PackListPropsType = {
     pageCount: number
     sortPacks: string
     setModalData: (modalAction: modalActionType, id: string) => void
+    actualPackName:Nullable<string>
 }
 
 
 export const PacksList = memo(({
                                    packs, currentPage, totalItemCount, pageCount, sortPacks,
-                                   setModalData
+                                   setModalData,actualPackName
                                }: PackListPropsType) => {
 
     const dispatch = useDispatch()
@@ -39,7 +41,7 @@ export const PacksList = memo(({
     const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
     const id = useSelector<RootReducerType, string>(state => state.modals.id)
 
-    const [text, setText] = useState<string>(EMPTY_STRING)
+    const [text, setText] = useState<string>(actualPackName||'')
 
     const portionSize = 10
     const headersForPacks = {

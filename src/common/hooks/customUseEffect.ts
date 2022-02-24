@@ -8,7 +8,6 @@ export const UseSetTimeoutEffect = (callBack: () => void, dependencies:any, ms: 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        console.log('useeffSet')
         let idOfTimeout = setTimeout(() => {
             callBack()
         }, ms)

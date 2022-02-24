@@ -38,9 +38,9 @@ export const Modal: FC<ModalPropsType> = memo((
         return (
             <div className={s.modalWrapper}>
                 <div className={s.modalBlock}>
-                    <h3>
+                    <h2 className={s.title}>
                         {modalBody.title}
-                    </h3>
+                    </h2>
                     {children}
 
                     <div className={s.buttons}>
