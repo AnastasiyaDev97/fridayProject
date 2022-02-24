@@ -11,14 +11,13 @@ import {RootReducerType} from "./store/store";
 import Preloader from "./common/Preloader/Preloader";
 import {Cards} from "./Components/Cards/Cards";
 import {setModalPropsAC, setModalTypeAC} from "./store/reducers/modal-reducer";
-import {modalActionType, modalEntityType} from "./common/components/Modal/ModalContainer/ModalContainer";
+import {modalActionType, modalEntityType} from "./enum/Modals";
 import Profile from "./Components/Profile/Profile";
 import Packs from "./Components/Packs/Packs";
 import {initializeAppTC} from "./store/thunks/app";
 import {Nullable} from "./types/Nullable";
 import {STATUS} from "./enum/StatusType";
 import {PATH} from "./enum/Path";
-import {MODAL_ENTITY} from "./enum/ModalEntity";
 import {Login} from "./Components/Authorization/Login/Login";
 import {setErrorText} from "./store/reducers/app-reducer";
 
@@ -30,6 +29,7 @@ function App() {
     const isInitialized = useSelector<RootReducerType, boolean>(state => state.app.isInitialized)
     const error = useSelector<RootReducerType, Nullable<string>>(state => state.app.error)
 
+    const {Card,Pack}=modalEntityType
 
     useEffect(() => {
         dispatch(initializeAppTC())
@@ -49,12 +49,12 @@ function App() {
     }, [dispatch])
 
     const setModalDataCards = useCallback((modalAction: modalActionType, id: string) => {
-        setModalData(modalAction, MODAL_ENTITY.CARD, id)
-    }, [setModalData])
+        setModalData(modalAction, Card, id)
+    }, [setModalData,Card])
 
     const setModalDataPacks = useCallback((modalAction: modalActionType, id: string) => {
-        setModalData(modalAction, MODAL_ENTITY.PACK, id)
-    }, [setModalData])
+        setModalData(modalAction, Pack, id)
+    }, [setModalData,Pack])
 
 
     return (

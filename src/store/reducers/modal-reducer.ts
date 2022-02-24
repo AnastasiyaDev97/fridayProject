@@ -1,13 +1,10 @@
 import {ActionsType} from "./AC types/types";
-import {modalActionType, modalEntityType} from "../../common/components/Modal/ModalContainer/ModalContainer";
+import {modalActionType, modalEntityType} from "../../enum/Modals";
 
-
-
-/*export type modalTypeT='addCard'|''|'addPack'|'deleteCard'|'deletePack'|'updatePack'|'updateCard'|'learnPack'*/
 
 let initialState = {
-    modalAction: '' as modalActionType,
-    modalEntity: '' as modalEntityType,
+    modalAction: modalActionType.Empty_Action,
+    modalEntity: modalEntityType.Empty_Entity,
     id: ''
 }
 

@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback, useEffect, useMemo} from 'react';
+import {FC, memo, useCallback, useEffect, useMemo} from 'react';
 import style from './Cards.module.scss'
 import Pagination from "../../features/cards/pagination/Pagination";
 import {convertDateFormat} from "../../utils/handles";
@@ -10,16 +10,12 @@ import {useNavigate, useParams} from "react-router-dom";
 import SuperButton from "../TestComponents/components/c2-SuperButton/SuperButton";
 import {CardType} from "../../dal/cards/types";
 import {setAppStatusAC} from "../../store/reducers/app-reducer";
-import {
-    modalActionType,
-    ModalContainer,
-    modalEntityType
-} from "../../common/components/Modal/ModalContainer/ModalContainer";
+import {ModalContainer} from "../../common/components/Modal/ModalContainer/ModalContainer";
 import {Rating} from "./Rating/Rating";
 import {STATUS} from "../../enum/StatusType";
 import {getCardsTC} from "../../store/thunks/cards";
-import {MODAL_ACTION} from "../../enum/ModalAction";
 import {COMPONENT_NAME} from "../../enum/ComponentName";
+import { modalActionType, modalEntityType } from 'src/enum/Modals';
 
 
 type CardsT = {
@@ -43,6 +39,7 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
         const modalEntity = useSelector<RootReducerType, modalEntityType>(state => state.modals.modalEntity)
 
         const PORTION_SIZE = 10
+        const {Add,Delete,Update}=modalActionType
         const headersForTable = {
             question: 'Question', answer: 'Answer',
             updated: 'Last updated', grade: 'Grade', actions: 'Actions'
@@ -89,18 +86,18 @@ export const Cards: FC<CardsT> = memo(({setModalData}) => {
 
         const handleAddCardButtonClick = useCallback(() => {
             if (cardsPack_id) {
-                setModalData(MODAL_ACTION.ADD, cardsPack_id)
+                setModalData(Add, cardsPack_id)
             }
-        }, [setModalData, cardsPack_id])
+        }, [setModalData, cardsPack_id,Add])
 
 
         const handleDeleteButtonClick = useCallback((_id: string) => {
-            setModalData(MODAL_ACTION.DELETE, _id)
-        }, [setModalData])
+            setModalData(Delete, _id)
+        }, [setModalData,Delete])
 
         const handleUpdateCardClick = useCallback((_id: string) => {
-            setModalData(MODAL_ACTION.UPDATE, _id)
-        }, [setModalData])
+            setModalData(Update, _id)
+        }, [setModalData,Update])
 
         if (!cards) {
             return <></>

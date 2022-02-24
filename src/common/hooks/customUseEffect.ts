@@ -16,5 +16,5 @@ export const UseSetTimeoutEffect = (callBack: () => void, dependencies:any, ms: 
 
             clearTimeout(idOfTimeout)
         }
-    }, [dispatch,dependencies])
+    }, [dispatch,dependencies,callBack,ms])
 }

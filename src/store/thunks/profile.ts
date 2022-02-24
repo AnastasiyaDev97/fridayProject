@@ -5,9 +5,10 @@ import {profileAPI} from "../../dal/profile/profileAPI";
 import {catchErrorHandler} from "../../utils/error-utils";
 import {setProfileAC} from "../reducers/profile-reducer";
 
-export const updateProfileTC = (name: string,avatar:string) =>
+export const updateProfileTC = (name?: string,avatar?:string) =>
     async (dispatch:AppDispatch) => {
         try {
+            debugger
             dispatch(setAppStatusAC(STATUS.LOADING))
             let updatedProfile = await profileAPI.updateProfile({name,avatar})
             dispatch(setProfileAC(updatedProfile))

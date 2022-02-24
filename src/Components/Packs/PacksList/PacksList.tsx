@@ -10,16 +10,13 @@ import SuperButton from "../../TestComponents/components/c2-SuperButton/SuperBut
 import {UseSetTimeoutEffect} from "../../../common/hooks/customUseEffect";
 import {PackType} from "../../../dal/packs/types";
 
-import {
-    modalActionType,
-    ModalContainer,
-    modalEntityType
+import {ModalContainer
 } from "../../../common/components/Modal/ModalContainer/ModalContainer";
 import {RootReducerType} from "../../../store/store";
 import {EMPTY_STRING} from "../../../constants";
-import {MODAL_ACTION} from "../../../enum/ModalAction";
 import {getCardsTC} from "../../../store/thunks/cards";
 import {COMPONENT_NAME} from "../../../enum/ComponentName";
+import { modalActionType, modalEntityType } from 'src/enum/Modals';
 
 
 type PackListPropsType = {
@@ -49,6 +46,7 @@ export const PacksList = memo(({
         name: 'Name', cardsCount: 'Cards',
         updated: 'Last updated', user_name: 'Created by', actions: 'Actions'
     }
+    const {Add,Delete, Update, Learn}=modalActionType
 
     const packsForTable = useMemo(() => {
             return packs.map(({
@@ -80,20 +78,20 @@ export const PacksList = memo(({
     }, [dispatch, sortPacks])
 
     const handleAddPackButtonClick = useCallback(() => {
-        setModalData(MODAL_ACTION.ADD, EMPTY_STRING)
-    }, [setModalData])
+        setModalData(Add, EMPTY_STRING)
+    }, [setModalData,Add])
 
     const handleDeleteButtonClick = useCallback((packId: string) => {
-        setModalData(MODAL_ACTION.DELETE, packId)
-    }, [setModalData])
+        setModalData(Delete, packId)
+    }, [setModalData,Delete])
 
     const handleUpdatePackClick = useCallback((packId: string) => {
-        setModalData(MODAL_ACTION.UPDATE, packId)
-    }, [setModalData])
+        setModalData(Update, packId)
+    }, [setModalData,Update])
 
     async function handleLearnPackClick(packId: string) {
         await dispatch(getCardsTC({cardsPack_id: packId, max: 100, pageCount: 100}))
-        setModalData(MODAL_ACTION.LEARN, packId)
+        setModalData(Learn, packId)
     }
 
     return (

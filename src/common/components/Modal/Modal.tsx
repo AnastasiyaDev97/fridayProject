@@ -2,8 +2,8 @@ import {FC, memo, ReactElement} from "react";
 import s from './Modal.module.scss'
 import SuperButton from "../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
 import {Nullable} from "../../../types/Nullable";
-import {modalActionType} from "./ModalContainer/ModalContainer";
-import {MODAL_ACTION} from "../../../enum/ModalAction";
+
+import {modalActionType} from "../../../enum/Modals";
 
 
 export type ModalPropsType = {
@@ -31,7 +31,8 @@ export const Modal: FC<ModalPropsType> = memo((
     }
 ): Nullable<ReactElement> => {
 
-    const conditionForDisabledPrevBtn = modalAction === MODAL_ACTION.LEARN ? !isActivePrevBtn : false
+    const {Learn} = modalActionType
+    const conditionForDisabledPrevBtn = modalAction === Learn? !isActivePrevBtn : false
 
     if (modalBody) {
         return (
@@ -46,7 +47,7 @@ export const Modal: FC<ModalPropsType> = memo((
                         <SuperButton onClick={modalBody.btn.callback} className={s.btn}
                                      disabled={conditionForDisabledPrevBtn}>
                             {modalBody.btn.title}</SuperButton>
-                        {modalAction === MODAL_ACTION.LEARN &&
+                        {modalAction === Learn &&
                         <SuperButton onClick={onNextCardButtonClick}>
                             Next</SuperButton>}
                         <SuperButton onClick={onCloseModalButtonClick} className={s.btn}>Cancel</SuperButton>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState, KeyboardEvent, useCallback} from 'react';
+import {ChangeEvent, useState, KeyboardEvent, useCallback} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {RootReducerType} from "../../store/store";
 import {withRedirect} from "../../common/hoc/withRedirect";
@@ -28,21 +28,21 @@ const Profile = () => {
         setAvatarURL(e.currentTarget.value)
     },[])
 
-    const onAddNewPhotoClick = useCallback(() => {
-        dispatch(updateProfileTC(name, avatarURL))
+    const onAddNewPhotoClick = () => {
+        dispatch(updateProfileTC(name,avatarURL))
         setIsInputActive(false)
         setAvatarURL(EMPTY_STRING)
-    },[dispatch,name,avatarURL])
+    }
 
-    const onInputForURLKeyPress = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+    const onInputForURLKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             onAddNewPhotoClick()
         }
-    },[onAddNewPhotoClick])
+    }
 
     const onUpdateTitle = (newTitle: string) => {
         if (newTitle !== name) {
-            dispatch(updateProfileTC(newTitle, avatarURL))
+            dispatch(updateProfileTC(newTitle))
         }
     }
 
@@ -61,14 +61,14 @@ const Profile = () => {
 
                 {isInputActive &&
 
-                <div className={style.inputForURL}>
+                <div className={style.inputForURL} onBlur={onCloseInputBlur}>
                     <SuperInputText className={style.input} value={avatarURL}
                                     onChange={onInputForURLChange}
                                     onKeyPress={onInputForURLKeyPress}
                                     autoFocus placeholder={'Add URL'}
-                                    onBlur={onCloseInputBlur}/>
+                                   />
 
-                    <span className={style.addPhotoURlBtn} onClick={onAddNewPhotoClick}/></div>}
+                   {/*  <span className={style.addPhotoURlBtn} onClick={onAddNewPhotoClick}/> */}</div>}
             </div>
 
             <div className={style.profileInfo}>
