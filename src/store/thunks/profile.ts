@@ -8,7 +8,6 @@ import {setProfileAC} from "../reducers/profile-reducer";
 export const updateProfileTC = (name?: string,avatar?:string) =>
     async (dispatch:AppDispatch) => {
         try {
-            debugger
             dispatch(setAppStatusAC(STATUS.LOADING))
             let updatedProfile = await profileAPI.updateProfile({name,avatar})
             dispatch(setProfileAC(updatedProfile))

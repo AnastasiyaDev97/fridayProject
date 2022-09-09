@@ -1,0 +1,142 @@
+@import '../../common/sass/variables.scss';
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  padding-bottom: 20px;
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: $activeLinkBcgr;
+    opacity: 0.2;
+    z-index: 0;
+  }
+
+  h2 {
+    color: $Text;
+    line-height: 1.5;
+    font-family: $QuicksandFont;
+    font-weight: 700;
+    margin-bottom: 40px;
+    z-index: 1;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    z-index: 1;
+    @media (max-width: 465px) {
+      width: 90%;
+    }
+
+    .inputsWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      color: $formTextColor;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 26px;
+      font-family: $NunitoFont;
+      width: 100%;
+      box-sizing: content-box;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+
+      a {
+        color: $Text;
+        box-shadow: none;
+        text-decoration: none;
+        line-height: 26px;
+        font-family: $NunitoFont;
+        font-weight: 800;
+        font-size: 18px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      .registrationBtns {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        button {
+          width: 45%;
+        }
+      }
+    }
+
+    .submitBtn {
+      width: 80%;
+      z-index: 1;
+      margin: 20px 0;
+    }
+  }
+
+  .registerLink {
+    text-decoration: none;
+    color: $Text;
+    font-family: $NunitoFont;
+    font-weight: 800;
+    line-height: 26px;
+    font-size: 18px;
+    z-index: 1;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+div {
+  color: $Text;
+  font-family: $NunitoFont;
+  font-weight: 200;
+  font-size: 16px;
+  z-index: 1;
+}
+
+.sendMailBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  & h2::after {
+    content: '';
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background-image: url('../../common/assets/svg/mail.svg');
+    background-size: cover;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    top: 30px;
+  }
+  div {
+    margin-top: 50px;
+  }
+  .sendMailBtn {
+    width: 70%;
+  }
+}
+
+.sendMailMessage {
+  margin-bottom: 15px;
+}

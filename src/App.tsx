@@ -1,28 +1,30 @@
-import React, { useCallback, useEffect } from "react";
-import { Registration } from "./Components/Authorization/Redistration/Registration";
-import { NotFound } from "./Components/NotFound/NotFound";
-import { ForgotPassword } from "./Components/Authorization/ForgotPassword/ForgotPassword";
-import { NewPassword } from "./Components/Authorization/NewPassword/NewPassword";
-import { Navigate, Route, Routes } from "react-router-dom";
-import { Header } from "./Components/Header/Header";
-import styles from "./App.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { RootReducerType } from "./store/store";
-import Preloader from "./common/Preloader/Preloader";
-import { Cards } from "./Components/Cards/Cards";
+import { useCallback, useEffect } from 'react';
+import { Registration } from './pages/Registration';
+import { NotFound } from './pages/NotFound/NotFound';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { NewPassword } from './pages/NewPassword/NewPassword';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { Header } from './Components/Header/Header';
+import styles from './App.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootReducerType } from './store/store';
+import Preloader from './Components/Preloader/Preloader';
+import { Cards } from './pages/Cards/Cards';
+import { Users } from 'pages/Users/Users';
+import { Chat } from 'pages/Chat/Chat';
 import {
   setModalPropsAC,
   setModalTypeAC,
-} from "./store/reducers/modal-reducer";
-import { modalActionType, modalEntityType } from "./enum/Modals";
-import Profile from "./Components/Profile/Profile";
-import Packs from "./Components/Packs/Packs";
-import { initializeAppTC } from "./store/thunks/app";
-import { Nullable } from "./types/Nullable";
-import { STATUS } from "./enum/StatusType";
-import { PATH } from "./enum/Path";
-import { Login } from "./Components/Authorization/Login/Login";
-import { setErrorText } from "./store/reducers/app-reducer";
+} from './store/reducers/modal-reducer';
+import { modalActionType, modalEntityType } from './enum/Modals';
+import Profile from './pages/Profile/Profile';
+import Packs from './pages/Packs/Packs';
+import { initializeAppTC } from './store/thunks/app';
+import { Nullable } from './types/Nullable';
+import { STATUS } from './enum/StatusType';
+import { PATH } from './enum/Path';
+import { Login } from './pages/Login/Login';
+import { setErrorText } from './store/reducers/app-reducer';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +34,9 @@ function App() {
   );
   const isInitialized = useSelector<RootReducerType, boolean>(
     (state) => state.app.isInitialized
+  );
+  const isLoggedIn = useSelector<RootReducerType, boolean>(
+    (state) => state.login.isLoggedIn
   );
   const error = useSelector<RootReducerType, Nullable<string>>(
     (state) => state.app.error
@@ -51,6 +56,8 @@ function App() {
     TOKEN,
     ANY,
     ID,
+    USERS,
+    CHAT,
   } = PATH;
 
   useEffect(() => {
@@ -91,6 +98,12 @@ function App() {
     [setModalData, Pack]
   );
 
+  if (!isInitialized) {
+    return <Preloader />;
+  }
+  if (!isLoggedIn) {
+    <Navigate to={LOGIN} />;
+  }
   return (
     <div className={styles.appWrapper}>
       <Header />
@@ -98,35 +111,33 @@ function App() {
       <div className={styles.mainBlock}>
         {status === STATUS.LOADING && <Preloader />}
 
-        {!isInitialized ? (
-          <></>
-        ) : (
-          <Routes>
-            <Route path={START} element={<Navigate to={PROFILE} />} />
-            <Route path={PROFILE} element={<Profile />} />
-            <Route path={REGISTRATION} element={<Registration />} />
-            <Route path={NOT_FOUND} element={<NotFound />} />
-            <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
-            <Route path={NEW_PASSWORD} element={<NewPassword />}>
-              <Route path={TOKEN} element={<NewPassword />} />
-            </Route>
-            <Route path={ANY} element={<Navigate to={NOT_FOUND} />} />
+        <Routes>
+          <Route path={START} element={<Navigate to={PROFILE} />} />
+          <Route path={PROFILE} element={<Profile />} />
+          <Route path={REGISTRATION} element={<Registration />} />
+          <Route path={NOT_FOUND} element={<NotFound />} />
+          <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
+          <Route path={USERS} element={<Users />} />
+          <Route path={CHAT} element={<Chat />} />
+          <Route path={NEW_PASSWORD} element={<NewPassword />}>
+            <Route path={TOKEN} element={<NewPassword />} />
+          </Route>
+          <Route
+            path={CARDS}
+            element={<Cards setModalData={setModalDataCards} />}
+          >
             <Route
-              path={CARDS}
+              path={ID}
               element={<Cards setModalData={setModalDataCards} />}
-            >
-              <Route
-                path={ID}
-                element={<Cards setModalData={setModalDataCards} />}
-              />
-            </Route>
-            <Route
-              path={PACKS}
-              element={<Packs setModalData={setModalDataPacks} />}
             />
-            <Route path={LOGIN} element={<Login />} />
-          </Routes>
-        )}
+          </Route>
+          <Route
+            path={PACKS}
+            element={<Packs setModalData={setModalDataPacks} />}
+          />
+          <Route path={LOGIN} element={<Login />} />
+          <Route path={ANY} element={<Navigate to={NOT_FOUND} />} />
+        </Routes>
       </div>
       {error && <div className={styles.err}>{error}</div>}
     </div>

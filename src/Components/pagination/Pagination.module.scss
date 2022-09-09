@@ -1,0 +1,23 @@
+@import '../../common/sass/variables.scss';
+
+.pageNum {
+  padding: 5px 8px;
+  font-family: $NunitoFont;
+  color: $Text;
+  cursor: pointer;
+
+  &:hover {
+    background: $buttonBackground;
+  }
+
+  &:active {
+    position: relative;
+    top: 6px;
+    box-shadow: 0 0 $buttonBackground;
+    background: $buttonBackground;
+  }
+}
+.activePage {
+  font-weight: bold;
+  background: $buttonBackground;
+}

@@ -1,0 +1,26 @@
+.userBlock {
+  display: flex;
+  &:not(:last-of-type) {
+    margin-bottom: 20px;
+  }
+}
+.userDescription {
+  width: 100%;
+  display: flex;
+  padding: 5px 20px;
+  flex-direction: column;
+  & .userTitle {
+    margin: 0;
+  }
+  & .userInfo {
+    margin-top: 15px;
+  }
+}
+.avatarContainer {
+  min-width: 100px;
+  min-height: 100px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: burlywood;
+}

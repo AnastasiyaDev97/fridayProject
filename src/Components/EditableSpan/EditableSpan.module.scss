@@ -1,0 +1,15 @@
+@import '../../common/sass/variables.scss';
+
+.input {
+  margin-bottom: 20px;
+  padding: 8px;
+  width: 40%;
+}
+.span {
+  cursor: pointer;
+  font-size: 2rem;
+  font-family: $QuicksandFont;
+  &:hover {
+    color: grey;
+  }
+}

@@ -1,0 +1,14 @@
+@import '../../common/sass/variables.scss';
+
+.usersPage {
+  width: 60%;
+  height: 100%;
+  position: relative;
+  margin: 0 50px;
+  background: $backgrForPacks;
+  padding: 30px;
+}
+.usersContainer {
+  display: flex;
+  flex-direction: column;
+}
