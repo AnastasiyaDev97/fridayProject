@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import SuperButton from '../../../../Components/TestComponents/components/c2-SuperButton/SuperButton';
 import { RootReducerType } from '../../../../store/store';
 import { COMPONENT_NAME } from '../../../../enum/ComponentName';
-import { DeleteModal } from 'Components/Modal';
+import { DeleteModal, LearnModal, UpdateModal } from 'Components/Modal';
 import { ItemValues } from '../UniversalTable';
 
 type TableRowT = {
@@ -63,12 +63,15 @@ export const TableRow: FC<TableRowT> = memo(
         })}
         <td className={style.btns}>
           <DeleteModal id={id} cardsPackId={cardsPackId} itemName={itemName} />
-          {/* <SuperButton
-            disabled={CONDITION_FOR_DISABLE_BUTTON}
-            onClick={onDeleteModalCallClick}
-          >
-            Delete
-          </SuperButton> */}
+          <UpdateModal
+            id={id}
+            cardsPackId={cardsPackId}
+            itemName={itemName}
+            name={tableValues?.name}
+            question={tableValues?.question}
+            answer={tableValues?.answer}
+          />
+          {/*  <LearnModal id={id} cardsPackId={cardsPackId} itemName={itemName} /> */}
           {/*  <SuperButton
             disabled={CONDITION_FOR_DISABLE_BUTTON}
             onClick={onUpdateModalCallClick}

@@ -4,24 +4,24 @@ import { TableRow } from './TableRow/TableRow';
 import { EMPTY_STRING } from '../../../constants';
 
 export type PackRowValues = {
-  name: string;
-  cardsCount: number;
+  name?: string;
+  cardsCount?: number;
   updated: string;
-  user_name: string;
+  user_name?: string;
 };
 
 export type CardRowValues = {
-  question: string;
-  answer: string;
+  question?: string;
+  answer?: string;
   updated: string;
-  rating: ReactElement;
+  rating?: ReactElement;
 };
 
 export type ItemValues = {
   userId: string;
   cardsPackId?: string;
   id: string;
-  tableValues: CardRowValues | PackRowValues;
+  tableValues: CardRowValues & PackRowValues;
 };
 
 type TablePropsType = {

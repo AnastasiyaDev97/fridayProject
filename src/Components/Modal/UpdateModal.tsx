@@ -3,22 +3,102 @@ import { Nullable } from 'types/Nullable';
 import { useDispatch } from 'react-redux';
 import { updatePackTC } from 'store/thunks/packs';
 import { updateCardTC } from 'store/thunks/cards';
+import { ModalContainer } from './ModalContainer';
+import TextField from '@mui/material/TextField';
+import { useCustomInput } from 'common/hooks/useCustomInput';
+import style from './ModalContainer.module.scss';
 
-type UpdateModalPropsType = {};
+type UpdateModalPropsType = {
+  id: string;
+  name?: string;
+  question?: string;
+  answer?: string;
+  cardsPackId?: string;
+  itemName: 'packs' | 'cards';
+};
 
 export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
-  (): Nullable<ReactElement> => {
+  ({
+    id,
+    name,
+    question,
+    answer,
+    cardsPackId,
+    itemName,
+  }): Nullable<ReactElement> => {
     const dispatch = useDispatch();
+    const { state: nameValue, onChangeInput: onChangeNameInput } =
+      useCustomInput(name);
+    const { state: questionValue, onChangeInput: onChangeQuestionInput } =
+      useCustomInput(question);
+    const { state: answerValue, onChangeInput: onChangeAnswerInput } =
+      useCustomInput(answer);
 
-    const onUpdatePackClick = useCallback(() => {
-      /*   dispatch(updatePackTC(id, name)); */
-    }, [dispatch]);
+    const onUpdateButtonClick = useCallback(() => {
+      if (itemName === 'packs' && nameValue) {
+        dispatch(updatePackTC(id, nameValue));
+      }
+      if (itemName === 'cards' && cardsPackId) {
+        dispatch(
+          updateCardTC(cardsPackId, {
+            _id: id,
+            question: questionValue,
+            answer: answerValue,
+          })
+        );
+      }
+    }, [
+      dispatch,
+      itemName,
+      answerValue,
+      nameValue,
+      questionValue,
+      cardsPackId,
+      id,
+    ]);
 
-    const onUpdateCardClick = useCallback(() => {
-      /*  if (cardsPack_id) {
-        dispatch(updateCardTC(cardsPack_id, { _id: id, question, answer }));
-      } */
-    }, [dispatch]);
-    return <></>;
+    const editableFields = () => {
+      if (itemName === 'packs') {
+        return (
+          <TextField
+            id="outlined-basic"
+            label="Update name"
+            variant="outlined"
+            value={nameValue}
+            onChange={onChangeNameInput}
+          />
+        );
+      }
+      if (itemName === 'cards') {
+        return (
+          <>
+            <TextField
+              id="outlined-basic"
+              label="Update question"
+              variant="outlined"
+              value={questionValue}
+              onChange={onChangeQuestionInput}
+            />
+            <TextField
+              id="outlined-basic"
+              label="Update answer"
+              variant="outlined"
+              value={answerValue}
+              onChange={onChangeAnswerInput}
+            />
+          </>
+        );
+      }
+    };
+
+    return (
+      <ModalContainer
+        buttonTitle="Update"
+        modalTitle="Are you sure you want to update this record?"
+        onActionButtonClick={onUpdateButtonClick}
+      >
+        <div className={style.editableFieldsBlock}>{editableFields()}</div>
+      </ModalContainer>
+    );
   }
 );
