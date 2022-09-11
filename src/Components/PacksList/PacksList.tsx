@@ -21,6 +21,7 @@ import { getCardsTC } from '../../store/thunks/cards';
 import { COMPONENT_NAME } from '../../enum/ComponentName';
 import { modalActionType, modalEntityType } from 'enum/Modals';
 import { Nullable } from 'types/Nullable';
+import { PACK_TABLE_FIELDS } from 'constants/table';
 
 type PackListPropsType = {
   packs: Array<PackType>;
@@ -52,13 +53,7 @@ export const PacksList = memo(
     const [text, setText] = useState<string>(actualPackName || '');
 
     const portionSize = 10;
-    const headersForPacks = {
-      name: 'Name',
-      cardsCount: 'Cards',
-      updated: 'Last updated',
-      user_name: 'Created by',
-      actions: 'Actions',
-    };
+
     const { Add, Delete, Update, Learn } = modalActionType;
 
     const packsForTable = useMemo(() => {
@@ -66,7 +61,16 @@ export const PacksList = memo(
         ({ cardsCount, user_name, name, updated, user_id, _id }) => {
           updated = convertDateFormat(updated);
 
-          return { name, cardsCount, updated, user_name, user_id, _id };
+          return {
+            userId: user_id,
+            id: _id,
+            tableValues: {
+              name,
+              cardsCount,
+              updated,
+              user_name,
+            },
+          };
         }
       );
     }, [packs]);
@@ -144,10 +148,12 @@ export const PacksList = memo(
         {modalEntity && <ModalContainer pack={packForModal} />}
 
         <UniversalTable
-          rows={packsForTable}
-          headers={headersForPacks}
+          /* rows={packsForTable}
+          headers={headersForPacks} */
+          tableItems={packsForTable}
+          tableTitles={PACK_TABLE_FIELDS}
           onSetSortingClick={handleSetSortingClick}
-          component={COMPONENT_NAME.PACKS}
+          itemName={COMPONENT_NAME.PACKS}
           onDeleteButtonClick={handleDeleteButtonClick}
           onUpdateButtonClick={handleUpdatePackClick}
           onLearnPackClick={handleLearnPackClick}

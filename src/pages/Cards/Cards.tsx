@@ -19,6 +19,7 @@ import { STATUS } from '../../enum/StatusType';
 import { getCardsTC } from '../../store/thunks/cards';
 import { COMPONENT_NAME } from '../../enum/ComponentName';
 import { modalActionType, modalEntityType } from 'enum/Modals';
+import { CARD_TABLE_FIELDS } from 'constants/table';
 
 type CardsT = {
   setModalData: (modalAction: modalActionType, id: string) => void;
@@ -53,19 +54,20 @@ export const Cards: FC<CardsT> = memo(({ setModalData }) => {
 
   const PORTION_SIZE = 10;
   const { Add, Delete, Update } = modalActionType;
-  const headersForTable = {
-    question: 'Question',
-    answer: 'Answer',
-    updated: 'Last updated',
-    grade: 'Grade',
-    actions: 'Actions',
-  };
+
   const cardsForTable = useMemo(() => {
-    return cards.map(({ question, answer, updated, grade, _id, user_id }) => {
-      updated = convertDateFormat(updated);
-      let rating = <Rating grade={grade} />;
-      return { question, answer, updated, rating, _id, user_id };
-    });
+    return cards.map(
+      ({ question, answer, updated, grade, _id, user_id, cardsPack_id }) => {
+        updated = convertDateFormat(updated);
+        let rating = <Rating grade={grade} />;
+        return {
+          id: _id,
+          userId: user_id,
+          cardsPackId: cardsPack_id,
+          tableValues: { question, answer, updated, rating },
+        };
+      }
+    );
   }, [cards]);
 
   useEffect(() => {
@@ -138,10 +140,12 @@ export const Cards: FC<CardsT> = memo(({ setModalData }) => {
       {modalEntity && <ModalContainer />}
 
       <UniversalTable
-        rows={cardsForTable}
-        headers={headersForTable}
+        /* rows={cardsForTable}
+        headers={headersForTable} */
+        tableTitles={CARD_TABLE_FIELDS}
+        tableItems={cardsForTable}
         onSetSortingClick={handleSetSortingClick}
-        component={COMPONENT_NAME.CARDS}
+        itemName={COMPONENT_NAME.CARDS}
         onDeleteButtonClick={handleDeleteButtonClick}
         onUpdateButtonClick={handleUpdateCardClick}
       />

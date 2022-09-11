@@ -1,61 +1,71 @@
-import {FC, memo, ReactElement} from "react";
-import s from './Modal.module.scss'
-import SuperButton from "../../../Components/TestComponents/components/c2-SuperButton/SuperButton";
-import {Nullable} from "../../../types/Nullable";
+import { FC, memo, ReactElement, useState } from 'react';
+import s from './Modal.module.scss';
+import SuperButton from '../../../Components/TestComponents/components/c2-SuperButton/SuperButton';
+import { Nullable } from '../../../types/Nullable';
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-import {modalActionType} from "../../../enum/Modals";
-
+import { modalActionType } from '../../../enum/Modals';
 
 export type ModalPropsType = {
-    modalBody?: {
-        title: string
-        btn: {
-            title: string
-            callback: () => void
-        }
-    }
-    onCloseModalButtonClick: () => void
-    isActivePrevBtn: boolean
-    modalAction: modalActionType
-    onNextCardButtonClick: () => void
-}
+  modalBody?: {
+    title: string;
+    btn: {
+      title: string;
+      callback: () => void;
+    };
+  };
+  onCloseModalButtonClick: () => void;
+  isActivePrevBtn: boolean;
+  modalAction: modalActionType;
+  onNextCardButtonClick: () => void;
+};
 
-export const Modal: FC<ModalPropsType> = memo((
-    {
-        children,
-        modalBody,
-        onCloseModalButtonClick,
-        modalAction,
-        onNextCardButtonClick,
-        isActivePrevBtn
-    }
-): Nullable<ReactElement> => {
+export const Modal: FC<ModalPropsType> = memo(
+  ({ children }): Nullable<ReactElement> => {
+    const [open, setOpen] = useState(false);
 
-    const {Learn} = modalActionType
-    const conditionForDisabledPrevBtn = modalAction === Learn? !isActivePrevBtn : false
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
 
-    if (modalBody) {
-        return (
-            <div className={s.modalWrapper}>
-                <div className={s.modalBlock}>
-                    <h2 className={s.title}>
-                        {modalBody.title}
-                    </h2>
-                    {children}
+    const handleClose = () => {
+      setOpen(false);
+    };
 
-                    <div className={s.buttons}>
-                        <SuperButton onClick={modalBody.btn.callback} className={s.btn}
-                                     disabled={conditionForDisabledPrevBtn}>
-                            {modalBody.btn.title}</SuperButton>
-                        {modalAction === Learn &&
-                        <SuperButton onClick={onNextCardButtonClick}>
-                            Next</SuperButton>}
-                        <SuperButton onClick={onCloseModalButtonClick} className={s.btn}>Cancel</SuperButton>
-                    </div>
-
-                </div>
-            </div>
-        )
-    }
-    return null
-})
+    return (
+      <div>
+        <Button variant="outlined" onClick={handleClickOpen}>
+          Open alert dialog
+        </Button>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Use Google's location service?"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Let Google help apps determine location. This means sending
+              anonymous location data to Google, even when no apps are running.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Disagree</Button>
+            <Button onClick={handleClose} autoFocus>
+              Agree
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
+    );
+  }
+);

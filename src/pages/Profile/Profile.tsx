@@ -9,7 +9,6 @@ import { EMPTY_STRING } from '../../constants';
 import { updateProfileTC } from '../../store/thunks/profile';
 
 const Profile = () => {
-    debugger
   const dispatch = useDispatch();
 
   const avatar = useSelector<RootReducerType, string>(
