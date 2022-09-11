@@ -32,8 +32,8 @@ export const TableRow: FC<TableRowT> = memo(
     /* const CONDITION_FOR_DISABLE_BUTTON = rowValues.user_id !== userId; */
 
     const onLearnButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
-      /*  e.stopPropagation();
-      onLearnPackClick!(item._id); */
+      e.stopPropagation();
+      onLearnPackClick!(id);
     };
 
     const onDeleteModalCallClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -71,7 +71,17 @@ export const TableRow: FC<TableRowT> = memo(
             question={tableValues?.question}
             answer={tableValues?.answer}
           />
-          <LearnModal />
+          <LearnModal
+            name={tableValues?.name}
+            disabled={tableValues?.cardsCount! === 0}
+            id={id}
+          />
+          {/*  <SuperButton
+            onClick={onLearnButtonClick}
+            disabled={tableValues?.cardsCount! === 0}
+          >
+            Learn
+          </SuperButton> */}
           {/*  <LearnModal id={id} cardsPackId={cardsPackId} itemName={itemName} /> */}
           {/*  <SuperButton
             disabled={CONDITION_FOR_DISABLE_BUTTON}

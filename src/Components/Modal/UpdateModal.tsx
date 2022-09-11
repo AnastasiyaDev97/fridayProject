@@ -6,7 +6,6 @@ import { updateCardTC } from 'store/thunks/cards';
 import { ModalContainer } from './ModalContainer';
 import TextField from '@mui/material/TextField';
 import { useCustomInput } from 'common/hooks/useCustomInput';
-import style from './ModalContainer.module.scss';
 
 type UpdateModalPropsType = {
   id: string;
@@ -97,7 +96,7 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
         modalTitle="Are you sure you want to update this record?"
         onActionButtonClick={onUpdateButtonClick}
       >
-        <div className={style.editableFieldsBlock}>{editableFields()}</div>
+        {editableFields()}
       </ModalContainer>
     );
   }

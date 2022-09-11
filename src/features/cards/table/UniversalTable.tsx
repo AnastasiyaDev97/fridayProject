@@ -28,28 +28,7 @@ type TablePropsType = {
   itemName: 'packs' | 'cards';
   tableTitles: { title: string; value: string }[];
   tableItems: ItemValues[];
-  /* rows: Array<{
-    name?: string;
-    cardsCount?: number;
-    updated: string;
-    created?: string;
-    user_id?: string;
-    _id: string;
-    question?: string;
-    answer?: string;
-    grade?: number;
-  }>;
 
-  headers: {
-    name?: string;
-    cardsCount?: string;
-    updated: string;
-    created?: string;
-    actions?: string;
-    question?: string;
-    answer?: string;
-    grade?: string;
-  }; */
   onSetSortingClick: (headerName: string) => void;
   onDeleteButtonClick?: (id: string) => void;
   onUpdateButtonClick?: (id: string) => void;
