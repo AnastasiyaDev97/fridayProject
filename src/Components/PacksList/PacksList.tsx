@@ -148,8 +148,6 @@ export const PacksList = memo(
         {modalEntity && <ModalContainer pack={packForModal} />}
 
         <UniversalTable
-          /* rows={packsForTable}
-          headers={headersForPacks} */
           tableItems={packsForTable}
           tableTitles={PACK_TABLE_FIELDS}
           onSetSortingClick={handleSetSortingClick}

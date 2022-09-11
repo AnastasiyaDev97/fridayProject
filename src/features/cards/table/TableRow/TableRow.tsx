@@ -71,6 +71,7 @@ export const TableRow: FC<TableRowT> = memo(
             question={tableValues?.question}
             answer={tableValues?.answer}
           />
+          <LearnModal />
           {/*  <LearnModal id={id} cardsPackId={cardsPackId} itemName={itemName} /> */}
           {/*  <SuperButton
             disabled={CONDITION_FOR_DISABLE_BUTTON}
