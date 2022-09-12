@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addPackTC } from 'store/thunks/packs';
 import { addCardTC } from 'store/thunks/cards';
 import { useCustomInput } from 'common/hooks/useCustomInput';
-import { ModalContainer } from './ModalContainer';
+import { ModalContainer } from '../ModalContainer';
 import TextField from '@mui/material/TextField';
 
 type AddModalPropsType = {

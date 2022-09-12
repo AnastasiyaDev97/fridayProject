@@ -1,6 +1,6 @@
 import { memo, ReactElement, useCallback } from 'react';
 import { Nullable } from 'types/Nullable';
-import { ModalContainer } from './ModalContainer';
+import { ModalContainer } from '../ModalContainer';
 import { useDispatch } from 'react-redux';
 import { deletePackTC } from 'store/thunks/packs';
 import { deleteCardTC } from 'store/thunks/cards';

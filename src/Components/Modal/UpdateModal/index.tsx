@@ -3,7 +3,7 @@ import { Nullable } from 'types/Nullable';
 import { useDispatch } from 'react-redux';
 import { updatePackTC } from 'store/thunks/packs';
 import { updateCardTC } from 'store/thunks/cards';
-import { ModalContainer } from './ModalContainer';
+import { ModalContainer } from '../ModalContainer';
 import TextField from '@mui/material/TextField';
 import { useCustomInput } from 'common/hooks/useCustomInput';
 

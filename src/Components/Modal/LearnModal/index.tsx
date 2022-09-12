@@ -1,7 +1,7 @@
 import { FC, memo, ReactElement, useEffect, useState } from 'react';
 import { Nullable } from 'types/Nullable';
 import { useDispatch, useSelector } from 'react-redux';
-import { ModalContainer } from './ModalContainer';
+import { ModalContainer } from '../ModalContainer';
 import { getCardsTC } from 'store/thunks/cards';
 import { RootReducerType } from 'store/store';
 import { CardType } from 'dal/cards/types';
@@ -12,15 +12,19 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-import { ANSWERS_GRADE } from './../../constants/modal/index';
+import { ANSWERS_GRADE } from '../../../constants/modal/index';
+import { useCallback } from 'react';
+import { Button } from '@mui/material';
+import style from './LearnModal.module.scss';
 
 type LearnModalPropsType = { disabled: boolean; id: string; name?: string };
-type LearnPaclContentProps = { id: string };
+type LearnPaclContentProps = {
+  id: string;
+};
 
-const RowRadioButtonsGroup = ({ title }: { title: string }) => {
+const RowRadioButtonsGroup = () => {
   return (
     <FormControl>
-      <FormLabel id="demo-row-radio-buttons-group-label">{title}</FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
@@ -29,6 +33,7 @@ const RowRadioButtonsGroup = ({ title }: { title: string }) => {
         {ANSWERS_GRADE.map((answer, index) => {
           return (
             <FormControlLabel
+              sx={{ color: 'black' }}
               value={index + 1}
               control={<Radio />}
               label={answer}
@@ -44,16 +49,38 @@ const RowRadioButtonsGroup = ({ title }: { title: string }) => {
 const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }) => {
   const dispatch = useDispatch();
   const cards = useSelector<RootReducerType, Array<CardType>>(getCards);
+  const [currentCard, setCurrentCard] = useState<Nullable<CardType>>();
+  const [isShowAnswer, setIsShowAnswer] = useState<boolean>(false);
 
-  const [currentCard, setCurrentCard] = useState(getCard(cards));
+  const onShowButtonClick = () => {
+    setIsShowAnswer(true);
+  };
+
+  const onNextQuestionClick = () => {
+    setIsShowAnswer(false);
+    setCurrentCard(getCard(cards));
+  };
 
   useEffect(() => {
     dispatch(getCardsTC({ cardsPack_id: id }));
   }, [dispatch, id]);
 
+  useEffect(() => {
+    setCurrentCard(getCard(cards));
+  }, []);
+
+  if (!currentCard) {
+    return null;
+  }
   return (
-    <div>
-      <RowRadioButtonsGroup title={currentCard?.answer} />
+    <div className={style.contentBlock}>
+      <span className={style.question}>{currentCard.question}</span>
+      <RowRadioButtonsGroup />
+      {isShowAnswer && <div className={style.answer}>{currentCard.answer}</div>}
+      <div className={style.buttonsBlock}>
+        <Button onClick={onShowButtonClick}>Show answer</Button>
+        <Button onClick={onNextQuestionClick}>Next question</Button>
+      </div>
     </div>
   );
 });
@@ -83,6 +110,7 @@ export const LearnModal: React.FC<LearnModalPropsType> = memo(
         onNextCardButtonClick()
     }, [dispatch, activeCardId, onNextCardButtonClick])
  */
+
     return (
       <ModalContainer
         buttonTitle="Learn"
