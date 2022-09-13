@@ -1,5 +1,5 @@
-@import "../../../common/sass/variables.scss";
-@import "../../../common/sass/mixins.scss";
+@import '../../../common/sass/variables.scss';
+@import '../../../common/sass/mixins.scss';
 
 table {
   width: 100%;
@@ -12,18 +12,18 @@ table thead tr {
   color: $Text;
   font-weight: bold;
   background: $activeLinkBcgr;
-
 }
 
 table tbody tr:nth-child(2n) {
   position: relative;
   background: $backgr;
-
+}
+.tableRowPointer {
+  cursor: pointer;
 }
 
 table tbody tr:hover {
-  background: rgba(102, 98, 98, .6);
-  cursor: pointer;
+  background: rgba(102, 98, 98, 0.6);
 }
 
 .tableHeader {
@@ -32,7 +32,6 @@ table tbody tr:hover {
 
 th {
   padding: 19px;
-
 
   .value {
     position: relative;
@@ -51,12 +50,10 @@ th {
       bottom: 0;
     }
   }
-
 }
 
 td {
   padding: 13px 0px;
- 
 
   &:last-child {
     display: flex;
@@ -73,14 +70,13 @@ td {
 }
 
 .btns {
-
   & button {
     font-weight: normal;
     border-radius: 0;
     margin-right: 5px;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    cursor:pointer;
-    min-width:58px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    cursor: pointer;
+    min-width: 58px;
   }
 }

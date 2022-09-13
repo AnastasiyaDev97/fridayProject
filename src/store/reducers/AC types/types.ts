@@ -26,7 +26,7 @@ import {
   setCardsRatingAC,
   setSortingFilterCards,
 } from '../cards-reducer';
-import { setModalPropsAC, setModalTypeAC } from '../modal-reducer';
+
 
 export type ActionsType =
   | ReturnType<typeof setAppStatusAC>
@@ -46,8 +46,6 @@ export type ActionsType =
   | ReturnType<typeof setSortingFilterCards>
   | ReturnType<typeof changePageCardsAC>
   | ReturnType<typeof changeSearchPackNameAC>
-  | ReturnType<typeof setModalTypeAC>
-  | ReturnType<typeof setModalPropsAC>
   | ReturnType<typeof setCardsRatingAC>
   | ReturnType<typeof toggleShowUserPacksAC>
   | ReturnType<typeof getUsersAC>

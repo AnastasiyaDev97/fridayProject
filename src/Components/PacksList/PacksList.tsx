@@ -2,7 +2,7 @@ import s from './PacksList.module.scss';
 import React, { memo, useCallback, useMemo, useState } from 'react';
 import { UniversalTable } from '../../features/cards/table/UniversalTable';
 import Paginator from '../pagination/Pagination';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   changePageAC,
   changeSearchPackNameAC,
@@ -14,12 +14,7 @@ import SuperButton from '../TestComponents/components/c2-SuperButton/SuperButton
 import { UseSetTimeoutEffect } from '../../common/hooks/customUseEffect';
 import { PackType } from '../../dal/packs/types';
 
-import { ModalContainer } from '../../common/components/Modal/ModalContainer/ModalContainer';
-import { RootReducerType } from '../../store/store';
-import { EMPTY_STRING } from '../../constants';
-import { getCardsTC } from '../../store/thunks/cards';
 import { COMPONENT_NAME } from '../../enum/ComponentName';
-import { modalActionType, modalEntityType } from 'enum/Modals';
 import { Nullable } from 'types/Nullable';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 
@@ -29,7 +24,6 @@ type PackListPropsType = {
   totalItemCount: number;
   pageCount: number;
   sortPacks: string;
-  setModalData: (modalAction: modalActionType, id: string) => void;
   actualPackName: Nullable<string>;
 };
 
@@ -40,21 +34,13 @@ export const PacksList = memo(
     totalItemCount,
     pageCount,
     sortPacks,
-    setModalData,
     actualPackName,
   }: PackListPropsType) => {
     const dispatch = useDispatch();
 
-    const modalEntity = useSelector<RootReducerType, modalEntityType>(
-      (state) => state.modals.modalEntity
-    );
-    const id = useSelector<RootReducerType, string>((state) => state.modals.id);
-
     const [text, setText] = useState<string>(actualPackName || '');
 
     const portionSize = 10;
-
-    const { Add, Delete, Update, Learn } = modalActionType;
 
     const packsForTable = useMemo(() => {
       return packs.map(
@@ -74,8 +60,6 @@ export const PacksList = memo(
         }
       );
     }, [packs]);
-
-    const packForModal = packs.find((pack) => pack._id === id);
 
     const handleSearchPack = useCallback(() => {
       dispatch(changeSearchPackNameAC(text));
@@ -101,31 +85,6 @@ export const PacksList = memo(
       [dispatch, sortPacks]
     );
 
-    const handleAddPackButtonClick = useCallback(() => {
-      setModalData(Add, EMPTY_STRING);
-    }, [setModalData, Add]);
-
-    const handleDeleteButtonClick = useCallback(
-      (packId: string) => {
-        setModalData(Delete, packId);
-      },
-      [setModalData, Delete]
-    );
-
-    const handleUpdatePackClick = useCallback(
-      (packId: string) => {
-        setModalData(Update, packId);
-      },
-      [setModalData, Update]
-    );
-
-    async function handleLearnPackClick(packId: string) {
-      await dispatch(
-        getCardsTC({ cardsPack_id: packId, max: 100, pageCount: 100 })
-      );
-      setModalData(Learn, packId);
-    }
-
     return (
       <div className={s.listWrapper} aria-disabled={true}>
         <h2>Packs List</h2>
@@ -139,22 +98,17 @@ export const PacksList = memo(
           />
           <SuperButton
             style={{ width: '35%' }}
-            onClick={handleAddPackButtonClick}
+            /* onClick={handleAddPackButtonClick} */
           >
             Add new pack
           </SuperButton>
         </div>
-
-        {modalEntity && <ModalContainer pack={packForModal} />}
 
         <UniversalTable
           tableItems={packsForTable}
           tableTitles={PACK_TABLE_FIELDS}
           onSetSortingClick={handleSetSortingClick}
           itemName={COMPONENT_NAME.PACKS}
-          onDeleteButtonClick={handleDeleteButtonClick}
-          onUpdateButtonClick={handleUpdatePackClick}
-          onLearnPackClick={handleLearnPackClick}
         />
         <Paginator
           totalItemCount={totalItemCount}

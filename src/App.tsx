@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Registration } from './pages/Registration';
 import { NotFound } from './pages/NotFound/NotFound';
 import { ForgotPassword } from './pages/ForgotPassword';
@@ -12,11 +12,6 @@ import Preloader from './Components/Preloader/Preloader';
 import { Cards } from './pages/Cards/Cards';
 import { Users } from 'pages/Users/Users';
 import { Chat } from 'pages/Chat/Chat';
-import {
-  setModalPropsAC,
-  setModalTypeAC,
-} from './store/reducers/modal-reducer';
-import { modalActionType, modalEntityType } from './enum/Modals';
 import Profile from './pages/Profile/Profile';
 import Packs from './pages/Packs/Packs';
 import { initializeAppTC } from './store/thunks/app';
@@ -42,7 +37,6 @@ function App() {
     (state) => state.app.error
   );
 
-  const { Card, Pack } = modalEntityType;
   const {
     PROFILE,
     REGISTRATION,
@@ -72,32 +66,6 @@ function App() {
     }
   }, [error, dispatch]);
 
-  const setModalData = useCallback(
-    (
-      modalAction: modalActionType,
-      modalEntity: modalEntityType,
-      id: string
-    ) => {
-      dispatch(setModalPropsAC(id));
-      dispatch(setModalTypeAC(modalAction, modalEntity));
-    },
-    [dispatch]
-  );
-
-  const setModalDataCards = useCallback(
-    (modalAction: modalActionType, id: string) => {
-      setModalData(modalAction, Card, id);
-    },
-    [setModalData, Card]
-  );
-
-  const setModalDataPacks = useCallback(
-    (modalAction: modalActionType, id: string) => {
-      setModalData(modalAction, Pack, id);
-    },
-    [setModalData, Pack]
-  );
-
   if (!isInitialized) {
     return <Preloader />;
   }
@@ -122,19 +90,10 @@ function App() {
           <Route path={NEW_PASSWORD} element={<NewPassword />}>
             <Route path={TOKEN} element={<NewPassword />} />
           </Route>
-          <Route
-            path={CARDS}
-            element={<Cards setModalData={setModalDataCards} />}
-          >
-            <Route
-              path={ID}
-              element={<Cards setModalData={setModalDataCards} />}
-            />
+          <Route path={CARDS} element={<Cards />}>
+            <Route path={ID} element={<Cards />} />
           </Route>
-          <Route
-            path={PACKS}
-            element={<Packs setModalData={setModalDataPacks} />}
-          />
+          <Route path={PACKS} element={<Packs />} />
           <Route path={LOGIN} element={<Login />} />
           <Route path={ANY} element={<Navigate to={NOT_FOUND} />} />
         </Routes>

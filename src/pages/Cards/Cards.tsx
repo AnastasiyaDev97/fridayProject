@@ -13,19 +13,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SuperButton from '../../Components/TestComponents/components/c2-SuperButton/SuperButton';
 import { CardType } from '../../dal/cards/types';
 import { setAppStatusAC } from '../../store/reducers/app-reducer';
-import { ModalContainer } from '../../common/components/Modal/ModalContainer/ModalContainer';
 import { Rating } from '../../Components/Rating/Rating';
 import { STATUS } from '../../enum/StatusType';
 import { getCardsTC } from '../../store/thunks/cards';
 import { COMPONENT_NAME } from '../../enum/ComponentName';
-import { modalActionType, modalEntityType } from 'enum/Modals';
 import { CARD_TABLE_FIELDS } from 'constants/table';
 
-type CardsT = {
-  setModalData: (modalAction: modalActionType, id: string) => void;
-};
+type CardsT = {};
 
-export const Cards: FC<CardsT> = memo(({ setModalData }) => {
+export const Cards: FC<CardsT> = memo(() => {
   const dispatch = useDispatch();
 
   const params = useParams<'id'>();
@@ -48,12 +44,8 @@ export const Cards: FC<CardsT> = memo(({ setModalData }) => {
   const currentPage = useSelector<RootReducerType, number>(
     (state) => state.cards.page
   );
-  const modalEntity = useSelector<RootReducerType, modalEntityType>(
-    (state) => state.modals.modalEntity
-  );
 
   const PORTION_SIZE = 10;
-  const { Add, Delete, Update } = modalActionType;
 
   const cardsForTable = useMemo(() => {
     return cards.map(
@@ -106,26 +98,6 @@ export const Cards: FC<CardsT> = memo(({ setModalData }) => {
     navigate(-1);
   };
 
-  const handleAddCardButtonClick = useCallback(() => {
-    if (cardsPack_id) {
-      setModalData(Add, cardsPack_id);
-    }
-  }, [setModalData, cardsPack_id, Add]);
-
-  const handleDeleteButtonClick = useCallback(
-    (_id: string) => {
-      setModalData(Delete, _id);
-    },
-    [setModalData, Delete]
-  );
-
-  const handleUpdateCardClick = useCallback(
-    (_id: string) => {
-      setModalData(Update, _id);
-    },
-    [setModalData, Update]
-  );
-
   if (!cards) {
     return <></>;
   }
@@ -134,10 +106,11 @@ export const Cards: FC<CardsT> = memo(({ setModalData }) => {
       <h2 onClick={onTitleGoBackClick} className={style.cursor}>
         &#8592; Pack Name
       </h2>
-      <SuperButton onClick={handleAddCardButtonClick} className={style.btn}>
+      <SuperButton
+        /* onClick={handleAddCardButtonClick} */ className={style.btn}
+      >
         Add new card
       </SuperButton>
-      {modalEntity && <ModalContainer />}
 
       <UniversalTable
         /* rows={cardsForTable}
@@ -146,8 +119,6 @@ export const Cards: FC<CardsT> = memo(({ setModalData }) => {
         tableItems={cardsForTable}
         onSetSortingClick={handleSetSortingClick}
         itemName={COMPONENT_NAME.CARDS}
-        onDeleteButtonClick={handleDeleteButtonClick}
-        onUpdateButtonClick={handleUpdateCardClick}
       />
       <Pagination
         totalItemCount={totalItemCount}

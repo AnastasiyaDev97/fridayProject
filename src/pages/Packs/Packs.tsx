@@ -12,7 +12,6 @@ import { withRedirect } from '../../common/hoc/withRedirect';
 import { PacksList } from '../../Components/PacksList';
 import { STATUS } from '../../enum/StatusType';
 import { getPacksTC } from '../../store/thunks/packs';
-import { modalActionType } from 'enum/Modals';
 import { PATH } from '../../enum/Path';
 import {
   URLSearchParamsInit,
@@ -21,11 +20,9 @@ import {
 } from 'react-router-dom';
 import { EMPTY_STRING } from 'constants/index';
 
-type PacksT = {
-  setModalData: (modalAction: modalActionType, id: string) => void;
-};
+type PacksT = {};
 
-const Packs: FC<PacksT> = memo(({ setModalData }) => {
+const Packs: FC<PacksT> = memo(() => {
   const dispatch = useDispatch();
 
   let [searchParams, setSearchParams] = useSearchParams();
@@ -113,7 +110,6 @@ const Packs: FC<PacksT> = memo(({ setModalData }) => {
         totalItemCount={totalItemCount}
         pageCount={pageCount}
         sortPacks={sortPacks}
-        setModalData={setModalData}
         actualPackName={actualPackName}
       />
     </div>

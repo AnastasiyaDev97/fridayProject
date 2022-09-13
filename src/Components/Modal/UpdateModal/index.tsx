@@ -14,6 +14,7 @@ type UpdateModalPropsType = {
   answer?: string;
   cardsPackId?: string;
   itemName: 'packs' | 'cards';
+  disabled: boolean;
 };
 
 export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
@@ -24,6 +25,7 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
     answer,
     cardsPackId,
     itemName,
+    ...rest
   }): Nullable<ReactElement> => {
     const dispatch = useDispatch();
     const { state: nameValue, onChangeInput: onChangeNameInput } =
@@ -95,6 +97,7 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
         buttonTitle="Update"
         modalTitle="Are you sure you want to update this record?"
         onActionButtonClick={onUpdateButtonClick}
+        {...rest}
       >
         {editableFields()}
       </ModalContainer>

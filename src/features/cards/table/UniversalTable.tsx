@@ -30,9 +30,6 @@ type TablePropsType = {
   tableItems: ItemValues[];
 
   onSetSortingClick: (headerName: string) => void;
-  onDeleteButtonClick?: (id: string) => void;
-  onUpdateButtonClick?: (id: string) => void;
-  onLearnPackClick?: (packId: string) => void;
 };
 
 export const UniversalTable = memo(
@@ -41,9 +38,6 @@ export const UniversalTable = memo(
     tableItems,
     onSetSortingClick,
     itemName,
-    onDeleteButtonClick,
-    onUpdateButtonClick,
-    onLearnPackClick,
   }: TablePropsType) => {
     /* const titlesOfHeaders = Object.entries(headers); */
     return (
@@ -73,14 +67,7 @@ export const UniversalTable = memo(
         <tbody>
           {tableItems.map((row) => {
             return (
-              <TableRow
-                key={row.id}
-                itemValues={row}
-                itemName={itemName}
-                onDeleteButtonClick={onDeleteButtonClick}
-                onUpdateButtonClick={onUpdateButtonClick}
-                onLearnPackClick={onLearnPackClick}
-              />
+              <TableRow key={row.id} itemValues={row} itemName={itemName} />
             );
           })}
         </tbody>

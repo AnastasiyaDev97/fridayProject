@@ -4,10 +4,8 @@ import { Nullable } from 'types/Nullable';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
-import { style } from '@mui/system';
 
 type ModalContainerPropsType = {
   modalTitle: string;
@@ -56,10 +54,6 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
           <DialogTitle id="alert-dialog-title">{modalTitle}</DialogTitle>
           <DialogContent sx={{ marginBottom: '10px' }}>
             {open && children}
-            {/* <DialogContentText id="alert-dialog-description">
-              Let Google help apps determine location. This means sending
-              anonymous location data to Google, even when no apps are running.
-            </DialogContentText> */}
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose}>Cancel</Button>
