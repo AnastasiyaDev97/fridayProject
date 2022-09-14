@@ -1,6 +1,7 @@
 import { memo, ReactElement } from 'react';
 import style from './UniversalTable.module.scss';
 import { TableRow } from './TableRow/TableRow';
+import classNames from 'classnames';
 import { EMPTY_STRING } from '../../../constants';
 
 export type PackRowValues = {
@@ -28,8 +29,7 @@ type TablePropsType = {
   itemName: 'packs' | 'cards';
   tableTitles: { title: string; value: string }[];
   tableItems: ItemValues[];
-
-  onSetSortingClick: (headerName: string) => void;
+  onSetSortingClick: (sortName: string, direction: 'up' | 'down') => void;
 };
 
 export const UniversalTable = memo(
@@ -39,29 +39,40 @@ export const UniversalTable = memo(
     onSetSortingClick,
     itemName,
   }: TablePropsType) => {
-    /* const titlesOfHeaders = Object.entries(headers); */
     return (
       <table className={style.table}>
         <thead>
           <tr>
             {tableTitles.map(({ title, value }, i) => {
-              /*   const classNameForSpanValue =
-                key !== 'actions' ? style.value : EMPTY_STRING; */
-
-              const onTitleClick = () => {
-                /*    onSetSortingClick(key); */
+              const onUpSortTitleClick = () => {
+                onSetSortingClick(value, 'up');
+              };
+              const onDownSortTitleClick = () => {
+                onSetSortingClick(value, 'down');
               };
 
               return (
-                <th
-                  key={i}
-                  onClick={onTitleClick}
-                  className={style.tableHeader}
-                >
-                  <span className={style.value}>{title}</span>
+                <th key={title} className={style.tableHeader}>
+                  <div className={style.headerContent}>
+                    <span>{title}</span>
+                    <div
+                      onClick={onDownSortTitleClick}
+                      className={classNames(style.sortArrow, style.sortArrowUp)}
+                    />
+                    <div
+                      onClick={onUpSortTitleClick}
+                      className={classNames(
+                        style.sortArrow,
+                        style.sortArrowDown
+                      )}
+                    />
+                  </div>
                 </th>
               );
             })}
+            <th className={style.tableHeader}>
+              <span>Actions</span>
+            </th>
           </tr>
         </thead>
         <tbody>

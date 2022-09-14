@@ -1,8 +1,9 @@
-import s from './PacksList.module.scss';
-import React, { memo, useCallback, useMemo, useState } from 'react';
+import style from './PacksList.module.scss';
+import { memo, useCallback, useMemo, useState } from 'react';
 import { UniversalTable } from '../../features/cards/table/UniversalTable';
 import Paginator from '../pagination/Pagination';
 import { useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import {
   changePageAC,
   changeSearchPackNameAC,
@@ -10,13 +11,13 @@ import {
 } from '../../store/reducers/packs-reducer';
 import { convertDateFormat } from '../../utils/handles';
 import SuperInputText from '../TestComponents/components/c1-SuperInputText/SuperInputText';
-import SuperButton from '../TestComponents/components/c2-SuperButton/SuperButton';
 import { UseSetTimeoutEffect } from '../../common/hooks/customUseEffect';
 import { PackType } from '../../dal/packs/types';
 
 import { COMPONENT_NAME } from '../../enum/ComponentName';
 import { Nullable } from 'types/Nullable';
 import { PACK_TABLE_FIELDS } from 'constants/table';
+import { AddModal } from './../Modal/AddModal/index';
 
 type PackListPropsType = {
   packs: Array<PackType>;
@@ -33,14 +34,18 @@ export const PacksList = memo(
     currentPage,
     totalItemCount,
     pageCount,
-    sortPacks,
     actualPackName,
   }: PackListPropsType) => {
     const dispatch = useDispatch();
+    let [searchParams, setSearchParams] = useSearchParams();
 
     const [text, setText] = useState<string>(actualPackName || '');
 
     const portionSize = 10;
+
+    const styleForAddModalBtn = {
+      padding: '1rem 5rem',
+    };
 
     const packsForTable = useMemo(() => {
       return packs.map(
@@ -70,38 +75,33 @@ export const PacksList = memo(
     const handleChangePageClick = useCallback(
       (page: number) => {
         dispatch(changePageAC(page));
+        setSearchParams({ page: page.toString() });
+      },
+      [dispatch, setSearchParams]
+    );
+    console.log(searchParams.get('page'));
+
+    const handleSetSortingClick = useCallback(
+      (sortName: string, direction: 'up' | 'down') => {
+        dispatch(
+          setSortingFilter(direction === 'up' ? `1${sortName}` : `0${sortName}`)
+        );
       },
       [dispatch]
     );
 
-    const handleSetSortingClick = useCallback(
-      (headerName: string) => {
-        dispatch(
-          setSortingFilter(
-            sortPacks[0] === '0' ? `1${headerName}` : `0${headerName}`
-          )
-        );
-      },
-      [dispatch, sortPacks]
-    );
-
     return (
-      <div className={s.listWrapper} aria-disabled={true}>
+      <div className={style.listWrapper} aria-disabled={true}>
         <h2>Packs List</h2>
 
-        <div className={s.row}>
+        <div className={style.row}>
           <SuperInputText
             style={{ width: '60%' }}
             value={text}
             onChangeText={setText}
             onEnter={handleSearchPack}
           />
-          <SuperButton
-            style={{ width: '35%' }}
-            /* onClick={handleAddPackButtonClick} */
-          >
-            Add new pack
-          </SuperButton>
+          <AddModal itemName="packs" style={styleForAddModalBtn} />
         </div>
 
         <UniversalTable

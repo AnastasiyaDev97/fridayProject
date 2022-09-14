@@ -13,6 +13,7 @@ type ModalContainerPropsType = {
   children?: ReactElement;
   onActionButtonClick?: () => void;
   disabled?: boolean;
+  style?: { padding?: string; marginBottom?: string };
 };
 
 export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
@@ -22,6 +23,7 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
     children,
     onActionButtonClick,
     disabled,
+    style,
   }): Nullable<ReactElement> => {
     const [open, setOpen] = useState(false);
 
@@ -42,7 +44,11 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
 
     return (
       <div>
-        <SuperButton onClick={handleClickOpen} disabled={disabled}>
+        <SuperButton
+          onClick={handleClickOpen}
+          disabled={disabled}
+          style={style}
+        >
           {buttonTitle}
         </SuperButton>
         <Dialog

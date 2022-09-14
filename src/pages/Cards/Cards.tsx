@@ -10,7 +10,6 @@ import {
 } from '../../store/reducers/cards-reducer';
 import { UniversalTable } from '../../features/cards/table/UniversalTable';
 import { useNavigate, useParams } from 'react-router-dom';
-import SuperButton from '../../Components/TestComponents/components/c2-SuperButton/SuperButton';
 import { CardType } from '../../dal/cards/types';
 import { setAppStatusAC } from '../../store/reducers/app-reducer';
 import { Rating } from '../../Components/Rating/Rating';
@@ -18,6 +17,7 @@ import { STATUS } from '../../enum/StatusType';
 import { getCardsTC } from '../../store/thunks/cards';
 import { COMPONENT_NAME } from '../../enum/ComponentName';
 import { CARD_TABLE_FIELDS } from 'constants/table';
+import { AddModal } from './../../Components/Modal/AddModal/index';
 
 type CardsT = {};
 
@@ -46,6 +46,11 @@ export const Cards: FC<CardsT> = memo(() => {
   );
 
   const PORTION_SIZE = 10;
+
+  const styleForAddModalBtn = {
+    padding: '1rem 5rem',
+    marginBottom: '15px',
+  };
 
   const cardsForTable = useMemo(() => {
     return cards.map(
@@ -77,14 +82,14 @@ export const Cards: FC<CardsT> = memo(() => {
   }, [dispatch, currentPage, sortCards]);
 
   const handleSetSortingClick = useCallback(
-    (headerName: string) => {
+    (sortName: string, direction: 'up' | 'down') => {
       dispatch(
         setSortingFilterCards(
-          sortCards[0] === '0' ? `1${headerName}` : `0${headerName}`
+          direction === 'up' ? `1${sortName}` : `0${sortName}`
         )
       );
     },
-    [dispatch, sortCards]
+    [dispatch]
   );
 
   const handleChangePageClick = useCallback(
@@ -99,22 +104,20 @@ export const Cards: FC<CardsT> = memo(() => {
   };
 
   if (!cards) {
-    return <></>;
+    return null;
   }
   return (
     <div className={style.wrapper}>
       <h2 onClick={onTitleGoBackClick} className={style.cursor}>
         &#8592; Pack Name
       </h2>
-      <SuperButton
-        /* onClick={handleAddCardButtonClick} */ className={style.btn}
-      >
-        Add new card
-      </SuperButton>
+      <AddModal
+        style={styleForAddModalBtn}
+        itemName="cards"
+        /* className={style.btn} */
+      />
 
       <UniversalTable
-        /* rows={cardsForTable}
-        headers={headersForTable} */
         tableTitles={CARD_TABLE_FIELDS}
         tableItems={cardsForTable}
         onSetSortingClick={handleSetSortingClick}

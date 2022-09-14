@@ -56,6 +56,7 @@ const Packs: FC<PacksT> = memo(() => {
   const { PACKS } = PATH;
 
   let actualPackName = searchParams.get('packName');
+  console.log(actualPackName);
 
   useEffect(() => {
     dispatch(setAppStatusAC(STATUS.LOADING));

@@ -32,23 +32,24 @@ table tbody tr:hover {
 
 th {
   padding: 19px;
-
-  .value {
+  .headerContent {
     position: relative;
-
-    &:after {
-      @include triangle;
-      border-bottom: 8px solid $buttonBackground;
-      right: -20px;
-      top: 0;
-    }
-
-    &:before {
-      @include triangle;
-      border-top: 8px solid $buttonBackground;
-      right: -20px;
-      bottom: 0;
-    }
+  }
+  .sortArrow {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    position: absolute;
+    right: 0;
+  }
+  .sortArrowUp {
+    border-top: 8px solid $buttonBackground;
+    top: 0;
+  }
+  .sortArrowDown {
+    bottom: 0;
+    border-bottom: 8px solid $buttonBackground;
   }
 }
 

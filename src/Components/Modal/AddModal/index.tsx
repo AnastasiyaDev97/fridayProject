@@ -10,10 +10,12 @@ import TextField from '@mui/material/TextField';
 type AddModalPropsType = {
   cardsPackId?: string;
   itemName: 'packs' | 'cards';
+  buttonStyle?: string;
+  style?: { padding?: string; marginBottom?: string };
 };
 
 export const AddModal: React.FC<AddModalPropsType> = memo(
-  ({ cardsPackId, itemName }): Nullable<ReactElement> => {
+  ({ cardsPackId, itemName, ...rest }): Nullable<ReactElement> => {
     const dispatch = useDispatch();
     const { state: nameValue, onChangeInput: onChangeNameInput } =
       useCustomInput();
@@ -74,6 +76,7 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
 
     return (
       <ModalContainer
+        {...rest}
         buttonTitle="Add"
         modalTitle="Are you sure you want to add this record?"
         onActionButtonClick={onAddButtonClick}
