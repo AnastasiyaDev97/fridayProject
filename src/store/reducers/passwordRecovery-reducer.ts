@@ -15,8 +15,6 @@ export const passwordRecoveryReducer = (state: InitialStateType = initialState, 
     switch (action.type) {
         case "SET-RESPONSE-INFO-FORGOT-PASS":
         case "SET-RESPONSE-INFO-NEW-PASS":
-            debugger
-            return {...state, ...action.payload}
         case "ADD-EMAIL":
             return {...state, ...action.payload}
         default:

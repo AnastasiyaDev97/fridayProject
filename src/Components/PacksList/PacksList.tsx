@@ -1,9 +1,9 @@
 import style from './PacksList.module.scss';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import { UniversalTable } from '../../features/cards/table/UniversalTable';
 import Paginator from '../pagination/Pagination';
 import { useDispatch } from 'react-redux';
-import { useSearchParams } from 'react-router-dom';
+import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
 import {
   changePageAC,
   changeSearchPackNameAC,
@@ -11,7 +11,6 @@ import {
 } from '../../store/reducers/packs-reducer';
 import { convertDateFormat } from '../../utils/handles';
 import SuperInputText from '../TestComponents/components/c1-SuperInputText/SuperInputText';
-import { UseSetTimeoutEffect } from '../../common/hooks/customUseEffect';
 import { PackType } from '../../dal/packs/types';
 
 import { COMPONENT_NAME } from '../../enum/ComponentName';
@@ -68,18 +67,22 @@ export const PacksList = memo(
 
     const handleSearchPack = useCallback(() => {
       dispatch(changeSearchPackNameAC(text));
-    }, [dispatch, text]);
-
-    UseSetTimeoutEffect(handleSearchPack, text, 2000);
+      setSearchParams({
+        ...Object.fromEntries([...searchParams]),
+        packName: text,
+      } as URLSearchParamsInit);
+    }, [dispatch, text, searchParams, setSearchParams]);
 
     const handleChangePageClick = useCallback(
       (page: number) => {
         dispatch(changePageAC(page));
-        setSearchParams({ page: page.toString() });
+        setSearchParams({
+          ...Object.fromEntries([...searchParams]),
+          page: page.toString(),
+        } as URLSearchParamsInit);
       },
-      [dispatch, setSearchParams]
+      [dispatch, setSearchParams, searchParams]
     );
-    console.log(searchParams.get('page'));
 
     const handleSetSortingClick = useCallback(
       (sortName: string, direction: 'up' | 'down') => {
@@ -89,6 +92,21 @@ export const PacksList = memo(
       },
       [dispatch]
     );
+
+    useEffect(() => {
+      let idOfTimeout = setTimeout(() => {
+        handleSearchPack();
+      }, 2000);
+      return () => {
+        clearTimeout(idOfTimeout);
+      };
+    }, [text]);
+
+    useEffect(() => {
+      if (searchParams.get('page')) {
+        dispatch(changePageAC(Number(searchParams.get('page'))));
+      }
+    }, []);
 
     return (
       <div className={style.listWrapper} aria-disabled={true}>

@@ -5,27 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../../store/store';
 import { getPacks } from '../../selectors/getPacks';
 import { getCurrentPage } from '../../selectors/getCurrentPage';
-import { setAppStatusAC } from '../../store/reducers/app-reducer';
 import { Nullable } from '../../types/Nullable';
 import { PackType } from '../../dal/packs/types';
 import { withRedirect } from '../../common/hoc/withRedirect';
 import { PacksList } from '../../Components/PacksList';
-import { STATUS } from '../../enum/StatusType';
 import { getPacksTC } from '../../store/thunks/packs';
-import { PATH } from '../../enum/Path';
-import {
-  URLSearchParamsInit,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
-import { EMPTY_STRING } from 'constants/index';
+import { useSearchParams } from 'react-router-dom';
 
 type PacksT = {};
 
 const Packs: FC<PacksT> = memo(() => {
   const dispatch = useDispatch();
 
-  let [searchParams, setSearchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
 
   const packs = useSelector<RootReducerType, Array<PackType>>(getPacks);
   const currentPage = useSelector<RootReducerType, number>(getCurrentPage);
@@ -44,23 +36,13 @@ const Packs: FC<PacksT> = memo(() => {
   const sortPacks = useSelector<RootReducerType, string>(
     (state) => state.packs.sortPacks
   );
-  const packName = useSelector<RootReducerType, Nullable<string>>(
-    (state) => state.packs.packName
-  );
   const user_id = useSelector<RootReducerType, Nullable<string>>(
     (state) => state.packs.user_id
   );
 
-  let navigate = useNavigate();
-
-  const { PACKS } = PATH;
-
   let actualPackName = searchParams.get('packName');
-  console.log(actualPackName);
 
   useEffect(() => {
-    dispatch(setAppStatusAC(STATUS.LOADING));
-
     let idOfTimeout = setTimeout(() => {
       dispatch(getPacksTC(actualPackName));
     }, 1000);
@@ -75,28 +57,11 @@ const Packs: FC<PacksT> = memo(() => {
     maxValueForRangeSlider,
     user_id,
     sortPacks,
-    packName,
-    searchParams,
     actualPackName,
   ]);
 
-  useEffect(() => {
-    setSearchParams({
-      packName,
-    } as URLSearchParamsInit);
-    navigate({
-      pathname: PACKS,
-      search: `?packName=${packName}`,
-    });
-    if (packName === EMPTY_STRING) {
-      navigate({
-        pathname: PACKS,
-      });
-    }
-  }, [packName, PACKS, navigate, setSearchParams, searchParams]);
-
   if (!packs) {
-    return <></>;
+    return null;
   }
 
   return (

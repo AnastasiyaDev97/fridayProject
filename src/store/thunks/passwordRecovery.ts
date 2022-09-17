@@ -23,7 +23,6 @@ export const sendPassword = (email: string) =>
 export const setNewPasswordTC = (newPassData: newPassDataType) =>
     async (dispatch: AppDispatch) => {
         try {
-            debugger
             dispatch(setAppStatusAC(STATUS.LOADING))
             let res = await authorizationAPI.setNewPassword(newPassData)
             res.info && dispatch(SetResponseInfoNewPassAC(res.info))
