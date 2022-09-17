@@ -6,15 +6,14 @@ import { registerStatusAC } from '../store/reducers/registration-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../store/store';
 import styles from 'pages/Login/Login.module.scss';
-import { UniversalInput } from '../Components/Input/UniversalInput';
+import { InputType, UniversalInput } from '../Components/Input/UniversalInput';
 
 import { EMPTY_STRING } from '../constants';
 import { registerMeTC } from '../store/thunks/registration';
 import { PATH } from '../enum/Path';
-import { FORMIK_FIELDS_NAME } from '../enum/FormikFieldNames';
-import { INPUT_TYPE } from '../enum/InputType';
 import { BUTTON_TYPE } from '../enum/ButtonTyoe';
 import { AuthData, validates } from '../utils/validates';
+import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 
 export const Registration = () => {
   const dispatch = useDispatch();
@@ -64,33 +63,28 @@ export const Registration = () => {
       <h2>Sign up</h2>
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputsWrapper}>
-          <UniversalInput
-            validationErr={
-              (formik.touched.email && formik.errors.email) || EMPTY_STRING
-            }
-            formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.EMAIL)}
-          />
-          <UniversalInput
-            validationErr={
-              (formik.touched.password && formik.errors.password) ||
-              EMPTY_STRING
-            }
-            formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
-            type={INPUT_TYPE.PASSWORD}
-            isPassword={true}
-          />
-          <UniversalInput
-            validationErr={
-              (formik.touched.confirmPassword &&
-                formik.errors.confirmPassword) ||
-              EMPTY_STRING
-            }
-            formikProps={formik.getFieldProps(
-              FORMIK_FIELDS_NAME.CONFIRM_PASSWORD
-            )}
-            type={INPUT_TYPE.PASSWORD}
-            isPassword={true}
-          />
+          {REGISTRATION_FORM_FIELDS.map(
+            ({
+              register,
+              placeholder,
+              type,
+            }: {
+              register: string;
+              placeholder: string;
+              type: InputType;
+            }) => (
+              <UniversalInput
+                validationErr={
+                  (formik.touched[register as keyof typeof formik.touched] &&
+                    formik.errors[register as keyof typeof formik.touched]) ||
+                  EMPTY_STRING
+                }
+                formikProps={formik.getFieldProps(register)}
+                type={type}
+                placeholder={placeholder}
+              />
+            )
+          )}
         </div>
 
         <div className={styles.row}>
@@ -98,10 +92,13 @@ export const Registration = () => {
             <SuperButton
               type={BUTTON_TYPE.BUTTON}
               onClick={onCancelButtonClick}
+              className={styles.registerBtn}
             >
               Cancel
             </SuperButton>
-            <SuperButton type={BUTTON_TYPE.SUBMIT}>Register</SuperButton>
+            <SuperButton type={BUTTON_TYPE.SUBMIT} className={styles.registerBtn}>
+              Register
+            </SuperButton>
           </div>
         </div>
       </form>

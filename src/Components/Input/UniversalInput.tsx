@@ -4,17 +4,17 @@ import { FC, memo, useState } from 'react';
 import { FieldInputProps } from 'formik';
 import { INPUT_TYPE } from '../../enum/InputType';
 
-export type InputType = 'password' | 'text';
+export type InputType = 'password' | 'text' | 'email';
 
 type universalInputPropsType = {
   validationErr: string;
   formikProps: FieldInputProps<any>;
   type?: InputType;
-  isPassword?: boolean;
+  placeholder?: string;
 };
 
 export const UniversalInput: FC<universalInputPropsType> = memo(
-  ({ validationErr, formikProps, type, isPassword }) => {
+  ({ validationErr, formikProps, placeholder, type }) => {
     let [passwordShown, setPasswordShown] = useState<boolean>(false);
 
     const typeForInput =
@@ -28,11 +28,11 @@ export const UniversalInput: FC<universalInputPropsType> = memo(
       <div className={styles.inputWrapper}>
         <SuperInputText
           className={styles.input}
-          placeholder={formikProps.name}
+          placeholder={placeholder}
           {...formikProps}
           type={typeForInput}
         />
-        {isPassword && (
+        {type === 'password' && (
           <span
             className={styles.togglePassBtn}
             onClick={onSpanToggleShowPasswordClick}

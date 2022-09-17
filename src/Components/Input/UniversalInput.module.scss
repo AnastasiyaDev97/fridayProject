@@ -3,6 +3,12 @@
 .inputWrapper {
   width: 100%;
   position: relative;
+  &:not(:last-of-type) {
+    margin-bottom: 35px;
+  }
+  &:last-of-type {
+    margin-bottom: 15px;
+  }
 
   .input {
     font-size: inherit;
@@ -14,7 +20,6 @@
     padding: 1rem 4em 1rem 2rem;
     width: 100%;
     font-family: $NunitoFont;
-    margin-bottom: 35px;
     color: black;
 
     &:hover {
@@ -35,8 +40,7 @@
     background-size: cover;
     position: absolute;
     content: '';
-    top: 25%;
-
+    top: 30%;
     right: 3em;
     cursor: pointer;
   }

@@ -53,24 +53,17 @@
       box-sizing: content-box;
     }
 
-    .row {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      width: 100%;
+    a {
+      color: $Text;
+      box-shadow: none;
+      text-decoration: none;
+      line-height: 26px;
+      font-family: $NunitoFont;
+      font-weight: 800;
+      font-size: 18px;
 
-      a {
-        color: $Text;
-        box-shadow: none;
-        text-decoration: none;
-        line-height: 26px;
-        font-family: $NunitoFont;
-        font-weight: 800;
-        font-size: 18px;
-
-        &:hover {
-          text-decoration: underline;
-        }
+      &:hover {
+        text-decoration: underline;
       }
 
       .registrationBtns {
@@ -97,11 +90,17 @@
     font-family: $NunitoFont;
     font-weight: 800;
     line-height: 26px;
-    font-size: 18px;
+    font-size: 1rem;
     z-index: 1;
     &:hover {
       text-decoration: underline;
     }
+  }
+  .row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
   }
 }
 
@@ -139,4 +138,11 @@ div {
 
 .sendMailMessage {
   margin-bottom: 15px;
+}
+
+.registerBtn{
+  width: 90px;
+  &:not(:last-of-type){
+    margin-right: 15px;
+  }
 }

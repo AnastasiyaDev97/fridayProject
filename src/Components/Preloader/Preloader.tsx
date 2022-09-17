@@ -1,8 +1,8 @@
 import preload from 'common/assets/svg/oval.svg';
-import s from './Preloader.module.scss';
+import style from './Preloader.module.scss';
 
 const Preloader = () => {
-  return <img src={preload} alt="waiting..." className={s.loading} />;
+  return <img src={preload} alt="waiting..." className={style.loading} />;
 };
 
 export default Preloader;

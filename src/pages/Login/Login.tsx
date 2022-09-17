@@ -64,19 +64,16 @@ export const Login = () => {
             }
             formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
             type={INPUT_TYPE.PASSWORD}
-            isPassword={true}
           />
         </div>
 
-        <div className={styles.row}>
-          <SuperCheckbox
-            checked={formik.values.rememberMe}
-            {...formik.getFieldProps(FORMIK_FIELDS_NAME.REMEMBER_ME)}
-          >
-            Remember Me
-          </SuperCheckbox>
-          <NavLink to={PATH.FORGOT_PASSWORD}>Lost Password?</NavLink>
-        </div>
+        <SuperCheckbox
+          checked={formik.values.rememberMe}
+          {...formik.getFieldProps(FORMIK_FIELDS_NAME.REMEMBER_ME)}
+        >
+          Remember Me
+        </SuperCheckbox>
+
         <SuperButton
           className={styles.submitBtn}
           type={BUTTON_TYPE.SUBMIT}
@@ -85,10 +82,14 @@ export const Login = () => {
           Login
         </SuperButton>
       </form>
-
-      <NavLink className={styles.registerLink} to={PATH.REGISTRATION}>
-        Register
-      </NavLink>
+      <div className={styles.row}>
+        <NavLink className={styles.registerLink} to={PATH.REGISTRATION}>
+          Register
+        </NavLink>
+        <NavLink className={styles.registerLink} to={PATH.FORGOT_PASSWORD}>
+          Lost Password?
+        </NavLink>
+      </div>
     </div>
   );
 };

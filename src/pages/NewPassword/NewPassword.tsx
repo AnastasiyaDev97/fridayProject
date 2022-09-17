@@ -65,7 +65,6 @@ export const NewPassword = () => {
             }
             formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
             type={INPUT_TYPE.PASSWORD}
-            isPassword={true}
           />
         </div>
 

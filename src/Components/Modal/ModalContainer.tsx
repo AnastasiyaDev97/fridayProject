@@ -58,7 +58,13 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">{modalTitle}</DialogTitle>
-          <DialogContent sx={{ marginBottom: '10px' }}>
+          <DialogContent
+            sx={{
+              marginBottom: '10px',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
             {open && children}
           </DialogContent>
           <DialogActions>

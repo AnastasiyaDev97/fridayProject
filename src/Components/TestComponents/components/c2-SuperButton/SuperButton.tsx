@@ -12,7 +12,7 @@ type SuperButtonPropsType = DefaultButtonPropsType & {
 
 const SuperButton: FC<SuperButtonPropsType> = memo(
   ({ red, className, ...restProps }) => {
-    const finalClassName = `${style.btn} ${red && style.red} ${className}`;
+    let finalClassName = `${style.btn} ${red && style.red} ${className}`;
     return <button className={finalClassName} {...restProps} />;
   }
 );
