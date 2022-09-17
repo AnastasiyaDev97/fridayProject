@@ -1,6 +1,6 @@
 import style from './PacksList.module.scss';
 import { memo, useCallback, useMemo, useState, useEffect } from 'react';
-import { UniversalTable } from '../../features/cards/table/UniversalTable';
+import { UniversalTable } from '../Table/UniversalTable';
 import Paginator from '../pagination/Pagination';
 import { useDispatch } from 'react-redux';
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
@@ -66,6 +66,7 @@ export const PacksList = memo(
     }, [packs]);
 
     const handleSearchPack = useCallback(() => {
+      /*  if() */
       dispatch(changeSearchPackNameAC(text));
       setSearchParams({
         ...Object.fromEntries([...searchParams]),
@@ -94,13 +95,17 @@ export const PacksList = memo(
     );
 
     useEffect(() => {
-      let idOfTimeout = setTimeout(() => {
-        handleSearchPack();
-      }, 2000);
-      return () => {
-        clearTimeout(idOfTimeout);
-      };
-    }, [text]);
+      if (text === '' && !actualPackName) {
+        return;
+      } else {
+        let idOfTimeout = setTimeout(() => {
+          handleSearchPack();
+        }, 2000);
+        return () => {
+          clearTimeout(idOfTimeout);
+        };
+      }
+    }, [text, actualPackName]);
 
     useEffect(() => {
       if (searchParams.get('page')) {

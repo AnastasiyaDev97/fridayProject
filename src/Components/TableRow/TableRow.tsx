@@ -1,10 +1,10 @@
 import { FC, memo, MouseEvent } from 'react';
-import style from '../UniversalTable.module.scss';
+import style from '../Table/UniversalTable.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootReducerType } from '../../../../store/store';
+import { RootReducerType } from '../../store/store';
 import { DeleteModal, LearnModal, UpdateModal } from 'Components/Modal';
-import { ItemValues } from '../UniversalTable';
+import { ItemValues } from '../Table/UniversalTable';
 
 type TableRowT = {
   itemValues: ItemValues;
@@ -56,11 +56,13 @@ export const TableRow: FC<TableRowT> = memo(({ itemValues, itemName }) => {
           answer={tableValues?.answer}
           disabled={!isMyPack}
         />
-        <LearnModal
-          name={tableValues?.name}
-          disabled={tableValues?.cardsCount! === 0}
-          id={id}
-        />
+        {itemName === 'packs' && (
+          <LearnModal
+            name={tableValues?.name}
+            disabled={tableValues?.cardsCount! === 0}
+            id={id}
+          />
+        )}
       </td>
     </tr>
   );

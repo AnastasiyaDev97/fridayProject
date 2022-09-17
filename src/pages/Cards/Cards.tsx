@@ -8,20 +8,19 @@ import {
   changePageCardsAC,
   setSortingFilterCards,
 } from '../../store/reducers/cards-reducer';
-import { UniversalTable } from '../../features/cards/table/UniversalTable';
+import { UniversalTable } from '../../Components/Table/UniversalTable';
 import { useNavigate, useParams } from 'react-router-dom';
 import { CardType } from '../../dal/cards/types';
-import { setAppStatusAC } from '../../store/reducers/app-reducer';
 import { Rating } from '../../Components/Rating/Rating';
-import { STATUS } from '../../enum/StatusType';
 import { getCardsTC } from '../../store/thunks/cards';
 import { COMPONENT_NAME } from '../../enum/ComponentName';
 import { CARD_TABLE_FIELDS } from 'constants/table';
 import { AddModal } from './../../Components/Modal/AddModal/index';
+import { withRedirect } from 'common/hoc/withRedirect';
 
 type CardsT = {};
 
-export const Cards: FC<CardsT> = memo(() => {
+const Cards: FC<CardsT> = memo(() => {
   const dispatch = useDispatch();
 
   const params = useParams<'id'>();
@@ -68,8 +67,6 @@ export const Cards: FC<CardsT> = memo(() => {
   }, [cards]);
 
   useEffect(() => {
-    dispatch(setAppStatusAC(STATUS.LOADING));
-
     let idOfTimeout = setTimeout(() => {
       if (cardsPack_id) {
         dispatch(getCardsTC({ cardsPack_id, page: currentPage, sortCards }));
@@ -114,6 +111,7 @@ export const Cards: FC<CardsT> = memo(() => {
       <AddModal
         style={styleForAddModalBtn}
         itemName="cards"
+        cardsPackId={cardsPack_id}
         /* className={style.btn} */
       />
 
@@ -133,3 +131,5 @@ export const Cards: FC<CardsT> = memo(() => {
     </div>
   );
 });
+
+export default withRedirect(Cards);

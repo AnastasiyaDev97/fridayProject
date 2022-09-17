@@ -9,7 +9,7 @@ import styles from './App.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from './store/store';
 import Preloader from './Components/Preloader/Preloader';
-import { Cards } from './pages/Cards/Cards';
+import  Cards  from './pages/Cards/Cards';
 import { Users } from 'pages/Users/Users';
 import { Chat } from 'pages/Chat/Chat';
 import Profile from './pages/Profile/Profile';
