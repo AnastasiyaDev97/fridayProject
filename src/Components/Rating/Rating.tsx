@@ -1,5 +1,6 @@
 import Icon from 'Components/Icon';
 import { FC, memo, ReactElement } from 'react';
+import styles from './Rating.module.scss';
 
 type RatingProps = {
   grade: number;
@@ -21,5 +22,7 @@ type starPropsType = {
 };
 
 export const Star = memo(({ selected }: starPropsType) => {
-  return <Icon name={selected ? 'fullStar' : 'star'} /> 
+  return (
+    <Icon name={selected ? 'fullStar' : 'star'} className={styles.stars} />
+  );
 });

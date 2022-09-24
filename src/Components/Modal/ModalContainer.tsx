@@ -47,19 +47,23 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
 
     return (
       <div>
-        <div
-          onClick={handleClickOpen}
-          className={`${disabled ? styles.disabled : styles.active}`}
-        >
-          {mainElement}
-        </div>
-        {/* <SuperButton
-          onClick={handleClickOpen}
-          disabled={disabled}
-          style={style}
-        >
-          {buttonTitle}
-        </SuperButton> */}
+        {mainElement ? (
+          <div
+            onClick={handleClickOpen}
+            className={`${disabled ? styles.disabled : styles.active}`}
+          >
+            {mainElement}
+          </div>
+        ) : (
+          <SuperButton
+            onClick={handleClickOpen}
+            disabled={disabled}
+            style={style}
+          >
+            {buttonTitle}
+          </SuperButton>
+        )}
+
         <Dialog
           open={open}
           onClose={handleClose}

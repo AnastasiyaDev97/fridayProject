@@ -1,5 +1,5 @@
-@import "../../common/sass/variables.scss";
-
+@import '../../common/sass/variables.scss';
+@import '../../common/sass/media.scss';
 .wrapper {
   width: 80%;
   height: 100%;
@@ -9,13 +9,20 @@
   background: $backgrForPacks;
   padding: 30px;
   flex-direction: column;
-  .btn{
+  @include d-media(sm) {
+    width: 100%;
+    margin: 0 20px;
+    @include d-media(xs) {
+      margin: 0;
+    }
+  }
+  .btn {
     margin-top: 15px;
     margin-bottom: 15px;
     width: 25%;
   }
 }
 
-.cursor{
+.cursor {
   cursor: pointer;
 }

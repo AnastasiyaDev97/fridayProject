@@ -2,10 +2,7 @@ import { FC, memo, useCallback, useEffect } from 'react';
 import style from './PacksParams.module.scss';
 import SuperButton from '../TestComponents/components/c2-SuperButton/SuperButton';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  setNewMinMaxValues,
-  toggleShowUserPacksAC,
-} from '../../store/reducers/packs-reducer';
+import { toggleShowUserPacksAC } from '../../store/reducers/packs-reducer';
 import { RangeSlider } from '../rangeSlider/RangeSlider';
 import { RootReducerType } from '../../store/store';
 import { EMPTY_STRING } from '../../constants';

@@ -1,0 +1,9 @@
+@import '../../common/sass/media.scss';
+.stars {
+  width: 15px;
+  height: 15px;
+  @include d-media(sm) {
+    width: 10px;
+    height: 10px;
+  }
+}
