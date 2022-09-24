@@ -4,7 +4,7 @@ import { packsAPI } from '../../dal/packs/packsAPI';
 import { setAppStatusAC } from '../reducers/app-reducer';
 import { STATUS } from '../../enum/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
-import { setPacksAC } from '../reducers/packs-reducer';
+import {  setPacksAC } from '../reducers/packs-reducer';
 import { pageCountNumber } from '../../constants';
 import { Nullable } from 'types/Nullable';
 
@@ -12,7 +12,7 @@ export const getPacksTC =
   (actualPackName?: Nullable<string>) =>
   async (dispatch: AppDispatch, getState: () => RootReducerType) => {
     const { min, max, page, user_id, sortPacks } = getState().packs;
-    let paramsForQuery: getPacksQueryParamsType = {
+    const paramsForQuery: getPacksQueryParamsType = {
       min,
       max,
       sortPacks,
@@ -21,6 +21,7 @@ export const getPacksTC =
       user_id,
       packName: actualPackName,
     };
+
     try {
       const data = await packsAPI.getPacks(paramsForQuery);
       dispatch(setAppStatusAC(STATUS.LOADING));

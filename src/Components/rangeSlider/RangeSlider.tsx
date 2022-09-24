@@ -1,51 +1,56 @@
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import {FC, memo, useState} from "react";
-import {useSelector} from "react-redux";
-import {RootReducerType} from "../../store/store";
-import s from './RangeSlider.module.scss'
-import {UseSetTimeoutEffect} from "../../common/hooks/customUseEffect";
+import { FC, memo, useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootReducerType } from '../../store/store';
+import s from './RangeSlider.module.scss';
+import { UseSetTimeoutEffect } from '../../common/hooks/customUseEffect';
+import { Nullable } from 'types/Nullable';
+import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
 
 type SliderPropsType = {
-    minValueForRangeSlider: number
-    maxValueForRangeSlider: number
-    onChangeCardsCountsChange: (minValueForRangeSlider: number, maxValueForRangeSlider: number) => void
-}
+  currentMinCardsValue: number;
+  currentMaxCardsValue: Nullable<number>;
+};
 
+export const RangeSlider: FC<SliderPropsType> = memo(
+  ({ currentMinCardsValue, currentMaxCardsValue }) => {
+    const dispatch = useDispatch();
 
-export const RangeSlider:FC<SliderPropsType> = memo(({minValueForRangeSlider,maxValueForRangeSlider,
-                                                         onChangeCardsCountsChange}) => {
+    const maxValueForRangeSlider = useSelector<RootReducerType, number>(
+      (state) => state.packs.maxCardsCount
+    );
 
-        const maxCardsCount = useSelector<RootReducerType, number>((state) => state.packs.maxCardsCount)
-        const minCardsCount = useSelector<RootReducerType, number>((state) => state.packs.minCardsCount)
+    const [value, setValue] = useState<number[]>([
+      currentMinCardsValue,
+      currentMaxCardsValue || maxValueForRangeSlider,
+    ]);
 
-        const [value, setValue] = useState<number[]>([minValueForRangeSlider, maxValueForRangeSlider]);
+    const onCardsCountChange = () => {
+      dispatch(setNewMinMaxValues(value[0], value[1]));
+    };
 
-        const changeCardsCount = () => {
-            onChangeCardsCountsChange(value[0], value[1])
-        }
+    UseSetTimeoutEffect(onCardsCountChange, value, 500);
 
-        UseSetTimeoutEffect(changeCardsCount, value, 500)
+    const onSliderChange = (event: Event, newValue: number | number[]) => {
+      setValue(newValue as number[]);
+    };
 
-        const onSliderChange = (event: Event, newValue: number | number[]) => {
-            setValue(newValue as number[]);
-        };
-
-        return (
-            <Box sx={{width: '80%'}}>
-                <div className={s.sliderWrapper}>
-                    <Slider
-                        value={value}
-                        onChange={onSliderChange}
-                        valueLabelDisplay="auto"
-                        max={maxCardsCount}
-                    />
-                    <div className={s.sliderValues}>
-                        <span>{minCardsCount}</span>
-                        <span>{maxCardsCount}</span>
-                    </div>
-                </div>
-            </Box>
-        );
-    }
-)
+    return (
+      <Box sx={{ width: '80%' }}>
+        <div className={s.sliderWrapper}>
+          <Slider
+            value={value}
+            onChange={onSliderChange}
+            valueLabelDisplay="auto"
+            max={maxValueForRangeSlider}
+          />
+          <div className={s.sliderValues}>
+            <span>{currentMinCardsValue}</span>
+            <span>{currentMaxCardsValue}</span>
+          </div>
+        </div>
+      </Box>
+    );
+  }
+);

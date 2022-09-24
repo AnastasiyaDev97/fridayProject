@@ -25,7 +25,7 @@ export type newPassDataType = {
 export type getPacksQueryParamsType = {
   packName?: Nullable<string>;
   min?: number;
-  max?: number;
+  max?: Nullable<number>;
   sortPacks?: string;
   page?: number;
   pageCount?: number;

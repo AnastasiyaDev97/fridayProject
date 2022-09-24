@@ -27,10 +27,10 @@ const Packs: FC<PacksT> = memo(() => {
   const pageCount = useSelector<RootReducerType, number>(
     (state) => state.packs.pageCount
   );
-  const minValueForRangeSlider = useSelector<RootReducerType, number>(
+  const currentMinCardsValue = useSelector<RootReducerType, number>(
     (state) => state.packs.min
   );
-  const maxValueForRangeSlider = useSelector<RootReducerType, number>(
+  const currentMaxCardsValue = useSelector<RootReducerType, Nullable<number>>(
     (state) => state.packs.max
   );
   const sortPacks = useSelector<RootReducerType, string>(
@@ -53,8 +53,8 @@ const Packs: FC<PacksT> = memo(() => {
   }, [
     dispatch,
     currentPage,
-    minValueForRangeSlider,
-    maxValueForRangeSlider,
+    currentMinCardsValue,
+    currentMaxCardsValue,
     user_id,
     sortPacks,
     actualPackName,
@@ -67,8 +67,8 @@ const Packs: FC<PacksT> = memo(() => {
   return (
     <div className={s.wrapper}>
       <PacksParams
-        minValueForRangeSlider={minValueForRangeSlider}
-        maxValueForRangeSlider={maxValueForRangeSlider}
+        currentMinCardsValue={currentMinCardsValue}
+        currentMaxCardsValue={currentMaxCardsValue}
       />
       <PacksList
         packs={packs}

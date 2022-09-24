@@ -10,14 +10,15 @@ import { RangeSlider } from '../rangeSlider/RangeSlider';
 import { RootReducerType } from '../../store/store';
 import { EMPTY_STRING } from '../../constants';
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
+import { Nullable } from 'types/Nullable';
 
 type PacksParamsPropsT = {
-  minValueForRangeSlider: number;
-  maxValueForRangeSlider: number;
+  currentMinCardsValue: number;
+  currentMaxCardsValue: Nullable<number>;
 };
 
 export const PacksParams: FC<PacksParamsPropsT> = memo(
-  ({ minValueForRangeSlider, maxValueForRangeSlider }) => {
+  ({ currentMinCardsValue, currentMaxCardsValue }) => {
     const dispatch = useDispatch();
     let [searchParams, setSearchParams] = useSearchParams();
 
@@ -41,13 +42,6 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
       } as URLSearchParamsInit);
     }, [dispatch, setSearchParams, searchParams]);
 
-    const handleChangeCardsCountChange = useCallback(
-      (minValue: number, maxValue: number) => {
-        dispatch(setNewMinMaxValues(minValue, maxValue));
-      },
-      [dispatch]
-    );
-
     useEffect(() => {
       if (searchParams.get('user')) {
         dispatch(toggleShowUserPacksAC(searchParams.get('user') as string));
@@ -64,9 +58,8 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
         </div>
 
         <RangeSlider
-          minValueForRangeSlider={minValueForRangeSlider}
-          maxValueForRangeSlider={maxValueForRangeSlider}
-          onChangeCardsCountsChange={handleChangeCardsCountChange}
+          currentMinCardsValue={currentMinCardsValue}
+          currentMaxCardsValue={currentMaxCardsValue}
         />
       </div>
     );
