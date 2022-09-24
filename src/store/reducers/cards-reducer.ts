@@ -20,7 +20,7 @@ let initialState = {
   maxGrade: 0,
   minGrade: 0,
   page: 1,
-  pageCount: 0,
+  pageCount: 7,
   packUserId: EMPTY_STRING,
   sortCards: '0updated',
 } as InitialStateType;

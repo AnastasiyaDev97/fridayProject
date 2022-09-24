@@ -1,11 +1,12 @@
 import SuperButton from 'Components/TestComponents/components/c2-SuperButton/SuperButton';
-import { memo, ReactElement, useState } from 'react';
+import { memo, ReactElement, ReactNode, useState } from 'react';
 import { Nullable } from 'types/Nullable';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
+import styles from './ModalContainer.module.scss';
 
 type ModalContainerPropsType = {
   modalTitle: string;
@@ -14,6 +15,7 @@ type ModalContainerPropsType = {
   onActionButtonClick?: () => void;
   disabled?: boolean;
   style?: { padding?: string; marginBottom?: string };
+  mainElement?: Nullable<ReactNode>;
 };
 
 export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
@@ -24,6 +26,7 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
     onActionButtonClick,
     disabled,
     style,
+    mainElement,
   }): Nullable<ReactElement> => {
     const [open, setOpen] = useState(false);
 
@@ -44,13 +47,19 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
 
     return (
       <div>
-        <SuperButton
+        <div
+          onClick={handleClickOpen}
+          className={`${disabled ? styles.disabled : styles.active}`}
+        >
+          {mainElement}
+        </div>
+        {/* <SuperButton
           onClick={handleClickOpen}
           disabled={disabled}
           style={style}
         >
           {buttonTitle}
-        </SuperButton>
+        </SuperButton> */}
         <Dialog
           open={open}
           onClose={handleClose}

@@ -98,8 +98,13 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }) => {
 });
 
 export const LearnModal: React.FC<LearnModalPropsType> = memo(
-  ({ id, name, ...rest }): Nullable<ReactElement> => (
-    <ModalContainer buttonTitle="Learn" modalTitle={`Learn ${name}`} {...rest}>
+  ({ id, name, children, ...rest }): Nullable<ReactElement> => (
+    <ModalContainer
+      buttonTitle="Learn"
+      modalTitle={`Learn ${name}`}
+      mainElement={children}
+      {...rest}
+    >
       <LearnPackContent id={id} />
     </ModalContainer>
   )

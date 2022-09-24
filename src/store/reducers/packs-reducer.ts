@@ -20,7 +20,7 @@ let initialState = {
     /* cardPacksTotalCount: 0,*/
     maxCardsCount: 0,
     minCardsCount: 0,
-    pageCount: 0,
+    pageCount: 7,
     min: 0,
     max: INITIAL_CARDS_MAX_BORDER,
     sortPacks: '0updated',

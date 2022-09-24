@@ -56,7 +56,7 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
 
     return (
       <div className={style.wrapper}>
-        <h4>Show packs cards</h4>
+        <h4 className={style.title}>Show packs cards</h4>
 
         <div className={style.btnsWrapper}>
           <SuperButton onClick={onShowMyCardsClick}>My</SuperButton>

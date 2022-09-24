@@ -15,7 +15,7 @@ type AddModalPropsType = {
 };
 
 export const AddModal: React.FC<AddModalPropsType> = memo(
-  ({ cardsPackId, itemName, ...rest }): Nullable<ReactElement> => {
+  ({ cardsPackId, itemName, children, ...rest }): Nullable<ReactElement> => {
     const dispatch = useDispatch();
     const { state: nameValue, onChangeInput: onChangeNameInput } =
       useCustomInput();
@@ -80,6 +80,7 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
         buttonTitle="Add"
         modalTitle="Are you sure you want to add this record?"
         onActionButtonClick={onAddButtonClick}
+        mainElement={children}
       >
         {createFields()}
       </ModalContainer>

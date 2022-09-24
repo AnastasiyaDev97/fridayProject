@@ -17,6 +17,7 @@ import { COMPONENT_NAME } from '../../enum/ComponentName';
 import { Nullable } from 'types/Nullable';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { AddModal } from './../Modal/AddModal/index';
+import { EMPTY_STRING, PORTION_SIZE } from './../../constants/index';
 
 type PackListPropsType = {
   packs: Array<PackType>;
@@ -39,8 +40,6 @@ export const PacksList = memo(
     let [searchParams, setSearchParams] = useSearchParams();
 
     const [text, setText] = useState<string>(actualPackName || '');
-
-    const portionSize = 10;
 
     const styleForAddModalBtn = {
       padding: '1rem 5rem',
@@ -66,7 +65,6 @@ export const PacksList = memo(
     }, [packs]);
 
     const handleSearchPack = useCallback(() => {
-      /*  if() */
       dispatch(changeSearchPackNameAC(text));
       setSearchParams({
         ...Object.fromEntries([...searchParams]),
@@ -95,7 +93,7 @@ export const PacksList = memo(
     );
 
     useEffect(() => {
-      if (text === '' && !actualPackName) {
+      if (text === EMPTY_STRING && !actualPackName) {
         return;
       } else {
         let idOfTimeout = setTimeout(() => {
@@ -105,7 +103,7 @@ export const PacksList = memo(
           clearTimeout(idOfTimeout);
         };
       }
-    }, [text, actualPackName]);
+    }, [text, actualPackName, handleSearchPack]);
 
     useEffect(() => {
       if (searchParams.get('page')) {
@@ -115,14 +113,14 @@ export const PacksList = memo(
 
     return (
       <div className={style.listWrapper} aria-disabled={true}>
-        <h2>Packs List</h2>
+        <h2 className={style.title}>Packs List</h2>
 
         <div className={style.row}>
           <SuperInputText
-            style={{ width: '60%' }}
             value={text}
             onChangeText={setText}
             onEnter={handleSearchPack}
+            placeholder="Search pack"
           />
           <AddModal itemName="packs" style={styleForAddModalBtn} />
         </div>
@@ -138,7 +136,7 @@ export const PacksList = memo(
           pageCount={pageCount}
           currentPage={currentPage}
           onChangePageClick={handleChangePageClick}
-          portionSize={portionSize}
+          portionSize={PORTION_SIZE}
         />
       </div>
     );

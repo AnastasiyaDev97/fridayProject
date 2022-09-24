@@ -5,11 +5,11 @@ import { ForgotPassword } from './pages/ForgotPassword';
 import { NewPassword } from './pages/NewPassword/NewPassword';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { Header } from './Components/Header/Header';
-import styles from './App.module.css';
+import styles from './App.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from './store/store';
 import Preloader from './Components/Preloader/Preloader';
-import  Cards  from './pages/Cards/Cards';
+import Cards from './pages/Cards/Cards';
 import { Users } from 'pages/Users/Users';
 import { Chat } from 'pages/Chat/Chat';
 import Profile from './pages/Profile/Profile';
@@ -69,16 +69,14 @@ function App() {
   if (!isInitialized) {
     return <Preloader />;
   }
-  if (!isLoggedIn) {
-    <Navigate to={LOGIN} />;
-  }
+
   return (
     <div className={styles.appWrapper}>
       <Header />
 
       <div className={styles.mainBlock}>
         {status === STATUS.LOADING && <Preloader />}
-
+        {!isLoggedIn && <Navigate to={LOGIN} />}
         <Routes>
           <Route path={START} element={<Navigate to={PROFILE} />} />
           <Route path={PROFILE} element={<Profile />} />

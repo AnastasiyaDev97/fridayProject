@@ -13,7 +13,13 @@ type DeleteModalPropsType = {
 };
 
 export const DeleteModal: React.FC<DeleteModalPropsType> = memo(
-  ({ id, cardsPackId, itemName, disabled }): Nullable<ReactElement> => {
+  ({
+    id,
+    cardsPackId,
+    itemName,
+    disabled,
+    children,
+  }): Nullable<ReactElement> => {
     const dispatch = useDispatch();
 
     const onDeleteButtonClick = useCallback(() => {
@@ -31,6 +37,7 @@ export const DeleteModal: React.FC<DeleteModalPropsType> = memo(
         buttonTitle="Delete"
         modalTitle="Are you sure you want to delete this record?"
         onActionButtonClick={onDeleteButtonClick}
+        mainElement={children}
       />
     );
   }

@@ -1,14 +1,41 @@
+@import '../../common/sass/media.scss';
+
 .listWrapper {
   display: flex;
   flex-direction: column;
-  flex-basis: 77%;
-  padding: 30px;
-
+  flex-basis: 80%;
+  padding: 30px 15px;
+  .title {
+    font-size: 1.5rem;
+  }
   .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
-
+    input {
+      width: 60%;
+      @include d-media(xs) {
+        width: 100%;
+        padding: 0.5rem 2rem;
+      }
+    }
+  }
+}
+@include d-media(sm) {
+  .listWrapper {
+    width: 100%;
+    flex-basis: 100%;
+    .title {
+      margin-top: 0;
+      margin-bottom: 150px;
+    }
+  }
+}
+@include d-media(xs) {
+  .row {
+    input {
+      width: 100%;
+    }
   }
 }

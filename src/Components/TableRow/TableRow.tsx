@@ -5,6 +5,12 @@ import { useSelector } from 'react-redux';
 import { RootReducerType } from '../../store/store';
 import { DeleteModal, LearnModal, UpdateModal } from 'Components/Modal';
 import { ItemValues } from '../Table/UniversalTable';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTrash,
+  faPen,
+  faGraduationCap,
+} from '@fortawesome/free-solid-svg-icons';
 
 type TableRowT = {
   itemValues: ItemValues;
@@ -31,11 +37,10 @@ export const TableRow: FC<TableRowT> = memo(({ itemValues, itemName }) => {
       onClick={(e) => {
         onOpenCardClick(e);
       }}
-      className={isMyPack ? style.tableRowPointer : ''}
     >
       {Object.values(tableValues).map((item, i) => {
         return (
-          <td key={i}>
+          <td key={i} className={isMyPack ? style.tableRowPointer : ''}>
             <div className={style.cell}>{item}</div>
           </td>
         );
@@ -46,7 +51,9 @@ export const TableRow: FC<TableRowT> = memo(({ itemValues, itemName }) => {
           cardsPackId={cardsPackId}
           itemName={itemName}
           disabled={!isMyPack}
-        />
+        >
+          <FontAwesomeIcon icon={faTrash} />
+        </DeleteModal>
         <UpdateModal
           id={id}
           cardsPackId={cardsPackId}
@@ -55,13 +62,17 @@ export const TableRow: FC<TableRowT> = memo(({ itemValues, itemName }) => {
           question={tableValues?.question}
           answer={tableValues?.answer}
           disabled={!isMyPack}
-        />
+        >
+          <FontAwesomeIcon icon={faPen} />
+        </UpdateModal>
         {itemName === 'packs' && (
           <LearnModal
             name={tableValues?.name}
             disabled={tableValues?.cardsCount! === 0}
             id={id}
-          />
+          >
+            <FontAwesomeIcon icon={faGraduationCap} />
+          </LearnModal>
         )}
       </td>
     </tr>

@@ -17,6 +17,7 @@ import { COMPONENT_NAME } from '../../enum/ComponentName';
 import { CARD_TABLE_FIELDS } from 'constants/table';
 import { AddModal } from './../../Components/Modal/AddModal/index';
 import { withRedirect } from 'common/hoc/withRedirect';
+import { PORTION_SIZE } from 'constants/index';
 
 type CardsT = {};
 
@@ -43,8 +44,6 @@ const Cards: FC<CardsT> = memo(() => {
   const currentPage = useSelector<RootReducerType, number>(
     (state) => state.cards.page
   );
-
-  const PORTION_SIZE = 10;
 
   const styleForAddModalBtn = {
     padding: '1rem 5rem',
@@ -112,7 +111,6 @@ const Cards: FC<CardsT> = memo(() => {
         style={styleForAddModalBtn}
         itemName="cards"
         cardsPackId={cardsPack_id}
-        /* className={style.btn} */
       />
 
       <UniversalTable

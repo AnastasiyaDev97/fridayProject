@@ -25,6 +25,7 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
     answer,
     cardsPackId,
     itemName,
+    children,
     ...rest
   }): Nullable<ReactElement> => {
     const dispatch = useDispatch();
@@ -97,6 +98,7 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
         buttonTitle="Update"
         modalTitle="Are you sure you want to update this record?"
         onActionButtonClick={onUpdateButtonClick}
+        mainElement={children}
         {...rest}
       >
         {editableFields()}

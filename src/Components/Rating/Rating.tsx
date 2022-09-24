@@ -1,6 +1,5 @@
+import Icon from 'Components/Icon';
 import { FC, memo, ReactElement } from 'react';
-import star from 'common/assets/svg/star.svg';
-import fullStar from 'common/assets/svg/fullStar.svg';
 
 type RatingProps = {
   grade: number;
@@ -22,5 +21,5 @@ type starPropsType = {
 };
 
 export const Star = memo(({ selected }: starPropsType) => {
-  return <img src={selected ? fullStar : star} alt="rating" />;
+  return <Icon name={selected ? 'fullStar' : 'star'} /> 
 });

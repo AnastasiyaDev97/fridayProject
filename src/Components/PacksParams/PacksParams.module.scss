@@ -1,9 +1,9 @@
 @import '../../common/sass/variables.scss';
+@import '../../common/sass/media.scss';
 
 .wrapper {
   display: flex;
-  flex-basis: 300px;
-
+  flex-basis: 20%;
   position: relative;
   background: $backgr;
   flex-direction: column;
@@ -15,7 +15,25 @@
     justify-content: space-around;
     margin-bottom: 40px;
     & button {
-      width: 35%;
+      width: 40%;
+    }
+  }
+}
+
+@include d-media(sm) {
+  .wrapper {
+    position: absolute;
+    width: 100%;
+    background: inherit;
+    padding: 10px;
+    top: 60px;
+    background: none;
+    .title {
+   
+      display: none;
+    }
+    .btnsWrapper {
+      margin-bottom: 10px;
     }
   }
 }

@@ -10,6 +10,7 @@ import style from './Users.module.scss';
 import initialAvatar from 'common/assets/images/noavatar.png';
 import Pagination from 'Components/pagination/Pagination';
 import { changePageUsersAC } from 'store/reducers/users-reducer';
+import { PORTION_SIZE } from 'constants/index';
 
 type UsersPropsType = {};
 
@@ -29,8 +30,6 @@ export const Users: FC<UsersPropsType> = memo(() => {
   const currentPage = useSelector<RootReducerType, Nullable<number>>(
     (state) => state.users.page
   );
-
-  const PORTION_SIZE = 7;
 
   const handleChangePageClick = useCallback(
     (page: number) => {

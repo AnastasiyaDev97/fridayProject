@@ -1,4 +1,5 @@
-@import './../../common/sass/variables';
+@import '../../common/sass/variables.scss';
+@import '../../common/sass/media.scss';
 
 .headerBlock {
   width: 100%;
@@ -6,14 +7,14 @@
   position: absolute;
   top: 0;
   left: 0;
-  padding: 0 173px;
+  padding: 0 153px;
   display: flex;
-
   justify-content: center;
 
   @media (max-width: 891px) {
     padding: 0 40px;
   }
+
   .container {
     max-width: 1140px;
     width: 100%;
@@ -25,11 +26,54 @@
       font-family: $QuicksandFont;
       color: $Text;
       font-size: 1.2rem;
+      margin-right: 20px;
     }
-    .logout {
-      font-family: $QuicksandFont;
-      color: $Text;
-      cursor: pointer;
+    .menu {
+      width: 50px;
+      height: 50px;
     }
+  }
+}
+@include d-media(xs) {
+  .headerBlock {
+    width: 100%;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    padding: 0 15px;
+    height: 70px;
+
+    .container {
+      max-width: 1140px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .logo {
+        font-family: $QuicksandFont;
+        color: $Text;
+        font-size: 1.2rem;
+      }
+      .menu {
+        width: 50px;
+        height: 50px;
+      }
+      .logout {
+        font-family: $QuicksandFont;
+        color: $Text;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.menuIcon {
+  height: 1.2em;
+  &.none {
+    z-index: 1;
   }
 }

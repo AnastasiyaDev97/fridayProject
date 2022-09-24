@@ -50,22 +50,31 @@ export const UniversalTable = memo(
               const onDownSortTitleClick = () => {
                 onSetSortingClick(value, 'down');
               };
-
               return (
-                <th key={title} className={style.tableHeader}>
+                <th
+                  key={title}
+                  className={`${style.tableHeader}  ${
+                    title === 'Count' ? style.smallWidth : ''
+                  }`}
+                >
                   <div className={style.headerContent}>
-                    <span>{title}</span>
-                    <div
-                      onClick={onDownSortTitleClick}
-                      className={classNames(style.sortArrow, style.sortArrowUp)}
-                    />
-                    <div
-                      onClick={onUpSortTitleClick}
-                      className={classNames(
-                        style.sortArrow,
-                        style.sortArrowDown
-                      )}
-                    />
+                    <span className={style.tableTitle}>{title}</span>
+                    <div className={style.sortButtons}>
+                      <div
+                        onClick={onDownSortTitleClick}
+                        className={classNames(
+                          style.sortArrow,
+                          style.sortArrowUp
+                        )}
+                      />
+                      <div
+                        onClick={onUpSortTitleClick}
+                        className={classNames(
+                          style.sortArrow,
+                          style.sortArrowDown
+                        )}
+                      />
+                    </div>
                   </div>
                 </th>
               );
