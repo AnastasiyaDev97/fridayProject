@@ -58,8 +58,12 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }) => {
   const [currentCard, setCurrentCard] = useState<Nullable<CardType>>();
   const [isShowAnswer, setIsShowAnswer] = useState<boolean>(false);
 
-  const onShowButtonClick = () => {
-    setIsShowAnswer(true);
+  const onToggleButtonClick = () => {
+    if (isShowAnswer) {
+      setIsShowAnswer(false);
+    } else {
+      setIsShowAnswer(true);
+    }
   };
 
   const onNextQuestionClick = () => {
@@ -90,7 +94,9 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }) => {
       <RowRadioButtonsGroup cardId={currentCard._id} />
       {isShowAnswer && <div className={style.answer}>{currentCard.answer}</div>}
       <div className={style.buttonsBlock}>
-        <Button onClick={onShowButtonClick}>Show answer</Button>
+        <Button onClick={onToggleButtonClick}>
+          {isShowAnswer ? 'Hide answer' : 'Show answer'}
+        </Button>
         <Button onClick={onNextQuestionClick}>Next question</Button>
       </div>
     </div>

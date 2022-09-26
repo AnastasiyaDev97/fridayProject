@@ -45,6 +45,9 @@ export const cardsReducer = (
           ),
         ],
       };
+    case 'CARDS/RESET-CARDS': {
+      return { ...state, cards: [{ ...state.cards[0], _id: EMPTY_STRING }] };
+    }
     default:
       return state;
   }
@@ -53,6 +56,11 @@ export const setCardsAC = (payload: getCardsResponseType) =>
   ({
     type: 'CARDS/SET-CARDS',
     payload,
+  } as const);
+
+export const resetCardsAC = () =>
+  ({
+    type: 'CARDS/RESET-CARDS',
   } as const);
 
 export const setSortingFilterCards = (sortCards: string) => {

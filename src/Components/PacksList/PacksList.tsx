@@ -2,11 +2,12 @@ import style from './PacksList.module.scss';
 import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import { UniversalTable } from '../Table/UniversalTable';
 import Paginator from '../pagination/Pagination';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
 import {
   changePageAC,
   changeSearchPackNameAC,
+  setNewMinMaxValues,
   setSortingFilter,
 } from '../../store/reducers/packs-reducer';
 import { convertDateFormat } from '../../utils/handles';
@@ -18,6 +19,8 @@ import { Nullable } from 'types/Nullable';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { AddModal } from './../Modal/AddModal/index';
 import { EMPTY_STRING, PORTION_SIZE } from './../../constants/index';
+import SuperButton from 'Components/TestComponents/components/c2-SuperButton/SuperButton';
+import { RootReducerType } from 'store/store';
 
 type PackListPropsType = {
   packs: Array<PackType>;
@@ -39,11 +42,11 @@ export const PacksList = memo(
     const dispatch = useDispatch();
     let [searchParams, setSearchParams] = useSearchParams();
 
-    const [text, setText] = useState<string>(actualPackName || '');
+    const maxCardsCount = useSelector<RootReducerType, number>(
+      (state) => state.packs.maxCardsCount
+    );
 
-    const styleForAddModalBtn = {
-      padding: '1rem 5rem',
-    };
+    const [text, setText] = useState<string>(actualPackName || '');
 
     const packsForTable = useMemo(() => {
       return packs.map(
@@ -92,6 +95,20 @@ export const PacksList = memo(
       [dispatch]
     );
 
+    const onAddButtonClick = useCallback(() => {
+      setText('');
+      handleChangePageClick(1);
+      handleSetSortingClick('updated', 'down');
+      handleSearchPack();
+      dispatch(setNewMinMaxValues(0, maxCardsCount));
+    }, [
+      dispatch,
+      handleChangePageClick,
+      handleSearchPack,
+      handleSetSortingClick,
+      maxCardsCount,
+    ]);
+
     useEffect(() => {
       if (text === EMPTY_STRING && !actualPackName) {
         return;
@@ -122,7 +139,11 @@ export const PacksList = memo(
             onEnter={handleSearchPack}
             placeholder="Search pack"
           />
-          <AddModal itemName="packs" style={styleForAddModalBtn} />
+          <AddModal itemName="packs">
+            <SuperButton onClick={onAddButtonClick} className={style.addButton}>
+              Add pack
+            </SuperButton>
+          </AddModal>
         </div>
 
         <UniversalTable

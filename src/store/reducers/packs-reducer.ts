@@ -49,17 +49,19 @@ export const setPacksAC = (payload: getPacksResponseType) =>
     payload,
   } as const);
 
-export const changePageAC = (page: number) =>
-  ({
+export const changePageAC = (page: number) => {
+  return {
     type: 'PACKS/CHANGE-PAGE',
     payload: { page },
-  } as const);
+  } as const;
+};
 
-export const setNewMinMaxValues = (min: number, max: number) =>
-  ({
+export const setNewMinMaxValues = (min: number, max: number) => {
+  return {
     type: 'PACKS/SET-NEW-MIN-MAX-VALUE',
     payload: { min, max },
-  } as const);
+  } as const;
+};
 
 export const setSortingFilter = (sortPacks: string) =>
   ({

@@ -4,7 +4,12 @@ import { packsAPI } from '../../dal/packs/packsAPI';
 import { setAppStatusAC } from '../reducers/app-reducer';
 import { STATUS } from '../../enum/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
-import {  setPacksAC } from '../reducers/packs-reducer';
+import {
+  changePageAC,
+  setNewMinMaxValues,
+  setPacksAC,
+  setSortingFilter,
+} from '../reducers/packs-reducer';
 import { pageCountNumber } from '../../constants';
 import { Nullable } from 'types/Nullable';
 
@@ -23,8 +28,9 @@ export const getPacksTC =
     };
 
     try {
-      const data = await packsAPI.getPacks(paramsForQuery);
       dispatch(setAppStatusAC(STATUS.LOADING));
+
+      const data = await packsAPI.getPacks(paramsForQuery);
       dispatch(setPacksAC(data));
     } catch (err) {
       catchErrorHandler(dispatch, err);
@@ -35,13 +41,17 @@ export const getPacksTC =
 
 export const addPackTC =
   (name: string): ThunkType =>
-  async (dispatch) => {
+  async (dispatch, getState: () => RootReducerType) => {
+    const { maxCardsCount } = getState().packs;
     try {
       const cardsPack = {
         name,
       };
       dispatch(setAppStatusAC(STATUS.LOADING));
       await packsAPI.addPack({ cardsPack });
+      dispatch(setSortingFilter('0updated'));
+      dispatch(setNewMinMaxValues(0, maxCardsCount));
+      dispatch(changePageAC(1));
       await dispatch(getPacksTC());
     } catch (err) {
       catchErrorHandler(dispatch, err);

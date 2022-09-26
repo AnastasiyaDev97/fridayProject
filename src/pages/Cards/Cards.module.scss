@@ -13,7 +13,7 @@
     width: 100%;
     margin: 0 20px;
     @include d-media(xs) {
-      margin: 0;
+      margin: 0 10px;
     }
   }
   .btn {
@@ -25,4 +25,12 @@
 
 .cursor {
   cursor: pointer;
+}
+.addButton {
+  margin-bottom: 25px;
+  padding: 1rem 5rem;
+  @include d-media(sm) {
+    min-width: 90px;
+    padding: 0.5rem 1rem;
+  }
 }

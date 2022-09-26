@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../../store/store';
 import {
   changePageCardsAC,
+  resetCardsAC,
   setSortingFilterCards,
 } from '../../store/reducers/cards-reducer';
 import { UniversalTable } from '../../Components/Table/UniversalTable';
@@ -18,6 +19,8 @@ import { CARD_TABLE_FIELDS } from 'constants/table';
 import { AddModal } from './../../Components/Modal/AddModal/index';
 import { withRedirect } from 'common/hoc/withRedirect';
 import { PORTION_SIZE } from 'constants/index';
+import SuperButton from 'Components/TestComponents/components/c2-SuperButton/SuperButton';
+import Preloader from 'Components/Preloader/Preloader';
 
 type CardsT = {};
 
@@ -45,11 +48,6 @@ const Cards: FC<CardsT> = memo(() => {
     (state) => state.cards.page
   );
 
-  const styleForAddModalBtn = {
-    padding: '1rem 5rem',
-    marginBottom: '15px',
-  };
-
   const cardsForTable = useMemo(() => {
     return cards.map(
       ({ question, answer, updated, grade, _id, user_id, cardsPack_id }) => {
@@ -74,6 +72,7 @@ const Cards: FC<CardsT> = memo(() => {
 
     return () => {
       clearTimeout(idOfTimeout);
+      dispatch(resetCardsAC());
     };
   }, [dispatch, currentPage, sortCards]);
 
@@ -99,33 +98,43 @@ const Cards: FC<CardsT> = memo(() => {
     navigate(-1);
   };
 
-  if (!cards) {
-    return null;
+  const onAddButtonClick = () => {
+    handleChangePageClick(1);
+    handleSetSortingClick('updated', 'down');
+  };
+
+  if (cards[0]?._id === '') {
+    return <Preloader />;
   }
   return (
     <div className={style.wrapper}>
       <h2 onClick={onTitleGoBackClick} className={style.cursor}>
         &#8592; Pack Name
       </h2>
-      <AddModal
-        style={styleForAddModalBtn}
-        itemName="cards"
-        cardsPackId={cardsPack_id}
-      />
+      <AddModal itemName="cards" cardsPackId={cardsPack_id}>
+        {' '}
+        <SuperButton onClick={onAddButtonClick} className={style.addButton}>
+          Add card
+        </SuperButton>
+      </AddModal>
 
-      <UniversalTable
-        tableTitles={CARD_TABLE_FIELDS}
-        tableItems={cardsForTable}
-        onSetSortingClick={handleSetSortingClick}
-        itemName={COMPONENT_NAME.CARDS}
-      />
-      <Pagination
-        totalItemCount={totalItemCount}
-        pageCount={pageCount}
-        currentPage={currentPage}
-        onChangePageClick={handleChangePageClick}
-        portionSize={PORTION_SIZE}
-      />
+      {!!cards?.length && (
+        <>
+          <UniversalTable
+            tableTitles={CARD_TABLE_FIELDS}
+            tableItems={cardsForTable}
+            onSetSortingClick={handleSetSortingClick}
+            itemName={COMPONENT_NAME.CARDS}
+          />
+          <Pagination
+            totalItemCount={totalItemCount}
+            pageCount={pageCount}
+            currentPage={currentPage}
+            onChangePageClick={handleChangePageClick}
+            portionSize={PORTION_SIZE}
+          />
+        </>
+      )}
     </div>
   );
 });

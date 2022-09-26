@@ -35,7 +35,16 @@
 @include d-media(xs) {
   .row {
     input {
-      width: 100%;
+      min-width: 120px;
+      width: auto;
     }
+  }
+}
+.addButton {
+  padding: 1rem 5rem;
+  @include d-media(sm) {
+    min-width: 90px;
+    margin-left: 20px;
+    padding: .5rem 1rem;
   }
 }

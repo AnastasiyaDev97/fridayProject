@@ -25,8 +25,8 @@ import {
   setCardsAC,
   setCardsRatingAC,
   setSortingFilterCards,
+  resetCardsAC,
 } from '../cards-reducer';
-
 
 export type ActionsType =
   | ReturnType<typeof setAppStatusAC>
@@ -49,4 +49,5 @@ export type ActionsType =
   | ReturnType<typeof setCardsRatingAC>
   | ReturnType<typeof toggleShowUserPacksAC>
   | ReturnType<typeof getUsersAC>
-  | ReturnType<typeof changePageUsersAC>;
+  | ReturnType<typeof changePageUsersAC>
+  | ReturnType<typeof resetCardsAC>;

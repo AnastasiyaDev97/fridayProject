@@ -40,6 +40,11 @@ th {
     font-weight: 600;
     .tableTitle {
       margin-right: 10px;
+      @include d-media(xs) {
+        margin-right: 3px;
+        font-size: 12px;
+        font-weight: 400;
+      }
     }
     .sortButtons {
       height: 100%;
@@ -93,14 +98,12 @@ td {
 }
 
 @include d-media(xs) {
+  .tableHeader {
+    margin-right: 3px;
+  }
   th {
     font-size: 12px;
     font-weight: 400;
-
-    .tableTitle {
-      font-size: 12px;
-      font-weight: 400;
-    }
   }
   td {
     padding: 5px 0;
@@ -108,8 +111,9 @@ td {
       margin: 0 5px;
       text-align: left;
       font-size: 12px;
-      height: 15px;
-      line-height: 1;
+      height: 18px;
+      /* display: flex;
+      align-items: center; */
     }
   }
 }

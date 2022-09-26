@@ -6,6 +6,7 @@ import { addCardTC } from 'store/thunks/cards';
 import { useCustomInput } from 'common/hooks/useCustomInput';
 import { ModalContainer } from '../ModalContainer';
 import TextField from '@mui/material/TextField';
+import style from '../ModalContainer.module.scss';
 
 type AddModalPropsType = {
   cardsPackId?: string;
@@ -49,6 +50,7 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
             variant="outlined"
             value={nameValue}
             onChange={onChangeNameInput}
+            className={style.field}
           />
         );
       }
@@ -61,6 +63,7 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
               variant="outlined"
               value={questionValue}
               onChange={onChangeQuestionInput}
+              className={style.field}
             />
             <TextField
               id="outlined-basic"

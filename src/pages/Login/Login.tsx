@@ -17,6 +17,10 @@ import { loginTC } from '../../store/thunks/login';
 export const Login = () => {
   const dispatch = useDispatch();
 
+  let isLoggedIn = useSelector<RootReducerType, boolean>(
+    (state) => state.login.isLoggedIn
+  );
+
   const formik = useFormik({
     initialValues: {
       email: (process.env.REACT_APP_EMAIL as string) || '',
@@ -32,10 +36,6 @@ export const Login = () => {
       dispatch(loginTC(values));
     },
   });
-
-  let isLoggedIn = useSelector<RootReducerType, boolean>(
-    (state) => state.login.isLoggedIn
-  );
 
   const conditionForDisableButton = !!(
     formik.errors.email || formik.errors.password

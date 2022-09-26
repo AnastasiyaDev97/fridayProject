@@ -1,10 +1,9 @@
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { FC, memo, useState, useEffect } from 'react';
+import { FC, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootReducerType } from '../../store/store';
-import s from './RangeSlider.module.scss';
-import { UseSetTimeoutEffect } from '../../common/hooks/customUseEffect';
+import style from './RangeSlider.module.scss';
 import { Nullable } from 'types/Nullable';
 import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
 
@@ -21,33 +20,27 @@ export const RangeSlider: FC<SliderPropsType> = memo(
       (state) => state.packs.maxCardsCount
     );
 
-    const [value, setValue] = useState<number[]>([
-      currentMinCardsValue,
-      currentMaxCardsValue || maxValueForRangeSlider,
-    ]);
-
-    const onCardsCountChange = () => {
-      dispatch(setNewMinMaxValues(value[0], value[1]));
-    };
-
-    UseSetTimeoutEffect(onCardsCountChange, value, 500);
-
     const onSliderChange = (event: Event, newValue: number | number[]) => {
-      setValue(newValue as number[]);
+      if (Array.isArray(newValue)) {
+        dispatch(setNewMinMaxValues(newValue[0], newValue[1]));
+      }
     };
 
     return (
       <Box sx={{ width: '80%' }}>
-        <div className={s.sliderWrapper}>
+        <div className={style.sliderWrapper}>
           <Slider
-            value={value}
+            value={[
+              currentMinCardsValue,
+              currentMaxCardsValue ?? maxValueForRangeSlider,
+            ]}
             onChange={onSliderChange}
             valueLabelDisplay="auto"
             max={maxValueForRangeSlider}
           />
-          <div className={s.sliderValues}>
+          <div className={style.sliderValues}>
             <span>{currentMinCardsValue}</span>
-            <span>{currentMaxCardsValue}</span>
+            <span>{currentMaxCardsValue ?? maxValueForRangeSlider}</span>
           </div>
         </div>
       </Box>

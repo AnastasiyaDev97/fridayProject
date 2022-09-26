@@ -29,11 +29,13 @@
     top: 60px;
     background: none;
     .title {
-   
       display: none;
     }
     .btnsWrapper {
       margin-bottom: 10px;
+      & button {
+        padding: 0.5rem 1rem;
+      }
     }
   }
 }

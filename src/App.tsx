@@ -55,8 +55,11 @@ function App() {
   } = PATH;
 
   useEffect(() => {
+    if (isInitialized) {
+      return;
+    }
     dispatch(initializeAppTC());
-  }, [dispatch]);
+  }, [dispatch, isInitialized]);
 
   useEffect(() => {
     if (error) {
@@ -69,14 +72,13 @@ function App() {
   if (!isInitialized) {
     return <Preloader />;
   }
-
+  if (!isLoggedIn) <Navigate to={LOGIN} />;
+  
   return (
     <div className={styles.appWrapper}>
       <Header />
-
       <div className={styles.mainBlock}>
         {status === STATUS.LOADING && <Preloader />}
-        {!isLoggedIn && <Navigate to={LOGIN} />}
         <Routes>
           <Route path={START} element={<Navigate to={PROFILE} />} />
           <Route path={PROFILE} element={<Profile />} />

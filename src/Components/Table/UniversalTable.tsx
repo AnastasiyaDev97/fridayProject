@@ -2,7 +2,6 @@ import { memo, ReactElement } from 'react';
 import style from './UniversalTable.module.scss';
 import { TableRow } from '../TableRow/TableRow';
 import classNames from 'classnames';
-import { EMPTY_STRING } from '../../constants';
 
 export type PackRowValues = {
   name?: string;

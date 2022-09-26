@@ -19,7 +19,7 @@ type DefaultInputPropsType = DetailedHTMLProps<
 type SuperInputTextPropsType = DefaultInputPropsType & {
   // и + ещё пропсы которых нет в стандартном инпуте
   onChangeText?: (value: string) => void;
-  onEnter?: () => void;
+  onEnter?: (/* text: string */) => void;
   error?: Nullable<string>;
   spanClassName?: string;
 };
@@ -33,7 +33,7 @@ const SuperInputText: FC<SuperInputTextPropsType> = memo(
     onEnter,
     error,
     className,
-    /*value*/
+    /* value, */
     ...restProps // все остальные пропсы попадут в объект restProps
   }) => {
     const dispatch = useDispatch();
