@@ -6,6 +6,7 @@ import { updateCardTC } from 'store/thunks/cards';
 import { ModalContainer } from '../ModalContainer';
 import TextField from '@mui/material/TextField';
 import { useCustomInput } from 'common/hooks/useCustomInput';
+import style from '../ModalContainer.module.scss';
 
 type UpdateModalPropsType = {
   id: string;
@@ -68,6 +69,7 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
             variant="outlined"
             value={nameValue}
             onChange={onChangeNameInput}
+            className={style.field}
           />
         );
       }

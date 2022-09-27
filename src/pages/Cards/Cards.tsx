@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useEffect, useMemo } from 'react';
 import style from './Cards.module.scss';
-import Pagination from '../../Components/pagination/Pagination';
+import Pagination from '../../Components/Pagination/Pagination';
 import { convertDateFormat } from '../../utils/handles';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../../store/store';

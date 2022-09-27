@@ -11,6 +11,7 @@ import {
   faPen,
   faGraduationCap,
 } from '@fortawesome/free-solid-svg-icons';
+import { EMPTY_STRING } from 'constants/index';
 
 type TableRowT = {
   itemValues: ItemValues;
@@ -40,7 +41,10 @@ export const TableRow: FC<TableRowT> = memo(({ itemValues, itemName }) => {
     >
       {Object.values(tableValues).map((item, i) => {
         return (
-          <td key={i} className={isMyPack ? style.tableRowPointer : ''}>
+          <td
+            key={i}
+            className={isMyPack ? style.tableRowPointer : EMPTY_STRING}
+          >
             <div className={style.cell}>{item}</div>
           </td>
         );

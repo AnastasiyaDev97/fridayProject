@@ -8,7 +8,7 @@ import Preloader from 'Components/Preloader/Preloader';
 import { Nullable } from 'types/Nullable';
 import style from './Users.module.scss';
 import initialAvatar from 'common/assets/images/noavatar.png';
-import Pagination from 'Components/pagination/Pagination';
+import Pagination from 'Components/Pagination/Pagination';
 import { changePageUsersAC } from 'store/reducers/users-reducer';
 import { PORTION_SIZE } from 'constants/index';
 

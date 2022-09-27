@@ -1,5 +1,5 @@
 import SuperButton from 'Components/TestComponents/components/c2-SuperButton/SuperButton';
-import { memo, ReactElement, ReactNode, useState } from 'react';
+import { memo, ReactElement, ReactNode, useState, MouseEvent } from 'react';
 import { Nullable } from 'types/Nullable';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -30,7 +30,10 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
   }): Nullable<ReactElement> => {
     const [open, setOpen] = useState(false);
 
-    const handleClickOpen = () => {
+    const handleClickOpen = (
+      e: MouseEvent<HTMLDivElement> | MouseEvent<HTMLButtonElement>
+    ) => {
+      e.stopPropagation();
       setOpen(true);
     };
 
@@ -49,14 +52,14 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
       <div>
         {mainElement ? (
           <div
-            onClick={handleClickOpen}
+            onClick={(e) => handleClickOpen(e)}
             className={`${disabled ? styles.disabled : styles.active}`}
           >
             {mainElement}
           </div>
         ) : (
           <SuperButton
-            onClick={handleClickOpen}
+            onClick={(e) => handleClickOpen(e)}
             disabled={disabled}
             style={style}
           >

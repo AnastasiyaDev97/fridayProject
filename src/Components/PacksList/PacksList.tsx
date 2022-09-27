@@ -1,7 +1,7 @@
 import style from './PacksList.module.scss';
 import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 import { UniversalTable } from '../Table/UniversalTable';
-import Paginator from '../pagination/Pagination';
+import Paginator from '../Pagination/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
 import {
