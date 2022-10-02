@@ -1,14 +1,25 @@
 @import '../../common/sass/variables.scss';
+@import '../../common/sass/media.scss';
 
 .usersPage {
-  width: 60%;
+  width: 70%;
   height: 100%;
   position: relative;
   margin: 0 50px;
   background: $backgrForPacks;
   padding: 30px;
+  @include d-media(xs) {
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
 }
 .usersContainer {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  margin-bottom: 20px;
 }

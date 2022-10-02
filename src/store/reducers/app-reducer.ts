@@ -27,13 +27,13 @@ export const appReducer = (
   }
 };
 
-export const setAppStatusAC = (status: string) =>
-  ({
+export const setAppStatusAC = (status: string) =>{
+  return({
     type: 'APP/SET-STATUS',
     payload: {
       status,
     },
-  } as const);
+  } as const)};
 
 export const setIsInitializedAC = () =>
   ({

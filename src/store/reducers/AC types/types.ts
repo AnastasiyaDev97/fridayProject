@@ -1,7 +1,7 @@
 import { isAuthToggleAC } from '../login-reducer';
 import { setProfileAC } from '../profile-reducer';
 import { registerStatusAC } from '../registration-reducer';
-import { getUsersAC, changePageUsersAC } from '../users-reducer';
+import { getUsersDataAC, changePageUsersAC } from '../users-reducer';
 import {
   addEmailAC,
   SetResponseInfoForgotPassAC,
@@ -48,6 +48,6 @@ export type ActionsType =
   | ReturnType<typeof changeSearchPackNameAC>
   | ReturnType<typeof setCardsRatingAC>
   | ReturnType<typeof toggleShowUserPacksAC>
-  | ReturnType<typeof getUsersAC>
+  | ReturnType<typeof getUsersDataAC>
   | ReturnType<typeof changePageUsersAC>
   | ReturnType<typeof resetCardsAC>;

@@ -1,9 +1,9 @@
 import { ActionsType } from './AC types/types';
 import { ResponseLoginType } from '../../dal/authorization/types';
-import { EMPTY_STRING, profileInitializeAvatarURL } from '../../constants';
+import { EMPTY_STRING } from '../../constants';
 
 const initialState = {
-  avatar: profileInitializeAvatarURL,
+  avatar: '',
   created: EMPTY_STRING,
   email: EMPTY_STRING,
   isAdmin: false,

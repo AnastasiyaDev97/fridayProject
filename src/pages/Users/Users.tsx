@@ -24,13 +24,13 @@ export const Users: FC<UsersPropsType> = memo(() => {
   const totalItemCount = useSelector<RootReducerType, Nullable<number>>(
     (state) => state.users.usersTotalCount
   );
+
   const pageCount = useSelector<RootReducerType, Nullable<number>>(
     (state) => state.users.pageCount
   );
   const currentPage = useSelector<RootReducerType, Nullable<number>>(
     (state) => state.users.page
   );
-
   const handleChangePageClick = useCallback(
     (page: number) => {
       dispatch(changePageUsersAC(page));
@@ -47,7 +47,7 @@ export const Users: FC<UsersPropsType> = memo(() => {
   }
   return (
     <div className={style.usersPage}>
-      <h2>Users</h2>
+      <h2 className={style.title}>Users</h2>
       <div className={style.usersContainer}>
         {users.map(({ avatar, email, name, publicCardPacksCount, _id }) => {
           return (

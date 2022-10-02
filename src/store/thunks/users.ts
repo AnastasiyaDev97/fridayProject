@@ -3,7 +3,7 @@ import { setAppStatusAC } from '../reducers/app-reducer';
 import { STATUS } from '../../enum/StatusType';
 import { usersAPI } from 'dal/users/usersAPI';
 import { catchErrorHandler } from '../../utils/error-utils';
-import { getUsersAC } from 'store/reducers/users-reducer';
+import { getUsersDataAC } from 'store/reducers/users-reducer';
 
 export const getUsersTC =
   (userName?: string) =>
@@ -11,7 +11,12 @@ export const getUsersTC =
     const { min, max, page, sortUsers, pageCount } = getState().users;
     try {
       dispatch(setAppStatusAC(STATUS.LOADING));
-      let data = await usersAPI.getUsers({
+      let {
+        users,
+        page: getPage,
+        pageCount: getPageCount,
+        usersTotalCount,
+      } = await usersAPI.getUsers({
         userName,
         min,
         max,
@@ -19,7 +24,15 @@ export const getUsersTC =
         sortUsers,
         pageCount,
       });
-      dispatch(getUsersAC(data?.users));
+
+      dispatch(
+        getUsersDataAC({
+          users,
+          page: getPage,
+          pageCount: getPageCount,
+          usersTotalCount,
+        })
+      );
       dispatch(setAppStatusAC(STATUS.SUCCEEDED));
     } catch (err) {
       catchErrorHandler(dispatch, err);

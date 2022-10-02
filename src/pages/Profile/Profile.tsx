@@ -1,12 +1,11 @@
-import { ChangeEvent, useState, KeyboardEvent, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../../store/store';
 import { withRedirect } from 'common/hoc/withRedirect';
 import style from './Profile.module.scss';
-import SuperInputText from '../../Components/TestComponents/components/c1-SuperInputText/SuperInputText';
 import { EditableSpan } from '../../Components/EditableSpan/EditableSpan';
-import { EMPTY_STRING } from '../../constants';
 import { updateProfileTC } from '../../store/thunks/profile';
+import { InputTypeFile } from 'Components/InputTypeFile/InputTypeFile';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -24,66 +23,27 @@ const Profile = () => {
     (state) => state.profile.publicCardPacksCount
   );
 
-  const [avatarURL, setAvatarURL] = useState<string>(EMPTY_STRING);
-  const [isInputActive, setIsInputActive] = useState<boolean>(false);
-
-  const onActivateInputForURLClick = () => {
-    setIsInputActive(true);
-  };
-
-  const onInputForURLChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setAvatarURL(e.currentTarget.value);
+  const onUpdateTitle = useCallback(
+    (newTitle: string) => {
+      if (newTitle !== name) {
+        dispatch(updateProfileTC(newTitle, avatar));
+      }
     },
-    []
+    [dispatch, avatar, name]
   );
-
-  const onAddNewPhotoClick = () => {
-    dispatch(updateProfileTC(name, avatarURL));
-    setIsInputActive(false);
-    setAvatarURL(EMPTY_STRING);
-  };
-
-  const onInputForURLKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      onAddNewPhotoClick();
-    }
-  };
-
-  const onUpdateTitle = (newTitle: string) => {
-    if (newTitle !== name) {
-      dispatch(updateProfileTC(newTitle));
-    }
-  };
-
-  const onCloseInputBlur = useCallback(() => {
-    setIsInputActive(false);
-  }, [setIsInputActive]);
+  const onUpdateAvatar = useCallback(
+    (newAvatar: string) => {
+      if (newAvatar !== avatar) {
+        dispatch(updateProfileTC(name, newAvatar));
+      }
+    },
+    [avatar, dispatch, name]
+  );
 
   return (
     <div className={style.profileWrapper}>
       <div className={style.avatarBlock}>
-        <div className={style.avatarWrapper}>
-          <div className={style.tooltip} onClick={onActivateInputForURLClick}>
-            Change Photo
-          </div>
-          <img alt="avatar" className={style.avatar} src={avatar} />
-        </div>
-
-        {isInputActive && (
-          <div className={style.inputForURL} onBlur={onCloseInputBlur}>
-            <SuperInputText
-              className={style.input}
-              value={avatarURL}
-              onChange={onInputForURLChange}
-              onKeyPress={onInputForURLKeyPress}
-              autoFocus
-              placeholder={'Add URL'}
-            />
-
-            {/*  <span className={style.addPhotoURlBtn} onClick={onAddNewPhotoClick}/> */}
-          </div>
-        )}
+        <InputTypeFile onUpdateAvatar={onUpdateAvatar} avatar={avatar} />
       </div>
 
       <div className={style.profileInfo}>
