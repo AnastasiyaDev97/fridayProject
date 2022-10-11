@@ -8,10 +8,10 @@ import styles from './Login.module.scss';
 import { UniversalInput } from '../../Components/Input/UniversalInput';
 import { AuthData, validateLoginForm } from '../../utils/validates';
 import { EMPTY_STRING } from '../../constants';
-import { PATH } from '../../enum/Path';
-import { INPUT_TYPE } from '../../enum/InputType';
-import { BUTTON_TYPE } from '../../enum/ButtonTyoe';
-import { FORMIK_FIELDS_NAME } from '../../enum/FormikFieldNames';
+import { PATH } from '../../enums/Path';
+import { INPUT_TYPE } from '../../enums/InputType';
+import { BUTTON_TYPE } from '../../enums/ButtonTyoe';
+import { FORMIK_FIELDS_NAME } from '../../enums/FormikFieldNames';
 import { loginTC } from '../../store/thunks/login';
 
 export const Login = () => {

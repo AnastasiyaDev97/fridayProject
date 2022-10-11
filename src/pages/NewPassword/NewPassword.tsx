@@ -8,10 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../../store/store';
 import { EMPTY_STRING } from '../../constants';
 import { setNewPasswordTC } from '../../store/thunks/passwordRecovery';
-import { PATH } from '../../enum/Path';
-import { FORMIK_FIELDS_NAME } from '../../enum/FormikFieldNames';
-import { INPUT_TYPE } from '../../enum/InputType';
-import { BUTTON_TYPE } from '../../enum/ButtonTyoe';
+import { PATH } from '../../enums/Path';
+import { FORMIK_FIELDS_NAME } from '../../enums/FormikFieldNames';
+import { INPUT_TYPE } from '../../enums/InputType';
+import { BUTTON_TYPE } from '../../enums/ButtonTyoe';
 import { AuthData, validateNewPasswordForm } from '../../utils/validates';
 
 export const NewPassword = () => {

@@ -2,7 +2,7 @@ import styles from './UniversalInput.module.scss';
 import SuperInputText from '../TestComponents/components/c1-SuperInputText/SuperInputText';
 import { FC, memo, useState } from 'react';
 import { FieldInputProps } from 'formik';
-import { INPUT_TYPE } from '../../enum/InputType';
+import { INPUT_TYPE } from '../../enums/InputType';
 
 export type InputType = 'password' | 'text' | 'email';
 

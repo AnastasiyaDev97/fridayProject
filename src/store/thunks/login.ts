@@ -1,6 +1,6 @@
 import { AppDispatch } from '../store';
 import { setAppStatusAC } from '../reducers/app-reducer';
-import { STATUS } from '../../enum/StatusType';
+import { STATUS } from '../../enums/StatusType';
 import { authorizationAPI } from '../../dal/authorization/authorization';
 import { setProfileAC } from '../reducers/profile-reducer';
 import { catchErrorHandler } from '../../utils/error-utils';

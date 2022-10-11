@@ -34,7 +34,7 @@
     "sass": "^1.45.0",
     "socket.io-client": "^4.5.2",
     "styled-components": "^5.3.3",
-    "typescript": "^4.1.2",
+    "typescript": "*",
     "web-vitals": "^1.0.1"
   },
   "homepage": "https://NastyaZ23.github.io/fridayProject",
@@ -45,6 +45,12 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
+  },
+  "lint-staged": {
+    "**/*.{js,ts,jsx,tsx}": [
+      "npm run lint-fix",
+      "prettier --write"
+    ]
   },
   "eslintConfig": {
     "extends": [
@@ -67,9 +73,25 @@
   "devDependencies": {
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@types/axios": "^0.14.0",
+    "@types/eslint": "^8.4.6",
+    "@types/eslint-config-prettier": "^6.11.0",
+    "@types/eslint-plugin-prettier": "^3.1.0",
+    "@types/prettier": "^2.7.1",
     "@types/react-redux": "^7.1.20",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-thunk": "^2.1.0",
-    "gh-pages": "^3.2.3"
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^3.2.3",
+    "prettier": "^2.7.1"
   }
 }

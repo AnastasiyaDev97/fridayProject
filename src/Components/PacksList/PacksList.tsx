@@ -14,7 +14,7 @@ import { convertDateFormat } from '../../utils/handles';
 import SuperInputText from '../TestComponents/components/c1-SuperInputText/SuperInputText';
 import { PackType } from '../../dal/packs/types';
 
-import { COMPONENT_NAME } from '../../enum/ComponentName';
+import { COMPONENT_NAME } from '../../enums/ComponentName';
 import { Nullable } from 'types/Nullable';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { AddModal } from './../Modal/AddModal/index';

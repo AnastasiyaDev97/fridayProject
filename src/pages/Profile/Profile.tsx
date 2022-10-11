@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootReducerType } from '../../store/store';
+import { RootReducerType } from 'store/store';
 import { withRedirect } from 'common/hoc/withRedirect';
 import style from './Profile.module.scss';
-import { EditableSpan } from '../../Components/EditableSpan/EditableSpan';
-import { updateProfileTC } from '../../store/thunks/profile';
-import { InputTypeFile } from 'Components/InputTypeFile/InputTypeFile';
+import { EditableSpan } from 'components/EditableSpan/EditableSpan';
+import { updateProfileTC } from 'store/thunks/profile';
+import { InputTypeFile } from 'components/InputTypeFile/InputTypeFile';
 
 const Profile = () => {
   const dispatch = useDispatch();

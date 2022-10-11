@@ -1,17 +1,17 @@
 import { useCallback, useEffect } from 'react';
 import { useFormik } from 'formik';
-import SuperButton from '../Components/TestComponents/components/c2-SuperButton/SuperButton';
+import SuperButton from '../components/TestComponents/components/c2-SuperButton/SuperButton';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { registerStatusAC } from '../store/reducers/registration-reducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../store/store';
 import styles from 'pages/Login/Login.module.scss';
-import { InputType, UniversalInput } from '../Components/Input/UniversalInput';
+import { InputType, UniversalInput } from '../components/Input/UniversalInput';
 
 import { EMPTY_STRING } from '../constants';
 import { registerMeTC } from '../store/thunks/registration';
-import { PATH } from '../enum/Path';
-import { BUTTON_TYPE } from '../enum/ButtonTyoe';
+import { PATH } from '../enums/Path';
+import { BUTTON_TYPE } from '../enums/ButtonTyoe';
 import { AuthData, validates } from '../utils/validates';
 import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 
@@ -20,7 +20,7 @@ export const Registration = () => {
 
   const navigate = useNavigate();
 
-  let registerStatus = useSelector<RootReducerType, boolean>(
+  const registerStatus = useSelector<RootReducerType, boolean>(
     (state) => state.register.registerStatus
   );
 
@@ -96,7 +96,10 @@ export const Registration = () => {
             >
               Cancel
             </SuperButton>
-            <SuperButton type={BUTTON_TYPE.SUBMIT} className={styles.registerBtn}>
+            <SuperButton
+              type={BUTTON_TYPE.SUBMIT}
+              className={styles.registerBtn}
+            >
               Register
             </SuperButton>
           </div>

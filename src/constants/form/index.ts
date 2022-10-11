@@ -1,4 +1,4 @@
-import { INPUT_TYPE } from 'enum/InputType';
+import { INPUT_TYPE } from 'enums/InputType';
 
 export const REGISTRATION_FORM_FIELDS = [
   {

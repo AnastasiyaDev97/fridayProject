@@ -1,6 +1,6 @@
 import { AppDispatch, RootReducerType } from '../store';
 import { setAppStatusAC } from '../reducers/app-reducer';
-import { STATUS } from '../../enum/StatusType';
+import { STATUS } from '../../enums/StatusType';
 import { usersAPI } from 'dal/users/usersAPI';
 import { catchErrorHandler } from '../../utils/error-utils';
 import { getUsersDataAC } from 'store/reducers/users-reducer';

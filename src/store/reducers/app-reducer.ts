@@ -1,6 +1,6 @@
 import { Nullable } from '../../types/Nullable';
 import { ActionsType } from './AC types/types';
-import { STATUS } from '../../enum/StatusType';
+import { STATUS } from '../../enums/StatusType';
 
 const initialState = {
   status: STATUS.IDLE,
@@ -27,13 +27,14 @@ export const appReducer = (
   }
 };
 
-export const setAppStatusAC = (status: string) =>{
-  return({
+export const setAppStatusAC = (status: string) => {
+  return {
     type: 'APP/SET-STATUS',
     payload: {
       status,
     },
-  } as const)};
+  } as const;
+};
 
 export const setIsInitializedAC = () =>
   ({

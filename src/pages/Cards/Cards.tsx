@@ -14,7 +14,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { CardType } from '../../dal/cards/types';
 import { Rating } from '../../Components/Rating/Rating';
 import { getCardsTC } from '../../store/thunks/cards';
-import { COMPONENT_NAME } from '../../enum/ComponentName';
+import { COMPONENT_NAME } from '../../enums/ComponentName';
 import { CARD_TABLE_FIELDS } from 'constants/table';
 import { AddModal } from './../../Components/Modal/AddModal/index';
 import { withRedirect } from 'common/hoc/withRedirect';

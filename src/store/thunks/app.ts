@@ -1,5 +1,5 @@
 import { ThunkType } from '../store';
-import { STATUS } from '../../enum/StatusType';
+import { STATUS } from '../../enums/StatusType';
 import { authorizationAPI } from '../../dal/authorization/authorization';
 import { isAuthToggleAC } from '../reducers/login-reducer';
 import { setProfileAC } from '../reducers/profile-reducer';

@@ -2,7 +2,7 @@ import { AppDispatch, RootReducerType, ThunkType } from '../store';
 import { getPacksQueryParamsType } from '../../dal/packs/types';
 import { packsAPI } from '../../dal/packs/packsAPI';
 import { setAppStatusAC } from '../reducers/app-reducer';
-import { STATUS } from '../../enum/StatusType';
+import { STATUS } from '../../enums/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
 import {
   changePageAC,

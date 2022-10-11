@@ -1,7 +1,7 @@
 import { getCardsQueryParamsType, updateCardType } from '../../dal/cards/types';
 import { AppDispatch, ThunkType } from '../store';
 import { setAppStatusAC } from '../reducers/app-reducer';
-import { STATUS } from '../../enum/StatusType';
+import { STATUS } from '../../enums/StatusType';
 import { cardsAPI } from '../../dal/cards/cardsAPI';
 import { catchErrorHandler } from '../../utils/error-utils';
 import { setCardsAC, setCardsRatingAC } from '../reducers/cards-reducer';
@@ -18,7 +18,6 @@ export const getCardsTC =
       catchErrorHandler(dispatch, err);
     }
   };
-
 
 export const addCardTC =
   (cardsPack_id: string, question: string, answer: string): ThunkType =>

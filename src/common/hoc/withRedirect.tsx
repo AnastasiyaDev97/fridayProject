@@ -2,7 +2,7 @@ import React, { ComponentType } from 'react';
 import { useSelector } from 'react-redux';
 import { RootReducerType } from '../../store/store';
 import { Navigate } from 'react-router-dom';
-import { PATH } from '../../enum/Path';
+import { PATH } from '../../enums/Path';
 
 export function withRedirect<T>(Component: ComponentType<T>) {
   let RedirectComponent = (props: T) => {

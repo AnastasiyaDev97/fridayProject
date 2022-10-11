@@ -11,11 +11,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { RootReducerType } from '../store/store';
 
-import { EMPTY_STRING } from '../constants';
-import { PATH } from '../enum/Path';
-import { BUTTON_TYPE } from '../enum/ButtonTyoe';
-import { sendPassword } from '../store/thunks/passwordRecovery';
-import { AuthData, validateForgotPasswordForm } from '../utils/validates';
+import { EMPTY_STRING } from 'constants/index';
+import { PATH } from 'enums/Path';
+import { BUTTON_TYPE } from 'enums/ButtonTyoe';
+import { sendPassword } from 'store/thunks/passwordRecovery';
+import { AuthData, validateForgotPasswordForm } from 'utils/validates';
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();

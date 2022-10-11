@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 import { useDispatch } from 'react-redux';
 import { EMPTY_STRING } from '../../constants';
-import { PATH } from '../../enum/Path';
+import { PATH } from '../../enums/Path';
 import { logoutTC } from '../../store/thunks/login';
 import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
 import { style } from '@mui/system';
