@@ -2,6 +2,8 @@ import { FC, memo } from 'react';
 
 type ChatPropsType = {};
 
-export const Chat: FC<ChatPropsType> = memo(() => {
+const Chat: FC<ChatPropsType> = memo(() => {
   return <></>;
 });
+
+export default Chat;

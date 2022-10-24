@@ -1,26 +1,24 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootReducerType } from 'store/store';
-import { withRedirect } from 'common/hoc/withRedirect';
-import style from './Profile.module.scss';
-import { EditableSpan } from 'components/EditableSpan/EditableSpan';
-import { updateProfileTC } from 'store/thunks/profile';
-import { InputTypeFile } from 'components/InputTypeFile/InputTypeFile';
 
-const Profile = () => {
+import { useDispatch, useSelector } from 'react-redux';
+
+import style from './Profile.module.scss';
+
+import { withRedirect } from 'common/hoc/withRedirect';
+import { EditableSpan } from 'components/EditableSpan/EditableSpan';
+import { InputTypeFile } from 'components/InputTypeFile/InputTypeFile';
+import { AppRootStateType } from 'store/store';
+import { updateProfileTC } from 'store/thunks/profile';
+import { ReturnComponentType } from 'types/ReturnComponentType';
+
+const Profile = (): ReturnComponentType => {
   const dispatch = useDispatch();
 
-  const avatar = useSelector<RootReducerType, string>(
-    (state) => state.profile.avatar
-  );
-  const email = useSelector<RootReducerType, string>(
-    (state) => state.profile.email
-  );
-  const name = useSelector<RootReducerType, string>(
-    (state) => state.profile.name
-  );
-  const publicCardPacksCount = useSelector<RootReducerType, number>(
-    (state) => state.profile.publicCardPacksCount
+  const avatar = useSelector<AppRootStateType, string>(state => state.profile.avatar);
+  const email = useSelector<AppRootStateType, string>(state => state.profile.email);
+  const name = useSelector<AppRootStateType, string>(state => state.profile.name);
+  const publicCardPacksCount = useSelector<AppRootStateType, number>(
+    state => state.profile.publicCardPacksCount,
   );
 
   const onUpdateTitle = useCallback(
@@ -29,7 +27,7 @@ const Profile = () => {
         dispatch(updateProfileTC(newTitle, avatar));
       }
     },
-    [dispatch, avatar, name]
+    [dispatch, avatar, name],
   );
   const onUpdateAvatar = useCallback(
     (newAvatar: string) => {
@@ -37,7 +35,7 @@ const Profile = () => {
         dispatch(updateProfileTC(name, newAvatar));
       }
     },
-    [avatar, dispatch, name]
+    [avatar, dispatch, name],
   );
 
   return (

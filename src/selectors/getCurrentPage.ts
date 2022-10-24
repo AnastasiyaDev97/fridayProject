@@ -1,3 +1,3 @@
-import {RootReducerType} from "../store/store";
+import {AppRootStateType} from "../store/store";
 
-export const getCurrentPage=(state:RootReducerType):number=>state.packs.page
+export const getCurrentPage=(state:AppRootStateType):number=>state.packs.page

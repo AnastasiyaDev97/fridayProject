@@ -1,16 +1,17 @@
-import { AppDispatch } from '../store';
-import { setAppStatusAC } from '../reducers/app-reducer';
-import { STATUS } from '../../enums/StatusType';
 import { authorizationAPI } from '../../dal/authorization/authorization';
-import { setProfileAC } from '../reducers/profile-reducer';
+import { STATUS } from '../../enums/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
+import { setAppStatusAC } from '../reducers/app-reducer';
 import { isAuthToggleAC, loginAuthDataType } from '../reducers/login-reducer';
+import { setProfileAC } from '../reducers/profile-reducer';
+import { AppDispatch } from '../store';
 
 export const loginTC =
   (loginAuthData: loginAuthDataType) => async (dispatch: AppDispatch) => {
     try {
       dispatch(setAppStatusAC(STATUS.LOADING));
       let res = await authorizationAPI.loginMe(loginAuthData);
+
       dispatch(setAppStatusAC(STATUS.SUCCEEDED));
       dispatch(isAuthToggleAC(true));
       dispatch(setProfileAC(res));

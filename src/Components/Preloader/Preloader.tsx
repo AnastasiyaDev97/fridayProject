@@ -1,8 +1,8 @@
-import preloader from 'common/assets/svg/oval.svg';
 import style from './Preloader.module.scss';
 
-const Preloader = () => {
+import preloader from 'common/assets/svg/oval.svg';
+import { ReturnComponentType } from 'types/ReturnComponentType';
+
+export const Preloader = (): ReturnComponentType => {
   return <img src={preloader} className={style.loading} alt="loading" />;
 };
-
-export default Preloader;

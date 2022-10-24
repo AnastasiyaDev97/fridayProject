@@ -1,5 +1,5 @@
 import { CardType } from 'dal/cards/types';
-import { RootReducerType } from '../store/store';
+import { AppRootStateType } from '../store/store';
 
-export const getCards = (state: RootReducerType): CardType[] =>
+export const getCards = (state: AppRootStateType): CardType[] =>
   state.cards.cards;

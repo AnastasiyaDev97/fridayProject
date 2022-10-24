@@ -9,7 +9,10 @@
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:prettier/recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "overrides": [
@@ -82,7 +85,7 @@
       "error",
       {
         "props": true,
-        "ignorePropertyModificationsFor": ["state", "self"]
+        "ignorePropertyModificationsFor": ["state", "self","errors"]
       }
     ],
     "react/display-name": "off",

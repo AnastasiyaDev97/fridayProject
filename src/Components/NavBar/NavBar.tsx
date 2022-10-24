@@ -1,13 +1,5 @@
-import { NavLink } from 'react-router-dom';
-import styles from './NavBar.module.scss';
-import { useDispatch } from 'react-redux';
-import { EMPTY_STRING } from '../../constants';
-import { PATH } from '../../enums/Path';
-import { logoutTC } from '../../store/thunks/login';
-import { ButtonHTMLAttributes, DetailedHTMLProps, FC } from 'react';
-import { style } from '@mui/system';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useLocation } from 'react-router-dom';
+import { FC } from 'react';
+
 import {
   faUser,
   faCirclePlay,
@@ -15,8 +7,17 @@ import {
   faMessage,
   faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
+
+import styles from './NavBar.module.scss';
 
 import useWindowDimensions from 'common/hooks/useWindowDimensions';
+import { EMPTY_STRING } from 'constants/index';
+import { PATH } from 'enums/Path';
+import { logoutTC } from 'store/thunks/login';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
 /* type DefaultNavBarPropsType = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLDivElement>,
@@ -24,12 +25,12 @@ import useWindowDimensions from 'common/hooks/useWindowDimensions';
 >; */
 type NavBarPropsType = {};
 
-export const NavBar: FC<NavBarPropsType> = () => {
+export const NavBar: FC<NavBarPropsType> = (): ReturnComponentType => {
   const dispatch = useDispatch();
   const { pathname: currentPath } = useLocation();
   const { isMobile } = useWindowDimensions();
 
-  const classNameForLink = ({ isActive }: { isActive: boolean }) =>
+  const classNameForLink = ({ isActive }: { isActive: boolean }): string =>
     isActive ? `${styles.active}` : EMPTY_STRING;
 
   const NavLinkDataArray = [
@@ -43,7 +44,7 @@ export const NavBar: FC<NavBarPropsType> = () => {
     { navlinkPath: PATH.CHAT, title: 'Dialogs', icon: faMessage },
   ];
 
-  const logoutHandler = () => {
+  const logoutHandler = (): void => {
     dispatch(logoutTC());
   };
 
@@ -61,11 +62,7 @@ export const NavBar: FC<NavBarPropsType> = () => {
         </NavLink>
       ))}
       <span className={styles.logout} onClick={logoutHandler}>
-        {isMobile ? (
-          <FontAwesomeIcon icon={faArrowRightFromBracket} />
-        ) : (
-          'Logout'
-        )}
+        {isMobile ? <FontAwesomeIcon icon={faArrowRightFromBracket} /> : 'Logout'}
       </span>
     </div>
   );

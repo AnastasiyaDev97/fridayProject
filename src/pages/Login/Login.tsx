@@ -1,25 +1,26 @@
-import SuperButton from '../../Components/TestComponents/components/c2-SuperButton/SuperButton';
 import { useFormik } from 'formik';
-import SuperCheckbox from '../../Components/TestComponents/components/c3-SuperCheckbox/SuperCheckbox';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootReducerType } from '../../store/store';
 import { Navigate, NavLink } from 'react-router-dom';
-import styles from './Login.module.scss';
-import { UniversalInput } from '../../Components/Input/UniversalInput';
-import { AuthData, validateLoginForm } from '../../utils/validates';
-import { EMPTY_STRING } from '../../constants';
-import { PATH } from '../../enums/Path';
-import { INPUT_TYPE } from '../../enums/InputType';
-import { BUTTON_TYPE } from '../../enums/ButtonTyoe';
-import { FORMIK_FIELDS_NAME } from '../../enums/FormikFieldNames';
-import { loginTC } from '../../store/thunks/login';
 
-export const Login = () => {
+import styles from './Login.module.scss';
+
+import { SuperButton } from 'components/SuperButton';
+import { SuperCheckbox } from 'components/SuperCheckbox';
+import { UniversalInput } from 'components/UniversalInput';
+import { EMPTY_STRING } from 'constants/index';
+import { BUTTON_TYPE } from 'enums/ButtonTyoe';
+import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldNames';
+import { INPUT_TYPE } from 'enums/InputType';
+import { PATH } from 'enums/Path';
+import { AppRootStateType } from 'store/store';
+import { loginTC } from 'store/thunks/login';
+import { ReturnComponentType } from 'types/ReturnComponentType';
+import { AuthData, validateLoginForm } from 'utils/validates';
+
+const Login = (): ReturnComponentType => {
   const dispatch = useDispatch();
 
-  let isLoggedIn = useSelector<RootReducerType, boolean>(
-    (state) => state.login.isLoggedIn
-  );
+  let isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn);
 
   const formik = useFormik({
     initialValues: {
@@ -27,19 +28,19 @@ export const Login = () => {
       password: (process.env.REACT_APP_PASSWORD as string) || '',
       rememberMe: false,
     },
-    validate: (values) => {
+    validate: values => {
       const errors: AuthData = {};
+
       validateLoginForm(values, errors);
+
       return errors;
     },
-    onSubmit: (values) => {
+    onSubmit: values => {
       dispatch(loginTC(values));
     },
   });
 
-  const conditionForDisableButton = !!(
-    formik.errors.email || formik.errors.password
-  );
+  const conditionForDisableButton = !!(formik.errors.email || formik.errors.password);
 
   if (isLoggedIn) {
     return <Navigate to={PATH.START} />;
@@ -51,16 +52,13 @@ export const Login = () => {
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <div className={styles.inputsWrapper}>
           <UniversalInput
-            validationErr={
-              (formik.touched.email && formik.errors.email) || EMPTY_STRING
-            }
+            validationErr={(formik.touched.email && formik.errors.email) || EMPTY_STRING}
             formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.EMAIL)}
           />
 
           <UniversalInput
             validationErr={
-              (formik.touched.password && formik.errors.password) ||
-              EMPTY_STRING
+              (formik.touched.password && formik.errors.password) || EMPTY_STRING
             }
             formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
             type={INPUT_TYPE.PASSWORD}
@@ -83,7 +81,7 @@ export const Login = () => {
         </SuperButton>
       </form>
       <div className={styles.row}>
-        <NavLink className={styles.registerLink} to={PATH.REGISTRATION}>
+        <NavLink className={styles.registerLink} to={PATH.REGISTER}>
           Register
         </NavLink>
         <NavLink className={styles.registerLink} to={PATH.FORGOT_PASSWORD}>
@@ -93,3 +91,5 @@ export const Login = () => {
     </div>
   );
 };
+
+export default Login;

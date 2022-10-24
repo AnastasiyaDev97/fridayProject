@@ -1,16 +1,19 @@
 import { FC, memo, useEffect } from 'react';
-import s from './Packs.module.scss';
-import { PacksParams } from '../../Components/PacksParams/PacksParams';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { RootReducerType } from '../../store/store';
-import { getPacks } from '../../selectors/getPacks';
-import { getCurrentPage } from '../../selectors/getCurrentPage';
-import { Nullable } from '../../types/Nullable';
-import { PackType } from '../../dal/packs/types';
-import { withRedirect } from '../../common/hoc/withRedirect';
-import { PacksList } from '../../Components/PacksList';
-import { getPacksTC } from '../../store/thunks/packs';
 import { useSearchParams } from 'react-router-dom';
+
+import s from './Packs.module.scss';
+
+import { withRedirect } from 'common/hoc/withRedirect';
+import { PacksList } from 'components/PacksList';
+import { PacksParams } from 'components/PacksParams/PacksParams';
+import { PackType } from 'dal/packs/types';
+import { getCurrentPage } from 'selectors/getCurrentPage';
+import { getPacks } from 'selectors/getPacks';
+import { AppRootStateType } from 'store/store';
+import { getPacksTC } from 'store/thunks/packs';
+import { Nullable } from 'types/Nullable';
 
 type PacksT = {};
 
@@ -19,25 +22,21 @@ const Packs: FC<PacksT> = memo(() => {
 
   let [searchParams] = useSearchParams();
 
-  const packs = useSelector<RootReducerType, Array<PackType>>(getPacks);
-  const currentPage = useSelector<RootReducerType, number>(getCurrentPage);
-  const totalItemCount = useSelector<RootReducerType, number>(
-    (state) => state.packs.cardPacksTotalCount
+  const packs = useSelector<AppRootStateType, Array<PackType>>(getPacks);
+  const currentPage = useSelector<AppRootStateType, number>(getCurrentPage);
+  const totalItemCount = useSelector<AppRootStateType, number>(
+    state => state.packs.cardPacksTotalCount,
   );
-  const pageCount = useSelector<RootReducerType, number>(
-    (state) => state.packs.pageCount
+  const pageCount = useSelector<AppRootStateType, number>(state => state.packs.pageCount);
+  const currentMinCardsValue = useSelector<AppRootStateType, number>(
+    state => state.packs.min,
   );
-  const currentMinCardsValue = useSelector<RootReducerType, number>(
-    (state) => state.packs.min
+  const currentMaxCardsValue = useSelector<AppRootStateType, Nullable<number>>(
+    state => state.packs.max,
   );
-  const currentMaxCardsValue = useSelector<RootReducerType, Nullable<number>>(
-    (state) => state.packs.max
-  );
-  const sortPacks = useSelector<RootReducerType, string>(
-    (state) => state.packs.sortPacks
-  );
-  const user_id = useSelector<RootReducerType, Nullable<string>>(
-    (state) => state.packs.user_id
+  const sortPacks = useSelector<AppRootStateType, string>(state => state.packs.sortPacks);
+  const user_id = useSelector<AppRootStateType, Nullable<string>>(
+    state => state.packs.user_id,
   );
 
   let actualPackName = searchParams.get('packName');

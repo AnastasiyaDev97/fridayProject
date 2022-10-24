@@ -1,9 +1,9 @@
-import { AppDispatch } from '../store';
-import { setAppStatusAC } from '../reducers/app-reducer';
-import { STATUS } from '../../enums/StatusType';
 import { authorizationAPI } from '../../dal/authorization/authorization';
+import { STATUS } from '../../enums/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
+import { setAppStatusAC } from '../reducers/app-reducer';
 import { registerStatusAC } from '../reducers/registration-reducer';
+import { AppDispatch } from '../store';
 
 export const registerMeTC =
   (email: string, password: string) => async (dispatch: AppDispatch) => {

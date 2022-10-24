@@ -1,21 +1,22 @@
-import { AppDispatch, RootReducerType, ThunkType } from '../store';
-import { getPacksQueryParamsType } from '../../dal/packs/types';
+import { pageCountNumber } from '../../constants';
 import { packsAPI } from '../../dal/packs/packsAPI';
-import { setAppStatusAC } from '../reducers/app-reducer';
+import { getPacksQueryParamsType } from '../../dal/packs/types';
 import { STATUS } from '../../enums/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
+import { setAppStatusAC } from '../reducers/app-reducer';
 import {
   changePageAC,
   setNewMinMaxValues,
   setPacksAC,
   setSortingFilter,
 } from '../reducers/packs-reducer';
-import { pageCountNumber } from '../../constants';
+import { AppDispatch, AppRootStateType, ThunkType } from '../store';
+
 import { Nullable } from 'types/Nullable';
 
 export const getPacksTC =
   (actualPackName?: Nullable<string>) =>
-  async (dispatch: AppDispatch, getState: () => RootReducerType) => {
+  async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
     const { min, max, page, user_id, sortPacks } = getState().packs;
     const paramsForQuery: getPacksQueryParamsType = {
       min,
@@ -31,6 +32,7 @@ export const getPacksTC =
       dispatch(setAppStatusAC(STATUS.LOADING));
 
       const data = await packsAPI.getPacks(paramsForQuery);
+
       dispatch(setPacksAC(data));
     } catch (err) {
       catchErrorHandler(dispatch, err);
@@ -41,12 +43,14 @@ export const getPacksTC =
 
 export const addPackTC =
   (name: string): ThunkType =>
-  async (dispatch, getState: () => RootReducerType) => {
+  async (dispatch, getState: () => AppRootStateType) => {
     const { maxCardsCount } = getState().packs;
+
     try {
       const cardsPack = {
         name,
       };
+
       dispatch(setAppStatusAC(STATUS.LOADING));
       await packsAPI.addPack({ cardsPack });
       dispatch(setSortingFilter('0updated'));
@@ -60,7 +64,7 @@ export const addPackTC =
 
 export const deletePackTC =
   (packId: string): ThunkType =>
-  async (dispatch) => {
+  async dispatch => {
     try {
       dispatch(setAppStatusAC(STATUS.LOADING));
       await packsAPI.deletePack(packId);
@@ -72,12 +76,13 @@ export const deletePackTC =
 
 export const updatePackTC =
   (packId: string, newName: string): ThunkType =>
-  async (dispatch) => {
+  async dispatch => {
     try {
       const cardsPack = {
         _id: packId,
         name: newName,
       };
+
       dispatch(setAppStatusAC(STATUS.LOADING));
       await packsAPI.updatePack({ cardsPack });
       await dispatch(getPacksTC());

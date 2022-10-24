@@ -1,14 +1,16 @@
-import { AppDispatch, RootReducerType } from '../store';
-import { setAppStatusAC } from '../reducers/app-reducer';
 import { STATUS } from '../../enums/StatusType';
-import { usersAPI } from 'dal/users/usersAPI';
 import { catchErrorHandler } from '../../utils/error-utils';
+import { setAppStatusAC } from '../reducers/app-reducer';
+import { AppDispatch, AppRootStateType } from '../store';
+
+import { usersAPI } from 'dal/users/usersAPI';
 import { getUsersDataAC } from 'store/reducers/users-reducer';
 
 export const getUsersTC =
   (userName?: string) =>
-  async (dispatch: AppDispatch, getState: () => RootReducerType) => {
+  async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
     const { min, max, page, sortUsers, pageCount } = getState().users;
+
     try {
       dispatch(setAppStatusAC(STATUS.LOADING));
       let {
@@ -31,7 +33,7 @@ export const getUsersTC =
           page: getPage,
           pageCount: getPageCount,
           usersTotalCount,
-        })
+        }),
       );
       dispatch(setAppStatusAC(STATUS.SUCCEEDED));
     } catch (err) {

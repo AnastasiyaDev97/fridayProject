@@ -1,11 +1,15 @@
+import { FC, memo } from 'react';
+
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { FC, memo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootReducerType } from '../../store/store';
+
 import style from './RangeSlider.module.scss';
-import { Nullable } from 'types/Nullable';
+
 import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
+import { AppRootStateType } from 'store/store';
+import { Nullable } from 'types/Nullable';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type SliderPropsType = {
   currentMinCardsValue: number;
@@ -13,14 +17,14 @@ type SliderPropsType = {
 };
 
 export const RangeSlider: FC<SliderPropsType> = memo(
-  ({ currentMinCardsValue, currentMaxCardsValue }) => {
+  ({ currentMinCardsValue, currentMaxCardsValue }): ReturnComponentType => {
     const dispatch = useDispatch();
 
-    const maxValueForRangeSlider = useSelector<RootReducerType, number>(
-      (state) => state.packs.maxCardsCount
+    const maxValueForRangeSlider = useSelector<AppRootStateType, number>(
+      state => state.packs.maxCardsCount,
     );
 
-    const onSliderChange = (event: Event, newValue: number | number[]) => {
+    const onSliderChange = (event: Event, newValue: number | number[]): void => {
       if (Array.isArray(newValue)) {
         dispatch(setNewMinMaxValues(newValue[0], newValue[1]));
       }
@@ -30,10 +34,7 @@ export const RangeSlider: FC<SliderPropsType> = memo(
       <Box sx={{ width: '80%' }}>
         <div className={style.sliderWrapper}>
           <Slider
-            value={[
-              currentMinCardsValue,
-              currentMaxCardsValue ?? maxValueForRangeSlider,
-            ]}
+            value={[currentMinCardsValue, currentMaxCardsValue ?? maxValueForRangeSlider]}
             onChange={onSliderChange}
             valueLabelDisplay="auto"
             max={maxValueForRangeSlider}
@@ -45,5 +46,5 @@ export const RangeSlider: FC<SliderPropsType> = memo(
         </div>
       </Box>
     );
-  }
+  },
 );

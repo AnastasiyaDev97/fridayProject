@@ -1,7 +1,10 @@
-import { FC, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
+
 import styles from './Pagination.module.scss';
-import SuperButton from '../TestComponents/components/c2-SuperButton/SuperButton';
+
+import { SuperButton } from 'components/SuperButton';
 import { Nullable } from 'types/Nullable';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type PaginatorPropsType = {
   totalItemCount: Nullable<number>;
@@ -13,20 +16,19 @@ type PaginatorPropsType = {
 
 const START_VALUE_PORTION_NUMBER = 1;
 
-const Paginator: FC<PaginatorPropsType> = memo(
+export const Pagination = memo(
   ({
     totalItemCount,
     pageCount,
     currentPage,
     onChangePageClick,
     portionSize,
-  }) => {
-    let [portionNumber, setPortionNumber] = useState(
-      START_VALUE_PORTION_NUMBER
-    );
+  }: PaginatorPropsType): ReturnComponentType => {
+    let [portionNumber, setPortionNumber] = useState(START_VALUE_PORTION_NUMBER);
 
     let pagesCount;
     let portionCount;
+
     if (totalItemCount && pageCount) {
       pagesCount = Math.ceil(totalItemCount / pageCount);
       portionCount = Math.ceil(pagesCount / portionSize);
@@ -58,26 +60,19 @@ const Paginator: FC<PaginatorPropsType> = memo(
         )}
 
         {pages
-          .filter(
-            (page) =>
-              page >= leftPortionPageNumber && page <= rightPortionPageNumber
-          )
-          .map((page) => {
+          .filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
+          .map(page => {
             const classNameForPage =
               page === currentPage
                 ? `${styles.pageNum} ${styles.activePage}`
                 : styles.pageNum;
 
-            const onSpanClick = () => {
+            const onSpanClick = (): void => {
               onChangePageClick(page);
             };
 
             return (
-              <span
-                key={page}
-                className={classNameForPage}
-                onClick={onSpanClick}
-              >
+              <span key={page} className={classNameForPage} onClick={onSpanClick}>
                 {page}
               </span>
             );
@@ -90,7 +85,5 @@ const Paginator: FC<PaginatorPropsType> = memo(
         )}
       </div>
     );
-  }
+  },
 );
-
-export default Paginator;

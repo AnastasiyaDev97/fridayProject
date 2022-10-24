@@ -1,6 +1,9 @@
 import { FC, memo } from 'react';
+
 import style from './UserCard.module.scss';
+
 import initialAvatar from 'common/assets/images/noavatar.png';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type UserCardPropsType = {
   userName: string;
@@ -10,7 +13,7 @@ type UserCardPropsType = {
 };
 
 export const UserCard: FC<UserCardPropsType> = memo(
-  ({ userName, userMail, cardsCount, avatar }) => {
+  ({ userName, userMail, cardsCount, avatar }): ReturnComponentType => {
     return (
       <div className={style.userBlock}>
         <img
@@ -32,5 +35,5 @@ export const UserCard: FC<UserCardPropsType> = memo(
         </div>
       </div>
     );
-  }
+  },
 );

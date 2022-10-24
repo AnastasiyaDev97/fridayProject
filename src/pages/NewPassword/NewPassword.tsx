@@ -1,26 +1,28 @@
-import React from 'react';
-import styles from '../Login/Login.module.scss';
-import { UniversalInput } from '../../Components/Input/UniversalInput';
-import SuperButton from '../../Components/TestComponents/components/c2-SuperButton/SuperButton';
 import { useFormik } from 'formik';
-import { Navigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootReducerType } from '../../store/store';
-import { EMPTY_STRING } from '../../constants';
-import { setNewPasswordTC } from '../../store/thunks/passwordRecovery';
-import { PATH } from '../../enums/Path';
-import { FORMIK_FIELDS_NAME } from '../../enums/FormikFieldNames';
-import { INPUT_TYPE } from '../../enums/InputType';
-import { BUTTON_TYPE } from '../../enums/ButtonTyoe';
-import { AuthData, validateNewPasswordForm } from '../../utils/validates';
+import { Navigate, useParams } from 'react-router-dom';
 
-export const NewPassword = () => {
+import styles from '../Login/Login.module.scss';
+
+import { SuperButton } from 'components/SuperButton';
+import { UniversalInput } from 'components/UniversalInput';
+import { EMPTY_STRING } from 'constants/index';
+import { BUTTON_TYPE } from 'enums/ButtonTyoe';
+import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldNames';
+import { INPUT_TYPE } from 'enums/InputType';
+import { PATH } from 'enums/Path';
+import { AppRootStateType } from 'store/store';
+import { setNewPasswordTC } from 'store/thunks/passwordRecovery';
+import { ReturnComponentType } from 'types/ReturnComponentType';
+import { AuthData, validateNewPasswordForm } from 'utils/validates';
+
+const NewPassword = (): ReturnComponentType => {
   const dispatch = useDispatch();
 
   const { token } = useParams<string>();
 
-  const responseInfoNewPass = useSelector<RootReducerType, string>(
-    (state) => state.passRecovery.responseInfoNewPass
+  const responseInfoNewPass = useSelector<AppRootStateType, string>(
+    state => state.passRecovery.responseInfoNewPass,
   );
 
   const formik = useFormik({
@@ -28,17 +30,20 @@ export const NewPassword = () => {
       password: EMPTY_STRING,
     },
 
-    validate: (values) => {
+    validate: values => {
       const errors: AuthData = {};
+
       validateNewPasswordForm(values, errors);
+
       return errors;
     },
 
-    onSubmit: (values) => {
+    onSubmit: values => {
       let newPassDataType = {
         password: values.password,
         resetPasswordToken: token || EMPTY_STRING,
       };
+
       dispatch(setNewPasswordTC(newPassDataType));
       formik.resetForm();
     },
@@ -53,15 +58,14 @@ export const NewPassword = () => {
       <h2>Create new password</h2>
       <form
         className={styles.form}
-        onSubmit={(e) => {
+        onSubmit={e => {
           formik.handleSubmit(e);
         }}
       >
         <div className={styles.inputsWrapper}>
           <UniversalInput
             validationErr={
-              (formik.touched.password && formik.errors.password) ||
-              EMPTY_STRING
+              (formik.touched.password && formik.errors.password) || EMPTY_STRING
             }
             formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
             type={INPUT_TYPE.PASSWORD}
@@ -75,3 +79,5 @@ export const NewPassword = () => {
     </div>
   );
 };
+
+export default NewPassword;

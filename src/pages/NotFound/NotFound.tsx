@@ -1,10 +1,12 @@
-import React from 'react';
-import style from './NotFound.module.scss';
-import SuperButton from '../../Components/TestComponents/components/c2-SuperButton/SuperButton';
 import { NavLink } from 'react-router-dom';
-import { PATH } from '../../enums/Path';
 
-export const NotFound = () => {
+import style from './NotFound.module.scss';
+
+import { SuperButton } from 'components/SuperButton';
+import { PATH } from 'enums/Path';
+import { ReturnComponentType } from 'types/ReturnComponentType';
+
+const NotFound = (): ReturnComponentType => {
   return (
     <div className={style.notFoundBackgr}>
       <div className={style.notFoundBlock}>
@@ -18,3 +20,5 @@ export const NotFound = () => {
     </div>
   );
 };
+
+export default NotFound;

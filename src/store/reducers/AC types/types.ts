@@ -1,12 +1,12 @@
-import { isAuthToggleAC } from '../login-reducer';
-import { setProfileAC } from '../profile-reducer';
-import { registerStatusAC } from '../registration-reducer';
-import { getUsersDataAC, changePageUsersAC } from '../users-reducer';
+import { setAppStatusAC, setErrorText, setIsInitializedAC } from '../app-reducer';
 import {
-  addEmailAC,
-  SetResponseInfoForgotPassAC,
-  SetResponseInfoNewPassAC,
-} from '../passwordRecovery-reducer';
+  changePageCardsAC,
+  setCardsAC,
+  setCardsRatingAC,
+  setSortingFilterCards,
+  resetCardsAC,
+} from '../cards-reducer';
+import { isAuthToggleAC } from '../login-reducer';
 import {
   changePageAC,
   changeSearchPackNameAC,
@@ -16,17 +16,13 @@ import {
   toggleShowUserPacksAC,
 } from '../packs-reducer';
 import {
-  setAppStatusAC,
-  setErrorText,
-  setIsInitializedAC,
-} from '../app-reducer';
-import {
-  changePageCardsAC,
-  setCardsAC,
-  setCardsRatingAC,
-  setSortingFilterCards,
-  resetCardsAC,
-} from '../cards-reducer';
+  addEmailAC,
+  SetResponseInfoForgotPassAC,
+  SetResponseInfoNewPassAC,
+} from '../passwordRecovery-reducer';
+import { setProfileAC } from '../profile-reducer';
+import { registerStatusAC } from '../registration-reducer';
+import { getUsersDataAC, changePageUsersAC } from '../users-reducer';
 
 export type ActionsType =
   | ReturnType<typeof setAppStatusAC>

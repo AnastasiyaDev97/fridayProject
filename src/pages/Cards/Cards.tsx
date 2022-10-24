@@ -1,30 +1,36 @@
 import { FC, memo, useCallback, useEffect, useMemo } from 'react';
-import style from './Cards.module.scss';
-import Pagination from '../../Components/Pagination/Pagination';
-import { convertDateFormat } from '../../utils/handles';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { RootReducerType } from '../../store/store';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import style from './Cards.module.scss';
+
+import { withRedirect } from 'common/hoc/withRedirect';
+import { AddModal } from 'components/Modal/AddModal';
+import { Pagination } from 'components/Pagination';
+import { Preloader } from 'components/Preloader';
+import { Rating } from 'components/Rating/Rating';
+import { SuperButton } from 'components/SuperButton/SuperButton';
+import { Table } from 'components/Table';
+import { PORTION_SIZE } from 'constants/index';
+import { CARD_TABLE_FIELDS } from 'constants/table';
+import { CardType } from 'dal/cards/types';
+import { COMPONENT_NAME } from 'enums/ComponentName';
 import {
   changePageCardsAC,
   resetCardsAC,
   setSortingFilterCards,
-} from '../../store/reducers/cards-reducer';
-import { UniversalTable } from '../../Components/Table/UniversalTable';
-import { useNavigate, useParams } from 'react-router-dom';
-import { CardType } from '../../dal/cards/types';
-import { Rating } from '../../Components/Rating/Rating';
-import { getCardsTC } from '../../store/thunks/cards';
-import { COMPONENT_NAME } from '../../enums/ComponentName';
-import { CARD_TABLE_FIELDS } from 'constants/table';
-import { AddModal } from './../../Components/Modal/AddModal/index';
-import { withRedirect } from 'common/hoc/withRedirect';
-import { PORTION_SIZE } from 'constants/index';
-import SuperButton from 'Components/TestComponents/components/c2-SuperButton/SuperButton';
-import Preloader from 'Components/Preloader/Preloader';
+} from 'store/reducers/cards-reducer';
+import { AppRootStateType } from 'store/store';
+import { getCardsTC } from 'store/thunks/cards';
+import { ReturnComponentType } from 'types/ReturnComponentType';
+import { convertDateFormat } from 'utils/handles';
 
 type CardsT = {};
 
-const Cards: FC<CardsT> = memo(() => {
+const TIMER_VALUE = 1000;
+
+const Cards: FC<CardsT> = memo((): ReturnComponentType => {
   const dispatch = useDispatch();
 
   const params = useParams<'id'>();
@@ -32,43 +38,39 @@ const Cards: FC<CardsT> = memo(() => {
 
   const navigate = useNavigate();
 
-  const cards = useSelector<RootReducerType, Array<CardType>>(
-    (state) => state.cards.cards
+  const cards = useSelector<AppRootStateType, Array<CardType>>(
+    state => state.cards.cards,
   );
-  const sortCards = useSelector<RootReducerType, string>(
-    (state) => state.cards.sortCards
+  const sortCards = useSelector<AppRootStateType, string>(state => state.cards.sortCards);
+  const totalItemCount = useSelector<AppRootStateType, number>(
+    state => state.cards.cardsTotalCount,
   );
-  const totalItemCount = useSelector<RootReducerType, number>(
-    (state) => state.cards.cardsTotalCount
-  );
-  const pageCount = useSelector<RootReducerType, number>(
-    (state) => state.cards.pageCount
-  );
-  const currentPage = useSelector<RootReducerType, number>(
-    (state) => state.cards.page
-  );
+  const pageCount = useSelector<AppRootStateType, number>(state => state.cards.pageCount);
+  const currentPage = useSelector<AppRootStateType, number>(state => state.cards.page);
 
   const cardsForTable = useMemo(() => {
     return cards.map(
       ({ question, answer, updated, grade, _id, user_id, cardsPack_id }) => {
-        updated = convertDateFormat(updated);
-        let rating = <Rating grade={grade} />;
+        const convertedToDateUpdated = convertDateFormat(updated);
+
+        const rating = <Rating grade={grade} />;
+
         return {
           id: _id,
           userId: user_id,
           cardsPackId: cardsPack_id,
-          tableValues: { question, answer, updated, rating },
+          tableValues: { question, answer, updated: convertedToDateUpdated, rating },
         };
-      }
+      },
     );
   }, [cards]);
 
   useEffect(() => {
-    let idOfTimeout = setTimeout(() => {
+    const idOfTimeout = setTimeout(() => {
       if (cardsPack_id) {
         dispatch(getCardsTC({ cardsPack_id, page: currentPage, sortCards }));
       }
-    }, 1000);
+    }, TIMER_VALUE);
 
     return () => {
       clearTimeout(idOfTimeout);
@@ -79,26 +81,24 @@ const Cards: FC<CardsT> = memo(() => {
   const handleSetSortingClick = useCallback(
     (sortName: string, direction: 'up' | 'down') => {
       dispatch(
-        setSortingFilterCards(
-          direction === 'up' ? `1${sortName}` : `0${sortName}`
-        )
+        setSortingFilterCards(direction === 'up' ? `1${sortName}` : `0${sortName}`),
       );
     },
-    [dispatch]
+    [dispatch],
   );
 
   const handleChangePageClick = useCallback(
     (page: number) => {
       dispatch(changePageCardsAC(page));
     },
-    [dispatch]
+    [dispatch],
   );
 
-  const onTitleGoBackClick = () => {
+  const onTitleGoBackClick = (): void => {
     navigate(-1);
   };
 
-  const onAddButtonClick = () => {
+  const onAddButtonClick = (): void => {
     handleChangePageClick(1);
     handleSetSortingClick('updated', 'down');
   };
@@ -106,6 +106,7 @@ const Cards: FC<CardsT> = memo(() => {
   if (cards[0]?._id === '') {
     return <Preloader />;
   }
+
   return (
     <div className={style.wrapper}>
       <h2 onClick={onTitleGoBackClick} className={style.cursor}>
@@ -120,7 +121,7 @@ const Cards: FC<CardsT> = memo(() => {
 
       {!!cards?.length && (
         <>
-          <UniversalTable
+          <Table
             tableTitles={CARD_TABLE_FIELDS}
             tableItems={cardsForTable}
             onSetSortingClick={handleSetSortingClick}

@@ -1,1 +1,1 @@
-export {PacksList} from './PacksList'
+export { PacksList } from './PacksList';

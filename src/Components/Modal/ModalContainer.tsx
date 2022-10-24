@@ -1,24 +1,27 @@
-import SuperButton from 'Components/TestComponents/components/c2-SuperButton/SuperButton';
-import { memo, ReactElement, ReactNode, useState, MouseEvent } from 'react';
-import { Nullable } from 'types/Nullable';
+import { memo, useState, MouseEvent, ReactNode } from 'react';
+
+import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
+
 import styles from './ModalContainer.module.scss';
+
+import { SuperButton } from 'components/SuperButton';
+import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type ModalContainerPropsType = {
   modalTitle: string;
   buttonTitle: string;
-  children?: ReactElement;
+  children?: ReactNode;
   onActionButtonClick?: () => void;
   disabled?: boolean;
   style?: { padding?: string; marginBottom?: string };
-  mainElement?: Nullable<ReactNode>;
+  mainElement?: ReactNode;
 };
 
-export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
+export const ModalContainer = memo(
   ({
     modalTitle,
     buttonTitle,
@@ -27,21 +30,21 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
     disabled,
     style,
     mainElement,
-  }): Nullable<ReactElement> => {
+  }: ModalContainerPropsType): ReturnComponentType => {
     const [open, setOpen] = useState(false);
 
     const handleClickOpen = (
-      e: MouseEvent<HTMLDivElement> | MouseEvent<HTMLButtonElement>
-    ) => {
+      e: MouseEvent<HTMLDivElement> | MouseEvent<HTMLButtonElement>,
+    ): void => {
       e.stopPropagation();
       setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleClose = (): void => {
       setOpen(false);
     };
 
-    const handleActionClick = () => {
+    const handleActionClick = (): void => {
       if (onActionButtonClick) {
         onActionButtonClick();
       }
@@ -52,14 +55,14 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
       <div>
         {mainElement ? (
           <div
-            onClick={(e) => handleClickOpen(e)}
+            onClick={e => handleClickOpen(e)}
             className={`${disabled ? styles.disabled : styles.active}`}
           >
             {mainElement}
           </div>
         ) : (
           <SuperButton
-            onClick={(e) => handleClickOpen(e)}
+            onClick={e => handleClickOpen(e)}
             disabled={disabled}
             style={style}
           >
@@ -94,5 +97,5 @@ export const ModalContainer: React.FC<ModalContainerPropsType> = memo(
         </Dialog>
       </div>
     );
-  }
+  },
 );
