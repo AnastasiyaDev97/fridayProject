@@ -21,11 +21,6 @@ On the profile page you can change your profile photo and username, as well as i
 <br/>
 <br/>
 
-<img width="850" alt="Profile" src="./src/common/assets/images/Profile.png">
-
-<br/>
-<br/>
-
 On the Packs page you can create, delete, edit your packs. Study the cards of other users. The following functionalities are available: sorting, searching, filtering, pagination.
 
 
