@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
+
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, NavLink } from 'react-router-dom';
 
 import styles from './Login.module.scss';
@@ -8,24 +9,33 @@ import { SuperButton } from 'components/SuperButton';
 import { SuperCheckbox } from 'components/SuperCheckbox';
 import { UniversalInput } from 'components/UniversalInput';
 import { EMPTY_STRING } from 'constants/index';
-import { BUTTON_TYPE } from 'enums/ButtonTyoe';
-import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldNames';
-import { INPUT_TYPE } from 'enums/InputType';
+import { useLoginMutation } from 'dal/authorization';
+import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
 import { PATH } from 'enums/Path';
-import { AppRootStateType } from 'store/store';
-import { loginTC } from 'store/thunks/login';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { useAppDispatch, useAppSelector } from 'store';
+import { setLoginStatus } from 'store/reducers/auth';
+import { setProfileData } from 'store/reducers/profile';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { AuthData, validateLoginForm } from 'utils/validates';
 
-const Login = (): ReturnComponentType => {
-  const dispatch = useDispatch();
+export const Login = (): ReturnComponentType => {
+  const dispatch = useAppDispatch();
 
-  let isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.login.isLoggedIn);
+  const [login, { data: loginData /* , error: loginError */ }] = useLoginMutation();
+
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+  useEffect(() => {
+    if (loginData) {
+      dispatch(setLoginStatus(true));
+      dispatch(setProfileData(loginData));
+    }
+  }, [loginData, dispatch]);
 
   const formik = useFormik({
     initialValues: {
-      email: (process.env.REACT_APP_EMAIL as string) || '',
-      password: (process.env.REACT_APP_PASSWORD as string) || '',
+      email: /* (process.env.REACT_APP_EMAIL as string) ||  */ '',
+      password: /* (process.env.REACT_APP_PASSWORD as string) || */ '',
       rememberMe: false,
     },
     validate: values => {
@@ -36,7 +46,7 @@ const Login = (): ReturnComponentType => {
       return errors;
     },
     onSubmit: values => {
-      dispatch(loginTC(values));
+      login(values);
     },
   });
 
@@ -61,7 +71,7 @@ const Login = (): ReturnComponentType => {
               (formik.touched.password && formik.errors.password) || EMPTY_STRING
             }
             formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
-            type={INPUT_TYPE.PASSWORD}
+            type="password"
           />
         </div>
 
@@ -74,7 +84,7 @@ const Login = (): ReturnComponentType => {
 
         <SuperButton
           className={styles.submitBtn}
-          type={BUTTON_TYPE.SUBMIT}
+          type="submit"
           disabled={conditionForDisableButton}
         >
           Login
@@ -91,5 +101,3 @@ const Login = (): ReturnComponentType => {
     </div>
   );
 };
-
-export default Login;

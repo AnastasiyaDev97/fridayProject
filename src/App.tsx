@@ -4,40 +4,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import styles from './App.module.scss';
-import Login from './pages/Login/Login';
 
+import { AppStatusType } from 'common/types/AppStatus';
+import { Nullable } from 'common/types/Nullable';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Header } from 'components/Header';
 import { Preloader } from 'components/Preloader';
+import { STATUS } from 'constants/app';
 import { PATH } from 'enums/Path';
-import { STATUS } from 'enums/StatusType';
-import Cards from 'pages/Cards/Cards';
-import Chat from 'pages/Chat/Chat';
-import ForgotPassword from 'pages/ForgotPassword/ForgotPassword';
-import NewPassword from 'pages/NewPassword/NewPassword';
-import NotFound from 'pages/NotFound/NotFound';
-import Packs from 'pages/Packs/Packs';
-import Profile from 'pages/Profile/Profile';
-import Register from 'pages/Register/Register';
-import Users from 'pages/Users/Users';
+import {
+  Cards,
+  ForgotPassword,
+  Login,
+  NewPassword,
+  NotFound,
+  Packs,
+  Profile,
+  Register,
+  Users,
+} from 'pages';
+import { RootState } from 'store';
 import { setErrorText } from 'store/reducers/app-reducer';
-import { AppRootStateType } from 'store/store';
 import { initializeAppTC } from 'store/thunks/app';
-import { Nullable } from 'types/Nullable';
-import { ReturnComponentType } from 'types/ReturnComponentType';
 
 const TIMER_VALUE = 3000;
 
 const App = (): ReturnComponentType => {
   const dispatch = useDispatch();
 
-  const status = useSelector<AppRootStateType, string>(state => state.app.status);
-  const isInitialized = useSelector<AppRootStateType, boolean>(
-    state => state.app.isInitialized,
-  );
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(
-    state => state.login.isLoggedIn,
-  );
-  const error = useSelector<AppRootStateType, Nullable<string>>(state => state.app.error);
+  const status = useSelector<RootState, AppStatusType>(state => state.app.status);
+  const isInitialized = useSelector<RootState, boolean>(state => state.app.isInitialized);
+  const isLoggedIn = useSelector<RootState, boolean>(state => state.auth.isLoggedIn);
+  const error = useSelector<RootState, Nullable<string>>(state => state.app.errorText);
 
   const {
     PROFILE,
@@ -53,7 +51,7 @@ const App = (): ReturnComponentType => {
     ANY,
     ID,
     USERS,
-    CHAT,
+    /*  CHAT, */
   } = PATH;
 
   useEffect(() => {
@@ -85,10 +83,8 @@ const App = (): ReturnComponentType => {
           <Route path={START} element={<Navigate to={PROFILE} />} />
           <Route path={PROFILE} element={<Profile />} />
           <Route path={REGISTER} element={<Register />} />
-          <Route path={NOT_FOUND} element={<NotFound />} />
           <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={USERS} element={<Users />} />
-          <Route path={CHAT} element={<Chat />} />
           <Route path={NEW_PASSWORD} element={<NewPassword />}>
             <Route path={TOKEN} element={<NewPassword />} />
           </Route>
@@ -97,6 +93,7 @@ const App = (): ReturnComponentType => {
           </Route>
           <Route path={PACKS} element={<Packs />} />
           <Route path={LOGIN} element={<Login />} />
+          <Route path={NOT_FOUND} element={<NotFound />} />
           <Route path={ANY} element={<Navigate to={NOT_FOUND} />} />
         </Routes>
       </div>

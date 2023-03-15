@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, FC, memo } from 'react';
 
 import style from './SuperButton.module.scss';
 
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type DefaultButtonPropsType = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
@@ -15,7 +15,7 @@ type SuperButtonPropsType = DefaultButtonPropsType & {
 
 export const SuperButton: FC<SuperButtonPropsType> = memo(
   ({ red, className, ...restProps }): ReturnComponentType => {
-    let finalClassName = `${style.btn} ${red && style.red} ${className}`;
+    const finalClassName = `${style.btn} ${red && style.red} ${className}`;
 
     return <button className={finalClassName} {...restProps} />;
   },

@@ -1,12 +1,12 @@
 import { FC, memo, useState } from 'react';
 
+import { INPUT_TYPE } from 'enums/InputType';
 import { FieldInputProps } from 'formik';
 
 import styles from './UniversalInput.module.scss';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperInputText } from 'components/SuperInputText';
-import { INPUT_TYPE } from 'enums/InputType';
-import { ReturnComponentType } from 'types/ReturnComponentType';
 
 export type InputType = 'password' | 'text' | 'email';
 
@@ -19,7 +19,7 @@ type UniversalInputPropsType = {
 
 export const UniversalInput: FC<UniversalInputPropsType> = memo(
   ({ validationErr, formikProps, placeholder, type }): ReturnComponentType => {
-    let [passwordShown, setPasswordShown] = useState<boolean>(false);
+    const [passwordShown, setPasswordShown] = useState<boolean>(false);
 
     const typeForInput = !passwordShown && type ? INPUT_TYPE.PASSWORD : INPUT_TYPE.TEXT;
 

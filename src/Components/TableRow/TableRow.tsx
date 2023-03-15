@@ -8,20 +8,21 @@ import { useNavigate } from 'react-router-dom';
 import style from '../Table/Table.module.scss';
 
 import { DeleteModal } from 'components/Modal/DeleteModal';
+import { LearnModal } from 'components/Modal/LearnModal';
 import { UpdateModal } from 'components/Modal/UpdateModal';
 import { ItemValues } from 'components/Table/Table';
 import { EMPTY_STRING } from 'constants/index';
-import { AppRootStateType } from 'store/store';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { RootState } from 'store';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type TableRowT = {
   itemValues: ItemValues;
   itemName: 'packs' | 'cards';
 };
 export const TableRow: FC<TableRowT> = memo(
-  ({ itemValues, itemName }): ReturnComponentType => {
+  ({ itemValues, itemName }: TableRowT): ReturnComponentType => {
     const navigate = useNavigate();
-    const profileId = useSelector<AppRootStateType, string>(state => state.profile._id);
+    const profileId = useSelector<RootState, string>(state => state.profile._id);
 
     const { tableValues, userId, id, cardsPackId } = itemValues;
     const isMyPack = profileId === userId;
@@ -70,7 +71,7 @@ export const TableRow: FC<TableRowT> = memo(
           {itemName === 'packs' && (
             <LearnModal
               name={tableValues?.name}
-              disabled={tableValues?.cardsCount! === 0}
+              disabled={tableValues?.cardsCount === 0}
               id={id}
             >
               <FontAwesomeIcon icon={faGraduationCap} />

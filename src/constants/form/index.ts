@@ -1,4 +1,8 @@
-import { INPUT_TYPE } from 'enums/InputType';
+const INPUT_TYPE = {
+  PASSWORD: 'password',
+  TEXT: 'text',
+  EMAIL: 'email',
+};
 
 export const REGISTRATION_FORM_FIELDS = [
   {

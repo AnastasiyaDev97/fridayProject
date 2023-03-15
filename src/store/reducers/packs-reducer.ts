@@ -1,7 +1,8 @@
-import { ActionsType } from './AC types/types';
-import { Nullable } from '../../types/Nullable';
-import { getPacksResponseType } from '../../dal/packs/types';
+import { Nullable } from '../../common/types/Nullable';
 import { EMPTY_STRING } from '../../constants';
+import { getPacksResponseType } from '../../dal/packs/types';
+
+import { ActionsType } from './AC types/types';
 
 type initialStateType = getPacksResponseType & {
   min: number;
@@ -11,7 +12,7 @@ type initialStateType = getPacksResponseType & {
   user_id: Nullable<string>;
 };
 
-let initialState = {
+const initialState = {
   page: 1,
   /*   cardPacks: [] as Array<PackType>,*/
   /* cardPacksTotalCount: 0,*/
@@ -27,7 +28,7 @@ let initialState = {
 
 export const packsReducer = (
   state: initialStateType = initialState,
-  action: ActionsType
+  action: ActionsType,
 ) => {
   switch (action.type) {
     case 'PACKS/SET-PACKS':

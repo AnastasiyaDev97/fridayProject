@@ -3,7 +3,7 @@ import { ChangeEvent, DetailedHTMLProps, FC, InputHTMLAttributes, memo } from 'r
 import s from './SuperCheckbox.module.css';
 
 import { EMPTY_STRING } from 'constants/index';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,

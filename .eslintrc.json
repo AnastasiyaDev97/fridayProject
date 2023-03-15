@@ -74,12 +74,7 @@
     "no-shadow": "off",
     "no-debugger": "error",
     "no-unused-vars": "off",
-    "no-magic-numbers": [
-      "error",
-      {
-        "ignore": [0, 1, -1]
-      }
-    ],
+    "no-magic-numbers": "off",
     "no-use-before-define": "off",
     "no-param-reassign": [
       "error",

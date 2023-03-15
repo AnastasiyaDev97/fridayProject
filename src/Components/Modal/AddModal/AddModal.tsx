@@ -9,7 +9,7 @@ import style from '../ModalContainer.module.scss';
 import { useCustomInput } from 'common/hooks/useCustomInput';
 import { addCardTC } from 'store/thunks/cards';
 import { addPackTC } from 'store/thunks/packs';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type AddModalPropsType = {
   cardsPackId?: string;

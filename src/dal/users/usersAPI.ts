@@ -1,5 +1,5 @@
 import { instance } from '../apiConfig';
-import { Nullable } from '../../types/Nullable';
+import { Nullable } from '../../common/types/Nullable';
 import {
   getUsersQueryParamsType,
   getUserQueryParamsType,

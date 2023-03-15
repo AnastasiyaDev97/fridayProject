@@ -11,9 +11,9 @@ import { useDispatch } from 'react-redux';
 
 import s from './SuperInputText.module.css';
 
+import { Nullable } from 'common/types/Nullable';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { setErrorText } from 'store/reducers/app-reducer';
-import { Nullable } from 'types/Nullable';
-import { ReturnComponentType } from 'types/ReturnComponentType';
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,

@@ -6,7 +6,7 @@ import { ModalContainer } from '../ModalContainer';
 
 import { deleteCardTC } from 'store/thunks/cards';
 import { deletePackTC } from 'store/thunks/packs';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type DeleteModalPropsType = {
   id: string;

@@ -12,7 +12,7 @@ import {
 } from '../reducers/packs-reducer';
 import { AppDispatch, AppRootStateType, ThunkType } from '../store';
 
-import { Nullable } from 'types/Nullable';
+import { Nullable } from 'common/types/Nullable';
 
 export const getPacksTC =
   (actualPackName?: Nullable<string>) =>

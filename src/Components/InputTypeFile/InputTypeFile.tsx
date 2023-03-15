@@ -8,7 +8,7 @@ import style from './InputTypeFile.module.scss';
 
 import defaultAva from 'common/assets/images/noavatar.png';
 import { setErrorText } from 'store/reducers/app-reducer';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type InputFileTypeProps = {
   onUpdateAvatar: (newAvatar: string) => void;

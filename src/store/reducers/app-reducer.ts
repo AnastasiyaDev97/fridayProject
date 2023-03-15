@@ -1,6 +1,7 @@
-import { Nullable } from '../../types/Nullable';
-import { ActionsType } from './AC types/types';
+import { Nullable } from '../../common/types/Nullable';
 import { STATUS } from '../../enums/StatusType';
+
+import { ActionsType } from './AC types/types';
 
 const initialState = {
   status: STATUS.IDLE,
@@ -12,7 +13,7 @@ type InitialStateType = typeof initialState;
 
 export const appReducer = (
   state: InitialStateType = initialState,
-  action: ActionsType
+  action: ActionsType,
 ): InitialStateType => {
   switch (action.type) {
     case 'APP/SET-STATUS':

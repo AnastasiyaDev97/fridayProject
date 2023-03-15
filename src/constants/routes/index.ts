@@ -1,6 +1,6 @@
-import { PATH } from 'enums/Path';
+/* import { PATH } from 'enums/Path'; */
 
-/* export const ROUTES = {
+export const ROUTES = {
   PROFILE: '/profile',
   REGISTRATION: '/registration',
   NOT_FOUND: '/404',
@@ -15,8 +15,7 @@ import { PATH } from 'enums/Path';
   ID: ':id',
   USERS: '/users',
   CHAT: '/chat',
-}; */
-
+};
 
 /* <Route path={START} element={<Navigate to={PROFILE} />} />
           <Route path={PROFILE} element={<Profile />} />
@@ -34,24 +33,24 @@ import { PATH } from 'enums/Path';
           <Route path={PACKS} element={<Packs />} />
           <Route path={LOGIN} element={<Login />} />
           <Route path={ANY} element={<Navigate to={NOT_FOUND} />} /> */
-          
-          const {
-            PROFILE,
-            REGISTRATION,
-            NOT_FOUND,
-            FORGOT_PASSWORD,
-            NEW_PASSWORD,
-            CARDS,
-            PACKS,
-            LOGIN,
-            START,
-            TOKEN,
-            ANY,
-            ID,
-            USERS,
-            CHAT,
-          } = PATH;
 
-const ROUTES=[
+/* const {
+  PROFILE,
+  REGISTRATION,
+  NOT_FOUND,
+  FORGOT_PASSWORD,
+  NEW_PASSWORD,
+  CARDS,
+  PACKS,
+  LOGIN,
+  START,
+  TOKEN,
+  ANY,
+  ID,
+  USERS,
+  CHAT,
+} = PATH; */
+
+/* const ROUTES=[
   {path:PROFILE,element:}
-]
+] */

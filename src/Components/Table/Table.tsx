@@ -6,7 +6,7 @@ import { TableRow } from '../TableRow/TableRow';
 
 import style from './Table.module.scss';
 
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 export type PackRowValues = {
   name?: string;

@@ -22,8 +22,8 @@ import {
   setSortingFilter,
 } from 'store/reducers/packs-reducer';
 import { AppRootStateType } from 'store/store';
-import { Nullable } from 'types/Nullable';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { Nullable } from 'common/types/Nullable';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { convertDateFormat } from 'utils/handles';
 
 type PackListPropsType = {

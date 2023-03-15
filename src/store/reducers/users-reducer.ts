@@ -1,8 +1,9 @@
 import { ActionsType } from './AC types/types';
-import { getUsersResponseType, UserType } from 'dal/users/types/index';
-import { Nullable } from 'types/Nullable';
 
-let initialState = {
+import { Nullable } from 'common/types/Nullable';
+import { getUsersResponseType, UserType } from 'dal/users/types/index';
+
+const initialState = {
   users: null,
   page: null,
   pageCount: 7,
@@ -13,6 +14,7 @@ let initialState = {
   userName: null,
   user: null,
 };
+
 type InitialStateType = {
   users: Nullable<UserType[]>;
   page: Nullable<number>;
@@ -27,7 +29,7 @@ type InitialStateType = {
 
 export const usersReducer = (
   state: InitialStateType = initialState,
-  action: ActionsType
+  action: ActionsType,
 ) => {
   switch (action.type) {
     case 'USERS/GET_USERS_DATA':

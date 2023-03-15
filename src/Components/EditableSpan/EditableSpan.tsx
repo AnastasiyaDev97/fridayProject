@@ -3,7 +3,7 @@ import { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react';
 import style from './EditableSpan.module.scss';
 
 import { SuperInputText } from 'components/SuperInputText';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type editableSpanPropsType = {
   title: string;

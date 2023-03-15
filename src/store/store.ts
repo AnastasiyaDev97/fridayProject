@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { useDispatch } from 'react-redux';
 
-import { ActionsType } from './reducers/AC types/types';
 import { appReducer } from './reducers/app-reducer';
 import { cardsReducer } from './reducers/cards-reducer';
 import { loginReducer } from './reducers/login-reducer';

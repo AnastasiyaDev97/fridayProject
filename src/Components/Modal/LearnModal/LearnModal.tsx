@@ -1,5 +1,5 @@
 import { FC, memo, ReactElement, useEffect, useState } from 'react';
-import { Nullable } from 'types/Nullable';
+import { Nullable } from 'common/types/Nullable';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalContainer } from '../ModalContainer';
 import { getCardsTC, updateCardRatingTC } from 'store/thunks/cards';

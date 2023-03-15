@@ -3,7 +3,7 @@ import { FC, memo } from 'react';
 import style from './UserCard.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type UserCardPropsType = {
   userName: string;

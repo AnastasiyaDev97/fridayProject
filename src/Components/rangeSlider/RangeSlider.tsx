@@ -8,8 +8,8 @@ import style from './RangeSlider.module.scss';
 
 import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
 import { AppRootStateType } from 'store/store';
-import { Nullable } from 'types/Nullable';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { Nullable } from 'common/types/Nullable';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type SliderPropsType = {
   currentMinCardsValue: number;

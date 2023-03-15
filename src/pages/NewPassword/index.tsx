@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 
 import styles from '../Login/Login.module.scss';
@@ -7,23 +6,21 @@ import styles from '../Login/Login.module.scss';
 import { SuperButton } from 'components/SuperButton';
 import { UniversalInput } from 'components/UniversalInput';
 import { EMPTY_STRING } from 'constants/index';
-import { BUTTON_TYPE } from 'enums/ButtonTyoe';
-import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldNames';
-import { INPUT_TYPE } from 'enums/InputType';
+import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
 import { PATH } from 'enums/Path';
-import { AppRootStateType } from 'store/store';
-import { setNewPasswordTC } from 'store/thunks/passwordRecovery';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { useAppDispatch, useAppSelector } from 'store';
+/* import { setNewPasswordTC } from 'store/thunks/passwordRecovery'; */
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { AuthData, validateNewPasswordForm } from 'utils/validates';
 
-const NewPassword = (): ReturnComponentType => {
-  const dispatch = useDispatch();
+export const NewPassword = (): ReturnComponentType => {
+  const dispatch = useAppDispatch();
 
   const { token } = useParams<string>();
 
-  const responseInfoNewPass = useSelector<AppRootStateType, string>(
+  /*  const responseInfoNewPass = useAppSelector(
     state => state.passRecovery.responseInfoNewPass,
-  );
+  ); */
 
   const formik = useFormik({
     initialValues: {
@@ -39,19 +36,19 @@ const NewPassword = (): ReturnComponentType => {
     },
 
     onSubmit: values => {
-      let newPassDataType = {
+      const newPassDataType = {
         password: values.password,
         resetPasswordToken: token || EMPTY_STRING,
       };
 
-      dispatch(setNewPasswordTC(newPassDataType));
+      /* dispatch(setNewPasswordTC(newPassDataType)); */
       formik.resetForm();
     },
   });
 
-  if (responseInfoNewPass) {
+  /* if (responseInfoNewPass) {
     return <Navigate to={PATH.LOGIN} />;
-  }
+  } */
 
   return (
     <div className={styles.wrapper}>
@@ -68,16 +65,14 @@ const NewPassword = (): ReturnComponentType => {
               (formik.touched.password && formik.errors.password) || EMPTY_STRING
             }
             formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
-            type={INPUT_TYPE.PASSWORD}
+            type="password"
           />
         </div>
 
-        <SuperButton className={styles.submitBtn} type={BUTTON_TYPE.SUBMIT}>
+        <SuperButton className={styles.submitBtn} type="submit">
           Create new password
         </SuperButton>
       </form>
     </div>
   );
 };
-
-export default NewPassword;

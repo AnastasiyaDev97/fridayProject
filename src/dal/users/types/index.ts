@@ -1,4 +1,4 @@
-import { Nullable } from 'types/Nullable';
+import { Nullable } from 'common/types/Nullable';
 
 export type getUsersResponseType = {
   users: Array<UserType>;

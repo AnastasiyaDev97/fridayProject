@@ -4,9 +4,9 @@ import style from './NotFound.module.scss';
 
 import { SuperButton } from 'components/SuperButton';
 import { PATH } from 'enums/Path';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
-const NotFound = (): ReturnComponentType => {
+export const NotFound = (): ReturnComponentType => {
   return (
     <div className={style.notFoundBackgr}>
       <div className={style.notFoundBlock}>
@@ -20,5 +20,3 @@ const NotFound = (): ReturnComponentType => {
     </div>
   );
 };
-
-export default NotFound;

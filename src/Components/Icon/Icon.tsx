@@ -1,7 +1,7 @@
 import { memo, FC, SVGProps } from 'react';
 
 import sprite from 'common/assets/svg/sprite.svg';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type DefaultSvgPropsType = SVGProps<SVGSVGElement>;
 

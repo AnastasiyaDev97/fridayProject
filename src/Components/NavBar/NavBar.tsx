@@ -14,10 +14,10 @@ import { NavLink, useLocation } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 
 import useWindowDimensions from 'common/hooks/useWindowDimensions';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EMPTY_STRING } from 'constants/index';
 import { PATH } from 'enums/Path';
 import { logoutTC } from 'store/thunks/login';
-import { ReturnComponentType } from 'types/ReturnComponentType';
 
 /* type DefaultNavBarPropsType = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLDivElement>,

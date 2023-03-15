@@ -1,5 +1,5 @@
 import {instance} from "../apiConfig";
-import {Nullable} from "../../types/Nullable";
+import {Nullable} from "../../common/types/Nullable";
 import {addNewPackPayloadType, getPacksQueryParamsType, getPacksResponseType, updatePackPayloadType} from "./types";
 
 export const packsAPI = {

@@ -10,8 +10,8 @@ import { SuperButton } from 'components/SuperButton';
 import { EMPTY_STRING } from 'constants/index';
 import { toggleShowUserPacksAC } from 'store/reducers/packs-reducer';
 import { AppRootStateType } from 'store/store';
-import { Nullable } from 'types/Nullable';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { Nullable } from 'common/types/Nullable';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type PacksParamsPropsT = {
   currentMinCardsValue: number;

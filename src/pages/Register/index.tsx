@@ -1,31 +1,30 @@
 import { useCallback, useEffect } from 'react';
 
-import { UniversalInput } from 'components/UniversalInput';
 import { useFormik } from 'formik';
-import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { InputType } from 'components/UniversalInput/UniversalInput';
 import { SuperButton } from 'components/SuperButton';
+import { UniversalInput } from 'components/UniversalInput';
+import { InputType } from 'components/UniversalInput/UniversalInput';
 import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
-import { BUTTON_TYPE } from 'enums/ButtonTyoe';
+import { useRegisterMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
-import { registerStatusAC } from 'store/reducers/registration-reducer';
-import { AppRootStateType } from 'store/store';
-import { registerMeTC } from 'store/thunks/registration';
-import { ReturnComponentType } from 'types/ReturnComponentType';
+import { useAppDispatch, useAppSelector } from 'store';
+import { setRegisterStatus } from 'store/reducers/auth';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { AuthData, validates } from 'utils/validates';
 
-const Register = (): ReturnComponentType => {
-  const dispatch = useDispatch();
+export const Register = (): ReturnComponentType => {
+  const dispatch = useAppDispatch();
+
+  const [register, { data: registerData /* error: registerError */ }] =
+    useRegisterMutation();
 
   const navigate = useNavigate();
 
-  const registerStatus = useSelector<AppRootStateType, boolean>(
-    state => state.register.registerStatus,
-  );
+  const registerStatus = useAppSelector(state => state.auth.isRegistered);
 
   const formik = useFormik({
     initialValues: {
@@ -42,17 +41,17 @@ const Register = (): ReturnComponentType => {
       return errors;
     },
 
-    onSubmit: values => {
-      dispatch(registerMeTC(values.email, values.password));
+    onSubmit: ({ email, password }) => {
+      register({ email, password });
       formik.resetForm();
     },
   });
 
   useEffect(() => {
-    return () => {
-      dispatch(registerStatusAC(false));
-    };
-  });
+    if (registerData) {
+      dispatch(setRegisterStatus(true));
+    }
+  }, [registerData, dispatch]);
 
   const onCancelButtonClick = useCallback(() => {
     formik.resetForm();
@@ -87,6 +86,7 @@ const Register = (): ReturnComponentType => {
                 formikProps={formik.getFieldProps(register)}
                 type={type}
                 placeholder={placeholder}
+                key={register}
               />
             ),
           )}
@@ -95,13 +95,13 @@ const Register = (): ReturnComponentType => {
         <div className={styles.row}>
           <div className={styles.registrationBtns}>
             <SuperButton
-              type={BUTTON_TYPE.BUTTON}
+              type="button"
               onClick={onCancelButtonClick}
               className={styles.registerBtn}
             >
               Cancel
             </SuperButton>
-            <SuperButton type={BUTTON_TYPE.SUBMIT} className={styles.registerBtn}>
+            <SuperButton type="submit" className={styles.registerBtn}>
               Register
             </SuperButton>
           </div>
@@ -110,5 +110,3 @@ const Register = (): ReturnComponentType => {
     </div>
   );
 };
-
-export default Register;
