@@ -1,5 +1,5 @@
 
-# CardsApp 
+# CardsApp (in the process of migrating to redux toolkit query)
 
 <a href="https://nastyaz23.github.io/fridayProject/">
   <div>
