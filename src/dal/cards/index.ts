@@ -1,20 +1,20 @@
 import URI from 'urijs';
 
 import { clientAPI } from '..';
+import type { builderType } from '..';
 
 import {
+  CardType,
   addNewCardPayloadType,
   getCardsQueryParamsType,
   getCardsResponseType,
-  ResponseAddCardType,
-  ResponseUpdateCardType,
   updateCardPayloadType,
   updateCardRatingType,
 } from './types';
 
 const cardsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Cards'] }).injectEndpoints({
-  endpoints: build => ({
-    getCards: build.query<getCardsResponseType, getCardsQueryParamsType>({
+  endpoints: (builder: builderType) => ({
+    getCards: builder.query<getCardsResponseType, getCardsQueryParamsType>({
       query(queryParams) {
         const URL = new URI(`cards/card`);
 
@@ -27,7 +27,7 @@ const cardsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Cards'] }).injectEn
       providesTags: ['Cards'],
       transformResponse: (response: { data: getCardsResponseType }) => response.data,
     }),
-    addCard: build.mutation<ResponseAddCardType, addNewCardPayloadType>({
+    addCard: builder.mutation<{ newCard: CardType }, addNewCardPayloadType>({
       query(data) {
         const URL = new URI(`cards/card`);
 
@@ -39,7 +39,7 @@ const cardsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Cards'] }).injectEn
       },
       invalidatesTags: ['Cards'],
     }),
-    deleteCard: build.mutation<void, string>({
+    deleteCard: builder.mutation<{ deletedCard: CardType }, string>({
       query(id) {
         const URL = new URI(`cards/card`);
 
@@ -52,7 +52,7 @@ const cardsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Cards'] }).injectEn
       },
       invalidatesTags: ['Cards'],
     }),
-    updateCard: build.mutation<ResponseUpdateCardType, updateCardPayloadType>({
+    updateCard: builder.mutation<{ updatedCard: CardType }, updateCardPayloadType>({
       query(data) {
         const URL = new URI(`cards/card`);
 
@@ -64,7 +64,7 @@ const cardsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Cards'] }).injectEn
       },
       invalidatesTags: ['Cards'],
     }),
-    updateCardGrade: build.mutation<
+    updateCardGrade: builder.mutation<
       updateCardRatingType,
       { grade: number; card_id: string }
     >({

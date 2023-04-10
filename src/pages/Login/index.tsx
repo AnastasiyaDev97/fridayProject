@@ -5,6 +5,7 @@ import { Navigate, NavLink } from 'react-router-dom';
 
 import styles from './Login.module.scss';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { SuperCheckbox } from 'components/SuperCheckbox';
 import { UniversalInput } from 'components/UniversalInput';
@@ -15,7 +16,6 @@ import { PATH } from 'enums/Path';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setLoginStatus } from 'store/reducers/auth';
 import { setProfileData } from 'store/reducers/profile';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { AuthData, validateLoginForm } from 'utils/validates';
 
 export const Login = (): ReturnComponentType => {

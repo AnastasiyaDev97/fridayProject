@@ -1,6 +1,6 @@
 import { cardsAPI } from '../../dal/cards/cardsAPI';
 import { getCardsQueryParamsType, updateCardType } from '../../dal/cards/types';
-import { STATUS } from '../../enums/StatusType';
+
 import { catchErrorHandler } from '../../utils/error-utils';
 import { setAppStatusAC } from '../reducers/app-reducer';
 import { setCardsAC, setCardsRatingAC } from '../reducers/cards-reducer';

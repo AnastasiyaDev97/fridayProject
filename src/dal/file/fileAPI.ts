@@ -1,17 +1,32 @@
-import {instance} from "../apiConfig";
+import { builderType, clientAPI } from '..';
 
+export const fileAPI = clientAPI
+  .enhanceEndpoints({ addTagTypes: ['Packs'] })
+  .injectEndpoints({
+    endpoints: (build: builderType) => ({
+      setFile: build.mutation<void, File>({
+        query(file) {
+          const URL = new URI(`file`);
+          const formData = new FormData();
 
+          formData.append('image', file);
 
-export const fileAPI = {
-    async setFile(file: File) {
-        let formData = new FormData()
-        formData.append('image', file)
-        const res = await instance.post(`file`, formData);
-        return res.data;
-    },
+          return {
+            url: URL.toString(),
+            method: 'POST',
+            body: formData,
+          };
+        },
+      }),
+      getFile: build.query<void, void>({
+        query() {
+          const URL = new URI(`file`);
 
-    getFile() {
-        return instance.get(`file`)
-            .then(res => res.data)
-    },
-    }
+          return {
+            url: URL.toString(),
+          };
+        },
+        transformResponse: (response: { data: any }) => response.data,
+      }),
+    }),
+  });

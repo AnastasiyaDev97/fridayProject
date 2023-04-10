@@ -8,7 +8,7 @@ export type getCardsResponseType = {
   packUserId: string;
 };
 
-export type CardType = {
+export interface CardType {
   answer: string;
   question: string;
   cardsPack_id: string;
@@ -18,7 +18,7 @@ export type CardType = {
   created: string;
   updated: string;
   _id: string;
-};
+}
 
 export type getCardsQueryParamsType = {
   cardAnswer?: string;
@@ -63,9 +63,9 @@ export type updateCardType = {
 export type updateCardRatingType = {
   token: string;
   tokenDeathTime: number;
-  updatedGrade: updatedGradeT;
+  updatedGrade: updatedGradeType;
 };
-export type updatedGradeT = {
+export type updatedGradeType = {
   _id: string;
   cardsPack_id: string;
   card_id: string;

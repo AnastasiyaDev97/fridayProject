@@ -8,8 +8,8 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  min: 0,
-  max: 0,
+  /*   min: 0,
+  max: 0, */
   pageCount: 7,
 };
 

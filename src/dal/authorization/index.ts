@@ -1,11 +1,12 @@
 import URI from 'urijs';
 
 import { clientAPI } from '..';
+import type { builderType } from '..';
 import { newPassDataType } from '../packs/types';
 
 import {
-  AuthDataType,
-  LoginAuthDataType,
+  AuthPayloadDataType,
+  RegisterPayloadDataType,
   ResponseForgotPasswordType,
   ResponseLoginType,
   ResponseLogoutType,
@@ -16,8 +17,8 @@ import {
 <!--https://nastyaZ23.github.io/fridayProject-->*!/*/
 
 const authAPI = clientAPI.injectEndpoints({
-  endpoints: build => ({
-    register: build.mutation<ResponseRegisterType, AuthDataType>({
+  endpoints: (build: builderType) => ({
+    register: build.mutation<ResponseRegisterType, AuthPayloadDataType>({
       query(data) {
         const URL = new URI(`auth/register`);
 
@@ -29,7 +30,7 @@ const authAPI = clientAPI.injectEndpoints({
       },
       transformResponse: (response: { data: ResponseRegisterType }) => response.data,
     }),
-    login: build.mutation<ResponseLoginType, LoginAuthDataType>({
+    login: build.mutation<ResponseLoginType, RegisterPayloadDataType>({
       query(data) {
         const URL = new URI(`auth/login`);
 

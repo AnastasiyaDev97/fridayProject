@@ -1,14 +1,15 @@
+/* import { Nullable } from '../../common/types/Nullable';
 import { instance } from '../apiConfig';
-import { Nullable } from '../../common/types/Nullable';
+
 import {
   getUsersQueryParamsType,
   getUserQueryParamsType,
   getUsersResponseType,
   getUserResponseType,
-} from './types';
+} from './types'; */
 
 export const usersAPI = {
-  getUsers(getUsersQueryParams: Nullable<getUsersQueryParamsType>) {
+  /*   getUsers(getUsersQueryParams: Nullable<getUsersQueryParamsType>) {
     return instance
       .get<getUsersResponseType>(`social/users`, {
         params: getUsersQueryParams,
@@ -21,5 +22,5 @@ export const usersAPI = {
         params: getUserQueryParams,
       })
       .then((res) => res.data);
-  },
+  }, */
 };

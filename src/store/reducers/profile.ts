@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { EMPTY_STRING } from '../../constants';
 
-import { UserType } from 'dal/authorization/types';
+import { UserType } from 'dal/users/types';
 
 const initialState = {
   avatar: '',

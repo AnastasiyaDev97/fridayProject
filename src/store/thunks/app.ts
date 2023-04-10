@@ -1,5 +1,5 @@
 import { authorizationAPI } from '../../dal/authorization/authorization';
-import { STATUS } from '../../enums/StatusType';
+
 import { setAppStatusAC, setIsInitializedAC } from '../reducers/app-reducer';
 import { isAuthToggleAC } from '../reducers/login-reducer';
 import { setProfileAC } from '../reducers/profile-reducer';

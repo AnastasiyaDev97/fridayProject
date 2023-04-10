@@ -3,24 +3,20 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import styles from '../Login/Login.module.scss';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { UniversalInput } from 'components/UniversalInput';
 import { EMPTY_STRING } from 'constants/index';
+import { useSetNewPasswordMutation } from 'dal/authorization';
 import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
 import { PATH } from 'enums/Path';
-import { useAppDispatch, useAppSelector } from 'store';
-/* import { setNewPasswordTC } from 'store/thunks/passwordRecovery'; */
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { AuthData, validateNewPasswordForm } from 'utils/validates';
 
 export const NewPassword = (): ReturnComponentType => {
-  const dispatch = useAppDispatch();
+  const [setNewPassword, { data: newPasswordData /* , error: loginError */ }] =
+    useSetNewPasswordMutation();
 
   const { token } = useParams<string>();
-
-  /*  const responseInfoNewPass = useAppSelector(
-    state => state.passRecovery.responseInfoNewPass,
-  ); */
 
   const formik = useFormik({
     initialValues: {
@@ -41,14 +37,15 @@ export const NewPassword = (): ReturnComponentType => {
         resetPasswordToken: token || EMPTY_STRING,
       };
 
+      setNewPassword(newPassDataType);
       /* dispatch(setNewPasswordTC(newPassDataType)); */
       formik.resetForm();
     },
   });
 
-  /* if (responseInfoNewPass) {
+  if (newPasswordData) {
     return <Navigate to={PATH.LOGIN} />;
-  } */
+  }
 
   return (
     <div className={styles.wrapper}>

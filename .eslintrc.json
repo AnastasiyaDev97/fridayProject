@@ -76,13 +76,7 @@
     "no-unused-vars": "off",
     "no-magic-numbers": "off",
     "no-use-before-define": "off",
-    "no-param-reassign": [
-      "error",
-      {
-        "props": true,
-        "ignorePropertyModificationsFor": ["state", "self","errors"]
-      }
-    ],
+    "no-param-reassign": "off",
     "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",

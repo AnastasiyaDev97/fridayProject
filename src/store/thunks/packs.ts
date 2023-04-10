@@ -1,16 +1,9 @@
-import { pageCountNumber } from '../../constants';
-import { packsAPI } from '../../dal/packs/packsAPI';
-import { getPacksQueryParamsType } from '../../dal/packs/types';
-import { STATUS } from '../../enums/StatusType';
-import { catchErrorHandler } from '../../utils/error-utils';
-import { setAppStatusAC } from '../reducers/app-reducer';
 import {
   changePageAC,
   setNewMinMaxValues,
   setPacksAC,
   setSortingFilter,
 } from '../reducers/packs-reducer';
-import { AppDispatch, AppRootStateType, ThunkType } from '../store';
 
 import { Nullable } from 'common/types/Nullable';
 

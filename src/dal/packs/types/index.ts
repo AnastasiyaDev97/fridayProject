@@ -5,7 +5,7 @@ export type getPacksResponseType = {
   cardPacksTotalCount: number;
   maxCardsCount: number;
   minCardsCount: number;
-  page: number;
+  /* page: number; */
   pageCount: number;
 };
 export type PackType = {

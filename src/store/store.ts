@@ -11,11 +11,9 @@ import { profileReducer } from './reducers/profile-reducer';
 import { registrationReducer } from './reducers/registration-reducer';
 import { usersReducer } from './reducers/users-reducer';
 
-/* export type ThunkType = ThunkAction<void, RootState, unknown, ActionsType>; */
+type RootState = ReturnType<typeof store.getState>;
 
-export type RootState = ReturnType<typeof store.getState>;
-
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     app: appReducer,
     login: loginReducer,
@@ -29,8 +27,8 @@ export const store = configureStore({
   middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
 });
 
-export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch: () => AppDispatch = useDispatch;
+type AppDispatch = typeof store.dispatch;
+const useAppDispatch: () => AppDispatch = useDispatch;
 
 setupListeners(store.dispatch);
 

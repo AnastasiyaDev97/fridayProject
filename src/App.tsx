@@ -24,7 +24,7 @@ import {
   Users,
 } from 'pages';
 import { RootState } from 'store';
-import { setErrorText } from 'store/reducers/app-reducer';
+import { setErrorText } from 'store/reducers/app';
 import { initializeAppTC } from 'store/thunks/app';
 
 const TIMER_VALUE = 3000;
@@ -64,7 +64,7 @@ const App = (): ReturnComponentType => {
   useEffect(() => {
     if (error) {
       setTimeout(() => {
-        dispatch(setErrorText(null));
+        dispatch(setErrorText({ errorText: null }));
       }, TIMER_VALUE);
     }
   }, [error, dispatch]);

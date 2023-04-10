@@ -1,6 +1,7 @@
 import URI from 'urijs';
 
 import { clientAPI } from '..';
+import type { builderType } from '..';
 import { Nullable } from '../../common/types/Nullable';
 
 import {
@@ -11,7 +12,7 @@ import {
 } from './types';
 
 const packsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Packs'] }).injectEndpoints({
-  endpoints: build => ({
+  endpoints: (build: builderType) => ({
     getPacks: build.query<getPacksResponseType, Nullable<getPacksQueryParamsType>>({
       query(queryParams) {
         const URL = new URI(`cards/pack`);

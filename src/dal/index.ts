@@ -1,10 +1,11 @@
+import type { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-/* import axios from 'axios'; */
-
-/* export const instance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
-  withCredentials: true,
-}); */
+import type {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  FetchBaseQueryMeta,
+} from '@reduxjs/toolkit/query/react';
 
 const CLIENT_API_OPTIONS = {
   baseUrl: 'http://localhost:7542/2.0/',
@@ -16,17 +17,18 @@ export const clientAPI = createApi({
     ...CLIENT_API_OPTIONS,
     credentials: 'include',
   }),
+  tagTypes: ['Cards', 'Packs'],
   endpoints: () => ({}),
 });
 
-/* export function providesList<R extends { id: string | number }[], T extends string>(
-  resultsWithIds: R | undefined,
-  tagType: T,
-) {
-  return resultsWithIds
-    ? [
-        { type: tagType, id: 'LIST' },
-        ...resultsWithIds.map(({ id }) => ({ type: tagType, id })),
-      ]
-    : [{ type: tagType, id: 'LIST' }];
-} */
+export type builderType = EndpointBuilder<
+  BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError,
+    Record<string, unknown>,
+    FetchBaseQueryMeta
+  >,
+  'Cards' | 'Packs',
+  'clientAPI'
+>;

@@ -1,7 +1,7 @@
 /* import { ActionsType } from './AC types/types'; */
 
+/* import { Nullable } from 'common/types/Nullable';
 import { getUsersResponseType, UserType } from 'dal/users/types/index';
-import { Nullable } from 'common/types/Nullable';
 
 const initialState = {
   users: null,
@@ -13,7 +13,7 @@ const initialState = {
   sortUsers: null,
   userName: null,
   user: null,
-};
+}; */
 
 /* type InitialStateType = {
   users: Nullable<UserType[]>;
