@@ -1,7 +1,6 @@
 import { ReactNode, memo, useCallback } from 'react';
 
 import TextField from '@mui/material/TextField';
-import { useDispatch } from 'react-redux';
 
 import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
@@ -9,7 +8,7 @@ import style from '../ModalContainer.module.scss';
 import { useCustomInput } from 'common/hooks/useCustomInput';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useAddCardMutation } from 'dal/cards';
-import { addPackTC } from 'store/thunks/packs';
+import { useAddPackMutation } from 'dal/packs';
 
 type AddModalPropsType = {
   cardsPackId?: string;
@@ -26,9 +25,8 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
     children,
     ...rest
   }: AddModalPropsType): ReturnComponentType => {
-    const dispatch = useDispatch();
-
     const [addCard /* { data: cardData, error: addCardError } */] = useAddCardMutation();
+    const [addPack /* { data: cardData, error: addCardError } */] = useAddPackMutation();
 
     const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput();
     const { state: questionValue, onChangeInput: onChangeQuestionInput } =
@@ -37,7 +35,8 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
 
     const onAddButtonClick = useCallback(() => {
       if (itemName === 'packs' && nameValue) {
-        dispatch(addPackTC(nameValue));
+        addPack({ cardsPack: { name: nameValue } });
+        /* dispatch(addPackTC(nameValue)); */
       }
       if (itemName === 'cards' && questionValue && answerValue && cardsPackId) {
         addCard({
@@ -50,7 +49,7 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
 
         //getCards!!!
       }
-    }, [dispatch, addCard, nameValue, itemName, answerValue, questionValue, cardsPackId]);
+    }, [addCard, nameValue, itemName, answerValue, questionValue, cardsPackId, addPack]);
 
     const createFields = (): ReturnComponentType => {
       if (itemName === 'packs') {

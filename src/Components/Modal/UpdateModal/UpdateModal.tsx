@@ -9,6 +9,7 @@ import style from '../ModalContainer.module.scss';
 import { useCustomInput } from 'common/hooks/useCustomInput';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useUpdateCardMutation } from 'dal/cards';
+import { useUpdatePackMutation } from 'dal/packs';
 import { updatePackTC } from 'store/thunks/packs';
 
 type UpdateModalPropsType = {
@@ -30,12 +31,16 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
     answer,
     itemName,
     children,
+    cardsPackId,
     ...rest
   }: UpdateModalPropsType): ReturnComponentType => {
     const dispatch = useDispatch();
 
     const [updateCard /* { data: cardData, error: addCardError } */] =
       useUpdateCardMutation();
+    const [updatePack /* { data: cardData, error: addCardError } */] =
+      useUpdatePackMutation();
+
     const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput(name);
     const { state: questionValue, onChangeInput: onChangeQuestionInput } =
       useCustomInput(question);
@@ -43,10 +48,11 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
       useCustomInput(answer);
 
     const onUpdateButtonClick = useCallback(() => {
-      if (itemName === 'packs' && nameValue) {
-        dispatch(updatePackTC(id, nameValue));
+      if (itemName === 'packs' && nameValue && cardsPackId) {
+        updatePack({ cardsPack: { _id: cardsPackId, name: nameValue } });
+        /* dispatch(updatePackTC(id, nameValue)); */
       }
-      if (itemName === 'cards' /* && cardsPackId */) {
+      if (itemName === 'cards') {
         updateCard({ card: { _id: id, question: questionValue, answer: answerValue } });
         /*  dispatch(
           updateCardTC(cardsPackId, {
@@ -62,8 +68,9 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
       answerValue,
       nameValue,
       questionValue,
-      /* cardsPackId, */
+      cardsPackId,
       id,
+      updatePack,
       updateCard,
     ]);
 

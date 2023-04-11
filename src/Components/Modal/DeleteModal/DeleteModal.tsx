@@ -1,12 +1,10 @@
 import { ReactNode, memo, useCallback } from 'react';
 
-import { useDispatch } from 'react-redux';
-
 import { ModalContainer } from '../ModalContainer';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useDeleteCardMutation } from 'dal/cards';
-import { deletePackTC } from 'store/thunks/packs';
+import { useDeletePackMutation } from 'dal/packs';
 
 type DeleteModalPropsType = {
   id: string;
@@ -19,25 +17,26 @@ type DeleteModalPropsType = {
 export const DeleteModal: React.FC<DeleteModalPropsType> = memo(
   ({
     id,
-    /* cardsPackId, */
+    cardsPackId,
     itemName,
     disabled,
     children,
   }: DeleteModalPropsType): ReturnComponentType => {
-    const dispatch = useDispatch();
-
     const [deleteCard /* { data: cardData, error: addCardError } */] =
       useDeleteCardMutation();
+    const [deletePack /* { data: cardData, error: addCardError } */] =
+      useDeletePackMutation();
 
     const onDeleteButtonClick = useCallback(() => {
-      if (itemName === 'packs') {
-        dispatch(deletePackTC(id));
+      if (itemName === 'packs' && cardsPackId) {
+        deletePack(cardsPackId);
+        /* dispatch(deletePackTC(id)); */
       }
       if (itemName === 'cards' /* && cardsPackId */) {
         deleteCard(id);
         /* dispatch(deleteCardTC(cardsPackId, id)); */
       }
-    }, [dispatch, id, /* cardsPackId, */ itemName, deleteCard]);
+    }, [id, /* cardsPackId, */ itemName, deleteCard, cardsPackId, deletePack]);
 
     return (
       <ModalContainer

@@ -1,13 +1,8 @@
-import {
-  changePageAC,
-  setNewMinMaxValues,
-  setPacksAC,
-  setSortingFilter,
-} from '../reducers/packs-reducer';
+import { setPacksAC } from '../reducers/packs-reducer';
 
 import { Nullable } from 'common/types/Nullable';
 
-export const getPacksTC =
+const getPacksTC =
   (actualPackName?: Nullable<string>) =>
   async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
     const { min, max, page, user_id, sortPacks } = getState().packs;
@@ -34,7 +29,7 @@ export const getPacksTC =
     }
   };
 
-export const addPackTC =
+/* export const addPackTC =
   (name: string): ThunkType =>
   async (dispatch, getState: () => AppRootStateType) => {
     const { maxCardsCount } = getState().packs;
@@ -82,4 +77,4 @@ export const updatePackTC =
     } catch (err) {
       catchErrorHandler(dispatch, err);
     }
-  };
+  }; */
