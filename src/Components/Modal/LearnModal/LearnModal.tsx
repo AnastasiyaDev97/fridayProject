@@ -1,21 +1,29 @@
-import { FC, memo, ReactElement, useEffect, useState } from 'react';
-import { Nullable } from 'common/types/Nullable';
-import { useDispatch, useSelector } from 'react-redux';
-import { ModalContainer } from '../ModalContainer';
-import { getCardsTC, updateCardRatingTC } from 'store/thunks/cards';
-import { AppRootStateType } from 'store/store';
-import { CardType } from 'dal/cards/types';
-import { getCards } from 'selectors/getCards';
-import { getCard } from 'utils/handles';
+import { FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react';
+
+import { Button } from '@mui/material';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
+import { useDispatch } from 'react-redux';
+
 import { ANSWERS_GRADE } from '../../../constants/modal/index';
-import { Button } from '@mui/material';
+import { ModalContainer } from '../ModalContainer';
+
 import style from './LearnModal.module.scss';
 
-type LearnModalPropsType = { disabled: boolean; id: string; name?: string };
+import { Nullable } from 'common/types/Nullable';
+import { useGetCardsQuery, useUpdateCardGradeMutation } from 'dal/cards';
+import { CardType } from 'dal/cards/types';
+import { updateCardRatingTC } from 'store/thunks/cards';
+import { getCard } from 'utils/handles';
+
+type LearnModalPropsType = {
+  disabled: boolean;
+  id: string;
+  name?: string;
+  children: ReactNode;
+};
 type RowRadioButtonsGroupProps = { cardId: string };
 type LearnPaclContentProps = {
   id: string;
@@ -23,6 +31,8 @@ type LearnPaclContentProps = {
 
 const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
   const dispatch = useDispatch();
+  const [updateCardGrade /* { data: cardData, error: addCardError } */] =
+    useUpdateCardGradeMutation();
 
   return (
     <FormControl>
@@ -33,9 +43,11 @@ const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
       >
         {ANSWERS_GRADE.map((answer, index) => {
           const grade = index + 1;
-          const onRateButtonClick = () => {
-            dispatch(updateCardRatingTC(grade, cardId));
+          const onRateButtonClick = (): void => {
+            updateCardGrade({ grade, card_id: cardId });
+            /* dispatch(updateCardRatingTC(grade, cardId)); */
           };
+
           return (
             <FormControlLabel
               sx={{ color: 'black' }}
@@ -52,13 +64,19 @@ const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
   );
 };
 
-const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }) => {
-  const dispatch = useDispatch();
-  const cards = useSelector<AppRootStateType, Array<CardType>>(getCards);
+const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }) => {
+  /* const dispatch = useDispatch(); */
+  const {
+    data: cardsData,
+    /* error: cardsError, */
+    isSuccess: isCardsSuccess,
+    /* isLoading: isCardsLoading, */
+  } = useGetCardsQuery({ cardsPack_id: id }, { skip: !id });
+
   const [currentCard, setCurrentCard] = useState<Nullable<CardType>>();
   const [isShowAnswer, setIsShowAnswer] = useState<boolean>(false);
 
-  const onToggleButtonClick = ():void => {
+  const onToggleButtonClick = (): void => {
     if (isShowAnswer) {
       setIsShowAnswer(false);
     } else {
@@ -66,28 +84,33 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }) => {
     }
   };
 
-  const onNextQuestionClick = ():void => {
+  const onNextQuestionClick = (): void => {
     setIsShowAnswer(false);
-    setCurrentCard(getCard(cards));
+    if (cardsData?.cards && isCardsSuccess) {
+      setCurrentCard(getCard(cardsData.cards));
+    }
   };
 
-  useEffect(() => {
+  /*   useEffect(() => {
     dispatch(getCardsTC({ cardsPack_id: id }));
-  }, [dispatch, id]);
+  }, [dispatch, id]); */
 
-  useEffect(() => {
-    setCurrentCard(getCard(cards));
-  }, [id]);
-
-  useEffect(() => {
-    if (!currentCard?._id && cards) {
-      setCurrentCard(getCard(cards));
+  /*   useEffect(() => {
+    if (cardsData?.cards) {
+      setCurrentCard(getCard(cardsData.cards));
     }
-  }, [currentCard, cards]);
+  }, [id]); */
+
+  useEffect(() => {
+    if (!currentCard?._id && cardsData?.cards) {
+      setCurrentCard(getCard(cardsData.cards));
+    }
+  }, [currentCard, cardsData?.cards]);
 
   if (!currentCard) {
     return null;
   }
+
   return (
     <div className={style.contentBlock}>
       <span className={style.question}>{currentCard.question}</span>
@@ -104,7 +127,7 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }) => {
 });
 
 export const LearnModal: React.FC<LearnModalPropsType> = memo(
-  ({ id, name, children, ...rest }): Nullable<ReactElement> => (
+  ({ id, name, children, ...rest }: LearnModalPropsType): Nullable<ReactElement> => (
     <ModalContainer
       buttonTitle="Learn"
       modalTitle={`Learn ${name}`}
@@ -113,5 +136,5 @@ export const LearnModal: React.FC<LearnModalPropsType> = memo(
     >
       <LearnPackContent id={id} />
     </ModalContainer>
-  )
+  ),
 );

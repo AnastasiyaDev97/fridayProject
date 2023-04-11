@@ -11,9 +11,10 @@ import { useDispatch } from 'react-redux';
 
 import s from './SuperInputText.module.css';
 
+import { InputType } from 'common/types/InputType';
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { setErrorText } from 'store/reducers/app-reducer';
+import { setErrorText } from 'store/reducers/app';
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -26,6 +27,7 @@ type SuperInputTextPropsType = DefaultInputPropsType & {
   onEnter?: (/* text: string */) => void;
   error?: Nullable<string>;
   spanClassName?: string;
+  type: InputType;
 };
 
 export const SuperInputText: FC<SuperInputTextPropsType> = memo(
@@ -48,7 +50,7 @@ export const SuperInputText: FC<SuperInputTextPropsType> = memo(
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>): void => {
       onChange && onChange(e);
       onChangeText && onChangeText(e.currentTarget.value);
-      dispatch(setErrorText(null));
+      dispatch(setErrorText({ errorText: null }));
     };
 
     const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>): void => {

@@ -1,3 +1,5 @@
+import URI from 'urijs';
+
 import { builderType, clientAPI } from '..';
 
 export const fileAPI = clientAPI

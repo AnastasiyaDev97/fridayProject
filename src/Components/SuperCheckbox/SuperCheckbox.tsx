@@ -2,8 +2,8 @@ import { ChangeEvent, DetailedHTMLProps, FC, InputHTMLAttributes, memo } from 'r
 
 import s from './SuperCheckbox.module.css';
 
-import { EMPTY_STRING } from 'constants/index';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { EMPTY_STRING } from 'constants/index';
 
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -25,7 +25,7 @@ export const SuperCheckbox: FC<SuperCheckboxPropsType> = memo(
     children, // в эту переменную попадёт текст, типизировать не нужно так как он затипизирован в React.FC
 
     ...restProps // все остальные пропсы попадут в объект restProps
-  }): ReturnComponentType => {
+  }: SuperCheckboxPropsType): ReturnComponentType => {
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>): void => {
       onChange && onChange(e);
       onChangeChecked && onChangeChecked(e.currentTarget.checked);

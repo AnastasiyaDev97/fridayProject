@@ -11,6 +11,7 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Header } from 'components/Header';
 import { Preloader } from 'components/Preloader';
 import { STATUS } from 'constants/app';
+import { useAuthMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
 import {
   Cards,
@@ -23,17 +24,19 @@ import {
   Register,
   Users,
 } from 'pages';
-import { RootState } from 'store';
-import { setErrorText } from 'store/reducers/app';
-import { initializeAppTC } from 'store/thunks/app';
+import { RootState, useAppSelector } from 'store';
+import { setErrorText, setIsInitialized } from 'store/reducers/app';
+import { setProfileData } from 'store/reducers/profile';
 
 const TIMER_VALUE = 3000;
 
 const App = (): ReturnComponentType => {
   const dispatch = useDispatch();
 
+  const [auth, { data: authData /* , error: loginError */ }] = useAuthMutation();
+
   const status = useSelector<RootState, AppStatusType>(state => state.app.status);
-  const isInitialized = useSelector<RootState, boolean>(state => state.app.isInitialized);
+  const isInitialized = useAppSelector(state => state.app.isInitialized);
   const isLoggedIn = useSelector<RootState, boolean>(state => state.auth.isLoggedIn);
   const error = useSelector<RootState, Nullable<string>>(state => state.app.errorText);
 
@@ -58,8 +61,15 @@ const App = (): ReturnComponentType => {
     if (isInitialized) {
       return;
     }
-    dispatch(initializeAppTC());
-  }, [dispatch, isInitialized]);
+    auth();
+  }, [isInitialized, auth]);
+
+  useEffect(() => {
+    if (authData) {
+      dispatch(setProfileData(authData));
+      dispatch(setIsInitialized(true));
+    }
+  }, [authData, dispatch]);
 
   useEffect(() => {
     if (error) {

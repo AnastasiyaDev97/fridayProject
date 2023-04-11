@@ -2,8 +2,8 @@ import { memo, ReactElement } from 'react';
 
 import styles from './Rating.module.scss';
 
-import { Icon } from 'components/Icon';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { Icon } from 'components/Icon';
 
 type RatingProps = {
   grade: number;

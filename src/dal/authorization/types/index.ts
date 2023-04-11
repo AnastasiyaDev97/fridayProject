@@ -1,15 +1,12 @@
 export type ResponseLoginType = {
   avatar: string;
-  created: string;
   email: string;
-  isAdmin: boolean;
   name: string;
+  _id: string;
   publicCardPacksCount: number;
   rememberMe: boolean;
   token: string;
   tokenDeathTime: number;
-  updated: string;
-  error?: string;
 };
 
 export type ResponseRegisterType = {

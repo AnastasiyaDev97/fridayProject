@@ -2,9 +2,9 @@ import { NavLink } from 'react-router-dom';
 
 import style from './NotFound.module.scss';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { PATH } from 'enums/Path';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 export const NotFound = (): ReturnComponentType => {
   return (

@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { ReactNode, memo, useCallback } from 'react';
 
 import TextField from '@mui/material/TextField';
 import { useDispatch } from 'react-redux';
@@ -7,20 +7,29 @@ import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
 import { useCustomInput } from 'common/hooks/useCustomInput';
-import { addCardTC } from 'store/thunks/cards';
-import { addPackTC } from 'store/thunks/packs';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { useAddCardMutation } from 'dal/cards';
+import { addPackTC } from 'store/thunks/packs';
 
 type AddModalPropsType = {
   cardsPackId?: string;
   itemName: 'packs' | 'cards';
   buttonStyle?: string;
   style?: { padding?: string; marginBottom?: string };
+  children: ReactNode;
 };
 
 export const AddModal: React.FC<AddModalPropsType> = memo(
-  ({ cardsPackId, itemName, children, ...rest }): ReturnComponentType => {
+  ({
+    cardsPackId,
+    itemName,
+    children,
+    ...rest
+  }: AddModalPropsType): ReturnComponentType => {
     const dispatch = useDispatch();
+
+    const [addCard /* { data: cardData, error: addCardError } */] = useAddCardMutation();
+
     const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput();
     const { state: questionValue, onChangeInput: onChangeQuestionInput } =
       useCustomInput();
@@ -31,9 +40,17 @@ export const AddModal: React.FC<AddModalPropsType> = memo(
         dispatch(addPackTC(nameValue));
       }
       if (itemName === 'cards' && questionValue && answerValue && cardsPackId) {
-        dispatch(addCardTC(cardsPackId, questionValue, answerValue));
+        addCard({
+          card: {
+            cardsPack_id: cardsPackId,
+            question: questionValue,
+            answer: answerValue,
+          },
+        });
+
+        //getCards!!!
       }
-    }, [dispatch, nameValue, itemName, answerValue, questionValue, cardsPackId]);
+    }, [dispatch, addCard, nameValue, itemName, answerValue, questionValue, cardsPackId]);
 
     const createFields = (): ReturnComponentType => {
       if (itemName === 'packs') {

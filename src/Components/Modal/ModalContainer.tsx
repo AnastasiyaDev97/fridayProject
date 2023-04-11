@@ -8,8 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import styles from './ModalContainer.module.scss';
 
-import { SuperButton } from 'components/SuperButton';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { SuperButton } from 'components/SuperButton';
 
 type ModalContainerPropsType = {
   modalTitle: string;

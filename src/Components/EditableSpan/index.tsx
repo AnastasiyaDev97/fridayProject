@@ -2,17 +2,17 @@ import { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react';
 
 import style from './EditableSpan.module.scss';
 
-import { SuperInputText } from 'components/SuperInputText';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { SuperInputText } from 'components/SuperInputText';
 
-type editableSpanPropsType = {
+type EditableSpanPropsType = {
   title: string;
   updateTitle: (newTitle: string) => void;
 };
-export const EditableSpan: FC<editableSpanPropsType> = memo(
-  ({ title, updateTitle }): ReturnComponentType => {
-    let [isEdit, toggleEdit] = useState(true);
-    let [name, setName] = useState(title);
+export const EditableSpan: FC<EditableSpanPropsType> = memo(
+  ({ title, updateTitle }: EditableSpanPropsType): ReturnComponentType => {
+    const [isEdit, toggleEdit] = useState(true);
+    const [name, setName] = useState(title);
 
     const onActivateInputModeDblClick = (): void => {
       toggleEdit(false);

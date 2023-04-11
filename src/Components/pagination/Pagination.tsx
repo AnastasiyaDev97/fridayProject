@@ -2,9 +2,9 @@ import { memo, useCallback, useState } from 'react';
 
 import styles from './Pagination.module.scss';
 
-import { SuperButton } from 'components/SuperButton';
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { SuperButton } from 'components/SuperButton';
 
 type PaginatorPropsType = {
   totalItemCount: Nullable<number>;
@@ -24,7 +24,7 @@ export const Pagination = memo(
     onChangePageClick,
     portionSize,
   }: PaginatorPropsType): ReturnComponentType => {
-    let [portionNumber, setPortionNumber] = useState(START_VALUE_PORTION_NUMBER);
+    const [portionNumber, setPortionNumber] = useState(START_VALUE_PORTION_NUMBER);
 
     let pagesCount;
     let portionCount;
@@ -33,11 +33,11 @@ export const Pagination = memo(
       pagesCount = Math.ceil(totalItemCount / pageCount);
       portionCount = Math.ceil(pagesCount / portionSize);
     }
-    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
-    let rightPortionPageNumber = portionNumber * portionSize;
+    const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
+    const rightPortionPageNumber = portionNumber * portionSize;
     const styleForBtn = { padding: '5px', margin: '0 5px', fontWeight: 'bold' };
     const conditionForShowButton = portionNumber > START_VALUE_PORTION_NUMBER;
-    let pages = [];
+    const pages = [];
 
     for (let i = 1; i <= (pagesCount || 0); i++) {
       pages.push(i);

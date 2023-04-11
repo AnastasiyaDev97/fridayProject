@@ -1,5 +1,5 @@
 export type getCardsResponseType = {
-  cards: Array<CardType>;
+  cards: CardType[];
   cardsTotalCount: number;
   maxGrade: number;
   minGrade: number;
@@ -23,7 +23,7 @@ export interface CardType {
 export type getCardsQueryParamsType = {
   cardAnswer?: string;
   cardQuestion?: string;
-  cardsPack_id: string;
+  cardsPack_id?: string;
   min?: number;
   max?: number;
   sortCards?: string;

@@ -1,7 +1,6 @@
 import { FC, memo, useState } from 'react';
 
-import { INPUT_TYPE } from 'enums/InputType';
-import { FieldInputProps } from 'formik';
+import type { FieldInputProps } from 'formik';
 
 import styles from './UniversalInput.module.scss';
 
@@ -18,10 +17,15 @@ type UniversalInputPropsType = {
 };
 
 export const UniversalInput: FC<UniversalInputPropsType> = memo(
-  ({ validationErr, formikProps, placeholder, type }): ReturnComponentType => {
+  ({
+    validationErr,
+    formikProps,
+    placeholder,
+    type,
+  }: UniversalInputPropsType): ReturnComponentType => {
     const [passwordShown, setPasswordShown] = useState<boolean>(false);
 
-    const typeForInput = !passwordShown && type ? INPUT_TYPE.PASSWORD : INPUT_TYPE.TEXT;
+    const typeForInput = !passwordShown && type ? 'password' : 'text';
 
     const onSpanToggleShowPasswordClick = (): void => {
       setPasswordShown(!passwordShown);

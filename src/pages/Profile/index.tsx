@@ -2,12 +2,12 @@ import { useCallback, useEffect } from 'react';
 
 import style from './Profile.module.scss';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EditableSpan } from 'components/EditableSpan/EditableSpan';
-import { InputTypeFile } from 'components/InputTypeFile/InputTypeFile';
+import { InputTypeFile } from 'components/InputTypeFile';
 import { useUpdateProfileMutation } from 'dal/profile';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setProfileData } from 'store/reducers/profile';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 export const Profile = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -41,7 +41,7 @@ export const Profile = (): ReturnComponentType => {
 
   useEffect(() => {
     if (profileData) {
-      dispatch(setProfileData(profileData));
+      dispatch(setProfileData(profileData.updatedUser));
     }
   }, [profileData, dispatch]);
 

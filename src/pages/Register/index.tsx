@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Navigate, useNavigate } from 'react-router-dom';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { UniversalInput } from 'components/UniversalInput';
 import { InputType } from 'components/UniversalInput/UniversalInput';
@@ -13,7 +14,6 @@ import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setRegisterStatus } from 'store/reducers/auth';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { AuthData, validates } from 'utils/validates';
 
 export const Register = (): ReturnComponentType => {

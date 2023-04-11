@@ -1,5 +1,6 @@
 import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 
+import { COMPONENT_NAME } from 'enums/ComponentName';
 import { useDispatch, useSelector } from 'react-redux';
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
 
@@ -7,6 +8,8 @@ import { AddModal } from '../Modal/AddModal';
 
 import style from './PacksList.module.scss';
 
+import { Nullable } from 'common/types/Nullable';
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Pagination } from 'components/Pagination';
 import { SuperButton } from 'components/SuperButton';
 import { SuperInputText } from 'components/SuperInputText';
@@ -14,16 +17,12 @@ import { Table } from 'components/Table';
 import { EMPTY_STRING, PORTION_SIZE } from 'constants/index';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { PackType } from 'dal/packs/types';
-import { COMPONENT_NAME } from 'enums/ComponentName';
 import {
   changePageAC,
   changeSearchPackNameAC,
   setNewMinMaxValues,
   setSortingFilter,
 } from 'store/reducers/packs-reducer';
-import { AppRootStateType } from 'store/store';
-import { Nullable } from 'common/types/Nullable';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { convertDateFormat } from 'utils/handles';
 
 type PackListPropsType = {
@@ -46,7 +45,7 @@ export const PacksList = memo(
     actualPackName,
   }: PackListPropsType): ReturnComponentType => {
     const dispatch = useDispatch();
-    let [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const maxCardsCount = useSelector<AppRootStateType, number>(
       state => state.packs.maxCardsCount,
@@ -115,7 +114,7 @@ export const PacksList = memo(
       if (text === EMPTY_STRING && !actualPackName) {
         return;
       } else {
-        let idOfTimeout = setTimeout(() => {
+        const idOfTimeout = setTimeout(() => {
           handleSearchPack();
         }, TIMER_VALUE);
 

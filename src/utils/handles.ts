@@ -5,7 +5,7 @@ import { CardType } from '../dal/cards/types';
 const MAX_GRADE_BORDER = 6;
 
 export const convertDateFormat = (dateAsString: string): string => {
-  let date = new Date(dateAsString);
+  const date = new Date(dateAsString);
 
   return `${addZeroToDate(date.getDate())}.${addZeroToDate(
     date.getMonth() + 1,
@@ -20,7 +20,7 @@ export const addZeroToDate = (date: number): number | string => {
   return date;
 };
 
-export const getCard = (cards: CardType[]): CardType | ReactElement => {
+export const getCard = (cards: CardType[]): CardType => {
   const sum = cards.reduce(
     (acc, card) =>
       acc + (MAX_GRADE_BORDER - card.grade) * (MAX_GRADE_BORDER - card.grade),

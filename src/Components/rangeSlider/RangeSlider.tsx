@@ -6,10 +6,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import style from './RangeSlider.module.scss';
 
-import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
-import { AppRootStateType } from 'store/store';
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
 
 type SliderPropsType = {
   currentMinCardsValue: number;

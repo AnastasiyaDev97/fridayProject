@@ -1,4 +1,4 @@
-import { memo, FC, SVGProps } from 'react';
+import { FC, SVGProps } from 'react';
 
 import sprite from 'common/assets/svg/sprite.svg';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
@@ -9,10 +9,11 @@ type SuperSvgPropsType = DefaultSvgPropsType & {
   name: string;
 };
 
-export const Icon: FC<SuperSvgPropsType> = memo(
-  ({ name, ...rest }): ReturnComponentType => (
-    <svg {...rest}>
-      <use href={`${sprite}#${name}`} />
-    </svg>
-  ),
+export const Icon: FC<SuperSvgPropsType> = ({
+  name,
+  className,
+}: SuperSvgPropsType): ReturnComponentType => (
+  <svg className={className}>
+    <use href={`${sprite}#${name}`} />
+  </svg>
 );

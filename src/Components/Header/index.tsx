@@ -1,20 +1,16 @@
 import { memo } from 'react';
 
-import { useSelector } from 'react-redux';
-
 import styles from './Header.module.scss';
 
 import useWindowDimensions from 'common/hooks/useWindowDimensions';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { NavBar } from 'components/NavBar/NavBar';
-import { AppRootStateType } from 'store/store';
+import { useAppSelector } from 'store';
 
 export const Header = memo((): ReturnComponentType => {
   const { isMobile } = useWindowDimensions();
 
-  const isLoggedIn = useSelector<AppRootStateType, boolean>(
-    state => state.login.isLoggedIn,
-  );
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
   return (
     <div className={`${styles.headerBlock} ${isMobile && styles.mobileHeaderBlock}`}>

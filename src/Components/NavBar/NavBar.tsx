@@ -16,19 +16,21 @@ import styles from './NavBar.module.scss';
 import useWindowDimensions from 'common/hooks/useWindowDimensions';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EMPTY_STRING } from 'constants/index';
+import { useLogoutMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
-import { logoutTC } from 'store/thunks/login';
+import { setLoginStatus } from 'store/reducers/auth';
 
 /* type DefaultNavBarPropsType = DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >; */
-type NavBarPropsType = {};
 
-export const NavBar: FC<NavBarPropsType> = (): ReturnComponentType => {
+export const NavBar: FC = (): ReturnComponentType => {
   const dispatch = useDispatch();
   const { pathname: currentPath } = useLocation();
   const { isMobile } = useWindowDimensions();
+
+  const [logout] = useLogoutMutation();
 
   const classNameForLink = ({ isActive }: { isActive: boolean }): string =>
     isActive ? `${styles.active}` : EMPTY_STRING;
@@ -45,7 +47,8 @@ export const NavBar: FC<NavBarPropsType> = (): ReturnComponentType => {
   ];
 
   const logoutHandler = (): void => {
-    dispatch(logoutTC());
+    logout();
+    dispatch(setLoginStatus(false));
   };
 
   return (

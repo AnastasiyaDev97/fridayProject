@@ -13,7 +13,12 @@ type UserCardPropsType = {
 };
 
 export const UserCard: FC<UserCardPropsType> = memo(
-  ({ userName, userMail, cardsCount, avatar }): ReturnComponentType => {
+  ({
+    userName,
+    userMail,
+    cardsCount,
+    avatar,
+  }: UserCardPropsType): ReturnComponentType => {
     return (
       <div className={style.userBlock}>
         <img

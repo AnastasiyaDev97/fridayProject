@@ -7,8 +7,8 @@ import { useDispatch } from 'react-redux';
 import style from './InputTypeFile.module.scss';
 
 import defaultAva from 'common/assets/images/noavatar.png';
-import { setErrorText } from 'store/reducers/app-reducer';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { setErrorText } from 'store/reducers/app';
 
 type InputFileTypeProps = {
   onUpdateAvatar: (newAvatar: string) => void;
@@ -18,7 +18,7 @@ type InputFileTypeProps = {
 const MAX_FILE_SIZE = 4000000;
 
 export const InputTypeFile: FC<InputFileTypeProps> = memo(
-  ({ onUpdateAvatar, avatar }): ReturnComponentType => {
+  ({ onUpdateAvatar, avatar }: InputFileTypeProps): ReturnComponentType => {
     const dispatch = useDispatch();
 
     const [ava, setAva] = useState(avatar);
@@ -33,7 +33,7 @@ export const InputTypeFile: FC<InputFileTypeProps> = memo(
             setAva(file64);
           });
         } else {
-          dispatch(setErrorText('File is too large'));
+          dispatch(setErrorText({ errorText: 'File is too large' }));
         }
       }
     };
@@ -51,7 +51,7 @@ export const InputTypeFile: FC<InputFileTypeProps> = memo(
 
     const errorHandler = (): void => {
       setIsAvaBroken(true);
-      dispatch(setErrorText('Unsupported image format'));
+      dispatch(setErrorText({ errorText: 'Unsupported image format' }));
     };
 
     useEffect(() => {

@@ -1,25 +1,20 @@
-import { cardsAPI } from '../../dal/cards/cardsAPI';
-import { getCardsQueryParamsType, updateCardType } from '../../dal/cards/types';
-
+import { getCardsQueryParamsType } from '../../dal/cards/types';
 import { catchErrorHandler } from '../../utils/error-utils';
-import { setAppStatusAC } from '../reducers/app-reducer';
-import { setCardsAC, setCardsRatingAC } from '../reducers/cards-reducer';
-import { AppDispatch, ThunkType } from '../store';
+import { setCardsAC } from '../reducers/cards-reducer';
 
-export const getCardsTC =
-  (getCardsQueryParams: getCardsQueryParamsType) => async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setAppStatusAC(STATUS.LOADING));
-      const data = await cardsAPI.getCards(getCardsQueryParams);
+const getCardsTC = () => {
+  try {
+    /*  dispatch(setAppStatusAC(STATUS.LOADING)); */
+    /* const data = await cardsAPI.getCards(getCardsQueryParams);
 
-      dispatch(setCardsAC(data));
-      dispatch(setAppStatusAC(STATUS.SUCCEEDED));
-    } catch (err) {
-      catchErrorHandler(dispatch, err);
-    }
-  };
+    dispatch(setCardsAC(data)); */
+    /*  dispatch(setAppStatusAC(STATUS.SUCCEEDED)); */
+  } catch (err) {
+    /*  catchErrorHandler(dispatch, err); */
+  }
+};
 
-export const addCardTC =
+/* export const addCardTC =
   (cardsPack_id: string, question: string, answer: string): ThunkType =>
   async dispatch => {
     try {
@@ -78,4 +73,4 @@ export const updateCardRatingTC =
     } catch (err) {
       catchErrorHandler(dispatch, err);
     }
-  };
+  }; */

@@ -10,10 +10,6 @@ const initialState = {
   email: EMPTY_STRING,
   name: EMPTY_STRING,
   publicCardPacksCount: 0,
-  rememberMe: false,
-  token: EMPTY_STRING,
-  tokenDeathTime: 0,
-  updated: EMPTY_STRING,
   _id: EMPTY_STRING,
 };
 
@@ -24,7 +20,9 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     setProfileData: (state: InitialStateType, action: PayloadAction<UserType>) => {
-      state = action.payload;
+      const defaultAvatar = action.payload?.avatar || '';
+
+      state = { ...action.payload, avatar: defaultAvatar };
     },
   },
 });

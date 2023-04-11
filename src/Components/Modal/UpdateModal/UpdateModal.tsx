@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { ReactNode, memo, useCallback } from 'react';
 
 import TextField from '@mui/material/TextField';
 import { useDispatch } from 'react-redux';
@@ -7,9 +7,9 @@ import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
 import { useCustomInput } from 'common/hooks/useCustomInput';
-import { updateCardTC } from 'store/thunks/cards';
-import { updatePackTC } from 'store/thunks/packs';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { useUpdateCardMutation } from 'dal/cards';
+import { updatePackTC } from 'store/thunks/packs';
 
 type UpdateModalPropsType = {
   id: string;
@@ -19,6 +19,7 @@ type UpdateModalPropsType = {
   cardsPackId?: string;
   itemName: 'packs' | 'cards';
   disabled: boolean;
+  children: ReactNode;
 };
 
 export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
@@ -27,12 +28,14 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
     name,
     question,
     answer,
-    cardsPackId,
     itemName,
     children,
     ...rest
-  }): ReturnComponentType => {
+  }: UpdateModalPropsType): ReturnComponentType => {
     const dispatch = useDispatch();
+
+    const [updateCard /* { data: cardData, error: addCardError } */] =
+      useUpdateCardMutation();
     const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput(name);
     const { state: questionValue, onChangeInput: onChangeQuestionInput } =
       useCustomInput(question);
@@ -43,16 +46,26 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
       if (itemName === 'packs' && nameValue) {
         dispatch(updatePackTC(id, nameValue));
       }
-      if (itemName === 'cards' && cardsPackId) {
-        dispatch(
+      if (itemName === 'cards' /* && cardsPackId */) {
+        updateCard({ card: { _id: id, question: questionValue, answer: answerValue } });
+        /*  dispatch(
           updateCardTC(cardsPackId, {
             _id: id,
             question: questionValue,
             answer: answerValue,
           }),
-        );
+        ); */
       }
-    }, [dispatch, itemName, answerValue, nameValue, questionValue, cardsPackId, id]);
+    }, [
+      dispatch,
+      itemName,
+      answerValue,
+      nameValue,
+      questionValue,
+      /* cardsPackId, */
+      id,
+      updateCard,
+    ]);
 
     const editableFields = (): ReturnComponentType => {
       if (itemName === 'packs') {

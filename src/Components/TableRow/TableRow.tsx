@@ -7,13 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 import style from '../Table/Table.module.scss';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { DeleteModal } from 'components/Modal/DeleteModal';
 import { LearnModal } from 'components/Modal/LearnModal';
 import { UpdateModal } from 'components/Modal/UpdateModal';
 import { ItemValues } from 'components/Table/Table';
 import { EMPTY_STRING } from 'constants/index';
 import { RootState } from 'store';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 type TableRowT = {
   itemValues: ItemValues;
@@ -41,9 +41,9 @@ export const TableRow: FC<TableRowT> = memo(
           onOpenCardClick(e);
         }}
       >
-        {Object.values(tableValues).map((item, i) => {
+        {Object.values(tableValues).map(item => {
           return (
-            <td key={i} className={isMyPack ? style.tableRowPointer : EMPTY_STRING}>
+            <td key={item} className={isMyPack ? style.tableRowPointer : EMPTY_STRING}>
               <div className={style.cell}>{item}</div>
             </td>
           );

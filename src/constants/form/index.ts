@@ -2,7 +2,7 @@ const INPUT_TYPE = {
   PASSWORD: 'password',
   TEXT: 'text',
   EMAIL: 'email',
-};
+} as const;
 
 export const REGISTRATION_FORM_FIELDS = [
   {
