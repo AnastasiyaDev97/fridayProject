@@ -5,10 +5,11 @@ import styles from './Pagination.module.scss';
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
+import { PAGE_COUNT } from 'constants/table';
 
 type PaginatorPropsType = {
   totalItemCount: Nullable<number>;
-  pageCount: Nullable<number>;
+
   currentPage: Nullable<number>;
   onChangePageClick: (currentPage: number) => void;
   portionSize: number;
@@ -19,7 +20,7 @@ const START_VALUE_PORTION_NUMBER = 1;
 export const Pagination = memo(
   ({
     totalItemCount,
-    pageCount,
+
     currentPage,
     onChangePageClick,
     portionSize,
@@ -29,8 +30,8 @@ export const Pagination = memo(
     let pagesCount;
     let portionCount;
 
-    if (totalItemCount && pageCount) {
-      pagesCount = Math.ceil(totalItemCount / pageCount);
+    if (totalItemCount && PAGE_COUNT) {
+      pagesCount = Math.ceil(totalItemCount / PAGE_COUNT);
       portionCount = Math.ceil(pagesCount / portionSize);
     }
     const leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;

@@ -24,7 +24,7 @@ type PackListPropsType = {
   packs: Array<PackType>;
   currentPage: number;
   totalItemCount: number;
-  pageCount: number;
+
   sortPacks: string;
   actualPackName: Nullable<string>;
 };
@@ -36,7 +36,7 @@ export const PacksList = memo(
     packs,
     currentPage,
     totalItemCount,
-    pageCount,
+
     actualPackName,
   }: PackListPropsType): ReturnComponentType => {
     const dispatch = useAppDispatch();
@@ -150,7 +150,6 @@ export const PacksList = memo(
         />
         <Pagination
           totalItemCount={totalItemCount}
-          pageCount={pageCount}
           currentPage={currentPage}
           onChangePageClick={handleChangePageClick}
           portionSize={PORTION_SIZE}

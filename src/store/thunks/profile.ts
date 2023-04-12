@@ -1,4 +1,4 @@
-import { profileAPI } from '../../dal/profile/profileAPI';
+/* import { profileAPI } from '../../dal/profile/profileAPI';
 import { STATUS } from '../../enums/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
 import { setAppStatusAC } from '../reducers/app-reducer';
@@ -17,3 +17,6 @@ export const updateProfileTC =
       catchErrorHandler(dispatch, err);
     }
   };
+ */
+
+export {};

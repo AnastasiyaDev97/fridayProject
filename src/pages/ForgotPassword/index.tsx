@@ -14,7 +14,7 @@ import { useAppDispatch, useAppSelector } from 'store';
 import { setProfileData } from 'store/reducers/profile';
 import { AuthData, validateForgotPasswordForm } from 'utils/validates';
 
-export const ForgotPassword = (): ReturnComponentType => {
+const ForgotPassword = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
   const [sendPassword, { data: sendPasswordResponseData /* , error: addCardError */ }] =
@@ -107,3 +107,5 @@ export const ForgotPassword = (): ReturnComponentType => {
     </div>
   );
 };
+
+export default ForgotPassword;

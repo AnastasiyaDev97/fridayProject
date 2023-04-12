@@ -7,8 +7,8 @@ import style from './RangeSlider.module.scss';
 
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { useAppDispatch, useAppSelector } from 'store';
-import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
+import { /* useAppDispatch, */ useAppSelector } from 'store';
+/* import { setNewMinMaxValues } from 'store/reducers/packs-reducer'; */
 
 type SliderPropsType = {
   currentMinCardsValue: number;
@@ -20,13 +20,13 @@ export const RangeSlider: FC<SliderPropsType> = memo(
     currentMinCardsValue,
     currentMaxCardsValue,
   }: SliderPropsType): ReturnComponentType => {
-    const dispatch = useAppDispatch();
+    /* const dispatch = useAppDispatch(); */
 
     const maxValueForRangeSlider = useAppSelector(state => state.packs.maxCardsCount);
 
     const onSliderChange = (event: Event, newValue: number | number[]): void => {
       if (Array.isArray(newValue)) {
-        dispatch(setNewMinMaxValues(newValue[0], newValue[1]));
+        /* dispatch(setNewMinMaxValues(newValue[0], newValue[1])); */
       }
     };
 

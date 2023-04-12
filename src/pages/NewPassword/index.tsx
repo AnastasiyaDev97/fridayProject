@@ -12,7 +12,7 @@ import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
 import { PATH } from 'enums/Path';
 import { AuthData, validateNewPasswordForm } from 'utils/validates';
 
-export const NewPassword = (): ReturnComponentType => {
+const NewPassword = (): ReturnComponentType => {
   const [setNewPassword, { data: newPasswordData /* , error: loginError */ }] =
     useSetNewPasswordMutation();
 
@@ -73,3 +73,5 @@ export const NewPassword = (): ReturnComponentType => {
     </div>
   );
 };
+
+export default NewPassword;

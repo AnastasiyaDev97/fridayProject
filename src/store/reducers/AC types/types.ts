@@ -1,4 +1,4 @@
-import { setAppStatusAC, setErrorText, setIsInitializedAC } from '../app-reducer';
+/* import { setAppStatusAC, setErrorText, setIsInitializedAC } from '../app-reducer'; */
 import {
   changePageCardsAC,
   setCardsAC,
@@ -8,9 +8,9 @@ import {
 } from '../cards-reducer';
 import { isAuthToggleAC } from '../login-reducer';
 import {
-  changePageAC,
+  /*   changePageAC, */
   changeSearchPackNameAC,
-  setNewMinMaxValues,
+  /*   setNewMinMaxValues, */
   setPacksAC,
   setSortingFilter,
   toggleShowUserPacksAC,
@@ -20,23 +20,23 @@ import {
   SetResponseInfoForgotPassAC,
   SetResponseInfoNewPassAC,
 } from '../passwordRecovery-reducer';
-import { setProfileAC } from '../profile-reducer';
-import { registerStatusAC } from '../registration-reducer';
+/* import { setProfileAC } from '../profile-reducer';
+import { registerStatusAC } from '../registration-reducer'; */
 import { getUsersDataAC, changePageUsersAC } from '../users-reducer';
 
 export type ActionsType =
-  | ReturnType<typeof setAppStatusAC>
+  /*   | ReturnType<typeof setAppStatusAC> */
   | ReturnType<typeof isAuthToggleAC>
-  | ReturnType<typeof setProfileAC>
+  /*   | ReturnType<typeof setProfileAC>
   | ReturnType<typeof setIsInitializedAC>
   | ReturnType<typeof setErrorText>
-  | ReturnType<typeof registerStatusAC>
+  | ReturnType<typeof registerStatusAC> */
   | ReturnType<typeof SetResponseInfoForgotPassAC>
   | ReturnType<typeof addEmailAC>
   | ReturnType<typeof SetResponseInfoNewPassAC>
   | ReturnType<typeof setPacksAC>
-  | ReturnType<typeof changePageAC>
-  | ReturnType<typeof setNewMinMaxValues>
+  /*   | ReturnType<typeof changePageAC>
+  | ReturnType<typeof setNewMinMaxValues> */
   | ReturnType<typeof setSortingFilter>
   | ReturnType<typeof setCardsAC>
   | ReturnType<typeof setSortingFilterCards>

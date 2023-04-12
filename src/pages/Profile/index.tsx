@@ -9,7 +9,7 @@ import { useUpdateProfileMutation } from 'dal/profile';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setProfileData } from 'store/reducers/profile';
 
-export const Profile = (): ReturnComponentType => {
+const Profile = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
   const [updateProfile, { data: profileData /* , error: profileError */ }] =
@@ -66,3 +66,5 @@ export const Profile = (): ReturnComponentType => {
     </div>
   );
 };
+
+export default Profile;

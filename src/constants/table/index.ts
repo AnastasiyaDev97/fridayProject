@@ -10,3 +10,5 @@ export const PACK_TABLE_FIELDS = [
   { title: 'Last updated', value: 'updated' },
   { title: 'Created by', value: 'user_name' },
 ];
+
+export const PAGE_COUNT = 7;

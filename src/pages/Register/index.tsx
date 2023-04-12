@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { UniversalInput } from 'components/UniversalInput';
-import { InputType } from 'components/UniversalInput/UniversalInput';
+import { InputType } from 'components/UniversalInput';
 import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
 import { useRegisterMutation } from 'dal/authorization';
@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from 'store';
 import { setRegisterStatus } from 'store/reducers/auth';
 import { AuthData, validates } from 'utils/validates';
 
-export const Register = (): ReturnComponentType => {
+const Register = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
   const [register, { data: registerData /* error: registerError */ }] =
@@ -110,3 +110,5 @@ export const Register = (): ReturnComponentType => {
     </div>
   );
 };
+
+export default Register;

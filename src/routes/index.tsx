@@ -1,9 +1,11 @@
-import { lazy } from 'react';
+import { ReactElement, lazy } from 'react';
 
-import { Outlet } from 'react-router-dom';
-import type { RouteObject } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { Layout } from 'components';
 import { PATH } from 'enums/Path';
+import { useAppSelector } from 'store';
 
 const {
   PROFILE,
@@ -14,12 +16,17 @@ const {
   CARDS,
   PACKS,
   LOGIN,
-  START,
   TOKEN,
   ANY,
-  ID,
   CHAT,
+  ID,
 } = PATH;
+
+export const PrivateRoutes = (): ReactElement<any, any> => {
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+  return isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN} />;
+};
 
 const Cards = lazy(() => import('pages/Cards'));
 const Chat = lazy(() => import('pages/Chat'));
@@ -31,63 +38,31 @@ const Packs = lazy(() => import('pages/Packs'));
 const Login = lazy(() => import('pages/Login'));
 const Profile = lazy(() => import('pages/Profile'));
 
-export const routes: RouteObject[] = [
-  {
-    path: START,
-    element: <Profile />,
-  },
-  {
-    path: PROFILE,
-    element: <Profile />,
-  },
-  {
-    path: LOGIN,
-    element: <Login />,
-  },
-  {
-    path: REGISTER,
-    element: <Register />,
-  },
-  {
-    path: NOT_FOUND,
-    element: <NotFound />,
-  },
-  {
-    path: FORGOT_PASSWORD,
-    element: <ForgotPassword />,
-  },
-  {
-    path: ANY,
-    element: <NotFound />,
-  },
-  {
-    path: CHAT,
-    element: <Chat />,
-  },
-  {
-    path: CARDS,
-    element: <Outlet />,
-    children: [
-      { path: '', element: <Cards /> },
-      { path: ID, element: <Cards /> },
-    ],
-  },
-  {
-    path: PACKS,
-    element: <Packs />,
-  },
-  {
-    path: NEW_PASSWORD,
-    element: <Outlet />,
-    children: [
-      {
-        path: '',
-        element: <NewPassword />,
-      },
-      {
-        path: TOKEN,
-        element: <NewPassword />,
-      },
-    ],
-  },
-];
+export const AppRoutes = (): ReturnComponentType => {
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Navigate to={PROFILE} />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path={PROFILE} element={<Profile />} />
+          <Route path={CHAT} element={<Chat />} />
+          <Route path={CARDS} element={<Cards />}>
+            <Route path={ID} element={<Cards />} />
+          </Route>
+          <Route path={PACKS} element={<Packs />} />
+        </Route>
+
+        <Route path={REGISTER} element={<Register />} />
+        <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
+        {/*  <Route path={USERS} element={<Users />} /> */}
+        <Route path={NEW_PASSWORD} element={<NewPassword />}>
+          <Route path={TOKEN} element={<NewPassword />} />
+        </Route>
+
+        <Route path={LOGIN} element={<Login />} />
+        <Route path={NOT_FOUND} element={<NotFound />} />
+        <Route path={ANY} element={<Navigate to={NOT_FOUND} />} />
+      </Route>
+    </Routes>
+  );
+};

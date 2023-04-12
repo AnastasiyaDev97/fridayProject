@@ -13,7 +13,7 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useAppDispatch /* , useAppSelector */ } from 'store';
 /* import { changePageUsersAC } from 'store/reducers/users'; */
 
-export const Users = (): ReturnComponentType => {
+const Users = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
   /*   const users = useAppSelector(state => state.users.users);
@@ -63,3 +63,5 @@ export const Users = (): ReturnComponentType => {
     </div>
   );
 };
+
+export default Users;

@@ -72,3 +72,5 @@ export const changeSearchPackNameAC = (userName: string) =>
     payload: { userName },
   } as const);
  */
+
+export {};

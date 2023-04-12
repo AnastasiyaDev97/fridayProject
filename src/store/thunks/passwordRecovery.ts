@@ -1,4 +1,4 @@
-import { AppDispatch } from 'store';
+/* import { AppDispatch } from 'store';
 import { authorizationAPI } from '../../dal/authorization/authorization';
 import { newPassDataType } from '../../dal/packs/types';
 import { STATUS } from '../../enums/StatusType';
@@ -34,4 +34,6 @@ export const setNewPasswordTC =
     } catch (err) {
       catchErrorHandler(dispatch, err);
     }
-  };
+  }; */
+
+export {};

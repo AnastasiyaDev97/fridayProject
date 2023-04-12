@@ -6,7 +6,7 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { PATH } from 'enums/Path';
 
-export const NotFound = (): ReturnComponentType => {
+const NotFound = (): ReturnComponentType => {
   return (
     <div className={style.notFoundBackgr}>
       <div className={style.notFoundBlock}>
@@ -20,3 +20,5 @@ export const NotFound = (): ReturnComponentType => {
     </div>
   );
 };
+
+export default NotFound;

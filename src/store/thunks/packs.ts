@@ -1,8 +1,8 @@
-import { setPacksAC } from '../reducers/packs-reducer';
+/* import { setPacksAC } from '../reducers/packs-reducer';
 
-import { Nullable } from 'common/types/Nullable';
+import { Nullable } from 'common/types/Nullable'; */
 
-const getPacksTC =
+/* const getPacksTC =
   (actualPackName?: Nullable<string>) =>
   async (dispatch: AppDispatch, getState: () => AppRootStateType) => {
     const { min, max, page, user_id, sortPacks } = getState().packs;
@@ -28,7 +28,7 @@ const getPacksTC =
       dispatch(setAppStatusAC(STATUS.SUCCEEDED));
     }
   };
-
+ */
 /* export const addPackTC =
   (name: string): ThunkType =>
   async (dispatch, getState: () => AppRootStateType) => {
@@ -78,3 +78,5 @@ export const updatePackTC =
       catchErrorHandler(dispatch, err);
     }
   }; */
+
+export {};

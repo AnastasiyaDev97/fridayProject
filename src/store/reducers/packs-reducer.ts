@@ -32,11 +32,11 @@ export const packsReducer = (
   switch (action.type) {
     case 'PACKS/SET-PACKS':
     case 'PACKS/CHANGE-SEARCH-PACK-NAME':
-    case 'PACKS/CHANGE-PAGE':
-    case 'SET-RESPONSE-INFO-NEW-PASS':
-    case 'PACKS/TOGGLE-SHOW-USER-PACKS':
-    case 'PACKS/SET-NEW-MIN-MAX-VALUE':
-    case 'PACKS/SET-SORTING-FILTER':
+      /*     case 'PACKS/CHANGE-PAGE': */
+      /*     case 'SET-RESPONSE-INFO-NEW-PASS': */
+      /*     case 'PACKS/TOGGLE-SHOW-USER-PACKS': */
+      /*     case 'PACKS/SET-NEW-MIN-MAX-VALUE': */
+      /*     case 'PACKS/SET-SORTING-FILTER': */
       return { ...state, ...action.payload };
     default:
       return state;

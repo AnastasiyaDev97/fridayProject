@@ -1,4 +1,4 @@
-import { authorizationAPI } from '../../dal/authorization/authorization';
+/* import { authorizationAPI } from '../../dal/authorization/authorization';
 import { STATUS } from '../../enums/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
 import { setAppStatusAC } from '../reducers/app-reducer';
@@ -17,3 +17,5 @@ export const registerMeTC =
       dispatch(registerStatusAC(false));
     }
   };
+ */
+export {};

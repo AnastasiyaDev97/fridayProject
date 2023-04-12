@@ -1,5 +1,7 @@
 import { memo } from 'react';
 
-export const Chat = memo(() => {
+const Chat = memo(() => {
   return <></>;
 });
+
+export default Chat;

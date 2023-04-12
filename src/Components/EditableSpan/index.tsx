@@ -40,6 +40,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(
       </span>
     ) : (
       <SuperInputText
+        type="text"
         value={name}
         onBlur={onInputActivateSpanModeBlur}
         autoFocus

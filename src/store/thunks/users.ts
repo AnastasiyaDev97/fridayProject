@@ -1,4 +1,4 @@
-import { STATUS } from '../../enums/StatusType';
+/* import { STATUS } from '../../enums/StatusType';
 import { catchErrorHandler } from '../../utils/error-utils';
 import { setAppStatusAC } from '../reducers/app-reducer';
 import { AppDispatch, AppRootStateType } from '../store';
@@ -40,3 +40,6 @@ export const getUsersTC =
       catchErrorHandler(dispatch, err);
     }
   };
+ */
+
+export {};

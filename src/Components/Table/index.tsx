@@ -2,7 +2,7 @@ import { memo, ReactElement } from 'react';
 
 import classNames from 'classnames';
 
-import { TableRow } from '../TableRow/TableRow';
+import { TableRow } from '../TableRow';
 
 import style from './Table.module.scss';
 

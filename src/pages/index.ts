@@ -1,9 +1,0 @@
-export { NewPassword } from './NewPassword';
-export { Cards } from './Cards';
-export { ForgotPassword } from './ForgotPassword';
-export { Login } from './Login';
-export { NotFound } from './NotFound';
-export { Packs } from './Packs';
-export { Profile } from './Profile';
-export { Register } from './Register';
-export { Users } from './Users';

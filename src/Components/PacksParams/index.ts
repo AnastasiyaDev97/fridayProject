@@ -1,1 +1,0 @@
-export { PacksParams } from './PacksParams';

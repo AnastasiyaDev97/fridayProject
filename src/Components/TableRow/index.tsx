@@ -12,7 +12,7 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { DeleteModal } from 'components/Modal/DeleteModal';
 import { LearnModal } from 'components/Modal/LearnModal';
 import { UpdateModal } from 'components/Modal/UpdateModal';
-import { ItemValues } from 'components/Table/Table';
+import { ItemValues } from 'components/Table';
 import { EMPTY_STRING } from 'constants/index';
 import { RootState } from 'store';
 
@@ -42,9 +42,9 @@ export const TableRow: FC<TableRowT> = memo(
           onOpenCardClick(e);
         }}
       >
-        {Object.values(tableValues).map(item => {
+        {Object.values(tableValues).map((item, i) => {
           return (
-            <td key={item} className={isMyPack ? style.tableRowPointer : EMPTY_STRING}>
+            <td key={i} className={isMyPack ? style.tableRowPointer : EMPTY_STRING}>
               <div className={style.cell}>{item}</div>
             </td>
           );

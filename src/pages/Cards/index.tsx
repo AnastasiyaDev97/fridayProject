@@ -2,7 +2,7 @@ import { memo, useCallback, useState, useEffect } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { SuperButton } from './../../components/SuperButton/SuperButton';
+import { SuperButton } from '../../components/SuperButton';
 import style from './Cards.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
@@ -15,7 +15,14 @@ import { useGetCardsQuery } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
 import { convertDateFormat } from 'utils/handles';
 
-export const Cards = memo((): ReturnComponentType => {
+type CardsForTableType = {
+  id: string;
+  userId: string;
+  cardsPackId: string;
+  tableValues: { question: string; answer: string; updated: string; rating: JSX.Element };
+}[];
+
+const Cards = memo((): ReturnComponentType => {
   const params = useParams<'id'>();
   const cardsPack_id = params.id;
 
@@ -23,7 +30,7 @@ export const Cards = memo((): ReturnComponentType => {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortCards, setSortCards] = useState<string>('');
-  const [cards, setcards] = useState();
+  const [cards, setcards] = useState<CardsForTableType>();
 
   /*   const sortCards = useAppSelector(state => state.cards.sortCards);
   const totalItemCount = useAppSelector(state => state.cards.cardsTotalCount);
@@ -61,8 +68,8 @@ export const Cards = memo((): ReturnComponentType => {
   };
 
   useEffect(() => {
-    if (isCardsSuccess && !cards) {
-      const formattedCardsForTable = cardsData.map(
+    if (isCardsSuccess && !cardsData?.cards) {
+      const formattedCardsForTable = cardsData.cards.map(
         ({ question, answer, updated, grade, _id, user_id, cardsPack_id }: CardType) => {
           const convertedToDateUpdated = convertDateFormat(updated);
 
@@ -116,3 +123,5 @@ export const Cards = memo((): ReturnComponentType => {
 
   return null;
 });
+
+export default Cards;

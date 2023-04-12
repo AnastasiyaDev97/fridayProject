@@ -18,7 +18,7 @@ import { setLoginStatus } from 'store/reducers/auth';
 /* import { setProfileData } from 'store/reducers/profile'; */
 import { AuthData, validateLoginForm } from 'utils/validates';
 
-export const Login = (): ReturnComponentType => {
+const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
   const [login, { data: loginData /* , error: loginError */ }] = useLoginMutation();
@@ -101,3 +101,5 @@ export const Login = (): ReturnComponentType => {
     </div>
   );
 };
+
+export default Login;

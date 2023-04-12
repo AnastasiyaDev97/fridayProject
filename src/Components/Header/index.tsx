@@ -4,7 +4,7 @@ import styles from './Header.module.scss';
 
 import useWindowDimensions from 'common/hooks/useWindowDimensions';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { NavBar } from 'components/NavBar/NavBar';
+import { NavBar } from 'components/NavBar';
 import { useAppSelector } from 'store';
 
 export const Header = memo((): ReturnComponentType => {

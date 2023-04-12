@@ -1,1 +1,0 @@
-export { PacksList } from './PacksList';
