@@ -1,8 +1,7 @@
-import { STATUS } from '../enums/StatusType';
-import { setAppStatusAC, setErrorText } from '../store/reducers/app-reducer';
-import { AppDispatch } from '../store/store';
+import { AppDispatch } from 'store';
+import { setAppStatus, setErrorText } from 'store/reducers/app';
 
 export const catchErrorHandler = (dispatch: AppDispatch, err: any): void => {
-  dispatch(setErrorText(err?.response ? err?.response?.data?.error : err));
-  dispatch(setAppStatusAC(STATUS.FAILED));
+  dispatch(setErrorText({ errorText: err?.response ? err?.response?.data?.error : err }));
+  dispatch(setAppStatus({ status: 'failed' }));
 };

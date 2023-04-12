@@ -9,9 +9,9 @@ import { Pagination } from 'components/Pagination';
 import { Preloader } from 'components/Preloader';
 import { UserCard } from 'components/UserCard';
 import { PORTION_SIZE } from 'constants/index'; */
+import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useAppDispatch /* , useAppSelector */ } from 'store';
 /* import { changePageUsersAC } from 'store/reducers/users'; */
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 export const Users = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -63,4 +63,3 @@ export const Users = (): ReturnComponentType => {
     </div>
   );
 };
-

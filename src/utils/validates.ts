@@ -1,4 +1,4 @@
-import { ERROR_MESSAGE } from '../enums/errorMessages';
+import { ERROR_MESSAGE } from 'enums/ErrorMessage';
 
 export type AuthData = {
   email?: string;

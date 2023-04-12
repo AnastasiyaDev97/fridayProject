@@ -1,4 +1,4 @@
-import { ReactNode, memo, useCallback } from 'react';
+import { FC, ReactNode, memo, useCallback } from 'react';
 
 import TextField from '@mui/material/TextField';
 
@@ -6,19 +6,20 @@ import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
 import { useCustomInput } from 'common/hooks/useCustomInput';
+import { EntityType } from 'common/types/DataType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useAddCardMutation } from 'dal/cards';
 import { useAddPackMutation } from 'dal/packs';
 
 type AddModalPropsType = {
   cardsPackId?: string;
-  itemName: 'packs' | 'cards';
+  itemName: EntityType;
   buttonStyle?: string;
   style?: { padding?: string; marginBottom?: string };
   children: ReactNode;
 };
 
-export const AddModal: React.FC<AddModalPropsType> = memo(
+export const AddModal: FC<AddModalPropsType> = memo(
   ({
     cardsPackId,
     itemName,

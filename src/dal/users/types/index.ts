@@ -9,13 +9,13 @@ export type getUsersResponseType = {
 export type getUserResponseType = {
   user: UserType;
 };
-export type UserType = {
+export interface UserType {
   avatar?: string;
-  email: string;
-  name: string;
-  publicCardPacksCount: number;
-  _id: string;
-};
+  email?: string;
+  name?: string;
+  publicCardPacksCount?: number;
+  _id?: string;
+}
 
 export type getUsersQueryParamsType = {
   userName?: Nullable<string>;

@@ -1,4 +1,4 @@
-import { ChangeEvent, DetailedHTMLProps, FC, InputHTMLAttributes, memo } from 'react';
+import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, memo } from 'react';
 
 import s from './SuperCheckbox.module.css';
 
@@ -15,9 +15,8 @@ type SuperCheckboxPropsType = DefaultInputPropsType & {
   spanClassName?: string;
 };
 
-export const SuperCheckbox: FC<SuperCheckboxPropsType> = memo(
+export const SuperCheckbox = memo(
   ({
-    type, // достаём и игнорируем чтоб нельзя было задать другой тип инпута
     onChange,
     onChangeChecked,
     className,
@@ -41,7 +40,7 @@ export const SuperCheckbox: FC<SuperCheckboxPropsType> = memo(
           className={finalInputClassName}
           {...restProps}
         />
-        {children && <span className={s.spanClassName}>{children}</span>}
+        {children && <span className={s[`${spanClassName}`]}>{children}</span>}
       </label>
     );
   },

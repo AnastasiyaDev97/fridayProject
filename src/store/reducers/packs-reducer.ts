@@ -1,5 +1,4 @@
 import { Nullable } from '../../common/types/Nullable';
-import { EMPTY_STRING } from '../../constants';
 import { getPacksResponseType } from '../../dal/packs/types';
 
 import { ActionsType } from './AC types/types';
@@ -12,24 +11,24 @@ type initialStateType = getPacksResponseType & {
   user_id: Nullable<string>;
 };
 
-const initialState = {
-  page: 1,
-  /*   cardPacks: [] as Array<PackType>,*/
-  /* cardPacksTotalCount: 0,*/
-  maxCardsCount: 0,
-  minCardsCount: 0,
-  pageCount: 7,
-  min: 0,
-  max: null,
-  sortPacks: '0updated',
-  packName: EMPTY_STRING,
-  user_id: null,
-} as initialStateType;
+// const initialState = {
+//   page: 1,
+//   /*   cardPacks: [] as Array<PackType>,*/
+//   /* cardPacksTotalCount: 0,*/
+//   maxCardsCount: 0,
+//   minCardsCount: 0,
+//   pageCount: 7,
+//   min: 0,
+//   max: null,
+//   sortPacks: '0updated',
+//   packName: EMPTY_STRING,
+//   user_id: null,
+// } as initialStateType;
 
 export const packsReducer = (
-  state: initialStateType = initialState,
+  state: initialStateType /* = initialState */,
   action: ActionsType,
-) => {
+): initialStateType => {
   switch (action.type) {
     case 'PACKS/SET-PACKS':
     case 'PACKS/CHANGE-SEARCH-PACK-NAME':
@@ -50,7 +49,7 @@ export const setPacksAC = (payload: getPacksResponseType) =>
     payload,
   } as const);
 
-export const changePageAC = (page: number) => {
+/* export const changePageAC = (page: number) => {
   return {
     type: 'PACKS/CHANGE-PAGE',
     payload: { page },
@@ -63,7 +62,7 @@ export const setNewMinMaxValues = (min: number, max: number) => {
     payload: { min, max },
   } as const;
 };
-
+ */
 export const setSortingFilter = (sortPacks: string) =>
   ({
     type: 'PACKS/SET-SORTING-FILTER',

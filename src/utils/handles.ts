@@ -1,5 +1,3 @@
-import { ReactElement } from 'react';
-
 import { CardType } from '../dal/cards/types';
 
 const MAX_GRADE_BORDER = 6;

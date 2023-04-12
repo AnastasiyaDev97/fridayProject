@@ -6,6 +6,7 @@ import { TableRow } from '../TableRow/TableRow';
 
 import style from './Table.module.scss';
 
+import { EntityType } from 'common/types/DataType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 
 export type PackRowValues = {
@@ -30,7 +31,7 @@ export type ItemValues = {
 };
 
 type TablePropsType = {
-  itemName: 'packs' | 'cards';
+  itemName: EntityType;
   tableTitles: { title: string; value: string }[];
   tableItems: ItemValues[];
   onSetSortingClick: (sortName: string, direction: 'up' | 'down') => void;

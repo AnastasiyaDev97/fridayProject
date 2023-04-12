@@ -1,16 +1,15 @@
 import { ReactNode, memo, useCallback } from 'react';
 
 import TextField from '@mui/material/TextField';
-import { useDispatch } from 'react-redux';
 
 import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
 import { useCustomInput } from 'common/hooks/useCustomInput';
+import { EntityType } from 'common/types/DataType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useUpdateCardMutation } from 'dal/cards';
 import { useUpdatePackMutation } from 'dal/packs';
-import { updatePackTC } from 'store/thunks/packs';
 
 type UpdateModalPropsType = {
   id: string;
@@ -18,7 +17,7 @@ type UpdateModalPropsType = {
   question?: string;
   answer?: string;
   cardsPackId?: string;
-  itemName: 'packs' | 'cards';
+  itemName: EntityType;
   disabled: boolean;
   children: ReactNode;
 };
@@ -34,8 +33,6 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
     cardsPackId,
     ...rest
   }: UpdateModalPropsType): ReturnComponentType => {
-    const dispatch = useDispatch();
-
     const [updateCard /* { data: cardData, error: addCardError } */] =
       useUpdateCardMutation();
     const [updatePack /* { data: cardData, error: addCardError } */] =
@@ -63,7 +60,6 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
         ); */
       }
     }, [
-      dispatch,
       itemName,
       answerValue,
       nameValue,

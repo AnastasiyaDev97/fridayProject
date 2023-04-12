@@ -1,7 +1,6 @@
 import {
   ChangeEvent,
   DetailedHTMLProps,
-  FC,
   InputHTMLAttributes,
   KeyboardEvent,
   memo,
@@ -22,7 +21,6 @@ type DefaultInputPropsType = DetailedHTMLProps<
 >;
 
 type SuperInputTextPropsType = DefaultInputPropsType & {
-  // и + ещё пропсы которых нет в стандартном инпуте
   onChangeText?: (value: string) => void;
   onEnter?: (/* text: string */) => void;
   error?: Nullable<string>;
@@ -30,17 +28,18 @@ type SuperInputTextPropsType = DefaultInputPropsType & {
   type: InputType;
 };
 
-export const SuperInputText: FC<SuperInputTextPropsType> = memo(
+export const SuperInputText = memo(
   ({
     type,
     onChange,
     onChangeText,
+    /* spanClassName, */
     onKeyPress,
     onEnter,
     error,
     className,
     ...restProps
-  }): ReturnComponentType => {
+  }: SuperInputTextPropsType): ReturnComponentType => {
     const dispatch = useDispatch();
 
     const finalInputClassName = `${s.input} ${
@@ -55,9 +54,7 @@ export const SuperInputText: FC<SuperInputTextPropsType> = memo(
 
     const onKeyPressCallback = (e: KeyboardEvent<HTMLInputElement>): void => {
       onKeyPress && onKeyPress(e);
-      onEnter &&
-        e.key === 'Enter' && // и если нажата кнопка Enter
-        onEnter(); // то вызвать его
+      onEnter && e.key === 'Enter' && onEnter();
     };
 
     return (

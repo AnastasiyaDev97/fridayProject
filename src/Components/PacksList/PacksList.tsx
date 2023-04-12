@@ -1,8 +1,7 @@
 import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 
-import { COMPONENT_NAME } from 'enums/ComponentName';
-import { useDispatch, useSelector } from 'react-redux';
-import { URLSearchParamsInit, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import type { URLSearchParamsInit } from 'react-router-dom';
 
 import { AddModal } from '../Modal/AddModal';
 
@@ -17,12 +16,8 @@ import { Table } from 'components/Table';
 import { EMPTY_STRING, PORTION_SIZE } from 'constants/index';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { PackType } from 'dal/packs/types';
-import {
-  changePageAC,
-  changeSearchPackNameAC,
-  setNewMinMaxValues,
-  setSortingFilter,
-} from 'store/reducers/packs-reducer';
+import { useAppDispatch, useAppSelector } from 'store';
+import { changeSearchPackNameAC, setSortingFilter } from 'store/reducers/packs-reducer';
 import { convertDateFormat } from 'utils/handles';
 
 type PackListPropsType = {
@@ -44,12 +39,10 @@ export const PacksList = memo(
     pageCount,
     actualPackName,
   }: PackListPropsType): ReturnComponentType => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const maxCardsCount = useSelector<AppRootStateType, number>(
-      state => state.packs.maxCardsCount,
-    );
+    const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
 
     const [text, setText] = useState<string>(actualPackName || '');
 
@@ -80,7 +73,7 @@ export const PacksList = memo(
 
     const handleChangePageClick = useCallback(
       (page: number) => {
-        dispatch(changePageAC(page));
+        /*  dispatch(changePageAC(page)); */
         setSearchParams({
           ...Object.fromEntries([...searchParams]),
           page: page.toString(),
@@ -101,7 +94,7 @@ export const PacksList = memo(
       handleChangePageClick(1);
       handleSetSortingClick('updated', 'down');
       handleSearchPack();
-      dispatch(setNewMinMaxValues(0, maxCardsCount));
+      /* dispatch(setNewMinMaxValues(0, maxCardsCount)); */
     }, [
       dispatch,
       handleChangePageClick,
@@ -126,7 +119,7 @@ export const PacksList = memo(
 
     useEffect(() => {
       if (searchParams.get('page')) {
-        dispatch(changePageAC(Number(searchParams.get('page'))));
+        /* dispatch(changePageAC(Number(searchParams.get('page')))); */
       }
     }, []);
 
@@ -140,6 +133,7 @@ export const PacksList = memo(
             onChangeText={setText}
             onEnter={handleSearchPack}
             placeholder="Search pack"
+            type="text"
           />
           <AddModal itemName="packs">
             <SuperButton onClick={onAddButtonClick} className={style.addButton}>
@@ -152,7 +146,7 @@ export const PacksList = memo(
           tableItems={packsForTable}
           tableTitles={PACK_TABLE_FIELDS}
           onSetSortingClick={handleSetSortingClick}
-          itemName={COMPONENT_NAME.PACKS}
+          itemName={'packs'}
         />
         <Pagination
           totalItemCount={totalItemCount}

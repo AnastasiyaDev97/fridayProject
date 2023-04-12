@@ -20,9 +20,7 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     setProfileData: (state: InitialStateType, action: PayloadAction<UserType>) => {
-      const defaultAvatar = action.payload?.avatar || '';
-
-      state = { ...action.payload, avatar: defaultAvatar };
+      state = { ...state, ...action.payload };
     },
   },
 });

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import style from '../Table/Table.module.scss';
 
+import { EntityType } from 'common/types/DataType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { DeleteModal } from 'components/Modal/DeleteModal';
 import { LearnModal } from 'components/Modal/LearnModal';
@@ -17,7 +18,7 @@ import { RootState } from 'store';
 
 type TableRowT = {
   itemValues: ItemValues;
-  itemName: 'packs' | 'cards';
+  itemName: EntityType;
 };
 export const TableRow: FC<TableRowT> = memo(
   ({ itemValues, itemName }: TableRowT): ReturnComponentType => {

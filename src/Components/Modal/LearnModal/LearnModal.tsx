@@ -5,7 +5,6 @@ import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { useDispatch } from 'react-redux';
 
 import { ANSWERS_GRADE } from '../../../constants/modal/index';
 import { ModalContainer } from '../ModalContainer';
@@ -15,7 +14,6 @@ import style from './LearnModal.module.scss';
 import { Nullable } from 'common/types/Nullable';
 import { useGetCardsQuery, useUpdateCardGradeMutation } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
-import { updateCardRatingTC } from 'store/thunks/cards';
 import { getCard } from 'utils/handles';
 
 type LearnModalPropsType = {
@@ -30,7 +28,6 @@ type LearnPaclContentProps = {
 };
 
 const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
-  const dispatch = useDispatch();
   const [updateCardGrade /* { data: cardData, error: addCardError } */] =
     useUpdateCardGradeMutation();
 

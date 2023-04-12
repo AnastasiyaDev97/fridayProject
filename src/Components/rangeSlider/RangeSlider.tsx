@@ -2,12 +2,12 @@ import { FC, memo } from 'react';
 
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-import { useSelector, useDispatch } from 'react-redux';
 
 import style from './RangeSlider.module.scss';
 
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { useAppDispatch, useAppSelector } from 'store';
 import { setNewMinMaxValues } from 'store/reducers/packs-reducer';
 
 type SliderPropsType = {
@@ -16,12 +16,13 @@ type SliderPropsType = {
 };
 
 export const RangeSlider: FC<SliderPropsType> = memo(
-  ({ currentMinCardsValue, currentMaxCardsValue }): ReturnComponentType => {
-    const dispatch = useDispatch();
+  ({
+    currentMinCardsValue,
+    currentMaxCardsValue,
+  }: SliderPropsType): ReturnComponentType => {
+    const dispatch = useAppDispatch();
 
-    const maxValueForRangeSlider = useSelector<AppRootStateType, number>(
-      state => state.packs.maxCardsCount,
-    );
+    const maxValueForRangeSlider = useAppSelector(state => state.packs.maxCardsCount);
 
     const onSliderChange = (event: Event, newValue: number | number[]): void => {
       if (Array.isArray(newValue)) {

@@ -1,6 +1,5 @@
 import { FC, memo, useCallback, useEffect } from 'react';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import type { URLSearchParamsInit } from 'react-router-dom';
 
@@ -11,6 +10,7 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { RangeSlider } from 'components/RangeSlider';
 import { SuperButton } from 'components/SuperButton';
 import { EMPTY_STRING } from 'constants/index';
+import { useAppDispatch, useAppSelector } from 'store';
 import { toggleShowUserPacksAC } from 'store/reducers/packs-reducer';
 
 type PacksParamsPropsT = {
@@ -19,19 +19,22 @@ type PacksParamsPropsT = {
 };
 
 export const PacksParams: FC<PacksParamsPropsT> = memo(
-  ({ currentMinCardsValue, currentMaxCardsValue }): ReturnComponentType => {
-    const dispatch = useDispatch();
+  ({
+    currentMinCardsValue,
+    currentMaxCardsValue,
+  }: PacksParamsPropsT): ReturnComponentType => {
+    const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const user_id = useSelector<AppRootStateType, string>(state => state.profile._id);
+    const userId = useAppSelector(state => state.profile._id);
 
     const onShowMyCardsClick = useCallback(() => {
-      dispatch(toggleShowUserPacksAC(user_id));
+      dispatch(toggleShowUserPacksAC(userId));
       setSearchParams({
         ...Object.fromEntries([...searchParams]),
-        user: user_id,
+        user: userId,
       } as URLSearchParamsInit);
-    }, [dispatch, user_id, searchParams, setSearchParams]);
+    }, [dispatch, userId, searchParams, setSearchParams]);
 
     const onShowAllCardsClick = useCallback(() => {
       dispatch(toggleShowUserPacksAC(EMPTY_STRING));
