@@ -1,28 +1,27 @@
-import { ChangeEvent, FC, memo, useEffect, useState } from 'react';
+import { ChangeEvent, memo, useState } from 'react';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { IconButton } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import style from './InputTypeFile.module.scss';
+import style from './FileInput.module.scss';
 
 import defaultAva from 'common/assets/images/noavatar.png';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { setErrorText } from 'store/reducers/app';
 
-type InputFileTypeProps = {
-  onUpdateAvatar: (newAvatar: string) => void;
-  avatar: string;
-};
-
 const MAX_FILE_SIZE = 4000000;
 
-export const InputTypeFile: FC<InputFileTypeProps> = memo(
-  ({ onUpdateAvatar, avatar }: InputFileTypeProps): ReturnComponentType => {
+type FileInputPropsType = {
+  updateImage: (newAvatar: string) => void;
+  image: string;
+};
+
+export const FileInput = memo(
+  ({ updateImage, image }: FileInputPropsType): ReturnComponentType => {
     const dispatch = useDispatch();
 
-    const [ava, setAva] = useState(avatar);
-    const [isAvaBroken, setIsAvaBroken] = useState(false);
+    const [isImageBroken, setIsImageBroken] = useState(false);
 
     const uploadHandler = (e: ChangeEvent<HTMLInputElement>): void => {
       if (e.target.files && e.target.files.length) {
@@ -30,7 +29,7 @@ export const InputTypeFile: FC<InputFileTypeProps> = memo(
 
         if (file?.size < MAX_FILE_SIZE) {
           convertFileToBase64(file, (file64: string) => {
-            setAva(file64);
+            updateImage(file64);
           });
         } else {
           dispatch(setErrorText({ errorText: 'File is too large' }));
@@ -50,24 +49,25 @@ export const InputTypeFile: FC<InputFileTypeProps> = memo(
     };
 
     const errorHandler = (): void => {
-      setIsAvaBroken(true);
+      setIsImageBroken(true);
       dispatch(setErrorText({ errorText: 'Unsupported image format' }));
     };
-
-    useEffect(() => {
-      onUpdateAvatar(ava);
-    }, [ava, onUpdateAvatar]);
 
     return (
       <div className={style.inputFileBlock}>
         <img
-          src={isAvaBroken ? defaultAva : ava}
+          src={isImageBroken ? defaultAva : image}
           className={style.avatar}
           onError={errorHandler}
           alt="avatar"
         />
         <label>
-          <input type="file" onChange={uploadHandler} style={{ display: 'none' }} />
+          <input
+            type="file"
+            onChange={uploadHandler}
+            style={{ display: 'none' }}
+            accept="image/*"
+          />
           <IconButton component="span" className={style.uploadIcon} color="inherit">
             <CloudUploadIcon sx={{ width: '100%', height: '100%' }} />
           </IconButton>

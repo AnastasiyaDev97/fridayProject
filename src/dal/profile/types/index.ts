@@ -1,10 +1,10 @@
 import { UserType } from 'dal/users/types';
 
-export type updateProfilePayloadtype = {
+export type UpdateProfilePayloadtype = {
   name?: string;
   avatar?: string;
 };
-export type updateProfileResponseType = {
+export type UpdateProfileResponseType = {
   updatedUser: UserType;
   error?: string;
 };

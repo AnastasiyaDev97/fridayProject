@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { Outlet } from 'react-router-dom';
 
 import styles from './Layout.module.scss';
@@ -12,6 +14,15 @@ export const Layout = (): ReturnComponentType => {
   const errorText = useAppSelector(state => state.app.errorText);
   const status = useAppSelector(state => state.app.status);
 
+  const [isErrorShown, setIsErrorShown] = useState(false);
+
+  useEffect(() => {
+    if (errorText) {
+      setIsErrorShown(true);
+      setTimeout(() => setIsErrorShown(false), 3000);
+    }
+  }, [errorText]);
+
   return (
     <div className={styles.appWrapper}>
       <Header />
@@ -19,7 +30,7 @@ export const Layout = (): ReturnComponentType => {
         {status === STATUS.LOADING && <Preloader />}
         <Outlet />
       </div>
-      {errorText && <div className={styles.err}>{errorText}</div>}
+      {isErrorShown && <div className={styles.err}>{errorText}</div>}
     </div>
   );
 };

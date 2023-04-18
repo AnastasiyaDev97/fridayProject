@@ -11,7 +11,7 @@ export { UniversalInput } from 'components/UniversalInput';
 export { UserCard } from 'components/UserCard';
 export { PacksParams } from 'components/PacksParams';
 
-export { InputTypeFile } from './InputTypeFile';
+export { FileInput } from './FileInput';
 export { Layout } from './Layout';
 export { NavBar } from './NavBar';
 export { PacksList } from './PacksList';

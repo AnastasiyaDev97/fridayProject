@@ -16,6 +16,7 @@ import { PATH } from 'enums/Path';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setLoginStatus } from 'store/reducers/auth';
 /* import { setProfileData } from 'store/reducers/profile'; */
+import { setProfileData } from 'store/reducers/profile';
 import { AuthData, validateLoginForm } from 'utils/validates';
 
 const Login = (): ReturnComponentType => {
@@ -31,7 +32,7 @@ const Login = (): ReturnComponentType => {
   useEffect(() => {
     if (loginData) {
       dispatch(setLoginStatus(true));
-      /* dispatch(setProfileData(loginData)); */
+      dispatch(setProfileData(loginData));
     }
   }, [loginData, dispatch]);
 

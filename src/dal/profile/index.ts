@@ -3,11 +3,11 @@ import URI from 'urijs';
 import { clientAPI } from '..';
 import type { builderType } from '..';
 
-import { updateProfilePayloadtype, updateProfileResponseType } from './types';
+import { UpdateProfilePayloadtype, UpdateProfileResponseType } from './types';
 
 const profileAPI = clientAPI.injectEndpoints({
   endpoints: (build: builderType) => ({
-    updateProfile: build.mutation<updateProfileResponseType, updateProfilePayloadtype>({
+    updateProfile: build.mutation<UpdateProfileResponseType, UpdateProfilePayloadtype>({
       query(data) {
         const URL = new URI(`auth/me`);
 
@@ -17,7 +17,6 @@ const profileAPI = clientAPI.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (response: { data: updateProfileResponseType }) => response.data,
     }),
   }),
   overrideExisting: false,

@@ -1,22 +1,18 @@
 import { Suspense, useEffect } from 'react';
 
-/* import { Navigate } from 'react-router-dom'; */
-
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Preloader } from 'components/Preloader';
 import { useAuthMutation } from 'dal/authorization';
-/* import Login from 'pages/Login'; */
 import { AppRoutes } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
-import { setErrorText, setIsInitialized } from 'store/reducers/app';
+import { /* setErrorText, */ setIsInitialized } from 'store/reducers/app';
 import { setLoginStatus } from 'store/reducers/auth';
 import { setProfileData } from 'store/reducers/profile';
 
 const App = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
-  const [auth, { data: authData, isError: authError /* , isError, isSuccess */ }] =
-    useAuthMutation();
+  const [auth, { data: authData, isError: authError }] = useAuthMutation();
 
   const isInitialized = useAppSelector(state => state.app.isInitialized);
 
@@ -25,7 +21,7 @@ const App = (): ReturnComponentType => {
       return;
     }
     auth();
-  }, []);
+  }, [auth, isInitialized]);
 
   useEffect(() => {
     if (authData) {
@@ -34,7 +30,7 @@ const App = (): ReturnComponentType => {
       dispatch(setIsInitialized(true));
     }
     if (authError) {
-      dispatch(setErrorText({ errorText: 'You are not authorized' }));
+      /* dispatch(setErrorText({ errorText: 'You are not authorized' })); */
       dispatch(setIsInitialized(true));
     }
   }, [authData, dispatch, authError]);
