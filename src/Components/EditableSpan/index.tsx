@@ -14,7 +14,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(
     const [isEdit, toggleEdit] = useState(true);
     const [name, setName] = useState(title);
 
-    const onActivateInputModeDblClick = (): void => {
+    const onActivateInputMode = (): void => {
       toggleEdit(false);
     };
 
@@ -35,7 +35,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(
     };
 
     return isEdit ? (
-      <span onDoubleClick={onActivateInputModeDblClick} className={style.span}>
+      <span onClick={onActivateInputMode} className={style.textField}>
         {name}
       </span>
     ) : (
@@ -45,7 +45,7 @@ export const EditableSpan: FC<EditableSpanPropsType> = memo(
         onBlur={onInputActivateSpanModeBlur}
         autoFocus
         onChange={onInputUpdateTitleChange}
-        className={style.input}
+        className={style.inputField}
         onKeyPress={onInputActivateModePress}
       />
     );

@@ -4,10 +4,9 @@
     box-sizing: border-box;
 }
 
-
 .input {
-    font-family: inherit; /* 1 */
-    font-size: inherit; /* 1 */
+    font-family: inherit; 
+    font-size: inherit;
     color: #626c72;
     line-height: 26px;
     box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
@@ -25,10 +24,6 @@
     outline:none;
 }
 
-.superInput {
-
-}
-
 .errorInput {
 border:1px solid red;
 }
@@ -36,3 +31,4 @@ border:1px solid red;
 .error {
     color: red;
 }
+

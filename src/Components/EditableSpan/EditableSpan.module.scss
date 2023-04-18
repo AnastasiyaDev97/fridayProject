@@ -1,15 +1,19 @@
 @import '../../common/sass/variables.scss';
 
-.input {
-  margin-bottom: 20px;
-  padding: 8px;
-  width: 40%;
-}
-.span {
+
+.textField {
   cursor: pointer;
   font-size: 2rem;
   font-family: $QuicksandFont;
   &:hover {
     color: grey;
   }
+}
+.inputField {
+  background-color: transparent !important;
+  font-size: 2rem !important;
+  color: $Text !important;
+  font-family: $QuicksandFont !important;
+  border: none !important;
+  padding: 0 !important;
 }

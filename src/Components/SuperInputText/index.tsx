@@ -8,7 +8,7 @@ import {
 
 import { useDispatch } from 'react-redux';
 
-import s from './SuperInputText.module.css';
+import style from './SuperInputText.module.scss';
 
 import { InputType } from 'common/types/InputType';
 import { Nullable } from 'common/types/Nullable';
@@ -42,8 +42,8 @@ export const SuperInputText = memo(
   }: SuperInputTextPropsType): ReturnComponentType => {
     const dispatch = useDispatch();
 
-    const finalInputClassName = `${s.input} ${
-      error ? s.errorInput : s.superInput
+    const finalInputClassName = `${style.input} ${
+      error ? style.errorInput : style.superInput
     } ${className} `;
 
     const onChangeCallback = (e: ChangeEvent<HTMLInputElement>): void => {

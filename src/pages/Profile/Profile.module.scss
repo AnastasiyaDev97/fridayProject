@@ -27,8 +27,6 @@
 
   .profileInfo {
     padding-left: 40px;
-    display: flex;
-    flex-direction: column;
     padding-bottom: 25px;
     @include d-media(sm) {
       padding-left: 0;
