@@ -1,6 +1,6 @@
-import { ReactElement, /*  ReactNode, */ lazy } from 'react';
+import { ReactElement, lazy } from 'react';
 
-import { Navigate, /* Outlet, */ Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Layout } from 'components';
@@ -14,7 +14,7 @@ const {
   FORGOT_PASSWORD,
   NEW_PASSWORD,
   CARDS,
-  /* PACKS, */
+  PACKS,
   LOGIN,
   TOKEN,
   ANY,
@@ -24,8 +24,9 @@ const {
 
 export const PrivateRoutes = ({ children }: any): ReactElement<any, any> => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+  const location = useLocation();
 
-  return isLoggedIn ? children : <Navigate to={PATH.LOGIN} />;
+  return isLoggedIn ? children : <Navigate to={PATH.LOGIN} state={{ from: location }} />;
 };
 
 const Cards = lazy(() => import('pages/Cards'));
@@ -42,14 +43,57 @@ export const AppRoutes = (): ReturnComponentType => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="/" index element={<Packs />} />
+        <Route
+          path="/"
+          index
+          element={
+            <PrivateRoutes>
+              <Packs />
+            </PrivateRoutes>
+          }
+        />
 
-        <Route path={PROFILE} element={<Profile />} />
-        <Route path={CHAT} element={<Chat />} />
-        <Route path={CARDS} element={<Cards />}>
-          <Route path={ID} element={<Cards />} />
+        <Route
+          path={PROFILE}
+          element={
+            <PrivateRoutes>
+              <Profile />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path={CHAT}
+          element={
+            <PrivateRoutes>
+              <Chat />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path={PACKS}
+          element={
+            <PrivateRoutes>
+              <Packs />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path={CARDS}
+          element={
+            <PrivateRoutes>
+              <Cards />
+            </PrivateRoutes>
+          }
+        >
+          <Route
+            path={ID}
+            element={
+              <PrivateRoutes>
+                <Cards />
+              </PrivateRoutes>
+            }
+          />
         </Route>
-        {/*  <Route path={PACKS} element={<Packs />} /> */}
 
         <Route path={REGISTER} element={<Register />} />
         <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />

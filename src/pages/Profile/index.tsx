@@ -15,7 +15,9 @@ const Profile = (): ReturnComponentType => {
   const [updateProfile, { data: profileData /* , error: profileError */ }] =
     useUpdateProfileMutation();
 
-  const avatar = useAppSelector(state => state.profile.avatar);
+  const avatar = useAppSelector(state => {
+    return state.profile.avatar;
+  });
   const email = useAppSelector(state => state.profile.email);
   const name = useAppSelector(state => state.profile.name);
   const publicCardPacksCount = useAppSelector(

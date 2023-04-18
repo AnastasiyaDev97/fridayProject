@@ -64,7 +64,7 @@ export const InputTypeFile: FC<InputFileTypeProps> = memo(
           src={isAvaBroken ? defaultAva : ava}
           className={style.avatar}
           onError={errorHandler}
-          alt="ava"
+          alt="avatar"
         />
         <label>
           <input type="file" onChange={uploadHandler} style={{ display: 'none' }} />

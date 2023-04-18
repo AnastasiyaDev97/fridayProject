@@ -23,7 +23,6 @@ const packsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Packs'] }).injectEn
           url: URL.toString(),
         };
       },
-      transformResponse: (response: { data: getPacksResponseType }) => response.data,
     }),
     addPack: build.mutation<void, addNewPackPayloadType>({
       query(data) {
@@ -63,6 +62,7 @@ const packsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Packs'] }).injectEn
       invalidatesTags: ['Packs'],
     }),
   }),
+  overrideExisting: false,
 });
 
 export const {

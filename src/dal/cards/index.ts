@@ -80,6 +80,7 @@ const cardsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Cards'] }).injectEn
       invalidatesTags: ['Cards'],
     }),
   }),
+  overrideExisting: false,
 });
 
 export const {

@@ -20,7 +20,7 @@ export const profileSlice = createSlice({
   initialState,
   reducers: {
     setProfileData: (state: InitialStateType, action: PayloadAction<UserType>) => {
-      state = { ...state, ...action.payload };
+      Object.assign(state, action.payload);
     },
   },
 });

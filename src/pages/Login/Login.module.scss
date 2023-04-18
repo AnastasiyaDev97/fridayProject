@@ -20,15 +20,7 @@
     z-index: 0;
   }
 
-  h2 {
-    color: $Text;
-    line-height: 1.5;
-    font-family: $QuicksandFont;
-    font-weight: 700;
-    margin-bottom: 40px;
-    z-index: 1;
-  }
-
+  
   .form {
     display: flex;
     flex-direction: column;
@@ -104,13 +96,7 @@
   }
 }
 
-div {
-  color: $Text;
-  font-family: $NunitoFont;
-  font-weight: 200;
-  font-size: 16px;
-  /* z-index: 1; */
-}
+
 
 .sendMailBlock {
   display: flex;

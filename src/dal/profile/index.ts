@@ -20,6 +20,7 @@ const profileAPI = clientAPI.injectEndpoints({
       transformResponse: (response: { data: updateProfileResponseType }) => response.data,
     }),
   }),
+  overrideExisting: false,
 });
 
 export const { useUpdateProfileMutation } = profileAPI;

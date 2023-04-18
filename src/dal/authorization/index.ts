@@ -61,7 +61,6 @@ const authAPI = clientAPI.injectEndpoints({
           method: 'POST',
         };
       },
-      transformResponse: (response: { data: ResponseLoginType }) => response.data,
     }),
     sendPassword: build.mutation<ResponseForgotPasswordType, string>({
       query(email) {
