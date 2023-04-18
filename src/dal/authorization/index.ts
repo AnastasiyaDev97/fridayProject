@@ -40,7 +40,6 @@ const authAPI = clientAPI.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (response: { data: ResponseLoginType }) => response.data,
     }),
     logout: build.mutation<ResponseLogoutType, void>({
       query() {

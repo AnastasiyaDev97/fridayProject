@@ -5,8 +5,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
-import { UniversalInput } from 'components/UniversalInput';
-import { InputType } from 'components/UniversalInput';
+import { UniversalInput, InputType } from 'components/UniversalInput';
 import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
 import { useRegisterMutation } from 'dal/authorization';

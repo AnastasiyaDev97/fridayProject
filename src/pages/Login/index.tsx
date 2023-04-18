@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
-import { Navigate, NavLink } from 'react-router-dom';
+import { Navigate, NavLink, useLocation } from 'react-router-dom';
 
 import styles from './Login.module.scss';
 
@@ -20,10 +20,13 @@ import { AuthData, validateLoginForm } from 'utils/validates';
 
 const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   const [login, { data: loginData /* , error: loginError */ }] = useLoginMutation();
 
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
+
+  const fromPage = location?.state?.from?.pathname || '/';
 
   useEffect(() => {
     if (loginData) {
@@ -53,7 +56,7 @@ const Login = (): ReturnComponentType => {
   const conditionForDisableButton = !!(formik.errors.email || formik.errors.password);
 
   if (isLoggedIn) {
-    return <Navigate to={PATH.START} />;
+    return <Navigate to={fromPage} />;
   }
 
   return (
