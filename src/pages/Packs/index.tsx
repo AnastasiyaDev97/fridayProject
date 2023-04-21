@@ -11,6 +11,7 @@ import { useAppSelector } from 'store';
 
 const Packs = memo(() => {
   const [searchParams] = useSearchParams();
+
   const actualPackName = searchParams.get('packName');
   const currentPage = Number(searchParams.get('packPage'));
   const min = Number(searchParams.get('min')) || 0;
@@ -42,7 +43,8 @@ const Packs = memo(() => {
       <div className={style.wrapper}>
         <PacksParams
           currentMinCardsValue={min}
-          currentMaxCardsValue={max} /* maxCardsCount={maxCardsCount} */
+          currentMaxCardsValue={max}
+          maxCardsCount={packs?.maxCardsCount}
         />
         <PacksList
           packs={packs?.cardPacks}

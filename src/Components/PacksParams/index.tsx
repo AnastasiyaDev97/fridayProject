@@ -5,7 +5,6 @@ import type { URLSearchParamsInit } from 'react-router-dom';
 
 import style from './PacksParams.module.scss';
 
-import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { RangeSlider } from 'components/RangeSlider';
 import { SuperButton } from 'components/SuperButton';
@@ -15,13 +14,15 @@ import { toggleShowUserPacksAC } from 'store/reducers/packs-reducer';
 
 type PacksParamsPropsT = {
   currentMinCardsValue: number;
-  currentMaxCardsValue: Nullable<number>;
+  currentMaxCardsValue: number;
+  maxCardsCount: number;
 };
 
 export const PacksParams: FC<PacksParamsPropsT> = memo(
   ({
     currentMinCardsValue,
     currentMaxCardsValue,
+    maxCardsCount,
   }: PacksParamsPropsT): ReturnComponentType => {
     const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -44,6 +45,17 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
       } as URLSearchParamsInit);
     }, [dispatch, setSearchParams, searchParams]);
 
+    const handleChangeCardsCountChange = useCallback(
+      (min: number, max: number) => {
+        setSearchParams({
+          ...Object.fromEntries([...searchParams]),
+          min: min.toString(),
+          max: max.toString(),
+        } as URLSearchParamsInit);
+      },
+      [setSearchParams, searchParams],
+    );
+
     useEffect(() => {
       if (searchParams.get('user')) {
         dispatch(toggleShowUserPacksAC(searchParams.get('user') as string));
@@ -60,8 +72,10 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
         </div>
 
         <RangeSlider
-          currentMinCardsValue={currentMinCardsValue}
-          currentMaxCardsValue={currentMaxCardsValue}
+          currentMinSliderValue={currentMinCardsValue}
+          currentMaxSliderValue={currentMaxCardsValue}
+          maxSliderCount={maxCardsCount}
+          onSliderValuesChange={handleChangeCardsCountChange}
         />
       </div>
     );
