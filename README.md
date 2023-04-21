@@ -1,9 +1,9 @@
 
 # CardsApp (in the process of migrating to redux toolkit query)
 
-<a href="https://nastyaz23.github.io/fridayProject/">
+<a href="https://anastasiyadev97.github.io/fridayProject/">
   <div>
-   <h3><a href="https://nastyaz23.github.io/fridayProject/">Link to app </a></h3>
+   <h3><a href="https://anastasiyadev97.github.io/fridayProject/">Link to app </a></h3>
   </div>
 </a>
 
