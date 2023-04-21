@@ -9,11 +9,11 @@ import {
 import { isAuthToggleAC } from '../login-reducer';
 import {
   /*   changePageAC, */
-  changeSearchPackNameAC,
+  /*   changeSearchPackNameAC, */
   /*   setNewMinMaxValues, */
   setPacksAC,
-  setSortingFilter,
-  toggleShowUserPacksAC,
+  /*   setSortingFilter,
+  toggleShowUserPacksAC, */
 } from '../packs-reducer';
 import {
   addEmailAC,
@@ -37,13 +37,13 @@ export type ActionsType =
   | ReturnType<typeof setPacksAC>
   /*   | ReturnType<typeof changePageAC>
   | ReturnType<typeof setNewMinMaxValues> */
-  | ReturnType<typeof setSortingFilter>
+  /*   | ReturnType<typeof setSortingFilter> */
   | ReturnType<typeof setCardsAC>
   | ReturnType<typeof setSortingFilterCards>
   | ReturnType<typeof changePageCardsAC>
-  | ReturnType<typeof changeSearchPackNameAC>
+  /*  | ReturnType<typeof changeSearchPackNameAC> */
   | ReturnType<typeof setCardsRatingAC>
-  | ReturnType<typeof toggleShowUserPacksAC>
+  /*   | ReturnType<typeof toggleShowUserPacksAC> */
   | ReturnType<typeof getUsersDataAC>
   | ReturnType<typeof changePageUsersAC>
   | ReturnType<typeof resetCardsAC>;

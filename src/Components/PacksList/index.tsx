@@ -17,7 +17,6 @@ import { EMPTY_STRING, PORTION_SIZE } from 'constants/index';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { PackType } from 'dal/packs/types';
 import { useAppDispatch, useAppSelector } from 'store';
-import { changeSearchPackNameAC, setSortingFilter } from 'store/reducers/packs-reducer';
 import { convertDateFormat } from 'utils/handles';
 
 type PackListPropsType = {
@@ -64,12 +63,12 @@ export const PacksList = memo(
     }, [packs]);
 
     const handleSearchPack = useCallback(() => {
-      dispatch(changeSearchPackNameAC(text));
+      /*  dispatch(changeSearchPackNameAC(text)); */
       setSearchParams({
         ...Object.fromEntries([...searchParams]),
         packName: text,
       } as URLSearchParamsInit);
-    }, [dispatch, text, searchParams, setSearchParams]);
+    }, [text, searchParams, setSearchParams]);
 
     const handleChangePageClick = useCallback(
       (page: number) => {
@@ -79,12 +78,12 @@ export const PacksList = memo(
           page: page.toString(),
         } as URLSearchParamsInit);
       },
-      [dispatch, setSearchParams, searchParams],
+      [setSearchParams, searchParams],
     );
 
     const handleSetSortingClick = useCallback(
-      (sortName: string, direction: 'up' | 'down') => {
-        dispatch(setSortingFilter(direction === 'up' ? `1${sortName}` : `0${sortName}`));
+      (/* sortName: string, direction: 'up' | 'down' */) => {
+        /*   dispatch(setSortingFilter(direction === 'up' ? `1${sortName}` : `0${sortName}`)); */
       },
       [dispatch],
     );
@@ -92,7 +91,7 @@ export const PacksList = memo(
     const onAddButtonClick = useCallback(() => {
       setText('');
       handleChangePageClick(1);
-      handleSetSortingClick('updated', 'down');
+      /*  handleSetSortingClick('updated', 'down'); */
       handleSearchPack();
       /* dispatch(setNewMinMaxValues(0, maxCardsCount)); */
     }, [

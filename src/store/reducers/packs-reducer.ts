@@ -31,7 +31,7 @@ export const packsReducer = (
 ): initialStateType => {
   switch (action.type) {
     case 'PACKS/SET-PACKS':
-    case 'PACKS/CHANGE-SEARCH-PACK-NAME':
+      /*  case 'PACKS/CHANGE-SEARCH-PACK-NAME': */
       /*     case 'PACKS/CHANGE-PAGE': */
       /*     case 'SET-RESPONSE-INFO-NEW-PASS': */
       /*     case 'PACKS/TOGGLE-SHOW-USER-PACKS': */
@@ -63,20 +63,19 @@ export const setNewMinMaxValues = (min: number, max: number) => {
   } as const;
 };
  */
-export const setSortingFilter = (sortPacks: string) =>
+/* const setSortingFilter = (sortPacks: string) =>
   ({
     type: 'PACKS/SET-SORTING-FILTER',
     payload: { sortPacks },
   } as const);
-
-export const changeSearchPackNameAC = (packName: string) =>
+const changeSearchPackNameAC = (packName: string) =>
   ({
     type: 'PACKS/CHANGE-SEARCH-PACK-NAME',
     payload: { packName },
   } as const);
 
-export const toggleShowUserPacksAC = (user_id: string) =>
+const toggleShowUserPacksAC = (user_id: string) =>
   ({
     type: 'PACKS/TOGGLE-SHOW-USER-PACKS',
     payload: { user_id },
-  } as const);
+  } as const); */

@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect } from 'react';
+import { FC, memo, useCallback /* , useEffect */ } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 import type { URLSearchParamsInit } from 'react-router-dom';
@@ -8,9 +8,7 @@ import style from './PacksParams.module.scss';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { RangeSlider } from 'components/RangeSlider';
 import { SuperButton } from 'components/SuperButton';
-import { EMPTY_STRING } from 'constants/index';
-import { useAppDispatch, useAppSelector } from 'store';
-import { toggleShowUserPacksAC } from 'store/reducers/packs-reducer';
+import { /* useAppDispatch, */ useAppSelector } from 'store';
 
 type PacksParamsPropsT = {
   currentMinCardsValue: number;
@@ -24,26 +22,25 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
     currentMaxCardsValue,
     maxCardsCount,
   }: PacksParamsPropsT): ReturnComponentType => {
-    const dispatch = useAppDispatch();
+    /*     const dispatch = useAppDispatch(); */
     const [searchParams, setSearchParams] = useSearchParams();
 
     const userId = useAppSelector(state => state.profile._id);
 
     const onShowMyCardsClick = useCallback(() => {
-      dispatch(toggleShowUserPacksAC(userId));
       setSearchParams({
         ...Object.fromEntries([...searchParams]),
-        user: userId,
+        userId,
       } as URLSearchParamsInit);
-    }, [dispatch, userId, searchParams, setSearchParams]);
+    }, [userId, searchParams, setSearchParams]);
 
     const onShowAllCardsClick = useCallback(() => {
-      dispatch(toggleShowUserPacksAC(EMPTY_STRING));
-      setSearchParams({
-        ...Object.fromEntries([...searchParams]),
-        user: '',
-      } as URLSearchParamsInit);
-    }, [dispatch, setSearchParams, searchParams]);
+      const searchParamsObject = { ...Object.fromEntries([...searchParams]) };
+
+      delete searchParamsObject.userId;
+
+      setSearchParams(searchParamsObject as URLSearchParamsInit);
+    }, [setSearchParams, searchParams]);
 
     const handleChangeCardsCountChange = useCallback(
       (min: number, max: number) => {
@@ -55,12 +52,6 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
       },
       [setSearchParams, searchParams],
     );
-
-    useEffect(() => {
-      if (searchParams.get('user')) {
-        dispatch(toggleShowUserPacksAC(searchParams.get('user') as string));
-      }
-    }, []);
 
     return (
       <div className={style.wrapper}>
