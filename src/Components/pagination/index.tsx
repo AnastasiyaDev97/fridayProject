@@ -2,15 +2,13 @@ import { memo, useCallback, useState } from 'react';
 
 import styles from './Pagination.module.scss';
 
-import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { PAGE_COUNT } from 'constants/table';
 
 type PaginatorPropsType = {
-  totalItemCount: Nullable<number>;
-
-  currentPage: Nullable<number>;
+  totalItemCount: number;
+  currentPage: number;
   onChangePageClick: (currentPage: number) => void;
   portionSize: number;
 };
@@ -20,7 +18,6 @@ const START_VALUE_PORTION_NUMBER = 1;
 export const Pagination = memo(
   ({
     totalItemCount,
-
     currentPage,
     onChangePageClick,
     portionSize,

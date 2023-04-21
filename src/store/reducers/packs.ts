@@ -5,11 +5,8 @@ import { getPacksResponseType, PackType } from '../../dal/packs/types';
 
 const initialState = {
   cardPacks: [] as Array<PackType>,
-  cardPacksTotalCount: 0,
   maxCardsCount: 0,
   minCardsCount: 0,
-  /*   min: 0,
-  max: 0, */
 };
 
 type InitialStateType = typeof initialState;

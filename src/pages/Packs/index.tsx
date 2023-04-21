@@ -7,19 +7,16 @@ import style from './Packs.module.scss';
 import { PacksList } from 'components/PacksList';
 import { PacksParams } from 'components/PacksParams';
 import { useGetPacksQuery } from 'dal/packs';
-import { useAppSelector } from 'store';
 
 const Packs = memo(() => {
   const [searchParams] = useSearchParams();
 
   const actualPackName = searchParams.get('packName');
-  const currentPage = Number(searchParams.get('packPage'));
+  const currentPage = Number(searchParams.get('packPage')) || 1;
   const min = Number(searchParams.get('min')) || 0;
   const max = Number(searchParams.get('max')) || 0;
   const sortPacks = searchParams.get('sortPacks') || '';
   const userId = searchParams.get('userId') || '';
-
-  const totalItemCount = useAppSelector(state => state.packs.cardPacksTotalCount);
 
   /* const onAddPackButtonClick = useCallback(count => {
     setMaxCardsCount(count);
@@ -49,7 +46,7 @@ const Packs = memo(() => {
         <PacksList
           packs={packs?.cardPacks}
           currentPage={currentPage}
-          totalItemCount={totalItemCount}
+          totalItemCount={packs?.cardPacksTotalCount}
           sortPacks={sortPacks}
           actualPackName={actualPackName}
           /*  onAddPackButtonClick={onAddPackButtonClick} */

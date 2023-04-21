@@ -23,7 +23,6 @@ type PackListPropsType = {
   packs: Array<PackType>;
   currentPage: number;
   totalItemCount: number;
-
   sortPacks: string;
   actualPackName: Nullable<string>;
 };
@@ -35,7 +34,6 @@ export const PacksList = memo(
     packs,
     currentPage,
     totalItemCount,
-
     actualPackName,
   }: PackListPropsType): ReturnComponentType => {
     const dispatch = useAppDispatch();
@@ -72,10 +70,9 @@ export const PacksList = memo(
 
     const handleChangePageClick = useCallback(
       (page: number) => {
-        /*  dispatch(changePageAC(page)); */
         setSearchParams({
           ...Object.fromEntries([...searchParams]),
-          page: page.toString(),
+          packPage: page.toString(),
         } as URLSearchParamsInit);
       },
       [setSearchParams, searchParams],
