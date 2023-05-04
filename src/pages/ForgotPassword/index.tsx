@@ -4,14 +4,13 @@ import { useFormik } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { SuperButton } from 'components/SuperButton';
-import { UniversalInput } from 'components/UniversalInput';
+import { UniversalInput, SuperButton } from 'components';
 import { EMPTY_STRING } from 'constants/index';
 import { useSendPasswordMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
-import { setProfileData } from 'store/reducers/profile';
+import { setProfileData } from 'store/reducers';
 import { AuthData, validateForgotPasswordForm } from 'utils/validates';
 
 const ForgotPassword = (): ReturnComponentType => {

@@ -4,8 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import style from './Packs.module.scss';
 
-import { PacksList } from 'components/PacksList';
-import { PacksParams } from 'components/PacksParams';
+import { PacksList, PacksParams } from 'components';
 import { useGetPacksQuery } from 'dal/packs';
 
 const Packs = memo(() => {

@@ -12,7 +12,7 @@ import { useRegisterMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
-import { setRegisterStatus } from 'store/reducers/auth';
+import { setRegisterStatus } from 'store/reducers';
 import { errorHandler } from 'utils/error-utils';
 import { AuthData, validates } from 'utils/validates';
 

@@ -30,7 +30,7 @@ export const Layout = (): ReturnComponentType => {
         {status === STATUS.LOADING && <Preloader />}
         <Outlet />
       </div>
-      {isErrorShown && <div className={styles.err}>{errorText}</div>}
+      {isErrorShown && <div className={styles.defaultError}>{errorText} &#128123;</div>}
     </div>
   );
 };

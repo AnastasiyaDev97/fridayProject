@@ -3,12 +3,10 @@ import { useCallback, useEffect } from 'react';
 import style from './Profile.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { EditableSpan } from 'components/EditableSpan';
-import { FileInput } from 'components/FileInput';
+import { EditableSpan, FileInput } from 'components';
 import { useUpdateProfileMutation } from 'dal/profile';
 import { useAppDispatch, useAppSelector } from 'store';
-import { setErrorText } from 'store/reducers/app';
-import { setProfileData } from 'store/reducers/profile';
+import { setErrorText, setProfileData } from 'store/reducers';
 
 const Profile = (): ReturnComponentType => {
   const dispatch = useAppDispatch();

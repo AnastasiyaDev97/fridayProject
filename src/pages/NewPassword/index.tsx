@@ -6,8 +6,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import styles from '../Login/Login.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { SuperButton } from 'components/SuperButton';
-import { UniversalInput } from 'components/UniversalInput';
+import { SuperButton, UniversalInput } from 'components';
 import { EMPTY_STRING } from 'constants/index';
 import { useSetNewPasswordMutation } from 'dal/authorization';
 import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';

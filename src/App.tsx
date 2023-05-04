@@ -5,9 +5,7 @@ import { Preloader } from 'components/Preloader';
 import { useAuthMutation } from 'dal/authorization';
 import { AppRoutes } from 'routes';
 import { useAppDispatch, useAppSelector } from 'store';
-import { /* setErrorText, */ setIsInitialized } from 'store/reducers/app';
-import { setLoginStatus } from 'store/reducers/auth';
-import { setProfileData } from 'store/reducers/profile';
+import { setIsInitialized, setLoginStatus, setProfileData } from 'store/reducers';
 
 const App = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -30,7 +28,6 @@ const App = (): ReturnComponentType => {
       dispatch(setIsInitialized(true));
     }
     if (authError) {
-      /* dispatch(setErrorText({ errorText: 'You are not authorized' })); */
       dispatch(setIsInitialized(true));
     }
   }, [authData, dispatch, authError]);
