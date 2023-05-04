@@ -23,12 +23,12 @@ export const UniversalInput: FC<UniversalInputPropsType> = memo(
     placeholder,
     type,
   }: UniversalInputPropsType): ReturnComponentType => {
-    const [passwordShown, setPasswordShown] = useState<boolean>(false);
-
-    const typeForInput = !passwordShown && type ? 'password' : 'text';
+    const [inputType, setInputType] = useState<InputType>(type || 'text');
 
     const onSpanToggleShowPasswordClick = (): void => {
-      setPasswordShown(!passwordShown);
+      setInputType(state => {
+        return state === 'password' ? 'text' : 'password';
+      });
     };
 
     return (
@@ -37,7 +37,7 @@ export const UniversalInput: FC<UniversalInputPropsType> = memo(
           className={styles.input}
           placeholder={placeholder}
           {...formikProps}
-          type={typeForInput}
+          type={inputType}
         />
         {type === 'password' && (
           <span

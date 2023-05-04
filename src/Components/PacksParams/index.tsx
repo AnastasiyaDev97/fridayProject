@@ -6,8 +6,7 @@ import type { URLSearchParamsInit } from 'react-router-dom';
 import style from './PacksParams.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { RangeSlider } from 'components/RangeSlider';
-import { SuperButton } from 'components/SuperButton';
+import { RangeSlider, SuperButton } from 'components';
 import { useAppSelector } from 'store';
 
 type PacksParamsPropsT = {

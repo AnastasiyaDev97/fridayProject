@@ -2,14 +2,11 @@ import { memo, useCallback, useState, useEffect } from 'react';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { SuperButton } from '../../components/SuperButton';
 import style from './Cards.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { Preloader, Rating, SuperButton, Table } from 'components';
 import { AddModal } from 'components/Modal/AddModal';
-import { Preloader } from 'components/Preloader';
-import { Rating } from 'components/Rating';
-import { Table } from 'components/Table';
 import { CARD_TABLE_FIELDS } from 'constants/table';
 import { useGetCardsQuery } from 'dal/cards';
 import { CardType } from 'dal/cards/types';

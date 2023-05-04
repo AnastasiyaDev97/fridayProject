@@ -9,7 +9,7 @@ import style from './PacksList.module.scss';
 
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { Pagination } from 'components/Pagination';
+import { Pagination } from 'components';
 import { SuperButton } from 'components/SuperButton';
 import { SuperInputText } from 'components/SuperInputText';
 import { Table } from 'components/Table';
