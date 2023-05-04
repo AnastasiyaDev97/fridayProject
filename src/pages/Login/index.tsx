@@ -6,9 +6,7 @@ import { Navigate, NavLink, useLocation } from 'react-router-dom';
 import styles from './Login.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { SuperButton } from 'components/SuperButton';
-import { SuperCheckbox } from 'components/SuperCheckbox';
-import { UniversalInput } from 'components/UniversalInput';
+import { SuperButton, SuperCheckbox, UniversalInput } from 'components';
 import { EMPTY_STRING } from 'constants/index';
 import { useLoginMutation } from 'dal/authorization';
 import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
@@ -28,6 +26,7 @@ const Login = (): ReturnComponentType => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
   const fromPage = location?.state?.from?.pathname || '/';
+  const userEmail: string = location?.state?.emailFromRegister;
 
   useEffect(() => {
     if (loginData) {
@@ -38,7 +37,7 @@ const Login = (): ReturnComponentType => {
 
   const formik = useFormik({
     initialValues: {
-      email: /* (process.env.REACT_APP_EMAIL as string) ||  */ '',
+      email: userEmail || /* (process.env.REACT_APP_EMAIL as string) ||  */ '',
       password: /* (process.env.REACT_APP_PASSWORD as string) || */ '',
       rememberMe: false,
     },

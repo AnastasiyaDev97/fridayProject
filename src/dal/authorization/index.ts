@@ -28,7 +28,6 @@ const authAPI = clientAPI.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (response: { data: ResponseRegisterType }) => response.data,
     }),
     login: build.mutation<ResponseLoginType, RegisterPayloadDataType>({
       query(data) {

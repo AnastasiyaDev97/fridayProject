@@ -3,22 +3,23 @@ import { useCallback, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Navigate, useNavigate } from 'react-router-dom';
 
+import { InputType } from 'common/types/InputType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { SuperButton } from 'components/SuperButton';
-import { UniversalInput, InputType } from 'components/UniversalInput';
+import { SuperButton, UniversalInput } from 'components';
 import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
 import { useRegisterMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
+import { setErrorText } from 'store/reducers/app';
 import { setRegisterStatus } from 'store/reducers/auth';
 import { AuthData, validates } from 'utils/validates';
 
 const Register = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
-  const [register, { data: registerData /* error: registerError */ }] =
+  const [register, { data: registerData, isError: isRegisterError }] =
     useRegisterMutation();
 
   const navigate = useNavigate();
@@ -50,7 +51,10 @@ const Register = (): ReturnComponentType => {
     if (registerData) {
       dispatch(setRegisterStatus(true));
     }
-  }, [registerData, dispatch]);
+    if (isRegisterError) {
+      dispatch(setErrorText({ errorText: 'Something went wrong' }));
+    }
+  }, [registerData, dispatch, isRegisterError]);
 
   const onCancelButtonClick = useCallback(() => {
     formik.resetForm();
@@ -58,7 +62,13 @@ const Register = (): ReturnComponentType => {
   }, [formik, navigate]);
 
   if (registerStatus) {
-    return <Navigate to={PATH.LOGIN} />;
+    return (
+      <Navigate
+        to={PATH.LOGIN}
+        state={{ emailFromRegister: registerData?.addedUser?.email }}
+        replace
+      />
+    );
   }
 
   return (
