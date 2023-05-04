@@ -1,6 +1,6 @@
 import URI from 'urijs';
 
-import { clientAPI } from '..';
+import { PasswordBuilderType, clientAPI, passwordClientAPI } from '..';
 import type { builderType } from '..';
 import { newPassDataType } from '../packs/types';
 
@@ -61,28 +61,6 @@ const authAPI = clientAPI.injectEndpoints({
         };
       },
     }),
-    sendPassword: build.mutation<ResponseForgotPasswordType, string>({
-      query(email) {
-        const messageDataPassword = {
-          email,
-          from: 'test-front-admin <ai73a@yandex.by>',
-          message: `<div style="background-color: lime; padding: 15px">
-    password recovery link: <a href='http://nastyaz23.github.io/fridayProject/#/new-password/$token$'<!--https://nastyaz23.github.io/fridayProject/#new-password/$token$-->'>
-    link</a></div>`,
-
-          /* http://localhost:3000/#/new-password/$token$*/
-        };
-
-        const URL = new URI(`auth/forgot`);
-
-        return {
-          url: URL.toString(),
-          method: 'POST',
-          body: messageDataPassword,
-        };
-      },
-      transformResponse: (response: { data: ResponseRegisterType }) => response.data,
-    }),
     setNewPassword: build.mutation<ResponseLogoutType, newPassDataType>({
       query(data) {
         const URL = new URI(`auth/set-new-password`);
@@ -98,11 +76,38 @@ const authAPI = clientAPI.injectEndpoints({
   }),
 });
 
+const passworsAPI = passwordClientAPI.injectEndpoints({
+  endpoints: (build: PasswordBuilderType) => ({
+    sendPassword: build.mutation<ResponseForgotPasswordType, string>({
+      query(email) {
+        const messageDataPassword = {
+          email,
+          from: 'test-front-admin <ai73a@yandex.by>',
+          message: `<div style="background-color: lime; padding: 15px">
+password recovery link: <a href='http://anastasiyadev97.github.io/fridayProject/#/new-password/$token$'<!--https://anastasiyadev97.github.io/fridayProject/#new-password/$token$-->'>
+link</a></div>`,
+
+          /* http://localhost:3000/#/new-password/$token$*/
+        };
+
+        const URL = new URI(`auth/forgot`);
+
+        return {
+          url: URL.toString(),
+          method: 'POST',
+          body: messageDataPassword,
+        };
+      },
+    }),
+  }),
+});
+
 export const {
   useAuthMutation,
   useLoginMutation,
   useLogoutMutation,
   useRegisterMutation,
-  useSendPasswordMutation,
   useSetNewPasswordMutation,
 } = authAPI;
+
+export const { useSendPasswordMutation } = passworsAPI;

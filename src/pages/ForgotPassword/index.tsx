@@ -53,10 +53,10 @@ const ForgotPassword = (): ReturnComponentType => {
   }, [navigate]);
 
   useEffect(() => {
-    if (sendPasswordResponseData?.info) {
+    if (sendPasswordResponseData?.success) {
       setIsCheckEmailDataShow(true);
     }
-  }, [sendPasswordResponseData?.info]);
+  }, [sendPasswordResponseData]);
 
   return (
     <div className={styles.wrapper}>

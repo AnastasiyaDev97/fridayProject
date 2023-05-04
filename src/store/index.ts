@@ -9,12 +9,13 @@ import cards from './reducers/cards';
 import packs from './reducers/packs';
 import profile from './reducers/profile';
 
-import { clientAPI } from 'dal/index';
+import { clientAPI, passwordClientAPI } from 'dal/index';
 /* import { user } from './reducers/users'; */
 
 export const store = configureStore({
   reducer: {
     [clientAPI.reducerPath]: clientAPI.reducer,
+    [passwordClientAPI.reducerPath]: passwordClientAPI.reducer,
 
     app,
     auth,
@@ -23,7 +24,8 @@ export const store = configureStore({
     cards,
     /* user, */
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(clientAPI.middleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat([clientAPI.middleware, passwordClientAPI.middleware]),
 });
 
 export type AppDispatch = typeof store.dispatch;

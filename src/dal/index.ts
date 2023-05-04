@@ -11,6 +11,10 @@ const CLIENT_API_OPTIONS = {
   baseUrl: 'http://localhost:7542/2.0/',
 };
 
+const PASSWORD_CLIENT_API_OPTIONS = {
+  baseUrl: 'https://neko-back.herokuapp.com/2.0',
+};
+
 export const clientAPI = createApi({
   reducerPath: 'clientAPI',
   baseQuery: fetchBaseQuery({
@@ -18,6 +22,15 @@ export const clientAPI = createApi({
     credentials: 'include',
   }),
   tagTypes: ['Cards', 'Packs'],
+  endpoints: () => ({}),
+});
+
+export const passwordClientAPI = createApi({
+  reducerPath: 'passwordClientAPI',
+  baseQuery: fetchBaseQuery({
+    ...PASSWORD_CLIENT_API_OPTIONS,
+    credentials: 'include',
+  }),
   endpoints: () => ({}),
 });
 
@@ -31,4 +44,16 @@ export type builderType = EndpointBuilder<
   >,
   'Cards' | 'Packs',
   'clientAPI'
+>;
+
+export type PasswordBuilderType = EndpointBuilder<
+  BaseQueryFn<
+    string | FetchArgs,
+    unknown,
+    FetchBaseQueryError,
+    Record<string, unknown>,
+    FetchBaseQueryMeta
+  >,
+  '',
+  'passwordClientAPI'
 >;

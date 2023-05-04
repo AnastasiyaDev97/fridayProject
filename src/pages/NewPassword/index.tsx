@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import { useFormik } from 'formik';
 import { Navigate, useParams } from 'react-router-dom';
 
@@ -10,11 +12,15 @@ import { EMPTY_STRING } from 'constants/index';
 import { useSetNewPasswordMutation } from 'dal/authorization';
 import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
 import { PATH } from 'enums/Path';
+import { useAppDispatch } from 'store';
+import { errorHandler } from 'utils/error-utils';
 import { AuthData, validateNewPasswordForm } from 'utils/validates';
 
 const NewPassword = (): ReturnComponentType => {
-  const [setNewPassword, { data: newPasswordData /* , error: loginError */ }] =
+  const [setNewPassword, { data: newPasswordData, isError: isNewPasswordError }] =
     useSetNewPasswordMutation();
+
+  const dispatch = useAppDispatch();
 
   const { token } = useParams<string>();
 
@@ -38,10 +44,14 @@ const NewPassword = (): ReturnComponentType => {
       };
 
       setNewPassword(newPassDataType);
-      /* dispatch(setNewPasswordTC(newPassDataType)); */
-      formik.resetForm();
     },
   });
+
+  useEffect(() => {
+    if (isNewPasswordError) {
+      errorHandler(dispatch);
+    }
+  }, [isNewPasswordError, dispatch]);
 
   if (newPasswordData) {
     return <Navigate to={PATH.LOGIN} />;

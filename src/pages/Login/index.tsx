@@ -12,10 +12,10 @@ import { useLoginMutation } from 'dal/authorization';
 import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
 import { PATH } from 'enums/Path';
 import { useAppDispatch, useAppSelector } from 'store';
-import { setErrorText } from 'store/reducers/app';
 import { setLoginStatus } from 'store/reducers/auth';
 /* import { setProfileData } from 'store/reducers/profile'; */
 import { setProfileData } from 'store/reducers/profile';
+import { errorHandler } from 'utils/error-utils';
 import { AuthData, validateLoginForm } from 'utils/validates';
 
 const Login = (): ReturnComponentType => {
@@ -35,7 +35,7 @@ const Login = (): ReturnComponentType => {
       dispatch(setProfileData(loginData));
     }
     if (isLoginError) {
-      dispatch(setErrorText({ errorText: 'Something went wrong' }));
+      errorHandler(dispatch);
     }
   }, [loginData, dispatch, isLoginError]);
 

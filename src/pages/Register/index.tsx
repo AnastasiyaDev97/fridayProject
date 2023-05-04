@@ -12,8 +12,8 @@ import { useRegisterMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
-import { setErrorText } from 'store/reducers/app';
 import { setRegisterStatus } from 'store/reducers/auth';
+import { errorHandler } from 'utils/error-utils';
 import { AuthData, validates } from 'utils/validates';
 
 const Register = (): ReturnComponentType => {
@@ -43,7 +43,6 @@ const Register = (): ReturnComponentType => {
 
     onSubmit: ({ email, password }) => {
       register({ email, password });
-      formik.resetForm();
     },
   });
 
@@ -52,7 +51,7 @@ const Register = (): ReturnComponentType => {
       dispatch(setRegisterStatus(true));
     }
     if (isRegisterError) {
-      dispatch(setErrorText({ errorText: 'Something went wrong' }));
+      errorHandler(dispatch);
     }
   }, [registerData, dispatch, isRegisterError]);
 
