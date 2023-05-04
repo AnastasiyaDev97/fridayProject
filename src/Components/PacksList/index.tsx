@@ -101,7 +101,12 @@ export const PacksList = memo(
 
     useEffect(() => {
       if (text === EMPTY_STRING && !actualPackName) {
-        return;
+        if (searchParams.has('packName')) {
+          searchParams.delete('packName');
+          setSearchParams(searchParams);
+        } else {
+          return;
+        }
       } else {
         const idOfTimeout = setTimeout(() => {
           handleSearchPack();
@@ -111,7 +116,7 @@ export const PacksList = memo(
           clearTimeout(idOfTimeout);
         };
       }
-    }, [text, actualPackName, handleSearchPack]);
+    }, [text, actualPackName, handleSearchPack, searchParams, setSearchParams]);
 
     useEffect(() => {
       if (searchParams.get('page')) {

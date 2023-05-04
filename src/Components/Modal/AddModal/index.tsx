@@ -39,7 +39,6 @@ export const AddModal: FC<AddModalPropsType> = memo(
     const onAddButtonClick = useCallback(() => {
       if (itemName === 'packs' && nameValue) {
         addPack({ cardsPack: { name: nameValue } });
-        /* dispatch(addPackTC(nameValue)); */
       }
       if (itemName === 'cards' && questionValue && answerValue && cardsPackId) {
         addCard({
@@ -49,8 +48,6 @@ export const AddModal: FC<AddModalPropsType> = memo(
             answer: answerValue,
           },
         });
-
-        //getCards!!!
       }
     }, [addCard, nameValue, itemName, answerValue, questionValue, cardsPackId, addPack]);
 
