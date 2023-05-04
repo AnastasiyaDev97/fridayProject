@@ -12,6 +12,7 @@ import { useLoginMutation } from 'dal/authorization';
 import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
 import { PATH } from 'enums/Path';
 import { useAppDispatch, useAppSelector } from 'store';
+import { setErrorText } from 'store/reducers/app';
 import { setLoginStatus } from 'store/reducers/auth';
 /* import { setProfileData } from 'store/reducers/profile'; */
 import { setProfileData } from 'store/reducers/profile';
@@ -21,7 +22,7 @@ const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
-  const [login, { data: loginData /* , error: loginError */ }] = useLoginMutation();
+  const [login, { data: loginData, isError: isLoginError }] = useLoginMutation();
 
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
@@ -33,7 +34,10 @@ const Login = (): ReturnComponentType => {
       dispatch(setLoginStatus(true));
       dispatch(setProfileData(loginData));
     }
-  }, [loginData, dispatch]);
+    if (isLoginError) {
+      dispatch(setErrorText({ errorText: 'Something went wrong' }));
+    }
+  }, [loginData, dispatch, isLoginError]);
 
   const formik = useFormik({
     initialValues: {
