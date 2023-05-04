@@ -1,4 +1,4 @@
-import { FC, ReactNode, memo, useCallback } from 'react';
+import { FC, ReactNode, memo, useCallback, useEffect, useState } from 'react';
 
 import TextField from '@mui/material/TextField';
 
@@ -33,6 +33,8 @@ export const AddModal: FC<AddModalPropsType> = memo(
     const { state: questionValue, onChangeInput: onChangeQuestionInput } =
       useCustomInput();
     const { state: answerValue, onChangeInput: onChangeAnswerInput } = useCustomInput();
+
+    const [isActionModalButtonDisabled, setIsActionModalButtonDisabled] = useState(true);
 
     const onAddButtonClick = useCallback(() => {
       if (itemName === 'packs' && nameValue) {
@@ -90,6 +92,16 @@ export const AddModal: FC<AddModalPropsType> = memo(
       return null;
     };
 
+    useEffect(() => {
+      if (itemName === 'packs' && nameValue && nameValue.length > 0) {
+        if (nameValue.length > 0) {
+          setIsActionModalButtonDisabled(false);
+        } else {
+          setIsActionModalButtonDisabled(true);
+        }
+      }
+    }, [nameValue, itemName, setIsActionModalButtonDisabled]);
+
     return (
       <ModalContainer
         {...rest}
@@ -97,6 +109,7 @@ export const AddModal: FC<AddModalPropsType> = memo(
         modalTitle="Are you sure you want to add this record?"
         onActionButtonClick={onAddButtonClick}
         mainElement={children}
+        isActionModalButtonDisabled={isActionModalButtonDisabled}
       >
         {createFields()}
       </ModalContainer>

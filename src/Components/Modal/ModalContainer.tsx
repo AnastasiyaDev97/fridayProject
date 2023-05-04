@@ -19,6 +19,7 @@ type ModalContainerPropsType = {
   disabled?: boolean;
   style?: { padding?: string; marginBottom?: string };
   mainElement?: ReactNode;
+  isActionModalButtonDisabled?: boolean;
 };
 
 export const ModalContainer = memo(
@@ -30,6 +31,7 @@ export const ModalContainer = memo(
     disabled,
     style,
     mainElement,
+    isActionModalButtonDisabled,
   }: ModalContainerPropsType): ReturnComponentType => {
     const [open, setOpen] = useState(false);
 
@@ -76,7 +78,9 @@ export const ModalContainer = memo(
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{modalTitle}</DialogTitle>
+          <DialogTitle sx={{ color: 'rgba(0, 0, 0, 0.87)' }} id="alert-dialog-title">
+            {modalTitle}
+          </DialogTitle>
           <DialogContent
             sx={{
               marginBottom: '10px',
@@ -87,9 +91,15 @@ export const ModalContainer = memo(
             {open && children}
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose} variant="outlined">
+              Cancel
+            </Button>
             {onActionButtonClick && (
-              <Button onClick={handleActionClick} autoFocus>
+              <Button
+                onClick={handleActionClick}
+                disabled={isActionModalButtonDisabled}
+                variant="outlined"
+              >
                 {buttonTitle}
               </Button>
             )}

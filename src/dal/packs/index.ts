@@ -23,6 +23,7 @@ const packsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Packs'] }).injectEn
           url: URL.toString(),
         };
       },
+      providesTags: ['Packs'],
     }),
     addPack: build.mutation<void, addNewPackPayloadType>({
       query(data) {
