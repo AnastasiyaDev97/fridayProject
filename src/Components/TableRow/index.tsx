@@ -47,12 +47,7 @@ export const TableRow: FC<TableRowT> = memo(
           );
         })}
         <td className={style.btns}>
-          <DeleteModal
-            id={id}
-            cardsPackId={cardsPackId}
-            itemName={itemName}
-            disabled={!isMyPack}
-          >
+          <DeleteModal id={id} itemName={itemName} disabled={!isMyPack}>
             <FontAwesomeIcon icon={faTrash} />
           </DeleteModal>
           <UpdateModal
