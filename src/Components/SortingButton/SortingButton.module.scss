@@ -1,0 +1,23 @@
+@import '../../common/sass/media.scss';
+@import '../../common/sass/variables.scss';
+
+.sortButtons {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .sortArrow {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  }
+  .sortArrowUp {
+    border-top: 8px solid $buttonBackground;
+  }
+  .sortArrowDown {
+    border-bottom: 8px solid $buttonBackground;
+  }
+}
+

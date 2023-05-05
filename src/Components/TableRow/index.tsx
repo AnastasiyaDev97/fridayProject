@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import style from '../Table/Table.module.scss';
 
-import { EntityType } from 'common/types/DataType';
+import { EntityType } from 'common/types/EntityType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { DeleteModal } from 'components/Modal/DeleteModal';
 import { LearnModal } from 'components/Modal/LearnModal';

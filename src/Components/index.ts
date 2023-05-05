@@ -20,3 +20,4 @@ export { Pagination } from 'components/Pagination';
 export { Preloader } from 'components/Preloader';
 export { Icon } from './Icon';
 export { Header } from './Header';
+export { SortingButton } from './SortingButton';

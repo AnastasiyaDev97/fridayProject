@@ -78,13 +78,6 @@ export const PacksList = memo(
       [setSearchParams, searchParams],
     );
 
-    const handleSetSortingClick = useCallback(
-      (/* sortName: string, direction: 'up' | 'down' */) => {
-        /*   dispatch(setSortingFilter(direction === 'up' ? `1${sortName}` : `0${sortName}`)); */
-      },
-      [dispatch],
-    );
-
     // const onModalAddButtonClick = useCallback(() => {
     //   setText('');
     //   handleChangePageClick(1);
@@ -144,7 +137,6 @@ export const PacksList = memo(
         <Table
           tableItems={packsForTable}
           tableTitles={PACK_TABLE_FIELDS}
-          onSetSortingClick={handleSetSortingClick}
           itemName={'packs'}
         />
         <Pagination

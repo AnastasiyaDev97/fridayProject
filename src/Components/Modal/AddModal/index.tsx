@@ -6,7 +6,7 @@ import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
 import { useCustomInput } from 'common/hooks/useCustomInput';
-import { EntityType } from 'common/types/DataType';
+import { EntityType } from 'common/types/EntityType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useAddCardMutation } from 'dal/cards';
 import { useAddPackMutation } from 'dal/packs';

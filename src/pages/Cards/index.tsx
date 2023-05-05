@@ -45,13 +45,6 @@ const Cards = memo((): ReturnComponentType => {
     { skip: !cardsPack_id },
   );
 
-  const handleSetSortingClick = useCallback(
-    (sortName: string, direction: 'up' | 'down') => {
-      setSortCards(direction === 'up' ? `1${sortName}` : `0${sortName}`);
-    },
-    [],
-  );
-
   const handleChangePageClick = useCallback((page: number) => {
     setCurrentPage(page);
   }, []);
@@ -62,7 +55,7 @@ const Cards = memo((): ReturnComponentType => {
 
   const onAddButtonClick = (): void => {
     handleChangePageClick(1);
-    handleSetSortingClick('updated', 'down');
+    /*     handleSetSortingClick('updated', 'down'); */
   };
 
   useEffect(() => {
@@ -102,12 +95,7 @@ const Cards = memo((): ReturnComponentType => {
           </SuperButton>
         </AddModal>
 
-        <Table
-          tableTitles={CARD_TABLE_FIELDS}
-          tableItems={cards}
-          onSetSortingClick={handleSetSortingClick}
-          itemName="cards"
-        />
+        <Table tableTitles={CARD_TABLE_FIELDS} tableItems={cards} itemName="cards" />
         {/*  <Pagination
           totalItemCount={totalItemCount}
           pageCount={pageCount}

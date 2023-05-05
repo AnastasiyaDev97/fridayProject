@@ -38,7 +38,6 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
       };
 
       delete searchParamsObject.userId;
-      debugger;
       setSearchParams({
         ...searchParamsObject,
         max: maxCardsCount.toString(),

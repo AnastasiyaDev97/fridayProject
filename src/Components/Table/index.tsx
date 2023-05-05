@@ -1,13 +1,13 @@
 import { memo, ReactElement } from 'react';
 
-import classNames from 'classnames';
-
 import { TableRow } from '../TableRow';
 
 import style from './Table.module.scss';
 
-import { EntityType } from 'common/types/DataType';
+import { EntityType } from 'common/types/EntityType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { SortingButton } from 'components';
+import { TableFieldstype } from 'constants/table';
 
 export type PackRowValues = {
   name?: string;
@@ -32,30 +32,17 @@ export type ItemValues = {
 
 type TablePropsType = {
   itemName: EntityType;
-  tableTitles: { title: string; value: string }[];
+  tableTitles: TableFieldstype;
   tableItems: ItemValues[];
-  onSetSortingClick: (sortName: string, direction: 'up' | 'down') => void;
 };
 
 export const Table = memo(
-  ({
-    tableTitles,
-    tableItems,
-    onSetSortingClick,
-    itemName,
-  }: TablePropsType): ReturnComponentType => {
+  ({ tableTitles, tableItems, itemName }: TablePropsType): ReturnComponentType => {
     return (
       <table className={style.table}>
         <thead>
           <tr>
             {tableTitles.map(({ title, value }) => {
-              const onUpSortTitleClick = (): void => {
-                onSetSortingClick(value, 'up');
-              };
-              const onDownSortTitleClick = (): void => {
-                onSetSortingClick(value, 'down');
-              };
-
               return (
                 <th
                   key={title}
@@ -63,19 +50,11 @@ export const Table = memo(
                     title === 'Count' ? style.smallWidth : ''
                   }`}
                 >
-                  <div className={style.headerContent}>
-                    <span className={style.tableTitle}>{title}</span>
-                    <div className={style.sortButtons}>
-                      <div
-                        onClick={onDownSortTitleClick}
-                        className={classNames(style.sortArrow, style.sortArrowUp)}
-                      />
-                      <div
-                        onClick={onUpSortTitleClick}
-                        className={classNames(style.sortArrow, style.sortArrowDown)}
-                      />
+                  <SortingButton sortingFieldNameFromProps={value}>
+                    <div className={style.headerContent}>
+                      <span className={style.tableTitle}>{title}</span>
                     </div>
-                  </div>
+                  </SortingButton>
                 </th>
               );
             })}

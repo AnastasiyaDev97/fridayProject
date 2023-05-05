@@ -14,7 +14,7 @@ const Packs = memo(() => {
   const currentPage = Number(searchParams.get('packPage')) || 1;
   const min = Number(searchParams.get('min')) || 0;
   const max = Number(searchParams.get('max')) || 0;
-  const sortPacks = searchParams.get('sortPacks') || '';
+  const sortPacks = searchParams.get('sortPacks') || '0updated';
   const userId = searchParams.get('userId') || '';
 
   /* const onAddPackButtonClick = useCallback(count => {
@@ -31,7 +31,7 @@ const Packs = memo(() => {
     max,
     packName: actualPackName,
     user_id: userId,
-    sortPacks: sortPacks || '',
+    sortPacks: sortPacks,
   });
 
   if (isPacksSuccess) {
