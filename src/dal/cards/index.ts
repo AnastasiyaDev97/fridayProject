@@ -25,7 +25,6 @@ const cardsAPI = clientAPI.enhanceEndpoints({ addTagTypes: ['Cards'] }).injectEn
         };
       },
       providesTags: ['Cards'],
-      transformResponse: (response: { data: getCardsResponseType }) => response.data,
     }),
     addCard: builder.mutation<{ newCard: CardType }, addNewCardPayloadType>({
       query(data) {

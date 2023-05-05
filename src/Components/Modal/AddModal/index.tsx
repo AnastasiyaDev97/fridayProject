@@ -29,7 +29,7 @@ export const AddModal: FC<AddModalPropsType> = memo(
     const [addCard /* { data: cardData, error: addCardError } */] = useAddCardMutation();
     const [addPack /* { data: cardData, error: addCardError } */] = useAddPackMutation();
 
-    const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput();
+    const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput('');
     const { state: questionValue, onChangeInput: onChangeQuestionInput } =
       useCustomInput();
     const { state: answerValue, onChangeInput: onChangeAnswerInput } = useCustomInput();
@@ -90,7 +90,7 @@ export const AddModal: FC<AddModalPropsType> = memo(
     };
 
     useEffect(() => {
-      if (itemName === 'packs' && nameValue && nameValue.length > 0) {
+      if (itemName === 'packs' && nameValue) {
         if (nameValue.length > 0) {
           setIsActionModalButtonDisabled(false);
         } else {

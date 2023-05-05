@@ -6,7 +6,7 @@ import style from './Cards.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Preloader, Rating, SuperButton, Table } from 'components';
-import { AddModal } from 'components/Modal/AddModal';
+import { AddModal } from 'components/Modal';
 import { CARD_TABLE_FIELDS } from 'constants/table';
 import { useGetCardsQuery } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
@@ -39,6 +39,7 @@ const Cards = memo((): ReturnComponentType => {
     /* error: cardsError, */
     isSuccess: isCardsSuccess,
     isLoading: isCardsLoading,
+    /* isError: isCardsError, */
   } = useGetCardsQuery(
     { cardsPack_id, page: currentPage, sortCards },
     { skip: !cardsPack_id },
@@ -65,7 +66,7 @@ const Cards = memo((): ReturnComponentType => {
   };
 
   useEffect(() => {
-    if (isCardsSuccess && !cardsData?.cards) {
+    if (isCardsSuccess && cardsData?.cards) {
       const formattedCardsForTable = cardsData.cards.map(
         ({ question, answer, updated, grade, _id, user_id, cardsPack_id }: CardType) => {
           const convertedToDateUpdated = convertDateFormat(updated);
@@ -83,7 +84,7 @@ const Cards = memo((): ReturnComponentType => {
 
       setcards(formattedCardsForTable);
     }
-  }, [isCardsSuccess, cards, cardsData]);
+  }, [isCardsSuccess, cardsData]);
 
   if (isCardsLoading) {
     return <Preloader />;

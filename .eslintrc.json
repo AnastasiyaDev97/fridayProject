@@ -73,7 +73,7 @@
     ],
     "no-shadow": "off",
     "no-debugger": "off",
-    "no-unused-vars": "off",
+    "no-unused-vars": "warn",
     "no-magic-numbers": "off",
     "no-use-before-define": "off",
     "no-param-reassign": "off",

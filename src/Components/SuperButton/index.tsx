@@ -14,7 +14,12 @@ type SuperButtonPropsType = DefaultButtonPropsType & {
 };
 
 export const SuperButton = memo(
-  ({ red, className, ...restProps }: SuperButtonPropsType): ReturnComponentType => {
+  ({
+    red,
+    className,
+
+    ...restProps
+  }: SuperButtonPropsType): ReturnComponentType => {
     const finalClassName = `${style.btn} ${red && style.red} ${className}`;
 
     return <button className={finalClassName} {...restProps} />;

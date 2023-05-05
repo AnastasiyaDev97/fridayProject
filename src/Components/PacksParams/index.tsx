@@ -33,12 +33,17 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
     }, [userId, searchParams, setSearchParams]);
 
     const onShowAllCardsClick = useCallback(() => {
-      const searchParamsObject = { ...Object.fromEntries([...searchParams]) };
+      const searchParamsObject = {
+        ...Object.fromEntries([...searchParams]),
+      };
 
       delete searchParamsObject.userId;
-
-      setSearchParams(searchParamsObject as URLSearchParamsInit);
-    }, [setSearchParams, searchParams]);
+      debugger;
+      setSearchParams({
+        ...searchParamsObject,
+        max: maxCardsCount.toString(),
+      } as URLSearchParamsInit);
+    }, [setSearchParams, searchParams, maxCardsCount]);
 
     const handleChangeCardsCountChange = useCallback(
       (min: number, max: number) => {

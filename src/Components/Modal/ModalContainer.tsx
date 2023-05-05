@@ -96,8 +96,8 @@ export const ModalContainer = memo(
             </Button>
             {onActionButtonClick && (
               <Button
-                onClick={handleActionClick}
                 disabled={isActionModalButtonDisabled}
+                onClick={handleActionClick}
                 variant="outlined"
               >
                 {buttonTitle}
