@@ -6,12 +6,12 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 
-import { ANSWERS_GRADE } from '../../../constants/modal/index';
 import { ModalContainer } from '../ModalContainer';
 
 import style from './LearnModal.module.scss';
 
 import { Nullable } from 'common/types/Nullable';
+import { ANSWERS_GRADE } from 'constants/modal/index';
 import { useGetCardsQuery, useUpdateCardGradeMutation } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
 import { getCard } from 'utils/handles';
@@ -22,14 +22,21 @@ type LearnModalPropsType = {
   name?: string;
   children: ReactNode;
 };
-type RowRadioButtonsGroupProps = { cardId: string };
+type RowRadioButtonsGroupProps = {
+  onInputChange: (value: Nullable<string>) => void;
+  defaultValue: Nullable<string>;
+};
 type LearnPaclContentProps = {
   id: string;
 };
 
-const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
-  const [updateCardGrade /* { data: cardData, error: addCardError } */] =
-    useUpdateCardGradeMutation();
+const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({
+  onInputChange,
+  defaultValue,
+}) => {
+  const onRateButtonClick = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    onInputChange((event.target as HTMLInputElement).value);
+  };
 
   return (
     <FormControl>
@@ -37,14 +44,10 @@ const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
+        value={defaultValue}
+        onChange={onRateButtonClick}
       >
         {ANSWERS_GRADE.map((answer, index) => {
-          const grade = index + 1;
-          const onRateButtonClick = (): void => {
-            updateCardGrade({ grade, card_id: cardId });
-            /* dispatch(updateCardRatingTC(grade, cardId)); */
-          };
-
           return (
             <FormControlLabel
               sx={{ color: 'black' }}
@@ -52,7 +55,6 @@ const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
               control={<Radio />}
               label={answer}
               key={answer}
-              onClick={onRateButtonClick}
             />
           );
         })}
@@ -62,7 +64,6 @@ const RowRadioButtonsGroup: FC<RowRadioButtonsGroupProps> = ({ cardId }) => {
 };
 
 const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }) => {
-  /* const dispatch = useDispatch(); */
   const {
     data: cardsData,
     /* error: cardsError, */
@@ -70,8 +71,12 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }
     /* isLoading: isCardsLoading, */
   } = useGetCardsQuery({ cardsPack_id: id }, { skip: !id });
 
+  const [updateCardGrade /* { data: cardData, error: addCardError } */] =
+    useUpdateCardGradeMutation();
+
   const [currentCard, setCurrentCard] = useState<Nullable<CardType>>();
   const [isShowAnswer, setIsShowAnswer] = useState<boolean>(false);
+  const [currentGrade, setCurrentGrade] = useState<Nullable<string>>(null);
 
   const onToggleButtonClick = (): void => {
     if (isShowAnswer) {
@@ -83,20 +88,14 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }
 
   const onNextQuestionClick = (): void => {
     setIsShowAnswer(false);
+    if (currentGrade && currentCard) {
+      updateCardGrade({ grade: Number(currentGrade), card_id: currentCard._id });
+      setCurrentGrade(null);
+    }
     if (cardsData?.cards && isCardsSuccess) {
       setCurrentCard(getCard(cardsData.cards));
     }
   };
-
-  /*   useEffect(() => {
-    dispatch(getCardsTC({ cardsPack_id: id }));
-  }, [dispatch, id]); */
-
-  /*   useEffect(() => {
-    if (cardsData?.cards) {
-      setCurrentCard(getCard(cardsData.cards));
-    }
-  }, [id]); */
 
   useEffect(() => {
     if (!currentCard?._id && cardsData?.cards) {
@@ -111,7 +110,7 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }
   return (
     <div className={style.contentBlock}>
       <span className={style.question}>{currentCard.question}</span>
-      <RowRadioButtonsGroup cardId={currentCard._id} />
+      <RowRadioButtonsGroup onInputChange={setCurrentGrade} defaultValue={currentGrade} />
       {isShowAnswer && <div className={style.answer}>{currentCard.answer}</div>}
       <div className={style.buttonsBlock}>
         <Button onClick={onToggleButtonClick}>
@@ -124,14 +123,16 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }
 });
 
 export const LearnModal: React.FC<LearnModalPropsType> = memo(
-  ({ id, name, children, ...rest }: LearnModalPropsType): Nullable<ReactElement> => (
-    <ModalContainer
-      buttonTitle="Learn"
-      modalTitle={`Learn ${name}`}
-      mainElement={children}
-      {...rest}
-    >
-      <LearnPackContent id={id} />
-    </ModalContainer>
-  ),
+  ({ id, name, children, ...rest }: LearnModalPropsType): Nullable<ReactElement> => {
+    return (
+      <ModalContainer
+        buttonTitle="Learn"
+        modalTitle={`Learn ${name}`}
+        mainElement={children}
+        {...rest}
+      >
+        <LearnPackContent id={id} />
+      </ModalContainer>
+    );
+  },
 );
