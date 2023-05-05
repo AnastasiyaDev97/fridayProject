@@ -7,11 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 import style from '../Table/Table.module.scss';
 
-import { EntityType } from 'common/types/EntityType';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { DeleteModal } from 'components/Modal/DeleteModal';
-import { LearnModal } from 'components/Modal/LearnModal';
-import { UpdateModal } from 'components/Modal/UpdateModal';
+import { EntityType, ReturnComponentType } from 'common/types';
+import { DeleteModal, LearnModal, UpdateModal } from 'components/Modal';
 import { ItemValues } from 'components/Table';
 import { EMPTY_STRING } from 'constants/index';
 import { RootState } from 'store';
@@ -39,7 +36,7 @@ export const TableRow: FC<TableRowT> = memo(
     return (
       <tr
         onClick={e => {
-          onOpenCardClick(e);
+          if (itemName === 'packs') onOpenCardClick(e);
         }}
       >
         {Object.values(tableValues).map((item, i) => {

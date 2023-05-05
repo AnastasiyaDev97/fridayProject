@@ -31,8 +31,8 @@ export const AddModal: FC<AddModalPropsType> = memo(
 
     const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput('');
     const { state: questionValue, onChangeInput: onChangeQuestionInput } =
-      useCustomInput();
-    const { state: answerValue, onChangeInput: onChangeAnswerInput } = useCustomInput();
+      useCustomInput('');
+    const { state: answerValue, onChangeInput: onChangeAnswerInput } = useCustomInput('');
 
     const [isActionModalButtonDisabled, setIsActionModalButtonDisabled] = useState(true);
 
@@ -97,7 +97,19 @@ export const AddModal: FC<AddModalPropsType> = memo(
           setIsActionModalButtonDisabled(true);
         }
       }
-    }, [nameValue, itemName, setIsActionModalButtonDisabled]);
+      if (itemName === 'cards') {
+        if (
+          questionValue &&
+          questionValue.length > 0 &&
+          answerValue &&
+          answerValue.length > 0
+        ) {
+          setIsActionModalButtonDisabled(false);
+        } else {
+          setIsActionModalButtonDisabled(true);
+        }
+      }
+    }, [nameValue, itemName, setIsActionModalButtonDisabled, answerValue, questionValue]);
 
     return (
       <ModalContainer
