@@ -90,8 +90,8 @@ export const AddModal: FC<AddModalPropsType> = memo(
     };
 
     useEffect(() => {
-      if (itemName === 'packs' && nameValue) {
-        if (nameValue.length > 0) {
+      if (itemName === 'packs') {
+        if (nameValue && nameValue.length > 0) {
           setIsActionModalButtonDisabled(false);
         } else {
           setIsActionModalButtonDisabled(true);

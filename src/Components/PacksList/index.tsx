@@ -85,19 +85,19 @@ export const PacksList = memo(
       [dispatch],
     );
 
-    const onAddButtonClick = useCallback(() => {
-      setText('');
-      handleChangePageClick(1);
-      /*  handleSetSortingClick('updated', 'down'); */
-      handleSearchPack();
-      /* dispatch(setNewMinMaxValues(0, maxCardsCount)); */
-    }, [
-      dispatch,
-      handleChangePageClick,
-      handleSearchPack,
-      handleSetSortingClick,
-      maxCardsCount,
-    ]);
+    // const onModalAddButtonClick = useCallback(() => {
+    //   setText('');
+    //   handleChangePageClick(1);
+    //   /*  handleSetSortingClick('updated', 'down'); */
+    //   handleSearchPack();
+    //   /* dispatch(setNewMinMaxValues(0, maxCardsCount)); */
+    // }, [
+    //   dispatch,
+    //   handleChangePageClick,
+    //   handleSearchPack,
+    //   handleSetSortingClick,
+    //   maxCardsCount,
+    // ]);
 
     useEffect(() => {
       if (text === EMPTY_STRING && !actualPackName) {
@@ -137,9 +137,7 @@ export const PacksList = memo(
             type="text"
           />
           <AddModal itemName="packs">
-            <SuperButton onClick={onAddButtonClick} className={style.addButton}>
-              Add pack
-            </SuperButton>
+            <SuperButton className={style.addButton}>Add pack</SuperButton>
           </AddModal>
         </div>
 

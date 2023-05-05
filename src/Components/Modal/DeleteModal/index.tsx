@@ -28,15 +28,15 @@ export const DeleteModal: React.FC<DeleteModalPropsType> = memo(
       useDeletePackMutation();
 
     const onDeleteButtonClick = useCallback(() => {
-      if (itemName === 'packs' && cardsPackId) {
-        deletePack(cardsPackId);
+      if (itemName === 'packs' && id) {
+        deletePack(id);
         /* dispatch(deletePackTC(id)); */
       }
-      if (itemName === 'cards' /* && cardsPackId */) {
-        deleteCard(id);
+      if (itemName === 'cards' && cardsPackId) {
+        deleteCard(cardsPackId);
         /* dispatch(deleteCardTC(cardsPackId, id)); */
       }
-    }, [id, /* cardsPackId, */ itemName, deleteCard, cardsPackId, deletePack]);
+    }, [id, itemName, deleteCard, cardsPackId, deletePack]);
 
     return (
       <ModalContainer
