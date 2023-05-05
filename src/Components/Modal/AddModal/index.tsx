@@ -29,16 +29,28 @@ export const AddModal: FC<AddModalPropsType> = memo(
     const [addCard /* { data: cardData, error: addCardError } */] = useAddCardMutation();
     const [addPack /* { data: cardData, error: addCardError } */] = useAddPackMutation();
 
-    const { state: nameValue, onChangeInput: onChangeNameInput } = useCustomInput('');
-    const { state: questionValue, onChangeInput: onChangeQuestionInput } =
-      useCustomInput('');
-    const { state: answerValue, onChangeInput: onChangeAnswerInput } = useCustomInput('');
+    const {
+      state: nameValue,
+      resetState: resetNameValue,
+      onChangeInput: onChangeNameInput,
+    } = useCustomInput('');
+    const {
+      state: questionValue,
+      resetState: resetQuestionValue,
+      onChangeInput: onChangeQuestionInput,
+    } = useCustomInput('');
+    const {
+      state: answerValue,
+      resetState: resetAnswerValue,
+      onChangeInput: onChangeAnswerInput,
+    } = useCustomInput('');
 
     const [isActionModalButtonDisabled, setIsActionModalButtonDisabled] = useState(true);
 
     const onAddButtonClick = useCallback(() => {
       if (itemName === 'packs' && nameValue) {
         addPack({ cardsPack: { name: nameValue } });
+        resetNameValue();
       }
       if (itemName === 'cards' && questionValue && answerValue && cardsPackId) {
         addCard({
@@ -48,8 +60,21 @@ export const AddModal: FC<AddModalPropsType> = memo(
             answer: answerValue,
           },
         });
+        resetQuestionValue();
+        resetAnswerValue();
       }
-    }, [addCard, nameValue, itemName, answerValue, questionValue, cardsPackId, addPack]);
+    }, [
+      addCard,
+      nameValue,
+      itemName,
+      answerValue,
+      questionValue,
+      cardsPackId,
+      addPack,
+      resetQuestionValue,
+      resetAnswerValue,
+      resetNameValue,
+    ]);
 
     const createFields = (): ReturnComponentType => {
       if (itemName === 'packs') {
