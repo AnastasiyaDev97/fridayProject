@@ -3,22 +3,22 @@ import { FC, memo } from 'react';
 import style from './UserCard.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types';
 
-type UserCardPropsType = {
+type UserListItemPropsType = {
   userName: string;
   userMail: string;
   cardsCount: number;
   avatar: string;
 };
 
-export const UserCard: FC<UserCardPropsType> = memo(
+export const UserListItem: FC<UserListItemPropsType> = memo(
   ({
     userName,
     userMail,
     cardsCount,
     avatar,
-  }: UserCardPropsType): ReturnComponentType => {
+  }: UserListItemPropsType): ReturnComponentType => {
     return (
       <div className={style.userBlock}>
         <img

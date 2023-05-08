@@ -19,6 +19,7 @@ const {
   TOKEN,
   ANY,
   CHAT,
+  USERS,
   ID,
 } = PATH;
 
@@ -38,6 +39,7 @@ const NotFound = lazy(() => import('pages/NotFound'));
 const Packs = lazy(() => import('pages/Packs'));
 const Login = lazy(() => import('pages/Login'));
 const Profile = lazy(() => import('pages/Profile'));
+const Users = lazy(() => import('pages/Users'));
 
 export const AppRoutes = (): ReturnComponentType => {
   return (
@@ -74,6 +76,14 @@ export const AppRoutes = (): ReturnComponentType => {
           element={
             <PrivateRoutes>
               <Packs />
+            </PrivateRoutes>
+          }
+        />
+        <Route
+          path={USERS}
+          element={
+            <PrivateRoutes>
+              <Users />
             </PrivateRoutes>
           }
         />

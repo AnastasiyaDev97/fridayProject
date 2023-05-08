@@ -5,8 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import style from './Cards.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { Preloader, Rating, SuperButton, Table } from 'components';
+import { Preloader, Rating, SuperButton, Table, Pagination } from 'components';
 import { AddModal } from 'components/Modal';
+import { PORTION_SIZE } from 'constants/index';
 import { CARD_TABLE_FIELDS } from 'constants/table';
 import { useGetCardsQuery } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
@@ -96,13 +97,12 @@ const Cards = memo((): ReturnComponentType => {
         </AddModal>
 
         <Table tableTitles={CARD_TABLE_FIELDS} tableItems={cards} itemName="cards" />
-        {/*  <Pagination
-          totalItemCount={totalItemCount}
-          pageCount={pageCount}
+        <Pagination
+          totalItemCount={cardsData.cardsTotalCount}
           currentPage={currentPage}
           onChangePageClick={handleChangePageClick}
           portionSize={PORTION_SIZE}
-        /> */}
+        />
       </div>
     );
   }

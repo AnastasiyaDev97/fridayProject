@@ -1,9 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import style from './Profile.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { EditableSpan, FileInput } from 'components';
+import { EditableSpan, FileInput, ProfileCard } from 'components';
 import { useUpdateProfileMutation } from 'dal/profile';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setErrorText, setProfileData } from 'store/reducers';
@@ -11,7 +11,7 @@ import { setErrorText, setProfileData } from 'store/reducers';
 const Profile = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
-  const [updateProfile, { data: profileData, isError: isProfileError }] =
+  const [updateProfile, { data: updatedProfileData, isError: isProfileError }] =
     useUpdateProfileMutation();
 
   const email = useAppSelector(state => state.profile.email);
@@ -21,11 +21,19 @@ const Profile = (): ReturnComponentType => {
     state => state.profile.publicCardPacksCount,
   );
 
-  const onUpdateAvatar = (newAvatar: string): void => {
-    if (newAvatar !== avatar) {
-      updateProfile({ avatar: newAvatar });
-    }
-  };
+  const profileData = useMemo(
+    () => ({ email, avatar, name, publicCardPacksCount }),
+    [email, avatar, name, publicCardPacksCount],
+  );
+
+  const onUpdateAvatar = useCallback(
+    (newAvatar: string): void => {
+      if (newAvatar !== avatar) {
+        updateProfile({ avatar: newAvatar });
+      }
+    },
+    [updateProfile, avatar],
+  );
 
   const onUpdateTitle = useCallback(
     (newTitle: string) => {
@@ -33,20 +41,33 @@ const Profile = (): ReturnComponentType => {
         updateProfile({ name: newTitle });
       }
     },
-    [name, updateProfile],
+    [updateProfile, name],
   );
 
   useEffect(() => {
-    if (profileData) {
-      dispatch(setProfileData(profileData.updatedUser));
+    if (updatedProfileData) {
+      dispatch(setProfileData(updatedProfileData.updatedUser));
     }
     if (isProfileError) {
       dispatch(setErrorText({ errorText: 'Profile failed to update' }));
     }
-  }, [profileData, dispatch, isProfileError]);
+  }, [updatedProfileData, dispatch, isProfileError]);
 
-  return (
-    <div className={style.profileWrapper}>
+  if (profileData) {
+    return (
+      <ProfileCard
+        profileData={profileData}
+        nameChildren={<EditableSpan title={name} updateTitle={onUpdateTitle} />}
+        avatarChildren={<FileInput updateImage={onUpdateAvatar} image={avatar} />}
+      />
+    );
+  }
+
+  return null;
+};
+
+{
+  /* <div className={style.profileWrapper}>
       <div className={style.avatarBlock}>
         <FileInput updateImage={onUpdateAvatar} image={avatar} />
       </div>
@@ -63,8 +84,10 @@ const Profile = (): ReturnComponentType => {
           </span>
         </div>
       </div>
-    </div>
-  );
-};
+    </div> */
+  /*  }
+
+  return null; */
+}
 
 export default Profile;

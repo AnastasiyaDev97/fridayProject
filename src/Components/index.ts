@@ -8,7 +8,7 @@ export { SuperCheckbox } from 'components/SuperCheckbox';
 export { SuperInputText } from 'components/SuperInputText';
 export { Table } from 'components/Table';
 export { UniversalInput } from 'components/UniversalInput';
-export { UserCard } from 'components/UserCard';
+export { UserListItem } from 'components/UserListItem';
 export { PacksParams } from 'components/PacksParams';
 
 export { FileInput } from './FileInput';
@@ -21,3 +21,4 @@ export { Preloader } from 'components/Preloader';
 export { Icon } from './Icon';
 export { Header } from './Header';
 export { SortingButton } from './SortingButton';
+export { ProfileCard } from './ProfileCard';
