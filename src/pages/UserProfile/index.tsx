@@ -14,6 +14,7 @@ const UserProfile = (): ReturnComponentType => {
   const params = useParams<'id'>();
   const id = params.id;
 
+  console.log(id);
   const {
     data: userData,
     isSuccess: isUserSuccess,

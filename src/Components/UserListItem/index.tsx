@@ -10,6 +10,7 @@ type UserListItemPropsType = {
   userMail: string;
   cardsCount: number;
   avatar: string;
+  onUserCardClick: () => void;
 };
 
 export const UserListItem: FC<UserListItemPropsType> = memo(
@@ -18,9 +19,10 @@ export const UserListItem: FC<UserListItemPropsType> = memo(
     userMail,
     cardsCount,
     avatar,
+    onUserCardClick,
   }: UserListItemPropsType): ReturnComponentType => {
     return (
-      <div className={style.userBlock}>
+      <div className={style.userBlock} onClick={onUserCardClick}>
         <img
           className={style.avatarContainer}
           src={avatar}
