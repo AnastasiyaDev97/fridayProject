@@ -1,6 +1,7 @@
 import { memo, useCallback, useState, useEffect } from 'react';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import type { URLSearchParamsInit } from 'react-router-dom';
 
 import style from './Cards.module.scss';
 
@@ -22,12 +23,17 @@ type CardsForTableType = {
 
 const Cards = memo((): ReturnComponentType => {
   const params = useParams<'id'>();
-  const cardsPack_id = params.id;
 
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortCards, setSortCards] = useState<string>('');
+  const cardsPack_id = params.id;
+
+  const sortCards = searchParams.get('sortcards') || '0updated';
+  const currentPage = Number(searchParams.get('packPage')) || 1;
+
+  /* const [currentPage, setCurrentPage] = useState<number>(1); */
+  /* const [sortCards, setSortCards] = useState<string>(''); */
   const [cards, setcards] = useState<CardsForTableType>();
 
   /*   const sortCards = useAppSelector(state => state.cards.sortCards);
@@ -46,18 +52,28 @@ const Cards = memo((): ReturnComponentType => {
     { skip: !cardsPack_id },
   );
 
-  const handleChangePageClick = useCallback((page: number) => {
+  const handleChangePageClick = useCallback(
+    (page: number) => {
+      setSearchParams({
+        ...Object.fromEntries([...searchParams]),
+        packPage: page.toString(),
+      } as URLSearchParamsInit);
+    },
+    [setSearchParams, searchParams],
+  );
+
+  /*   const handleChangePageClick = useCallback((page: number) => {
     setCurrentPage(page);
-  }, []);
+  }, []); */
 
   const onTitleGoBackClick = (): void => {
     navigate(-1);
   };
 
-  const onAddButtonClick = (): void => {
-    handleChangePageClick(1);
-    /*     handleSetSortingClick('updated', 'down'); */
-  };
+  // const onAddButtonClick = (): void => {
+  //   handleChangePageClick(1);
+  //   /*     handleSetSortingClick('updated', 'down'); */
+  // };
 
   useEffect(() => {
     if (isCardsSuccess && cardsData?.cards) {
@@ -91,7 +107,7 @@ const Cards = memo((): ReturnComponentType => {
         </h2>
         <AddModal itemName="cards" cardsPackId={cardsPack_id}>
           {' '}
-          <SuperButton onClick={onAddButtonClick} className={style.addButton}>
+          <SuperButton /* onClick={onAddButtonClick} */ className={style.addButton}>
             Add card
           </SuperButton>
         </AddModal>

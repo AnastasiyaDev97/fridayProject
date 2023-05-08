@@ -50,7 +50,10 @@ export const Table = memo(
                     title === 'Count' ? style.smallWidth : ''
                   }`}
                 >
-                  <SortingButton sortingFieldNameFromProps={value}>
+                  <SortingButton
+                    sortingFieldNameFromProps={value}
+                    sortingItemsName={itemName}
+                  >
                     <div className={style.headerContent}>
                       <span className={style.tableTitle}>{title}</span>
                     </div>
