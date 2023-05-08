@@ -1,27 +1,18 @@
-import { useEffect /* , useCallback  */ } from 'react';
-
 import { useSearchParams } from 'react-router-dom';
 
 import style from './Users.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
 import { ReturnComponentType } from 'common/types';
-import { Preloader, UserListItem } from 'components';
+import { Pagination, Preloader, UserListItem } from 'components';
+import { PAGE_COUNT } from 'constants/table';
 import { useGetUsersQuery } from 'dal/users';
-import { useAppDispatch /* , useAppSelector */ } from 'store';
-/* import { changePageUsersAC } from 'store/reducers/users'; */
-/* import initialAvatar from 'common/assets/images/noavatar.png';
-import { Pagination } from 'components/Pagination';
-import { Preloader } from 'components/Preloader';
-import { UserCard } from 'components/UserCard';
-import { PORTION_SIZE } from 'constants/index'; */
-const Users = (): ReturnComponentType => {
-  const dispatch = useAppDispatch();
 
+const Users = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
 
   const userName = searchParams.get('userName');
-  const page = Number(searchParams.get('userPage')) || 1;
+  const page = Number(searchParams.get('pageusers')) || 1;
   const min = Number(searchParams.get('userMin')) || 0;
   const max = Number(searchParams.get('userMax')) || 0;
   const sortUsers = searchParams.get('sortUsers') || '0updated';
@@ -37,24 +28,8 @@ const Users = (): ReturnComponentType => {
     max,
     userName,
     sortUsers,
+    pageCount: PAGE_COUNT,
   });
-
-  /*   const users = useAppSelector(state => state.users.users);
-
-  const totalItemCount = useAppSelector(state => state.users.usersTotalCount);
-
-  const pageCount = useAppSelector(state => state.users.pageCount);
-  const currentPage = useAppSelector(state => state.users.page);
-  const handleChangePageClick = useCallback(
-    (page: number) => {
-      dispatch(changePageUsersAC(page));
-    },
-    [dispatch],
-  );
- */
-  useEffect(() => {
-    /* dispatch(getUsersTC()); */
-  }, [dispatch]);
 
   if (isUsersLoading) {
     return <Preloader />;
@@ -78,13 +53,11 @@ const Users = (): ReturnComponentType => {
             },
           )}
         </div>
-        {/*  <Pagination
-        totalItemCount={totalItemCount}
-        pageCount={pageCount}
-        currentPage={currentPage}
-        onChangePageClick={handleChangePageClick}
-        portionSize={PORTION_SIZE}
-      /> */}
+        <Pagination
+          totalItemCount={usersData.usersTotalCount}
+          currentPage={page}
+          itemName="users"
+        />
       </div>
     );
   }

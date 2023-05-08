@@ -9,14 +9,10 @@ import style from './PacksList.module.scss';
 
 import { Nullable } from 'common/types/Nullable';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { Pagination } from 'components';
-import { SuperButton } from 'components/SuperButton';
-import { SuperInputText } from 'components/SuperInputText';
-import { Table } from 'components/Table';
-import { EMPTY_STRING, PORTION_SIZE } from 'constants/index';
+import { Pagination, SuperButton, SuperInputText, Table } from 'components';
+import { EMPTY_STRING } from 'constants/index';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { PackType } from 'dal/packs/types';
-import { useAppDispatch, useAppSelector } from 'store';
 import { convertDateFormat } from 'utils/handles';
 
 type PackListPropsType = {
@@ -36,10 +32,7 @@ export const PacksList = memo(
     totalItemCount,
     actualPackName,
   }: PackListPropsType): ReturnComponentType => {
-    const dispatch = useAppDispatch();
     const [searchParams, setSearchParams] = useSearchParams();
-
-    const maxCardsCount = useAppSelector(state => state.packs.maxCardsCount);
 
     const [text, setText] = useState<string>(actualPackName || '');
 
@@ -61,36 +54,11 @@ export const PacksList = memo(
     }, [packs]);
 
     const handleSearchPack = useCallback(() => {
-      /*  dispatch(changeSearchPackNameAC(text)); */
       setSearchParams({
         ...Object.fromEntries([...searchParams]),
         packName: text,
       } as URLSearchParamsInit);
     }, [text, searchParams, setSearchParams]);
-
-    const handleChangePageClick = useCallback(
-      (page: number) => {
-        setSearchParams({
-          ...Object.fromEntries([...searchParams]),
-          packPage: page.toString(),
-        } as URLSearchParamsInit);
-      },
-      [setSearchParams, searchParams],
-    );
-
-    // const onModalAddButtonClick = useCallback(() => {
-    //   setText('');
-    //   handleChangePageClick(1);
-    //   /*  handleSetSortingClick('updated', 'down'); */
-    //   handleSearchPack();
-    //   /* dispatch(setNewMinMaxValues(0, maxCardsCount)); */
-    // }, [
-    //   dispatch,
-    //   handleChangePageClick,
-    //   handleSearchPack,
-    //   handleSetSortingClick,
-    //   maxCardsCount,
-    // ]);
 
     useEffect(() => {
       if (text === EMPTY_STRING && !actualPackName) {
@@ -110,12 +78,6 @@ export const PacksList = memo(
         };
       }
     }, [text, actualPackName, handleSearchPack, searchParams, setSearchParams]);
-
-    useEffect(() => {
-      if (searchParams.get('page')) {
-        /* dispatch(changePageAC(Number(searchParams.get('page')))); */
-      }
-    }, []);
 
     return (
       <div className={style.listWrapper} aria-disabled={true}>
@@ -142,8 +104,7 @@ export const PacksList = memo(
         <Pagination
           totalItemCount={totalItemCount}
           currentPage={currentPage}
-          onChangePageClick={handleChangePageClick}
-          portionSize={PORTION_SIZE}
+          itemName="packs"
         />
       </div>
     );

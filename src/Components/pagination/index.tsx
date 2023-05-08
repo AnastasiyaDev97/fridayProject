@@ -1,16 +1,21 @@
 import { memo, useCallback, useState } from 'react';
 
+import type { URLSearchParamsInit } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+
 import styles from './Pagination.module.scss';
 
+import { EntityType } from 'common/types';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
+import { PORTION_SIZE } from 'constants/index';
 import { PAGE_COUNT } from 'constants/table';
 
 type PaginatorPropsType = {
   totalItemCount: number;
   currentPage: number;
-  onChangePageClick: (currentPage: number) => void;
-  portionSize: number;
+  portionSize?: number;
+  itemName: EntityType;
 };
 
 const START_VALUE_PORTION_NUMBER = 1;
@@ -19,10 +24,12 @@ export const Pagination = memo(
   ({
     totalItemCount,
     currentPage,
-    onChangePageClick,
-    portionSize,
+    portionSize = PORTION_SIZE,
+    itemName,
   }: PaginatorPropsType): ReturnComponentType => {
     const [portionNumber, setPortionNumber] = useState(START_VALUE_PORTION_NUMBER);
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     let pagesCount;
     let portionCount;
@@ -48,6 +55,16 @@ export const Pagination = memo(
     const onButtonPrevPageClick = useCallback(() => {
       setPortionNumber(portionNumber - 1);
     }, [portionNumber]);
+
+    const onChangePageClick = useCallback(
+      (page: number) => {
+        setSearchParams({
+          ...Object.fromEntries([...searchParams]),
+          [`page${itemName}`]: page.toString(),
+        } as URLSearchParamsInit);
+      },
+      [setSearchParams, searchParams, itemName],
+    );
 
     return (
       <div className={styles.paginator}>

@@ -1,1 +1,1 @@
-export type EntityType = 'packs' | 'cards';
+export type EntityType = 'packs' | 'cards' | 'users';
