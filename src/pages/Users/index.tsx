@@ -1,6 +1,6 @@
 import { useEffect /* , useCallback  */ } from 'react';
 
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import style from './Users.module.scss';
 
@@ -17,7 +17,6 @@ import { UserCard } from 'components/UserCard';
 import { PORTION_SIZE } from 'constants/index'; */
 const Users = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
 
@@ -67,10 +66,6 @@ const Users = (): ReturnComponentType => {
         <div className={style.usersContainer}>
           {usersData.users.map(
             ({ avatar, email, name, publicCardPacksCount, _id: id }) => {
-              const onOpenUserProfileClick = (): void => {
-                navigate(`/users/${id}`);
-              };
-
               return (
                 <UserListItem
                   userName={name}
@@ -78,7 +73,6 @@ const Users = (): ReturnComponentType => {
                   cardsCount={publicCardPacksCount}
                   avatar={avatar ?? initialAvatar}
                   key={id}
-                  onUserCardClick={onOpenUserProfileClick}
                 />
               );
             },

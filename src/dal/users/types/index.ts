@@ -10,7 +10,7 @@ export type getUserResponseType = {
   user: UserType;
 };
 export interface UserType {
-  avatar: string;
+  avatar?: string;
   email: string;
   name: string;
   publicCardPacksCount: number;

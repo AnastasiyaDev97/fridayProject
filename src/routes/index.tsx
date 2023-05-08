@@ -1,6 +1,6 @@
 import { ReactElement, lazy } from 'react';
 
-import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Layout } from 'components';
@@ -39,7 +39,6 @@ const NotFound = lazy(() => import('pages/NotFound'));
 const Packs = lazy(() => import('pages/Packs'));
 const Login = lazy(() => import('pages/Login'));
 const Profile = lazy(() => import('pages/Profile'));
-const UserProfile = lazy(() => import('pages/UserProfile'));
 const Users = lazy(() => import('pages/Users'));
 
 export const AppRoutes = (): ReturnComponentType => {
@@ -80,24 +79,14 @@ export const AppRoutes = (): ReturnComponentType => {
             </PrivateRoutes>
           }
         />
-        <Route path={USERS} element={<Outlet />}>
-          <Route
-            path=""
-            element={
-              <PrivateRoutes>
-                <Users />
-              </PrivateRoutes>
-            }
-          />
-          <Route
-            path={ID}
-            element={
-              <PrivateRoutes>
-                <UserProfile />
-              </PrivateRoutes>
-            }
-          />
-        </Route>
+        <Route
+          path={USERS}
+          element={
+            <PrivateRoutes>
+              <Users />
+            </PrivateRoutes>
+          }
+        />
         <Route
           path={CARDS}
           element={
@@ -118,7 +107,7 @@ export const AppRoutes = (): ReturnComponentType => {
 
         <Route path={REGISTER} element={<Register />} />
         <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
-
+        {/*  <Route path={USERS} element={<Users />} /> */}
         <Route path={NEW_PASSWORD} element={<NewPassword />}>
           <Route path={TOKEN} element={<NewPassword />} />
         </Route>
