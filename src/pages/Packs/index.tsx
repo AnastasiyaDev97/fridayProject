@@ -11,11 +11,11 @@ import { useGetPacksQuery } from 'dal/packs';
 const Packs = memo(() => {
   const [searchParams] = useSearchParams();
 
-  const actualPackName = searchParams.get('packName');
-  const currentPage = Number(searchParams.get('pagepacks')) || 1;
-  const min = Number(searchParams.get('min')) || 0;
-  const max = Number(searchParams.get('max')) || 0;
-  const sortPacks = searchParams.get('sortpacks') || '0updated';
+  const actualPackName = searchParams.get('name');
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const min = Number(searchParams.get('min'));
+  const max = Number(searchParams.get('max'));
+  const sortPacks = searchParams.get('sort') || '0updated';
   const userId = searchParams.get('userId') || '';
 
   const {

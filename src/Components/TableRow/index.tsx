@@ -2,8 +2,7 @@ import { FC, memo, MouseEvent } from 'react';
 
 import { faTrash, faPen, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import style from '../Table/Table.module.scss';
 
@@ -11,7 +10,7 @@ import { EntityType, ReturnComponentType } from 'common/types';
 import { DeleteModal, LearnModal, UpdateModal } from 'components/Modal';
 import { ItemValues } from 'components/Table';
 import { EMPTY_STRING } from 'constants/index';
-import { RootState } from 'store';
+import { useAppSelector } from 'store';
 
 type TableRowT = {
   itemValues: ItemValues;
@@ -20,7 +19,8 @@ type TableRowT = {
 export const TableRow: FC<TableRowT> = memo(
   ({ itemValues, itemName }: TableRowT): ReturnComponentType => {
     const navigate = useNavigate();
-    const profileId = useSelector<RootState, string>(state => state.profile._id);
+    const [searchParams] = useSearchParams();
+    const profileId = useAppSelector(state => state.profile._id);
 
     const { tableValues, userId, id, cardsPackId } = itemValues;
     const isMyPack = profileId === userId;
@@ -29,7 +29,7 @@ export const TableRow: FC<TableRowT> = memo(
       const element = e.target as HTMLElement;
 
       if (isMyPack && element.tagName !== 'BUTTON') {
-        navigate(`/cards/${id}`);
+        navigate(`/cards/${id}`, { state: { packs: searchParams } });
       }
     };
 

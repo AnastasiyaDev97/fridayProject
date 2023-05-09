@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch } from 'react-redux';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
 
 import styles from './NavBar.module.scss';
 
@@ -20,17 +20,15 @@ import { useLogoutMutation } from 'dal/authorization';
 import { PATH } from 'enums/Path';
 import { setLoginStatus } from 'store/reducers/auth';
 
-/* type DefaultNavBarPropsType = DetailedHTMLProps<
-  ButtonHTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->; */
-
 export const NavBar: FC = (): ReturnComponentType => {
   const dispatch = useDispatch();
-  const { pathname: currentPath } = useLocation();
+  const { pathname: currentPath, state } = useLocation();
+  const [searchParams] = useSearchParams();
   const { isMobile } = useWindowDimensions();
 
   const [logout] = useLogoutMutation();
+
+  const itemName = currentPath.slice(1);
 
   const classNameForLink = ({ isActive }: { isActive: boolean }): string =>
     isActive ? `${styles.active}` : EMPTY_STRING;
@@ -40,9 +38,15 @@ export const NavBar: FC = (): ReturnComponentType => {
       navlinkPath: PATH.PROFILE,
       title: 'Profile',
       icon: faUser,
+      state: state?.profile,
     },
-    { navlinkPath: PATH.PACKS, title: 'Packs List', icon: faCirclePlay },
-    { navlinkPath: PATH.USERS, title: 'Users', icon: faUsers },
+    {
+      navlinkPath: PATH.PACKS,
+      title: 'Packs List',
+      icon: faCirclePlay,
+      state: state?.packs,
+    },
+    { navlinkPath: PATH.USERS, title: 'Users', icon: faUsers, state: state?.users },
     { navlinkPath: PATH.CHAT, title: 'Dialogs', icon: faMessage },
   ];
 
@@ -53,17 +57,26 @@ export const NavBar: FC = (): ReturnComponentType => {
 
   return (
     <div className={`${styles.navBarContainer} `}>
-      {NavLinkDataArray.map(({ navlinkPath, title, icon }) => (
-        <NavLink
-          key={title}
-          to={navlinkPath}
-          className={`${classNameForLink} ${
-            currentPath === navlinkPath && styles.activeLink
-          }`}
-        >
-          {isMobile ? <FontAwesomeIcon icon={icon} /> : title}
-        </NavLink>
-      ))}
+      {NavLinkDataArray.map(({ navlinkPath, title, icon, state }) => {
+        let linkPath: { pathname: PATH; search?: string } = { pathname: navlinkPath };
+
+        if (state) {
+          linkPath = { ...linkPath, search: `?${state}` };
+        }
+
+        return (
+          <NavLink
+            key={title}
+            to={linkPath}
+            state={{ [itemName]: searchParams }}
+            className={`${classNameForLink} ${
+              currentPath === navlinkPath && styles.activeLink
+            }`}
+          >
+            {isMobile ? <FontAwesomeIcon icon={icon} /> : title}
+          </NavLink>
+        );
+      })}
       <span className={styles.logout} onClick={logoutHandler}>
         {isMobile ? <FontAwesomeIcon icon={faArrowRightFromBracket} /> : 'Logout'}
       </span>

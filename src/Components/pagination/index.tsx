@@ -1,11 +1,10 @@
 import { memo, useCallback, useState } from 'react';
 
+import { useLocation, useSearchParams } from 'react-router-dom';
 import type { URLSearchParamsInit } from 'react-router-dom';
-import { useSearchParams } from 'react-router-dom';
 
 import styles from './Pagination.module.scss';
 
-import { EntityType } from 'common/types';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton } from 'components/SuperButton';
 import { PORTION_SIZE } from 'constants/index';
@@ -15,7 +14,6 @@ type PaginatorPropsType = {
   totalItemCount: number;
   currentPage: number;
   portionSize?: number;
-  itemName: EntityType;
 };
 
 const START_VALUE_PORTION_NUMBER = 1;
@@ -25,8 +23,9 @@ export const Pagination = memo(
     totalItemCount,
     currentPage,
     portionSize = PORTION_SIZE,
-    itemName,
   }: PaginatorPropsType): ReturnComponentType => {
+    const location = useLocation();
+
     const [portionNumber, setPortionNumber] = useState(START_VALUE_PORTION_NUMBER);
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -43,6 +42,7 @@ export const Pagination = memo(
     const styleForBtn = { padding: '5px', margin: '0 5px', fontWeight: 'bold' };
     const conditionForShowButton = portionNumber > START_VALUE_PORTION_NUMBER;
     const pages = [];
+    const locationState = location?.state;
 
     for (let i = 1; i <= (pagesCount || 0); i++) {
       pages.push(i);
@@ -58,12 +58,15 @@ export const Pagination = memo(
 
     const onChangePageClick = useCallback(
       (page: number) => {
-        setSearchParams({
-          ...Object.fromEntries([...searchParams]),
-          [`page${itemName}`]: page.toString(),
-        } as URLSearchParamsInit);
+        setSearchParams(
+          {
+            ...Object.fromEntries([...searchParams]),
+            page: page.toString(),
+          } as URLSearchParamsInit,
+          { state: locationState },
+        );
       },
-      [setSearchParams, searchParams, itemName],
+      [setSearchParams, searchParams, locationState],
     );
 
     return (

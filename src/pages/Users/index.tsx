@@ -15,7 +15,7 @@ const Users = (): ReturnComponentType => {
   const page = Number(searchParams.get('pageusers')) || 1;
   const min = Number(searchParams.get('userMin')) || 0;
   const max = Number(searchParams.get('userMax')) || 0;
-  const sortUsers = searchParams.get('sortUsers') || '0updated';
+  const sortUsers = searchParams.get('sortUsers') || '0created';
 
   const {
     data: usersData,
@@ -53,11 +53,7 @@ const Users = (): ReturnComponentType => {
             },
           )}
         </div>
-        <Pagination
-          totalItemCount={usersData.usersTotalCount}
-          currentPage={page}
-          itemName="users"
-        />
+        <Pagination totalItemCount={usersData.usersTotalCount} currentPage={page} />
       </div>
     );
   }

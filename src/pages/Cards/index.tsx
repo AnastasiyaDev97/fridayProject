@@ -1,10 +1,16 @@
 import { memo, useState, useEffect } from 'react';
 
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import {
+  useNavigate,
+  useParams,
+  useSearchParams,
+  createSearchParams,
+  useLocation,
+} from 'react-router-dom';
 
 import style from './Cards.module.scss';
 
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { ReturnComponentType } from 'common/types';
 import { Preloader, Rating, SuperButton, Table, Pagination } from 'components';
 import { AddModal } from 'components/Modal';
 import { CARD_TABLE_FIELDS, PAGE_COUNT } from 'constants/table';
@@ -24,11 +30,14 @@ const Cards = memo((): ReturnComponentType => {
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const cardsPack_id = params.id;
 
-  const sortCards = searchParams.get('sortcards') || '0updated';
-  const currentPage = Number(searchParams.get('pagecards')) || 1;
+  const sortCards = searchParams.get('sort') || '0updated';
+  const currentPage = Number(searchParams.get('page')) || 1;
+
+  const uriParams = location?.state?.packs;
 
   const [cards, setcards] = useState<CardsForTableType>();
 
@@ -44,7 +53,10 @@ const Cards = memo((): ReturnComponentType => {
   );
 
   const onTitleGoBackClick = (): void => {
-    navigate(-1);
+    navigate({
+      pathname: '/packs',
+      search: `?${createSearchParams(uriParams)}`,
+    });
   };
 
   useEffect(() => {
@@ -86,7 +98,6 @@ const Cards = memo((): ReturnComponentType => {
         <Pagination
           totalItemCount={cardsData.cardsTotalCount}
           currentPage={currentPage}
-          itemName="cards"
         />
       </div>
     );

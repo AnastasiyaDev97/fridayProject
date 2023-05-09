@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { AppStatusType } from 'common/types/AppStatus';
-import { Nullable } from 'common/types/Nullable';
+import { Nullable, AppStatusType } from 'common/types';
 
 const initialState = {
   status: 'idle' as AppStatusType,

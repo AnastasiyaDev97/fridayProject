@@ -1,12 +1,12 @@
 import { useState, useEffect, ReactNode, memo } from 'react';
 
 import classNames from 'classnames';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import type { URLSearchParamsInit } from 'react-router-dom';
 
 import style from './SortingButton.module.scss';
 
-import { EntityType, ReturnComponentType } from 'common/types';
+import { ReturnComponentType } from 'common/types';
 import { CardFieldsValuesType, PackFieldsValuesType } from 'constants/table';
 
 type CommonFieldsValuesType = PackFieldsValuesType | CardFieldsValuesType;
@@ -16,17 +16,18 @@ type SortingDirecionType = '0' | '1';
 type SortingButtonPropsType = {
   sortingFieldNameFromProps: CommonFieldsValuesType;
   children: ReactNode;
-  sortingItemsName: EntityType;
 };
 
 export const SortingButton = memo(
   ({
     sortingFieldNameFromProps,
     children,
-    sortingItemsName,
   }: SortingButtonPropsType): ReturnComponentType => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const sortItems = searchParams.get(`sort${sortingItemsName}`);
+    const location = useLocation();
+
+    const locationState = location?.state;
+    const sortItems = searchParams.get(`sort`);
 
     const currentSortingField = (): CommonFieldsValuesType => {
       if (sortItems) {
@@ -71,10 +72,13 @@ export const SortingButton = memo(
 
     useEffect(() => {
       if (isSortingButtonExist) {
-        setSearchParams({
-          ...Object.fromEntries([...searchParams]),
-          [`sort${sortingItemsName}`]: sortingDirection + sortingField,
-        } as URLSearchParamsInit);
+        setSearchParams(
+          {
+            ...Object.fromEntries([...searchParams]),
+            sort: sortingDirection + sortingField,
+          } as URLSearchParamsInit,
+          { state: locationState },
+        );
       }
     }, [
       sortingField,
@@ -82,7 +86,7 @@ export const SortingButton = memo(
       setSearchParams,
       searchParams,
       isSortingButtonExist,
-      sortingItemsName,
+      locationState,
     ]);
 
     return (

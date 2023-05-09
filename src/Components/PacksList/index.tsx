@@ -1,6 +1,6 @@
 import { memo, useCallback, useMemo, useState, useEffect } from 'react';
 
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import type { URLSearchParamsInit } from 'react-router-dom';
 
 import { AddModal } from '../Modal/AddModal';
@@ -33,8 +33,11 @@ export const PacksList = memo(
     actualPackName,
   }: PackListPropsType): ReturnComponentType => {
     const [searchParams, setSearchParams] = useSearchParams();
+    const location = useLocation();
 
     const [text, setText] = useState<string>(actualPackName || '');
+
+    const locationState = location?.state;
 
     const packsForTable = useMemo(() => {
       return packs.map(({ cardsCount, user_name, name, updated, user_id, _id }) => {
@@ -54,17 +57,20 @@ export const PacksList = memo(
     }, [packs]);
 
     const handleSearchPack = useCallback(() => {
-      setSearchParams({
-        ...Object.fromEntries([...searchParams]),
-        packName: text,
-      } as URLSearchParamsInit);
-    }, [text, searchParams, setSearchParams]);
+      setSearchParams(
+        {
+          ...Object.fromEntries([...searchParams]),
+          name: text,
+        } as URLSearchParamsInit,
+        { state: locationState },
+      );
+    }, [text, searchParams, setSearchParams, locationState]);
 
     useEffect(() => {
       if (text === EMPTY_STRING && !actualPackName) {
-        if (searchParams.has('packName')) {
-          searchParams.delete('packName');
-          setSearchParams(searchParams);
+        if (searchParams.has('name')) {
+          searchParams.delete('name');
+          setSearchParams(searchParams, { state: locationState });
         } else {
           return;
         }
@@ -77,7 +83,14 @@ export const PacksList = memo(
           clearTimeout(idOfTimeout);
         };
       }
-    }, [text, actualPackName, handleSearchPack, searchParams, setSearchParams]);
+    }, [
+      text,
+      actualPackName,
+      handleSearchPack,
+      searchParams,
+      setSearchParams,
+      locationState,
+    ]);
 
     return (
       <div className={style.listWrapper} aria-disabled={true}>
@@ -101,11 +114,7 @@ export const PacksList = memo(
           tableTitles={PACK_TABLE_FIELDS}
           itemName={'packs'}
         />
-        <Pagination
-          totalItemCount={totalItemCount}
-          currentPage={currentPage}
-          itemName="packs"
-        />
+        <Pagination totalItemCount={totalItemCount} currentPage={currentPage} />
       </div>
     );
   },
