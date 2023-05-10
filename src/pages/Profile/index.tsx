@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
-import style from './Profile.module.scss';
-
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EditableSpan, FileInput, ProfileCard } from 'components';
 import { useUpdateProfileMutation } from 'dal/profile';

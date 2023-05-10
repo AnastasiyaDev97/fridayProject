@@ -11,7 +11,7 @@ import { useSendPasswordMutation } from 'dal/authorization';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setProfileData } from 'store/reducers';
-import { AuthData, validateForgotPasswordForm } from 'utils/validates';
+import { AuthData, validateForgotPasswordForm } from 'utils';
 
 const ForgotPassword = (): ReturnComponentType => {
   const dispatch = useAppDispatch();

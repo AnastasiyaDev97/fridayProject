@@ -2,18 +2,13 @@
 @import '../../common/sass/media.scss';
 
 .profileWrapper {
-  width: 60%;
   height: 100%;
   position: relative;
-  margin: 0 100px;
   display: flex;
-  background: $backgrForPacks;
   flex-direction: column;
-  padding: 30px;
+  
   @include d-media(xs) {
     width: 100%;
-    margin: 0 15px;
-    background: rgba(0, 0, 0, 0.6);
   }
 
   .avatarBlock {

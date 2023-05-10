@@ -33,9 +33,11 @@ export const Layout = (): ReturnComponentType => {
   return (
     <div className={styles.appWrapper}>
       <Header />
-      <div className={styles.mainBlock}>
+      <div className={styles.mainContainer}>
         {status === STATUS.LOADING && <Preloader />}
-        <Outlet />
+        <div className={styles.pageContainer}>
+          <Outlet />
+        </div>
       </div>
       {isErrorShown && <div className={styles.defaultError}>{errorText} &#128123;</div>}
     </div>

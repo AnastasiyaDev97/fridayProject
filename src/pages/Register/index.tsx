@@ -13,8 +13,7 @@ import { useRegisterMutation } from 'dal/authorization';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setRegisterStatus } from 'store/reducers';
-import { errorHandler } from 'utils/error-utils';
-import { AuthData, validates } from 'utils/validates';
+import { errorHandler, AuthData, validates } from 'utils';
 
 const Register = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
@@ -102,15 +101,15 @@ const Register = (): ReturnComponentType => {
 
         <div className={styles.row}>
           <div className={styles.registrationBtns}>
+            <SuperButton type="submit" className={styles.registerBtn}>
+              Register
+            </SuperButton>
             <SuperButton
               type="button"
               onClick={onCancelButtonClick}
               className={styles.registerBtn}
             >
               Cancel
-            </SuperButton>
-            <SuperButton type="submit" className={styles.registerBtn}>
-              Register
             </SuperButton>
           </div>
         </div>

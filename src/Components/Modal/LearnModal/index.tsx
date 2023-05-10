@@ -14,7 +14,7 @@ import { Nullable } from 'common/types/Nullable';
 import { ANSWERS_GRADE } from 'constants/modal/index';
 import { useGetCardsQuery, useUpdateCardGradeMutation } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
-import { getCard } from 'utils/handles';
+import { getCard } from 'utils';
 
 type LearnModalPropsType = {
   disabled: boolean;

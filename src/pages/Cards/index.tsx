@@ -16,7 +16,7 @@ import { AddModal } from 'components/Modal';
 import { CARD_TABLE_FIELDS, PAGE_COUNT } from 'constants/table';
 import { useGetCardsQuery } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
-import { convertDateFormat } from 'utils/handles';
+import { convertDateFormat } from 'utils';
 
 type CardsForTableType = {
   id: string;

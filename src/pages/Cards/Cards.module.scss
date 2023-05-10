@@ -6,8 +6,8 @@
   position: relative;
   margin: 0 100px;
   display: flex;
-  background: $backgrForPacks;
-  padding: 30px;
+  /* background: $backgrForPacks; */
+  /* padding: 30px; */
   flex-direction: column;
   @include d-media(sm) {
     width: 100%;

@@ -25,18 +25,26 @@ body {
   }
 }
 
-.mainBlock {
+.mainContainer {
   max-width: 1200px;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-
-  padding-top: 90px;
-  padding-bottom: 90px;
+  /* background: $backgrForPacks; */
+  padding: 90px 15px;
   margin: 0 auto;
   @include d-media(xs) {
     padding-top: 70px;
   }
+}
+
+.pageContainer{
+  background: $backgrForPacks;
+  padding: 20px 15px;
+  min-width: 60%;
+  display: flex;
+  justify-content: center;
+  border-radius: 16px;
 }
 
 .defaultError {

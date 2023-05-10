@@ -12,8 +12,7 @@ import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { useSetNewPasswordMutation } from 'dal/authorization';
 import { useAppDispatch } from 'store';
-import { errorHandler } from 'utils/error-utils';
-import { AuthData, validateNewPasswordForm } from 'utils/validates';
+import { errorHandler, AuthData, validateNewPasswordForm } from 'utils';
 
 const NewPassword = (): ReturnComponentType => {
   const [setNewPassword, { data: newPasswordData, isError: isNewPasswordError }] =

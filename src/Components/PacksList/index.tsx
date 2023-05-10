@@ -13,7 +13,7 @@ import { Pagination, SuperButton, SuperInputText, Table } from 'components';
 import { EMPTY_STRING } from 'constants/index';
 import { PACK_TABLE_FIELDS } from 'constants/table';
 import { PackType } from 'dal/packs/types';
-import { convertDateFormat } from 'utils/handles';
+import { convertDateFormat } from 'utils';
 
 type PackListPropsType = {
   packs: Array<PackType>;

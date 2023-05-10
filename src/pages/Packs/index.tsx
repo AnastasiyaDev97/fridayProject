@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import style from './Packs.module.scss';
 
 import { PacksList, PacksParams } from 'components';
+import { SORT_CARDS_TYPE } from 'constants/data';
 import { PAGE_COUNT } from 'constants/table';
 import { useGetPacksQuery } from 'dal/packs';
 
@@ -15,7 +16,7 @@ const Packs = memo(() => {
   const currentPage = Number(searchParams.get('page')) || 1;
   const min = Number(searchParams.get('min'));
   const max = Number(searchParams.get('max'));
-  const sortPacks = searchParams.get('sort') || '0updated';
+  const sortPacks = searchParams.get('sort') || SORT_CARDS_TYPE.updatedUP;
   const userId = searchParams.get('userId') || '';
 
   const {
