@@ -7,10 +7,10 @@ import styles from './Login.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, SuperCheckbox, UniversalInput } from 'components';
+import { FORM_FIELDS_NAME } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
+import { ROUTES } from 'constants/routes';
 import { useLoginMutation } from 'dal/authorization';
-import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
-import { PATH } from 'enums/Path';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setLoginStatus, setProfileData } from 'store/reducers';
 import { errorHandler } from 'utils/error-utils';
@@ -68,21 +68,21 @@ const Login = (): ReturnComponentType => {
         <div className={styles.inputsWrapper}>
           <UniversalInput
             validationErr={(formik.touched.email && formik.errors.email) || EMPTY_STRING}
-            formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.EMAIL)}
+            formikProps={formik.getFieldProps(FORM_FIELDS_NAME.EMAIL)}
           />
 
           <UniversalInput
             validationErr={
               (formik.touched.password && formik.errors.password) || EMPTY_STRING
             }
-            formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
+            formikProps={formik.getFieldProps(FORM_FIELDS_NAME.PASSWORD)}
             type="password"
           />
         </div>
 
         <SuperCheckbox
           checked={formik.values.rememberMe}
-          {...formik.getFieldProps(FORMIK_FIELDS_NAME.REMEMBER_ME)}
+          {...formik.getFieldProps(FORM_FIELDS_NAME.REMEMBER_ME)}
         >
           Remember Me
         </SuperCheckbox>
@@ -96,10 +96,10 @@ const Login = (): ReturnComponentType => {
         </SuperButton>
       </form>
       <div className={styles.row}>
-        <NavLink className={styles.registerLink} to={PATH.REGISTER}>
+        <NavLink className={styles.registerLink} to={ROUTES.REGISTRATION}>
           Register
         </NavLink>
-        <NavLink className={styles.registerLink} to={PATH.FORGOT_PASSWORD}>
+        <NavLink className={styles.registerLink} to={ROUTES.FORGOT_PASSWORD}>
           Lost Password?
         </NavLink>
       </div>

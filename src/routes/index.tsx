@@ -4,12 +4,12 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { Layout } from 'components';
-import { PATH } from 'enums/Path';
+import { ROUTES } from 'constants/routes';
 import { useAppSelector } from 'store';
 
 const {
   PROFILE,
-  REGISTER,
+  REGISTRATION,
   NOT_FOUND,
   FORGOT_PASSWORD,
   NEW_PASSWORD,
@@ -21,13 +21,13 @@ const {
   CHAT,
   USERS,
   ID,
-} = PATH;
+} = ROUTES;
 
 export const PrivateRoutes = ({ children }: any): ReactElement<any, any> => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
   const location = useLocation();
 
-  return isLoggedIn ? children : <Navigate to={PATH.LOGIN} state={{ from: location }} />;
+  return isLoggedIn ? children : <Navigate to={LOGIN} state={{ from: location }} />;
 };
 
 const Cards = lazy(() => import('pages/Cards'));
@@ -50,7 +50,7 @@ export const AppRoutes = (): ReturnComponentType => {
           index
           element={
             <PrivateRoutes>
-              <Packs />
+              <Profile />
             </PrivateRoutes>
           }
         />
@@ -105,7 +105,7 @@ export const AppRoutes = (): ReturnComponentType => {
           />
         </Route>
 
-        <Route path={REGISTER} element={<Register />} />
+        <Route path={REGISTRATION} element={<Register />} />
         <Route path={FORGOT_PASSWORD} element={<ForgotPassword />} />
         {/*  <Route path={USERS} element={<Users />} /> */}
         <Route path={NEW_PASSWORD} element={<NewPassword />}>

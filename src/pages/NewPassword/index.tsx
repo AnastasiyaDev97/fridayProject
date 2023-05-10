@@ -7,10 +7,10 @@ import styles from '../Login/Login.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, UniversalInput } from 'components';
+import { FORM_FIELDS_NAME } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
+import { ROUTES } from 'constants/routes';
 import { useSetNewPasswordMutation } from 'dal/authorization';
-import { FORMIK_FIELDS_NAME } from 'enums/FormikFieldName';
-import { PATH } from 'enums/Path';
 import { useAppDispatch } from 'store';
 import { errorHandler } from 'utils/error-utils';
 import { AuthData, validateNewPasswordForm } from 'utils/validates';
@@ -53,7 +53,7 @@ const NewPassword = (): ReturnComponentType => {
   }, [isNewPasswordError, dispatch]);
 
   if (newPasswordData) {
-    return <Navigate to={PATH.LOGIN} />;
+    return <Navigate to={ROUTES.LOGIN} />;
   }
 
   return (
@@ -70,7 +70,7 @@ const NewPassword = (): ReturnComponentType => {
             validationErr={
               (formik.touched.password && formik.errors.password) || EMPTY_STRING
             }
-            formikProps={formik.getFieldProps(FORMIK_FIELDS_NAME.PASSWORD)}
+            formikProps={formik.getFieldProps(FORM_FIELDS_NAME.PASSWORD)}
             type="password"
           />
         </div>

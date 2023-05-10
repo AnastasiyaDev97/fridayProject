@@ -6,8 +6,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { UniversalInput, SuperButton } from 'components';
 import { EMPTY_STRING } from 'constants/index';
+import { ROUTES } from 'constants/routes';
 import { useSendPasswordMutation } from 'dal/authorization';
-import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setProfileData } from 'store/reducers';
@@ -48,7 +48,7 @@ const ForgotPassword = (): ReturnComponentType => {
   const onButtonTogglePasswordStatusClick = useCallback(() => {
     setIsCheckEmailDataShow(false);
     /* dispatch(addEmailAC(EMPTY_STRING)); */
-    navigate(PATH.LOGIN);
+    navigate(ROUTES.LOGIN);
   }, [navigate]);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ const ForgotPassword = (): ReturnComponentType => {
             </SuperButton>
           </form>
           <div>Do you remember your password?</div>
-          <NavLink className={styles.registerLink} to={PATH.LOGIN}>
+          <NavLink className={styles.registerLink} to={ROUTES.LOGIN}>
             Try logging in
           </NavLink>
         </>

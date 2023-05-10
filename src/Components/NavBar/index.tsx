@@ -14,10 +14,11 @@ import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 
 import useWindowDimensions from 'common/hooks/useWindowDimensions';
+import { LiteralObjectType } from 'common/types';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EMPTY_STRING } from 'constants/index';
+import { ROUTES } from 'constants/routes';
 import { useLogoutMutation } from 'dal/authorization';
-import { PATH } from 'enums/Path';
 import { setLoginStatus } from 'store/reducers/auth';
 
 export const NavBar: FC = (): ReturnComponentType => {
@@ -35,19 +36,19 @@ export const NavBar: FC = (): ReturnComponentType => {
 
   const NavLinkDataArray = [
     {
-      navlinkPath: PATH.PROFILE,
+      navlinkPath: ROUTES.PROFILE,
       title: 'Profile',
       icon: faUser,
       state: state?.profile,
     },
     {
-      navlinkPath: PATH.PACKS,
+      navlinkPath: ROUTES.PACKS,
       title: 'Packs List',
       icon: faCirclePlay,
       state: state?.packs,
     },
-    { navlinkPath: PATH.USERS, title: 'Users', icon: faUsers, state: state?.users },
-    { navlinkPath: PATH.CHAT, title: 'Dialogs', icon: faMessage },
+    { navlinkPath: ROUTES.USERS, title: 'Users', icon: faUsers, state: state?.users },
+    { navlinkPath: ROUTES.CHAT, title: 'Dialogs', icon: faMessage },
   ];
 
   const logoutHandler = (): void => {
@@ -58,7 +59,9 @@ export const NavBar: FC = (): ReturnComponentType => {
   return (
     <div className={`${styles.navBarContainer} `}>
       {NavLinkDataArray.map(({ navlinkPath, title, icon, state }) => {
-        let linkPath: { pathname: PATH; search?: string } = { pathname: navlinkPath };
+        let linkPath: { pathname: LiteralObjectType<typeof ROUTES>; search?: string } = {
+          pathname: navlinkPath,
+        };
 
         if (state) {
           linkPath = { ...linkPath, search: `?${state}` };

@@ -8,8 +8,8 @@ import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, UniversalInput } from 'components';
 import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
+import { ROUTES } from 'constants/routes';
 import { useRegisterMutation } from 'dal/authorization';
-import { PATH } from 'enums/Path';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setRegisterStatus } from 'store/reducers';
@@ -57,13 +57,13 @@ const Register = (): ReturnComponentType => {
 
   const onCancelButtonClick = useCallback(() => {
     formik.resetForm();
-    navigate(PATH.LOGIN);
+    navigate(ROUTES.LOGIN);
   }, [formik, navigate]);
 
   if (registerStatus) {
     return (
       <Navigate
-        to={PATH.LOGIN}
+        to={ROUTES.LOGIN}
         state={{ emailFromRegister: registerData?.addedUser?.email }}
         replace
       />

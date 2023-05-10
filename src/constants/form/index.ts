@@ -1,4 +1,4 @@
-const INPUT_TYPE = {
+export const INPUT_TYPE = {
   PASSWORD: 'password',
   TEXT: 'text',
   EMAIL: 'email',
@@ -21,3 +21,11 @@ export const REGISTRATION_FORM_FIELDS = [
     type: INPUT_TYPE.PASSWORD,
   },
 ];
+
+export const FORM_FIELDS_NAME = {
+  REMEMBER_ME: 'rememberMe',
+  EMAIL: 'email',
+  PASSWORD: 'password',
+  NAME: 'name',
+  CONFIRM_PASSWORD: 'confirmPassword',
+} as const;
