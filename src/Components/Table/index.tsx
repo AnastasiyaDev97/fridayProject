@@ -4,8 +4,7 @@ import { TableRow } from '../TableRow';
 
 import style from './Table.module.scss';
 
-import { EntityType } from 'common/types/EntityType';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { ReturnComponentType, EntityType } from 'common/types';
 import { SortingButton } from 'components';
 import { TableFieldstype } from 'constants/table';
 

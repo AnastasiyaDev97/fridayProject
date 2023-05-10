@@ -1,6 +1,6 @@
 import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, memo } from 'react';
 
-import s from './SuperCheckbox.module.css';
+import style from './SuperCheckbox.module.css';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EMPTY_STRING } from 'constants/index';
@@ -30,17 +30,19 @@ export const SuperCheckbox = memo(
       onChangeChecked && onChangeChecked(e.currentTarget.checked);
     };
 
-    const finalInputClassName = `${s.checkbox} ${className ? className : EMPTY_STRING}`;
+    const finalInputClassName = `${style.checkbox} ${
+      className ? className : EMPTY_STRING
+    }`;
 
     return (
-      <label className={s.labelForCheckBox}>
+      <label className={style.labelForCheckBox}>
         <input
           type={'checkbox'}
           onChange={onChangeCallback}
           className={finalInputClassName}
           {...restProps}
         />
-        {children && <span className={s[`${spanClassName}`]}>{children}</span>}
+        {children && <span className={style[`${spanClassName}`]}>{children}</span>}
       </label>
     );
   },

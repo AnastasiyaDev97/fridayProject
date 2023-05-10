@@ -4,10 +4,8 @@ import type { FieldInputProps } from 'formik';
 
 import styles from './UniversalInput.module.scss';
 
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { InputType, ReturnComponentType } from 'common/types';
 import { SuperInputText } from 'components/SuperInputText';
-
-export type InputType = 'password' | 'text' | 'email';
 
 type UniversalInputPropsType = {
   validationErr: string;

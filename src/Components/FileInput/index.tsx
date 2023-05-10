@@ -2,12 +2,12 @@ import { ChangeEvent, memo, useState } from 'react';
 
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { IconButton } from '@mui/material';
-import { useDispatch } from 'react-redux';
 
 import style from './FileInput.module.scss';
 
 import defaultAva from 'common/assets/images/noavatar.png';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { useAppDispatch } from 'store';
 import { setErrorText } from 'store/reducers/app';
 
 const MAX_FILE_SIZE = 4000000;
@@ -19,7 +19,7 @@ type FileInputPropsType = {
 
 export const FileInput = memo(
   ({ updateImage, image }: FileInputPropsType): ReturnComponentType => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const [isImageBroken, setIsImageBroken] = useState(false);
 

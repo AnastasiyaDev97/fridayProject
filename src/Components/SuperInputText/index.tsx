@@ -6,13 +6,10 @@ import {
   memo,
 } from 'react';
 
-import { useDispatch } from 'react-redux';
-
 import style from './SuperInputText.module.scss';
 
-import { InputType } from 'common/types/InputType';
-import { Nullable } from 'common/types/Nullable';
-import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { InputType, Nullable, ReturnComponentType } from 'common/types';
+import { useAppDispatch } from 'store';
 import { setErrorText } from 'store/reducers/app';
 
 type DefaultInputPropsType = DetailedHTMLProps<
@@ -40,7 +37,7 @@ export const SuperInputText = memo(
     className,
     ...restProps
   }: SuperInputTextPropsType): ReturnComponentType => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const finalInputClassName = `${style.input} ${
       error ? style.errorInput : style.superInput
