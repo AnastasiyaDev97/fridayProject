@@ -47,9 +47,10 @@ const ForgotPassword = (): ReturnComponentType => {
 
   const onButtonTogglePasswordStatusClick = useCallback(() => {
     setIsCheckEmailDataShow(false);
-    /* dispatch(addEmailAC(EMPTY_STRING)); */
     navigate(ROUTES.LOGIN);
   }, [navigate]);
+
+  const isActionButtonDisabled = Object.keys(formik.errors)?.length > 0 || !formik.dirty;
 
   useEffect(() => {
     if (sendPasswordResponseData?.success) {
@@ -75,7 +76,7 @@ const ForgotPassword = (): ReturnComponentType => {
         </div>
       ) : (
         <>
-          <h2>Forgot your password?</h2>
+          <h2 className={styles.title}>Forgot your password?</h2>
           <form
             className={styles.form}
             onSubmit={e => {
@@ -93,7 +94,11 @@ const ForgotPassword = (): ReturnComponentType => {
 
             <div>Enter your email address and we will send you further instructions</div>
 
-            <SuperButton className={styles.submitBtn} type="submit">
+            <SuperButton
+              className={styles.submitBtn}
+              type="submit"
+              disabled={isActionButtonDisabled}
+            >
               Send instructions
             </SuperButton>
           </form>
