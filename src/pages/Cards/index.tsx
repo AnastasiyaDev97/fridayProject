@@ -86,7 +86,7 @@ const Cards = memo((): ReturnComponentType => {
   if (isCardsSuccess && cards) {
     return (
       <div className={style.wrapper}>
-        <h2 onClick={onTitleGoBackClick} className={style.cursor}>
+        <h2 onClick={onTitleGoBackClick} className={`${style.cursor} ${style.title}`}>
           &#8592; Pack Name
         </h2>
         <AddModal itemName="cards" cardsPackId={cardsPack_id}>

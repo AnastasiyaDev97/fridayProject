@@ -8,7 +8,7 @@ export { SuperCheckbox } from 'components/SuperCheckbox';
 export { SuperInputText } from 'components/SuperInputText';
 export { Table } from 'components/Table';
 export { UniversalInput } from 'components/UniversalInput';
-export { UserListItem } from 'components/UserListItem';
+export { UserListItem, SkeletonUserListItem } from 'components/UserListItem';
 export { PacksParams } from 'components/PacksParams';
 
 export { FileInput } from './FileInput';

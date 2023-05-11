@@ -4,9 +4,12 @@ import style from './Users.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
 import { ReturnComponentType } from 'common/types';
-import { Pagination, Preloader, UserListItem } from 'components';
+import { Pagination, Preloader, SkeletonUserListItem, UserListItem } from 'components';
 import { PAGE_COUNT } from 'constants/table';
 import { useGetUsersQuery } from 'dal/users';
+import { generateArray } from 'utils';
+
+const SKELETON_LIST_ITEMS = generateArray(7);
 
 const Users = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
@@ -31,15 +34,13 @@ const Users = (): ReturnComponentType => {
     pageCount: PAGE_COUNT,
   });
 
-  if (isUsersLoading) {
-    return <Preloader />;
-  }
-  if (isUsersSuccess && usersData) {
-    return (
-      <div className={style.usersPage}>
-        <h2 className={style.title}>Users</h2>
-        <div className={style.usersContainer}>
-          {usersData.users.map(
+  return (
+    <div className={style.usersPage}>
+      <h2 className={style.title}>Users</h2>
+      <div className={style.usersContainer}>
+        {isUsersSuccess &&
+          usersData &&
+          usersData.users.map(
             ({ avatar, email, name, publicCardPacksCount, _id: id }) => {
               return (
                 <UserListItem
@@ -52,13 +53,14 @@ const Users = (): ReturnComponentType => {
               );
             },
           )}
-        </div>
-        <Pagination totalItemCount={usersData.usersTotalCount} currentPage={page} />
+        {isUsersLoading &&
+          SKELETON_LIST_ITEMS.map(item => {
+            return <SkeletonUserListItem key={item} />;
+          })}
       </div>
-    );
-  }
-
-  return null;
+      <Pagination totalItemCount={usersData?.usersTotalCount} currentPage={page} />
+    </div>
+  );
 };
 
 export default Users;
