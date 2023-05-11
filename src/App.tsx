@@ -1,6 +1,7 @@
 import { Suspense, useEffect } from 'react';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
+import { ErrorBoundary } from 'components';
 import { Preloader } from 'components/Preloader';
 import { useAuthMutation } from 'dal/authorization';
 import { AppRoutes } from 'routes';
@@ -38,7 +39,9 @@ const App = (): ReturnComponentType => {
 
   return (
     <Suspense fallback={<Preloader />}>
-      <AppRoutes />
+      <ErrorBoundary>
+        <AppRoutes />
+      </ErrorBoundary>
     </Suspense>
   );
 };
