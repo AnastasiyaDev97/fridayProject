@@ -37,3 +37,6 @@ export const getCard = (cards: CardType[]): CardType => {
 
   return cards[res.id + 1];
 };
+
+export const generateArray = (length: number): number[] =>
+  [...new Array(length)].map((el, i) => i);

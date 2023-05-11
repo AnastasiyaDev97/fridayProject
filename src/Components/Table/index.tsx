@@ -1,12 +1,13 @@
 import { memo, ReactElement } from 'react';
 
-import { TableRow } from '../TableRow';
+import { SkeletonTableRow, TableRow } from '../TableRow';
 
 import style from './Table.module.scss';
 
 import { ReturnComponentType, EntityType } from 'common/types';
 import { SortingButton } from 'components';
 import { TableFieldstype } from 'constants/table';
+import { generateArray } from 'utils';
 
 export type PackRowValues = {
   name?: string;
@@ -34,6 +35,8 @@ type TablePropsType = {
   tableTitles: TableFieldstype;
   tableItems?: ItemValues[];
 };
+
+const SKELETON_TABLE_ITEMS = generateArray(7);
 
 export const Table = memo(
   ({ tableTitles, tableItems, itemName }: TablePropsType): ReturnComponentType => {
@@ -63,9 +66,14 @@ export const Table = memo(
           </tr>
         </thead>
         <tbody>
-          {tableItems?.map(row => {
-            return <TableRow key={row.id} itemValues={row} itemName={itemName} />;
-          })}
+          {tableItems &&
+            tableItems.map(row => {
+              return <TableRow key={row.id} itemValues={row} itemName={itemName} />;
+            })}
+          {!tableItems &&
+            SKELETON_TABLE_ITEMS.map(row => {
+              return <SkeletonTableRow key={row} colSpan={tableTitles?.length + 1} />;
+            })}
         </tbody>
       </table>
     );

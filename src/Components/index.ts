@@ -1,8 +1,7 @@
 export { EditableSpan } from './EditableSpan';
-export { TableRow } from './TableRow';
+export { SkeletonTableRow, TableRow } from './TableRow';
 
-export { RangeSlider } from 'components/RangeSlider';
-export { SkeletonRangeSlider } from 'components/RangeSlider';
+export { RangeSlider, SkeletonRangeSlider } from 'components/RangeSlider';
 export { Rating } from 'components/Rating';
 export { SuperButton } from 'components/SuperButton';
 export { SuperCheckbox } from 'components/SuperCheckbox';
