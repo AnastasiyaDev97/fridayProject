@@ -20,6 +20,10 @@
   }
 }
 
+.title{
+  padding-bottom: 15px;
+}
+
 @include d-media(sm) {
   .wrapper {
     position: absolute;

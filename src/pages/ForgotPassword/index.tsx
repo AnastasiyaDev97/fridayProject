@@ -61,7 +61,7 @@ const ForgotPassword = (): ReturnComponentType => {
     <div className={styles.wrapper}>
       {isCheckEmailDataShow ? (
         <div className={styles.sendMailBlock}>
-          <h2>Check email</h2>
+          <h2 className={styles.title}>Check email</h2>
           <div className={styles.sendMailMessage}>
             We&apos;ve sent an Email with instructions to {emailForRecovery}
           </div>

@@ -42,7 +42,7 @@ th {
       margin-right: 10px;
       @include d-media(xs) {
         margin-right: 3px;
-        font-size: 12px;
+        font-size: 0.857rem;
         font-weight: 400;
       }
     }
@@ -102,7 +102,7 @@ td {
     margin-right: 3px;
   }
   th {
-    font-size: 12px;
+    font-size: 0.857rem;
     font-weight: 400;
   }
   td {
@@ -110,7 +110,7 @@ td {
     .cell {
       margin: 0 5px;
       text-align: left;
-      font-size: 12px;
+      font-size: 0.857rem;
       height: 18px;
       /* display: flex;
       align-items: center; */

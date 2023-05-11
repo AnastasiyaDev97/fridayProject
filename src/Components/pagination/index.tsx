@@ -11,7 +11,7 @@ import { PORTION_SIZE } from 'constants/index';
 import { PAGE_COUNT } from 'constants/table';
 
 type PaginatorPropsType = {
-  totalItemCount: number;
+  totalItemCount?: number;
   currentPage: number;
   portionSize?: number;
 };

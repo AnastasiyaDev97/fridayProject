@@ -1,5 +1,8 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
+import style from './Profile.module.scss';
+
+import initialAvatar from 'common/assets/images/noavatar.png';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EditableSpan, FileInput, ProfileCard } from 'components';
 import { useUpdateProfileMutation } from 'dal/profile';
@@ -53,11 +56,16 @@ const Profile = (): ReturnComponentType => {
 
   if (profileData) {
     return (
-      <ProfileCard
-        profileData={profileData}
-        nameChildren={<EditableSpan title={name} updateTitle={onUpdateTitle} />}
-        avatarChildren={<FileInput updateImage={onUpdateAvatar} image={avatar} />}
-      />
+      <div className={style.wrapper}>
+        <h2 className={style.title}>Profile Page</h2>
+        <ProfileCard
+          profileData={profileData}
+          nameChildren={<EditableSpan title={name} updateTitle={onUpdateTitle} />}
+          avatarChildren={
+            <FileInput updateImage={onUpdateAvatar} image={avatar || initialAvatar} />
+          }
+        />
+      </div>
     );
   }
 

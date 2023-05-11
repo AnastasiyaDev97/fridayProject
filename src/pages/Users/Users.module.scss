@@ -2,11 +2,12 @@
 @import '../../common/sass/media.scss';
 
 .usersPage {
-  width: 70%;
+  width: 100%;
   height: 100%;
   position: relative;
   .title {
     font-size: 1.8rem;
+    padding-bottom: 15px;
   }
 }
 .usersContainer {

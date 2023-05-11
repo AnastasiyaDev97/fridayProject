@@ -1,18 +1,7 @@
 @import '../../common/sass/media.scss';
 @import '../../common/sass/variables.scss';
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-html {
-  font-size: 14px;
-}
 
-body {
-  margin: 0px;
-}
 
 .appWrapper {
   background-image: url('../../common/assets/images/bck1.jpg');
@@ -40,11 +29,20 @@ body {
 
 .pageContainer{
   background: $backgrForPacks;
-  padding: 20px 15px;
+  padding: 20px 45px;
   min-width: 60%;
   display: flex;
   justify-content: center;
   border-radius: 16px;
+  @include d-media(md) {
+    min-width: 80%;
+  }
+  @include d-media(sm) {
+    padding: 20px 15px;
+  }
+  @include d-media(xs) {
+    min-width: 100%;
+  }
 }
 
 .defaultError {
@@ -75,5 +73,5 @@ div {
   color: $Text;
   font-family: $NunitoFont;
   font-weight: 200;
-  font-size: 16px;
+  font-size: 1.143rem;
 }

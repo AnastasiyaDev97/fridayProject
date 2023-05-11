@@ -1,5 +1,6 @@
 import { memo } from 'react';
 
+import { Skeleton } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
 import style from './Packs.module.scss';
@@ -18,11 +19,11 @@ const Packs = memo(() => {
   const max = Number(searchParams.get('max'));
   const sortPacks = searchParams.get('sort') || SORT_CARDS_TYPE.updatedUP;
   const userId = searchParams.get('userId') || '';
-
+  const isPacksLoading = true;
   const {
     data: packs,
     isSuccess: isPacksSuccess,
-    /* isLoading: isPacksLoading, */
+    /*  isLoading: isPacksLoading, */
   } = useGetPacksQuery({
     page: currentPage,
     min,
@@ -33,24 +34,40 @@ const Packs = memo(() => {
     pageCount: PAGE_COUNT,
   });
 
-  if (isPacksSuccess) {
+  return (
+    <div className={style.wrapper}>
+      <PacksParams
+        currentMinCardsValue={min}
+        currentMaxCardsValue={max}
+        maxCardsCount={packs?.maxCardsCount}
+      />
+      <PacksList
+        packs={packs?.cardPacks}
+        currentPage={currentPage}
+        totalItemCount={packs?.cardPacksTotalCount}
+        sortPacks={sortPacks}
+        actualPackName={actualPackName}
+      />
+    </div>
+  );
+  /*   } */
+  /*  if (isPacksLoading) {
     return (
-      <div className={style.wrapper}>
-        <PacksParams
-          currentMinCardsValue={min}
-          currentMaxCardsValue={max}
-          maxCardsCount={packs?.maxCardsCount}
-        />
-        <PacksList
-          packs={packs?.cardPacks}
-          currentPage={currentPage}
-          totalItemCount={packs?.cardPacksTotalCount}
-          sortPacks={sortPacks}
-          actualPackName={actualPackName}
-        />
-      </div>
+      <Skeleton
+        variant="rectangular"
+        width={1150}
+        height={770}
+        sx={{ background: 'white' }}
+      >
+        <Skeleton
+          variant="rectangular"
+          width={200}
+          height={770}
+          sx={{ background: 'red' }}
+        ></Skeleton>
+      </Skeleton>
     );
-  }
+  } */
 
   return null;
 });

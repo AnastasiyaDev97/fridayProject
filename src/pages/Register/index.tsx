@@ -45,6 +45,9 @@ const Register = (): ReturnComponentType => {
     },
   });
 
+  const isRegisterButtonDisabled =
+    Object.keys(formik.errors)?.length > 0 || Object.keys(formik.touched)?.length === 0;
+
   useEffect(() => {
     if (registerData) {
       dispatch(setRegisterStatus(true));
@@ -71,7 +74,7 @@ const Register = (): ReturnComponentType => {
 
   return (
     <div className={styles.wrapper}>
-      <h2>Sign up</h2>
+      <h2 className={styles.title}>Sign up</h2>
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputsWrapper}>
           {REGISTRATION_FORM_FIELDS.map(
@@ -101,7 +104,11 @@ const Register = (): ReturnComponentType => {
 
         <div className={styles.row}>
           <div className={styles.registrationBtns}>
-            <SuperButton type="submit" className={styles.registerBtn}>
+            <SuperButton
+              type="submit"
+              className={styles.registerBtn}
+              disabled={isRegisterButtonDisabled}
+            >
               Register
             </SuperButton>
             <SuperButton

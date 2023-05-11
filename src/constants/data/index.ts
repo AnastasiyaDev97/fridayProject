@@ -3,7 +3,7 @@ import { LiteralObjectType } from 'common/types/LiteralObjectType';
 export const SORT_CARDS_TYPE = {
   nameUP: '0name',
   nameDOWN: '1name',
-  updatedUP: '0update',
+  updatedUP: '0updated',
   updateDOWN: '1update',
   answerUP: '0answer',
   answerDOWN: '1answer',

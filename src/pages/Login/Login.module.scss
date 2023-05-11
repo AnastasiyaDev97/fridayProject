@@ -24,7 +24,7 @@
       align-items: center;
       position: relative;
       color: $formTextColor;
-      font-size: 14px;
+      font-size: 1rem;
       font-weight: 400;
       line-height: 26px;
       font-family: $NunitoFont;
@@ -39,7 +39,7 @@
       line-height: 26px;
       font-family: $NunitoFont;
       font-weight: 800;
-      font-size: 18px;
+      font-size: 1.286rem;
 
       &:hover {
         text-decoration: underline;
@@ -83,7 +83,10 @@
   }
 }
 
-
+.title{
+  font-size: 1.5rem;
+  padding-bottom: 15px;
+}
 
 .sendMailBlock {
   display: flex;

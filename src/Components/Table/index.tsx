@@ -32,7 +32,7 @@ export type ItemValues = {
 type TablePropsType = {
   itemName: EntityType;
   tableTitles: TableFieldstype;
-  tableItems: ItemValues[];
+  tableItems?: ItemValues[];
 };
 
 export const Table = memo(
@@ -63,7 +63,7 @@ export const Table = memo(
           </tr>
         </thead>
         <tbody>
-          {tableItems.map(row => {
+          {tableItems?.map(row => {
             return <TableRow key={row.id} itemValues={row} itemName={itemName} />;
           })}
         </tbody>

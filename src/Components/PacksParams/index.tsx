@@ -6,13 +6,13 @@ import type { URLSearchParamsInit } from 'react-router-dom';
 import style from './PacksParams.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { RangeSlider, SuperButton } from 'components';
+import { RangeSlider, SkeletonRangeSlider, SuperButton } from 'components';
 import { useAppSelector } from 'store';
 
 type PacksParamsPropsT = {
   currentMinCardsValue: number;
   currentMaxCardsValue: number;
-  maxCardsCount: number;
+  maxCardsCount?: number;
 };
 
 export const PacksParams: FC<PacksParamsPropsT> = memo(
@@ -40,7 +40,7 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
       delete searchParamsObject.userId;
       setSearchParams({
         ...searchParamsObject,
-        max: maxCardsCount.toString(),
+        max: maxCardsCount?.toString(),
       } as URLSearchParamsInit);
     }, [setSearchParams, searchParams, maxCardsCount]);
 
@@ -64,12 +64,16 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
           <SuperButton onClick={onShowAllCardsClick}>All</SuperButton>
         </div>
 
-        <RangeSlider
-          currentMinSliderValue={currentMinCardsValue}
-          currentMaxSliderValue={currentMaxCardsValue}
-          maxSliderCount={maxCardsCount}
-          onSliderValuesChange={handleChangeCardsCountChange}
-        />
+        {maxCardsCount ? (
+          <RangeSlider
+            currentMinSliderValue={currentMinCardsValue}
+            currentMaxSliderValue={currentMaxCardsValue}
+            maxSliderCount={maxCardsCount}
+            onSliderValuesChange={handleChangeCardsCountChange}
+          />
+        ) : (
+          <SkeletonRangeSlider />
+        )}
       </div>
     );
   },

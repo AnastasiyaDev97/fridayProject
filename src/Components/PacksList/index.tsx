@@ -16,9 +16,9 @@ import { PackType } from 'dal/packs/types';
 import { convertDateFormat } from 'utils';
 
 type PackListPropsType = {
-  packs: Array<PackType>;
+  packs?: PackType[];
   currentPage: number;
-  totalItemCount: number;
+  totalItemCount?: number;
   sortPacks: string;
   actualPackName: Nullable<string>;
 };
@@ -40,7 +40,7 @@ export const PacksList = memo(
     const locationState = location?.state;
 
     const packsForTable = useMemo(() => {
-      return packs.map(({ cardsCount, user_name, name, updated, user_id, _id }) => {
+      return packs?.map(({ cardsCount, user_name, name, updated, user_id, _id }) => {
         const convertedToDateUpdated = convertDateFormat(updated);
 
         return {

@@ -14,16 +14,16 @@
     a,
     .logout {
       padding: 19px 0;
-      font-size: 19px;
+      font-size: 1.357rem;
       color: white;
       &:hover {
-        font-size: 25px;
+        font-size: 1.786;
         color: #6b8e23;
       }
       &.activeLink {
         background: $buttonBackground;
         &:hover {
-          font-size: 25px;
+          font-size: 1.786;
           color: white;
         }
       }

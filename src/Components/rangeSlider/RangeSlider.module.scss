@@ -10,7 +10,7 @@
     display: flex;
     justify-content: space-between;
     @include d-media(xs) {
-      font-size: 13px;
+      font-size: 1 rem;
       padding-top: 0;
     }
   }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 import { useFormik } from 'formik';
 import { Navigate, NavLink, useLocation } from 'react-router-dom';
@@ -62,7 +62,7 @@ const Login = (): ReturnComponentType => {
 
   return (
     <div className={styles.wrapper}>
-      <h2>Welcome</h2>
+      <h2 className={styles.title}>Welcome</h2>
       <form className={styles.form} onSubmit={formik.handleSubmit}>
         <div className={styles.inputsWrapper}>
           <UniversalInput

@@ -16,11 +16,11 @@ export const ProfileCard = ({
   nameChildren,
   avatarChildren,
 }: ProfileCardPropsData): ReturnComponentType => {
-  const { email, avatar, publicCardPacksCount } = profileData;
+  const { email, publicCardPacksCount } = profileData;
 
   return (
     <div className={style.profileWrapper}>
-      {avatar && <div className={style.avatarBlock}>{avatarChildren}</div>}
+      {avatarChildren && <div className={style.avatarBlock}>{avatarChildren}</div>}
 
       <div className={style.profileInfo}>
         {nameChildren}

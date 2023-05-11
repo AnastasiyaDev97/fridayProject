@@ -9,7 +9,7 @@
   color: $Text;
   cursor: pointer;
   @include d-media(xs) {
-    font-size: 12px;
+    font-size: 1rem;
   }
 
   &:hover {

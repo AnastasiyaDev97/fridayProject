@@ -57,7 +57,7 @@ const NewPassword = (): ReturnComponentType => {
 
   return (
     <div className={styles.wrapper}>
-      <h2>Create new password</h2>
+      <h2 className={styles.title}>Create new password</h2>
       <form
         className={styles.form}
         onSubmit={e => {

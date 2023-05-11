@@ -10,7 +10,7 @@ const NotFound = (): ReturnComponentType => {
   return (
     <div className={style.notFoundBackgr}>
       <div className={style.notFoundBlock}>
-        <h2>Not Found &#128532;</h2>
+        <h2 className={style.title}>Not Found &#128532;</h2>
         <SuperButton>
           <NavLink to={ROUTES.PROFILE} className={style.link}>
             Go Back
