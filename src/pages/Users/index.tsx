@@ -14,11 +14,11 @@ const SKELETON_LIST_ITEMS = generateArray(7);
 const Users = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
 
-  const userName = searchParams.get('userName');
-  const page = Number(searchParams.get('pageusers')) || 1;
-  const min = Number(searchParams.get('userMin')) || 0;
-  const max = Number(searchParams.get('userMax')) || 0;
-  const sortUsers = searchParams.get('sortUsers') || '0created';
+  const userName = searchParams.get('name');
+  const page = Number(searchParams.get('page')) || 1;
+  const min = Number(searchParams.get('min')) || 0;
+  const max = Number(searchParams.get('max')) || 0;
+  const sortUsers = searchParams.get('sort') || '0created';
 
   const {
     data: usersData,
