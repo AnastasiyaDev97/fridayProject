@@ -1,5 +1,6 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
+import { socket } from 'common/config/socket';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { ErrorBoundary } from 'components';
 import { Preloader } from 'components/Preloader';
@@ -10,6 +11,8 @@ import { setIsInitialized, setLoginStatus, setProfileData } from 'store/reducers
 
 const App = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
+
+  const [isConnected, setIsConnected] = useState(socket.connected);
 
   const [auth, { data: authData, isError: authError }] = useAuthMutation();
 

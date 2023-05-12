@@ -8,11 +8,11 @@ import type {
 } from '@reduxjs/toolkit/query/react';
 
 const CLIENT_API_OPTIONS = {
-  baseUrl: 'http://localhost:7542/2.0/',
+  baseUrl: process.env.REACT_APP_BASE_URL,
 };
 
 const PASSWORD_CLIENT_API_OPTIONS = {
-  baseUrl: 'https://neko-back.herokuapp.com/2.0',
+  baseUrl: process.env.REACT_APP_BASE_URL,
 };
 
 export const clientAPI = createApi({

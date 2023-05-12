@@ -48,7 +48,7 @@ export const NavBar: FC = (): ReturnComponentType => {
       state: state?.packs,
     },
     { navlinkPath: ROUTES.USERS, title: 'Users', icon: faUsers, state: state?.users },
-    { navlinkPath: ROUTES.CHAT, title: 'Dialogs', icon: faMessage },
+    { navlinkPath: ROUTES.DIALOGS, title: 'Dialogs', icon: faMessage },
   ];
 
   const logoutHandler = (): void => {

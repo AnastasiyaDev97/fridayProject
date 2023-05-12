@@ -38,8 +38,8 @@ const Login = (): ReturnComponentType => {
 
   const formik = useFormik({
     initialValues: {
-      email: userEmail || /* (process.env.REACT_APP_EMAIL as string) ||  */ '',
-      password: /* (process.env.REACT_APP_PASSWORD as string) || */ '',
+      email: userEmail || (process.env.REACT_APP_EMAIL as string) || '',
+      password: (process.env.REACT_APP_PASSWORD as string) || '',
       rememberMe: false,
     },
     validate: values => {

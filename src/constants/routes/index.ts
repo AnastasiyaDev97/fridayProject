@@ -12,5 +12,5 @@ export const ROUTES = {
   ANY: '*',
   ID: ':id',
   USERS: '/users',
-  CHAT: '/chat',
+  DIALOGS: '/dialogs',
 } as const;

@@ -18,7 +18,7 @@ const {
   LOGIN,
   TOKEN,
   ANY,
-  CHAT,
+  DIALOGS,
   USERS,
   ID,
 } = ROUTES;
@@ -31,7 +31,7 @@ export const PrivateRoutes = ({ children }: any): ReactElement<any, any> => {
 };
 
 const Cards = lazy(() => import('pages/Cards'));
-const Chat = lazy(() => import('pages/Chat'));
+const Dialogs = lazy(() => import('pages/Dialogs'));
 const ForgotPassword = lazy(() => import('pages/ForgotPassword'));
 const Register = lazy(() => import('pages/Register'));
 const NewPassword = lazy(() => import('pages/NewPassword'));
@@ -64,10 +64,10 @@ export const AppRoutes = (): ReturnComponentType => {
           }
         />
         <Route
-          path={CHAT}
+          path={DIALOGS}
           element={
             <PrivateRoutes>
-              <Chat />
+              <Dialogs />
             </PrivateRoutes>
           }
         />
