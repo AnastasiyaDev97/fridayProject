@@ -1,1 +1,0 @@
-{"version":3,"sources":["pages/Chat/index.tsx"],"names":["Chat","memo"],"mappings":"yGAAA,yBAEMA,EAAOC,gBAAK,WAChB,OAAO,4BACT,IAEeD,W","file":"static/js/12.0b7b23cf.chunk.js","sourcesContent":["import { memo } from 'react';\r\n\r\nconst Chat = memo(() => {\r\n  return <></>;\r\n});\r\n\r\nexport default Chat;\r\n"],"sourceRoot":""}
