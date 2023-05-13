@@ -8,11 +8,7 @@ import type {
 } from '@reduxjs/toolkit/query/react';
 
 const CLIENT_API_OPTIONS = {
-  baseUrl: process.env.REACT_APP_BASE_URL,
-};
-
-const PASSWORD_CLIENT_API_OPTIONS = {
-  baseUrl: process.env.REACT_APP_BASE_URL,
+  baseUrl: 'http://localhost:7542/2.0/' /* process.env.REACT_APP_BASE_URL */,
 };
 
 export const clientAPI = createApi({
@@ -22,15 +18,6 @@ export const clientAPI = createApi({
     credentials: 'include',
   }),
   tagTypes: ['Cards', 'Packs'],
-  endpoints: () => ({}),
-});
-
-export const passwordClientAPI = createApi({
-  reducerPath: 'passwordClientAPI',
-  baseQuery: fetchBaseQuery({
-    ...PASSWORD_CLIENT_API_OPTIONS,
-    credentials: 'include',
-  }),
   endpoints: () => ({}),
 });
 
@@ -44,16 +31,4 @@ export type builderType = EndpointBuilder<
   >,
   'Cards' | 'Packs',
   'clientAPI'
->;
-
-export type PasswordBuilderType = EndpointBuilder<
-  BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    FetchBaseQueryError,
-    Record<string, unknown>,
-    FetchBaseQueryMeta
-  >,
-  '',
-  'passwordClientAPI'
 >;

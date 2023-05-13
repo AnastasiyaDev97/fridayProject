@@ -1,6 +1,6 @@
 import URI from 'urijs';
 
-import { PasswordBuilderType, clientAPI, passwordClientAPI } from '..';
+import { clientAPI } from '..';
 import type { builderType } from '..';
 import { newPassDataType } from '../packs/types';
 
@@ -12,9 +12,6 @@ import {
   ResponseLogoutType,
   ResponseRegisterType,
 } from './types';
-
-/*
-<!--https://nastyaZ23.github.io/fridayProject-->*!/*/
 
 const authAPI = clientAPI.injectEndpoints({
   endpoints: (build: builderType) => ({
@@ -49,7 +46,6 @@ const authAPI = clientAPI.injectEndpoints({
           method: 'DELETE',
         };
       },
-      transformResponse: (response: { data: ResponseRegisterType }) => response.data,
     }),
     auth: build.mutation<ResponseLoginType, void>({
       query() {
@@ -71,22 +67,20 @@ const authAPI = clientAPI.injectEndpoints({
           body: data,
         };
       },
-      transformResponse: (response: { data: ResponseLogoutType }) => response.data,
     }),
   }),
 });
 
-const passworsAPI = passwordClientAPI.injectEndpoints({
-  endpoints: (build: PasswordBuilderType) => ({
+const passworsAPI = clientAPI.injectEndpoints({
+  endpoints: (build: builderType) => ({
     sendPassword: build.mutation<ResponseForgotPasswordType, string>({
       query(email) {
         const messageDataPassword = {
           email,
           from: 'test-front-admin <ai73a@yandex.by>',
-          message: `<div style="background-color: lime; padding: 15px">
-password recovery link: <a href='http://anastasiyadev97.github.io/fridayProject/#/new-password/$token$'<!--https://anastasiyadev97.github.io/fridayProject/#new-password/$token$-->'>
+          message: `<div style="padding: 15px">
+password recovery link: <a href='https://anastasiyadev97.github.io/fridayProject/#/new-password/$token$'>
 link</a></div>`,
-
           /* http://localhost:3000/#/new-password/$token$*/
         };
 
