@@ -5,6 +5,7 @@ import { Navigate, NavLink, useLocation } from 'react-router-dom';
 
 import styles from './Login.module.scss';
 
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, SuperCheckbox, UniversalInput } from 'components';
 import { FORM_FIELDS_NAME } from 'constants/form';
@@ -13,13 +14,13 @@ import { ROUTES } from 'constants/routes';
 import { useLoginMutation } from 'dal/authorization';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setLoginStatus, setProfileData } from 'store/reducers';
-import { errorHandler, AuthData, validateLoginForm } from 'utils';
+import { AuthData, validateLoginForm } from 'utils';
 
 const Login = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
-  const [login, { data: loginData, isError: isLoginError }] = useLoginMutation();
+  const [login, { data: loginData, isError, isLoading, isSuccess }] = useLoginMutation();
 
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn);
 
@@ -31,10 +32,13 @@ const Login = (): ReturnComponentType => {
       dispatch(setLoginStatus(true));
       dispatch(setProfileData(loginData));
     }
-    if (isLoginError) {
-      errorHandler(dispatch);
-    }
-  }, [loginData, dispatch, isLoginError]);
+  }, [loginData, dispatch]);
+
+  useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
+  });
 
   const formik = useFormik({
     initialValues: {

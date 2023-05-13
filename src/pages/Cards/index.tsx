@@ -10,8 +10,9 @@ import {
 
 import style from './Cards.module.scss';
 
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types';
-import { Preloader, Rating, SuperButton, Table, Pagination } from 'components';
+import { Rating, SuperButton, Table, Pagination } from 'components';
 import { AddModal } from 'components/Modal';
 import { CARD_TABLE_FIELDS, PAGE_COUNT } from 'constants/table';
 import { useGetCardsQuery } from 'dal/cards';
@@ -43,10 +44,9 @@ const Cards = memo((): ReturnComponentType => {
 
   const {
     data: cardsData,
-    /* error: cardsError, */
-    isSuccess: isCardsSuccess,
-    isLoading: isCardsLoading,
-    /* isError: isCardsError, */
+    isSuccess,
+    isLoading,
+    isError,
   } = useGetCardsQuery(
     { cardsPack_id, page: currentPage, sortCards, pageCount: PAGE_COUNT },
     { skip: !cardsPack_id },
@@ -59,8 +59,14 @@ const Cards = memo((): ReturnComponentType => {
     });
   };
 
+  useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
+  });
+
   useEffect(() => {
-    if (isCardsSuccess && cardsData?.cards) {
+    if (isSuccess && cardsData?.cards) {
       const formattedCardsForTable = cardsData.cards.map(
         ({ question, answer, updated, grade, _id, user_id, cardsPack_id }: CardType) => {
           const convertedToDateUpdated = convertDateFormat(updated);
@@ -78,12 +84,9 @@ const Cards = memo((): ReturnComponentType => {
 
       setcards(formattedCardsForTable);
     }
-  }, [isCardsSuccess, cardsData]);
+  }, [isSuccess, cardsData]);
 
-  if (isCardsLoading) {
-    return <Preloader />;
-  }
-  if (isCardsSuccess && cards) {
+  if (isSuccess && cards) {
     return (
       <div className={style.wrapper}>
         <h2 onClick={onTitleGoBackClick} className={`${style.cursor} ${style.title}`}>

@@ -3,16 +3,17 @@ import { useCallback, useEffect, useMemo } from 'react';
 import style from './Profile.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EditableSpan, FileInput, ProfileCard } from 'components';
 import { useUpdateProfileMutation } from 'dal/profile';
 import { useAppDispatch, useAppSelector } from 'store';
-import { setErrorText, setProfileData } from 'store/reducers';
+import { setProfileData } from 'store/reducers';
 
 const Profile = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
-  const [updateProfile, { data: updatedProfileData, isError: isProfileError }] =
+  const [updateProfile, { data: updatedProfileData, isError, isLoading, isSuccess }] =
     useUpdateProfileMutation();
 
   const email = useAppSelector(state => state.profile.email);
@@ -49,10 +50,13 @@ const Profile = (): ReturnComponentType => {
     if (updatedProfileData) {
       dispatch(setProfileData(updatedProfileData.updatedUser));
     }
-    if (isProfileError) {
-      dispatch(setErrorText({ errorText: 'Profile failed to update' }));
-    }
-  }, [updatedProfileData, dispatch, isProfileError]);
+  }, [updatedProfileData, dispatch]);
+
+  useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
+  });
 
   if (profileData) {
     return (
@@ -71,29 +75,5 @@ const Profile = (): ReturnComponentType => {
 
   return null;
 };
-
-{
-  /* <div className={style.profileWrapper}>
-      <div className={style.avatarBlock}>
-        <FileInput updateImage={onUpdateAvatar} image={avatar} />
-      </div>
-
-      <div className={style.profileInfo}>
-        <EditableSpan title={name} updateTitle={onUpdateTitle} />
-
-        <div className={style.info}>
-          <span>
-            <b>Email</b>: {email}
-          </span>
-          <span>
-            <b>Count of cards</b>: {publicCardPacksCount}
-          </span>
-        </div>
-      </div>
-    </div> */
-  /*  }
-
-  return null; */
-}
 
 export default Profile;

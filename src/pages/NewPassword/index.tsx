@@ -1,24 +1,20 @@
-import { useEffect } from 'react';
-
 import { useFormik } from 'formik';
 import { Navigate, useParams } from 'react-router-dom';
 
 import styles from '../Login/Login.module.scss';
 
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, UniversalInput } from 'components';
 import { FORM_FIELDS_NAME } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { useSetNewPasswordMutation } from 'dal/authorization';
-import { useAppDispatch } from 'store';
-import { errorHandler, AuthData, validateNewPasswordForm } from 'utils';
+import { AuthData, validateNewPasswordForm } from 'utils';
 
 const NewPassword = (): ReturnComponentType => {
-  const [setNewPassword, { data: newPasswordData, isError: isNewPasswordError }] =
+  const [setNewPassword, { data: newPasswordData, isError, isLoading, isSuccess }] =
     useSetNewPasswordMutation();
-
-  const dispatch = useAppDispatch();
 
   const { token } = useParams<string>();
 
@@ -45,11 +41,11 @@ const NewPassword = (): ReturnComponentType => {
     },
   });
 
-  useEffect(() => {
-    if (isNewPasswordError) {
-      errorHandler(dispatch);
-    }
-  }, [isNewPasswordError, dispatch]);
+  useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
+  });
 
   if (newPasswordData) {
     return <Navigate to={ROUTES.LOGIN} />;

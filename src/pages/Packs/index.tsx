@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
-import { Skeleton } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
 import style from './Packs.module.scss';
 
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { PacksList, PacksParams } from 'components';
 import { SORT_CARDS_TYPE } from 'constants/data';
 import { PAGE_COUNT } from 'constants/table';
@@ -19,11 +19,12 @@ const Packs = memo(() => {
   const max = Number(searchParams.get('max'));
   const sortPacks = searchParams.get('sort') || SORT_CARDS_TYPE.updatedUP;
   const userId = searchParams.get('userId') || '';
-  const isPacksLoading = true;
+
   const {
     data: packs,
-    isSuccess: isPacksSuccess,
-    /*  isLoading: isPacksLoading, */
+    isSuccess,
+    isLoading,
+    isError,
   } = useGetPacksQuery({
     page: currentPage,
     min,
@@ -32,6 +33,12 @@ const Packs = memo(() => {
     user_id: userId,
     sortPacks: sortPacks,
     pageCount: PAGE_COUNT,
+  });
+
+  useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
   });
 
   return (
@@ -50,26 +57,6 @@ const Packs = memo(() => {
       />
     </div>
   );
-  /*   } */
-  /*  if (isPacksLoading) {
-    return (
-      <Skeleton
-        variant="rectangular"
-        width={1150}
-        height={770}
-        sx={{ background: 'white' }}
-      >
-        <Skeleton
-          variant="rectangular"
-          width={200}
-          height={770}
-          sx={{ background: 'red' }}
-        ></Skeleton>
-      </Skeleton>
-    );
-  } */
-
-  return null;
 });
 
 export default Packs;

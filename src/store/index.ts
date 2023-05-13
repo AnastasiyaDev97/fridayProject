@@ -10,7 +10,6 @@ import packs from './reducers/packs';
 import profile from './reducers/profile';
 
 import { clientAPI } from 'dal/index';
-/* import { user } from './reducers/users'; */
 
 export const store = configureStore({
   reducer: {

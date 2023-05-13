@@ -5,8 +5,3 @@ export const catchErrorHandler = (dispatch: AppDispatch, err: any): void => {
   dispatch(setErrorText({ errorText: err?.response ? err?.response?.data?.error : err }));
   dispatch(setAppStatus({ status: 'failed' }));
 };
-
-export const errorHandler = (dispatch: AppDispatch): void => {
-  dispatch(setErrorText({ errorText: 'Something went wrong' }));
-  dispatch(setAppStatus({ status: 'failed' }));
-};

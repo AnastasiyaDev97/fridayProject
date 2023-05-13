@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import style from './Users.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types';
 import { Pagination, SkeletonUserListItem, UserListItem } from 'components';
 import { PAGE_COUNT } from 'constants/table';
@@ -24,9 +25,9 @@ const Users = (): ReturnComponentType => {
 
   const {
     data: usersData,
-    isSuccess: isUsersSuccess,
-    isLoading: isUsersLoading,
-    isError: isUsersError,
+    isSuccess: isSuccess,
+    isLoading: isLoading,
+    isError: isError,
     refetch: refetchUsers,
   } = useGetUsersQuery({
     page,
@@ -38,16 +39,22 @@ const Users = (): ReturnComponentType => {
   });
 
   useEffect(() => {
-    if (isUsersError) {
+    if (isError) {
       refetchUsers();
     }
-  }, [isUsersError, refetchUsers]);
+  }, [isError, refetchUsers]);
+
+  /*   useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
+  }); */
 
   return (
     <div className={style.usersPage}>
       <h2 className={style.title}>Users</h2>
       <div className={style.usersContainer}>
-        {isUsersSuccess &&
+        {isSuccess &&
           usersData &&
           usersData.users.map(
             ({ avatar, email, name, publicCardPacksCount, _id: id }) => {
@@ -62,7 +69,7 @@ const Users = (): ReturnComponentType => {
               );
             },
           )}
-        {isUsersLoading &&
+        {isLoading &&
           SKELETON_LIST_ITEMS.map(item => {
             return <SkeletonUserListItem key={item} />;
           })}

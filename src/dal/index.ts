@@ -17,6 +17,7 @@ export const clientAPI = createApi({
     ...CLIENT_API_OPTIONS,
     credentials: 'include',
   }),
+
   tagTypes: ['Cards', 'Packs'],
   endpoints: () => ({}),
 });

@@ -1,4 +1,4 @@
-export { catchErrorHandler, errorHandler } from './error-utils';
+export { catchErrorHandler } from './error-utils';
 export { getCard, addZeroToDate, convertDateFormat, generateArray } from './handlers';
 export {
   validateNewPasswordForm,

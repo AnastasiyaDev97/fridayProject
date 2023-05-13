@@ -3,6 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { UniversalInput, SuperButton } from 'components';
 import { EMPTY_STRING } from 'constants/index';
@@ -16,8 +17,10 @@ import { AuthData, validateForgotPasswordForm } from 'utils';
 const ForgotPassword = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
-  const [sendPassword, { data: sendPasswordResponseData /* , error: addCardError */ }] =
-    useSendPasswordMutation();
+  const [
+    sendPassword,
+    { data: sendPasswordResponseData, isError, isLoading, isSuccess },
+  ] = useSendPasswordMutation();
 
   const navigate = useNavigate();
 
@@ -40,7 +43,6 @@ const ForgotPassword = (): ReturnComponentType => {
     onSubmit: values => {
       sendPassword(values.email);
       dispatch(setProfileData({ email: values.email }));
-      /* dispatch(sendPassword(values.email)); */
       formik.resetForm();
     },
   });
@@ -57,6 +59,12 @@ const ForgotPassword = (): ReturnComponentType => {
       setIsCheckEmailDataShow(true);
     }
   }, [sendPasswordResponseData]);
+
+  useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
+  });
 
   return (
     <div className={styles.wrapper}>

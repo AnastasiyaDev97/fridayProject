@@ -3,6 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Navigate, useNavigate } from 'react-router-dom';
 
+import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { InputType } from 'common/types/InputType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, UniversalInput } from 'components';
@@ -13,12 +14,12 @@ import { useRegisterMutation } from 'dal/authorization';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setRegisterStatus } from 'store/reducers';
-import { errorHandler, AuthData, validates } from 'utils';
+import { AuthData, validates } from 'utils';
 
 const Register = (): ReturnComponentType => {
   const dispatch = useAppDispatch();
 
-  const [register, { data: registerData, isError: isRegisterError }] =
+  const [register, { data: registerData, isError, isLoading, isSuccess }] =
     useRegisterMutation();
 
   const navigate = useNavigate();
@@ -52,10 +53,13 @@ const Register = (): ReturnComponentType => {
     if (registerData) {
       dispatch(setRegisterStatus(true));
     }
-    if (isRegisterError) {
-      errorHandler(dispatch);
-    }
-  }, [registerData, dispatch, isRegisterError]);
+  }, [registerData, dispatch]);
+
+  useResponseHandler({
+    isLoading,
+    isSuccess,
+    isError,
+  });
 
   const onCancelButtonClick = useCallback(() => {
     formik.resetForm();
