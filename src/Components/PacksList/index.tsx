@@ -69,8 +69,10 @@ export const PacksList = memo(
     useEffect(() => {
       if (text === EMPTY_STRING && !actualPackName) {
         if (searchParams.has('name')) {
-          searchParams.delete('name');
-          setSearchParams(searchParams, { state: locationState });
+          const updatedSearchParams = { ...searchParams };
+
+          updatedSearchParams.delete('name');
+          setSearchParams(updatedSearchParams, { state: locationState });
         } else {
           return;
         }

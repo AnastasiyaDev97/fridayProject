@@ -34,6 +34,7 @@ export const NavBar: FC = (): ReturnComponentType => {
   const classNameForLink = ({ isActive }: { isActive: boolean }): string =>
     isActive ? `${styles.active}` : EMPTY_STRING;
 
+  console.log(state);
   const NavLinkDataArray = [
     {
       navlinkPath: ROUTES.PROFILE,
@@ -48,7 +49,7 @@ export const NavBar: FC = (): ReturnComponentType => {
       state: state?.packs,
     },
     { navlinkPath: ROUTES.USERS, title: 'Users', icon: faUsers, state: state?.users },
-    /* { navlinkPath: ROUTES.DIALOGS, title: 'Dialogs', icon: faMessage }, */
+    { navlinkPath: ROUTES.DIALOGS, title: 'Dialogs', icon: faMessage },
   ];
 
   const logoutHandler = (): void => {
@@ -66,6 +67,7 @@ export const NavBar: FC = (): ReturnComponentType => {
         if (state) {
           linkPath = { ...linkPath, search: `?${state}` };
         }
+        console.log(linkPath);
 
         return (
           <NavLink

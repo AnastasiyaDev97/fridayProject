@@ -1,10 +1,12 @@
+import { useEffect } from 'react';
+
 import { useSearchParams } from 'react-router-dom';
 
 import style from './Users.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
 import { ReturnComponentType } from 'common/types';
-import { Pagination, Preloader, SkeletonUserListItem, UserListItem } from 'components';
+import { Pagination, SkeletonUserListItem, UserListItem } from 'components';
 import { PAGE_COUNT } from 'constants/table';
 import { useGetUsersQuery } from 'dal/users';
 import { generateArray } from 'utils';
@@ -25,6 +27,7 @@ const Users = (): ReturnComponentType => {
     isSuccess: isUsersSuccess,
     isLoading: isUsersLoading,
     isError: isUsersError,
+    refetch: refetchUsers,
   } = useGetUsersQuery({
     page,
     min,
@@ -33,6 +36,12 @@ const Users = (): ReturnComponentType => {
     sortUsers,
     pageCount: PAGE_COUNT,
   });
+
+  useEffect(() => {
+    if (isUsersError) {
+      refetchUsers();
+    }
+  }, [isUsersError, refetchUsers]);
 
   return (
     <div className={style.usersPage}>
