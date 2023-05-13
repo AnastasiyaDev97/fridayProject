@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack://src/pages/Profile/Profile.module.scss"],"names":[],"mappings":"AAAA,sBACE,mBAAA,CACA,gBAAA,CAEF,wBACE,YAAA,CACA,qBAAA,CACA,UAAA","file":"11.d5a90745.chunk.css","sourcesContent":[".title{\r\n  padding-bottom: 15px;\r\n  font-size: 1.5rem;\r\n}\r\n.wrapper{\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 100%;\r\n}"]}
