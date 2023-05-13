@@ -3,4 +3,4 @@ export const STATUS = {
   IDLE: 'idle',
   SUCCEEDED: 'succeeded',
   FAILED: 'failed',
-};
+} as const;
