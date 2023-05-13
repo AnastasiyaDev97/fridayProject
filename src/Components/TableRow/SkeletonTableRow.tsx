@@ -1,5 +1,7 @@
 import Skeleton from '@mui/material/Skeleton';
 
+import style from '../Table/Table.module.scss';
+
 import { ReturnComponentType } from 'common/types';
 
 export const SkeletonTableRow = ({
@@ -10,7 +12,7 @@ export const SkeletonTableRow = ({
   return (
     <tr>
       <td colSpan={colSpan}>
-        <Skeleton variant="rectangular" width={849} height={60} />
+        <Skeleton variant="rectangular" className={style.tableRowPointer} />
       </td>
     </tr>
   );
