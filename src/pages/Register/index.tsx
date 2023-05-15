@@ -3,7 +3,6 @@ import { useCallback, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { InputType } from 'common/types/InputType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, UniversalInput } from 'components';
@@ -11,6 +10,7 @@ import { REGISTRATION_FORM_FIELDS } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { useRegisterMutation } from 'dal/authorization';
+import { useResponseHandler } from 'hooks/useResponseHandler';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setRegisterStatus } from 'store/reducers';

@@ -3,12 +3,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { UniversalInput, SuperButton } from 'components';
 import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { useSendPasswordMutation } from 'dal/authorization';
+import { useResponseHandler } from 'hooks/useResponseHandler';
 import styles from 'pages/Login/Login.module.scss';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setProfileData } from 'store/reducers';

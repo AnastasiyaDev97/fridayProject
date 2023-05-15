@@ -2,9 +2,9 @@ import { memo } from 'react';
 
 import styles from './Header.module.scss';
 
-import useWindowDimensions from 'common/hooks/useWindowDimensions';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { NavBar } from 'components/NavBar';
+import useWindowDimensions from 'hooks/useWindowDimensions';
 import { useAppSelector } from 'store';
 
 export const Header = memo((): ReturnComponentType => {

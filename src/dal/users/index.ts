@@ -36,4 +36,4 @@ const usersAPI = clientAPI.injectEndpoints({
   }),
 });
 
-export const { useGetUsersQuery, useGetUserQuery } = usersAPI;
+export const { useGetUsersQuery, useGetUserQuery, useLazyGetUsersQuery } = usersAPI;

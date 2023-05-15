@@ -5,13 +5,13 @@ import { Navigate, NavLink, useLocation } from 'react-router-dom';
 
 import styles from './Login.module.scss';
 
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, SuperCheckbox, UniversalInput } from 'components';
 import { FORM_FIELDS_NAME } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { useLoginMutation } from 'dal/authorization';
+import { useResponseHandler } from 'hooks/useResponseHandler';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setLoginStatus, setProfileData } from 'store/reducers';
 import { AuthData, validateLoginForm } from 'utils';

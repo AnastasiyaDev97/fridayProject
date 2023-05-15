@@ -4,11 +4,11 @@ import { useSearchParams } from 'react-router-dom';
 
 import style from './Packs.module.scss';
 
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { PacksList, PacksParams } from 'components';
 import { SORT_CARDS_TYPE } from 'constants/data';
 import { PAGE_COUNT } from 'constants/table';
 import { useGetPacksQuery } from 'dal/packs';
+import { useResponseHandler } from 'hooks/useResponseHandler';
 
 const Packs = memo(() => {
   const [searchParams] = useSearchParams();

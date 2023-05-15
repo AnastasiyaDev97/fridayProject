@@ -3,10 +3,10 @@ import { useCallback, useEffect, useMemo } from 'react';
 import style from './Profile.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EditableSpan, FileInput, ProfileCard } from 'components';
 import { useUpdateProfileMutation } from 'dal/profile';
+import { useResponseHandler } from 'hooks/useResponseHandler';
 import { useAppDispatch, useAppSelector } from 'store';
 import { setProfileData } from 'store/reducers';
 

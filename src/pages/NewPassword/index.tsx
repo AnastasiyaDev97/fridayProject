@@ -3,13 +3,13 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import styles from '../Login/Login.module.scss';
 
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { SuperButton, UniversalInput } from 'components';
 import { FORM_FIELDS_NAME } from 'constants/form';
 import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { useSetNewPasswordMutation } from 'dal/authorization';
+import { useResponseHandler } from 'hooks/useResponseHandler';
 import { AuthData, validateNewPasswordForm } from 'utils';
 
 const NewPassword = (): ReturnComponentType => {

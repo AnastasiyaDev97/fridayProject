@@ -10,13 +10,13 @@ import {
 
 import style from './Cards.module.scss';
 
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types';
 import { Rating, SuperButton, Table, Pagination } from 'components';
 import { AddModal } from 'components/Modal';
 import { CARD_TABLE_FIELDS, PAGE_COUNT } from 'constants/table';
 import { useGetCardsQuery } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
+import { useResponseHandler } from 'hooks/useResponseHandler';
 import { convertDateFormat } from 'utils';
 
 type CardsForTableType = {

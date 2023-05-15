@@ -5,11 +5,11 @@ import TextField from '@mui/material/TextField';
 import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
-import { useCustomInput } from 'common/hooks/useCustomInput';
 import { EntityType } from 'common/types/EntityType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useAddCardMutation } from 'dal/cards';
 import { useAddPackMutation } from 'dal/packs';
+import { useCustomInput } from 'hooks/useCustomInput';
 
 type AddModalPropsType = {
   cardsPackId?: string;

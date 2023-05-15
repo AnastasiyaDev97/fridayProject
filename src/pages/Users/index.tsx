@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
 import style from './Users.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
-import { useResponseHandler } from 'common/hooks/useResponseHandler';
 import { ReturnComponentType } from 'common/types';
 import { Pagination, SkeletonUserListItem, UserListItem } from 'components';
 import { PAGE_COUNT } from 'constants/table';
-import { useGetUsersQuery } from 'dal/users';
+import { useGetUsersQuery, useLazyGetUsersQuery } from 'dal/users';
+/* import useInifiniteScroll from 'hooks/useInfiniteScroll'; */
 import { generateArray } from 'utils';
 
 const SKELETON_LIST_ITEMS = generateArray(7);
@@ -44,10 +44,56 @@ const Users = (): ReturnComponentType => {
     }
   }, [isError, refetchUsers]);
 
-  /*   useResponseHandler({
-    isLoading,
-    isSuccess,
-    isError,
+  /*   const baseQueryAttributes = {
+    userName,
+    min,
+    max,
+    sortUsers,
+    pageCount: PAGE_COUNT,
+  };
+ */
+  /*  useInifiniteScroll({
+    data: [],
+    fetch: () => {
+      console.log(1);
+    },
+    searchParams: { min: '1', page: '2' },
+  }); */
+  /*  const [fetchUsers, { data: usersData, isLoading: isLoading, isError, isSuccess }] =
+    useLazyGetUsersQuery();
+
+  const fetchCallback = useCallback(fetchUsers, [fetchUsers]); */
+
+  /*   const {
+    data: usersData,
+    isSuccess: isSuccess,
+    isLoading: isLoading,
+    isError: isError,
+    refetch: refetchUsers,
+  } = useLazyGetUsersQuery({
+    page,
+    min,
+    max,
+    userName,
+    sortUsers,
+    pageCount: PAGE_COUNT,
+  }); */
+  /* 
+  const { */
+  /* source, */
+  /* includedSource,
+    dataLength,
+    next,
+    hasMore,
+    resetList,
+    forceOnLoadMore, */
+  /*  } = useInifiniteScroll({
+    data: usersData?.users,
+    searchParams: {
+      ...baseQueryAttributes,
+    },
+    skip: isLoading,
+    fetch: fetchCallback,
   }); */
 
   return (

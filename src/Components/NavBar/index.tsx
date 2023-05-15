@@ -11,12 +11,12 @@ import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
 
 import styles from './NavBar.module.scss';
 
-import useWindowDimensions from 'common/hooks/useWindowDimensions';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { RoutesType } from 'constants/routes/types';
 import { useLogoutMutation } from 'dal/authorization';
+import useWindowDimensions from 'hooks/useWindowDimensions';
 import { useAppDispatch } from 'store';
 import { setLoginStatus } from 'store/reducers/auth';
 

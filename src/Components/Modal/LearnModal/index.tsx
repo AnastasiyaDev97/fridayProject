@@ -1,6 +1,6 @@
 import { FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react';
 
-import { Button } from '@mui/material';
+import { Button, Skeleton } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
@@ -11,6 +11,7 @@ import { ModalContainer } from '../ModalContainer';
 import style from './LearnModal.module.scss';
 
 import { Nullable } from 'common/types/Nullable';
+import { Preloader } from 'components/Preloader';
 import { ANSWERS_GRADE } from 'constants/modal/index';
 import { useGetCardsQuery, useUpdateCardGradeMutation } from 'dal/cards';
 import { CardType } from 'dal/cards/types';
@@ -67,8 +68,10 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }
   const {
     data: cardsData,
     /* error: cardsError, */
-    isSuccess: isCardsSuccess,
-    /* isLoading: isCardsLoading, */
+    isSuccess,
+    isLoading,
+    isError,
+    refetch,
   } = useGetCardsQuery({ cardsPack_id: id }, { skip: !id });
 
   const [updateCardGrade /* { data: cardData, error: addCardError } */] =
@@ -92,10 +95,16 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }
       updateCardGrade({ grade: Number(currentGrade), card_id: currentCard._id });
       setCurrentGrade(null);
     }
-    if (cardsData?.cards && isCardsSuccess) {
+    if (cardsData?.cards && isSuccess) {
       setCurrentCard(getCard(cardsData.cards));
     }
   };
+
+  useEffect(() => {
+    if (isError) {
+      refetch();
+    }
+  }, [isError, refetch]);
 
   useEffect(() => {
     if (!currentCard?._id && cardsData?.cards) {
@@ -103,15 +112,17 @@ const LearnPackContent: FC<LearnPaclContentProps> = memo(({ id }: { id: string }
     }
   }, [currentCard, cardsData?.cards]);
 
-  if (!currentCard) {
-    return null;
-  }
-
   return (
     <div className={style.contentBlock}>
-      <span className={style.question}>{currentCard.question}</span>
+      {!currentCard ? (
+        <Skeleton width={150} height={30} />
+      ) : (
+        <span className={style.question}>{currentCard.question}</span>
+      )}
       <RowRadioButtonsGroup onInputChange={setCurrentGrade} defaultValue={currentGrade} />
-      {isShowAnswer && <div className={style.answer}>{currentCard.answer}</div>}
+      {isShowAnswer && currentCard && (
+        <div className={style.answer}>{currentCard.answer}</div>
+      )}
       <div className={style.buttonsBlock}>
         <Button onClick={onToggleButtonClick}>
           {isShowAnswer ? 'Hide answer' : 'Show answer'}

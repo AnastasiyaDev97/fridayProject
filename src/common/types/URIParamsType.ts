@@ -1,8 +1,8 @@
 export type URIParamsType = {
-  page?: string;
+  page?: number;
   sort?: string;
-  max?: string;
-  min?: string;
+  max?: number;
+  min?: number;
   name?: string;
   userId?: string;
 };
