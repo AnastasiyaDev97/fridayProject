@@ -8,9 +8,10 @@ import type {
 } from '@reduxjs/toolkit/query/react';
 
 const CLIENT_API_OPTIONS = {
-  baseUrl: 'http://localhost:7542/2.0/' /* process.env.REACT_APP_BASE_URL */,
+  baseUrl: process.env.REACT_APP_BASE_URL,
 };
 
+/* 'http://localhost:7542/2.0/' */
 export const clientAPI = createApi({
   reducerPath: 'clientAPI',
   baseQuery: fetchBaseQuery({

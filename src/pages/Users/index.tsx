@@ -72,7 +72,7 @@ const Users = (): ReturnComponentType => {
             );
           })}
         </InfiniteScroll>
-        {!users &&
+        {users?.length === 0 &&
           SKELETON_LIST_ITEMS.map(item => {
             return <SkeletonUserListItem key={item} />;
           })}

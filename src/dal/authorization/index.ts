@@ -79,8 +79,8 @@ const passworsAPI = clientAPI.injectEndpoints({
           email,
           from: 'test-front-admin <ai73a@yandex.by>',
           message: `<div style="padding: 15px">
-password recovery link: <a href='https://anastasiyadev97.github.io/fridayProject/#/new-password/$token$'>
-link</a></div>`,
+<a href='https://anastasiyadev97.github.io/fridayProject/#/new-password/$token$'>
+password recovery link</a></div>`,
           /* http://localhost:3000/#/new-password/$token$*/
         };
 
