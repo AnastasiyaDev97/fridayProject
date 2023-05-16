@@ -58,7 +58,8 @@ const Login = (): ReturnComponentType => {
     },
   });
 
-  const conditionForDisableButton = !!(formik.errors.email || formik.errors.password);
+  const conditionForDisableButton =
+    !!(formik.errors.email || formik.errors.password) || isLoading;
 
   if (isLoggedIn) {
     return <Navigate to={fromPage} />;

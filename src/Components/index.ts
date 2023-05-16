@@ -24,3 +24,4 @@ export { SortingButton } from './SortingButton';
 export { ProfileCard } from './ProfileCard';
 export { ErrorBoundary } from './ErrorBoundary';
 export { Chat } from './Chat';
+export { InfiniteScroll } from './InfiniteScroll';

@@ -3,28 +3,39 @@
 
 
 
-.appWrapper {
+.bckgrImage {
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
   background-image: url('../../common/assets/images/bck1.jpg');
   background-size: cover;
-  background-position: center;
-  box-shadow: inset 0 0 2000px 170px rgba(0, 0, 0, 1);
+background-position: center;
+background-repeat: no-repeat;
+box-shadow: inset 0 0 2000px 170px rgba(0, 0, 0, 1);
 
   @include d-media(xs) {
     box-shadow: inset 0 100px 1700px rgb(0 0 0);
   }
 }
+.appWrapper{
+ 
+}
 
 .mainContainer {
   max-width: 1200px;
   min-height: 100vh;
+ position: relative;
   display: flex;
   justify-content: center;
   align-items: stretch;
   /* background: $backgrForPacks; */
-  padding: 90px 15px;
-  margin: 0 auto;
+  padding: 0 15px;
+  margin: 90px auto 90px auto;
   @include d-media(xs) {
     padding-top: 70px;
+    margin: 70px auto 70px auto;
   }
 }
 

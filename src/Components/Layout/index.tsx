@@ -31,15 +31,18 @@ export const Layout = (): ReturnComponentType => {
   }, [errorText, dispatch]);
 
   return (
-    <div className={styles.appWrapper}>
-      <Header />
-      <div className={styles.mainContainer}>
-        <div className={styles.pageContainer}>
-          <Outlet />
-          {status === STATUS.LOADING && <Preloader />}
+    <>
+      <div className={styles.bckgrImage} />
+      <div className={styles.appWrapper}>
+        <Header />
+        <div className={styles.mainContainer}>
+          <div className={styles.pageContainer}>
+            <Outlet />
+            {status === STATUS.LOADING && <Preloader />}
+          </div>
         </div>
+        {isErrorShown && <div className={styles.defaultError}>{errorText} &#128123;</div>}
       </div>
-      {isErrorShown && <div className={styles.defaultError}>{errorText} &#128123;</div>}
-    </div>
+    </>
   );
 };
