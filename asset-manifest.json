@@ -2,7 +2,7 @@
   "files": {
     "static/js/0.b781ef31.chunk.js": "/fridayProject/static/js/0.b781ef31.chunk.js",
     "static/js/0.b781ef31.chunk.js.map": "/fridayProject/static/js/0.b781ef31.chunk.js.map",
-    "main.css": "/fridayProject/static/css/main.4d3bb9a0.chunk.css",
+    "main.css": "/fridayProject/static/css/main.0e80d92c.chunk.css",
     "main.js": "/fridayProject/static/js/main.c64fad3e.chunk.js",
     "main.js.map": "/fridayProject/static/js/main.c64fad3e.chunk.js.map",
     "runtime-main.js": "/fridayProject/static/js/runtime-main.0798d7ea.js",
@@ -48,7 +48,7 @@
     "static/css/7.a558f5e4.chunk.css.map": "/fridayProject/static/css/7.a558f5e4.chunk.css.map",
     "static/css/8.19561d14.chunk.css.map": "/fridayProject/static/css/8.19561d14.chunk.css.map",
     "static/css/9.0d23aef6.chunk.css.map": "/fridayProject/static/css/9.0d23aef6.chunk.css.map",
-    "static/css/main.4d3bb9a0.chunk.css.map": "/fridayProject/static/css/main.4d3bb9a0.chunk.css.map",
+    "static/css/main.0e80d92c.chunk.css.map": "/fridayProject/static/css/main.0e80d92c.chunk.css.map",
     "static/js/3.bd1f1809.chunk.js.LICENSE.txt": "/fridayProject/static/js/3.bd1f1809.chunk.js.LICENSE.txt",
     "static/media/Layout.module.scss": "/fridayProject/static/media/bck1.75f7cde0.jpg",
     "static/media/UniversalInput.module.scss": "/fridayProject/static/media/login-eye.182cf644.svg",
@@ -59,7 +59,7 @@
   "entrypoints": [
     "static/js/runtime-main.0798d7ea.js",
     "static/js/3.bd1f1809.chunk.js",
-    "static/css/main.4d3bb9a0.chunk.css",
+    "static/css/main.0e80d92c.chunk.css",
     "static/js/main.c64fad3e.chunk.js"
   ]
 }
