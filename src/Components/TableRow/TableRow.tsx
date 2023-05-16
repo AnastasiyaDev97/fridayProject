@@ -8,7 +8,7 @@ import style from '../Table/Table.module.scss';
 
 import { EntityType, ReturnComponentType } from 'common/types';
 import { DeleteModal, LearnModal, UpdateModal } from 'components/Modal';
-import { ItemValues } from 'components/Table';
+import { ItemValues } from 'components/Table/types';
 import { EMPTY_STRING } from 'constants/index';
 import { useAppSelector } from 'store';
 

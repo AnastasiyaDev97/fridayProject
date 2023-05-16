@@ -1,45 +1,61 @@
-import { memo, ReactElement } from 'react';
+import { memo, useState } from 'react';
+
+import { useSearchParams } from 'react-router-dom';
 
 import { SkeletonTableRow, TableRow } from '../TableRow';
 
 import style from './Table.module.scss';
+import { CommonFieldsValuesType, SortingDirecionType, TablePropsType } from './types';
 
-import { ReturnComponentType, EntityType } from 'common/types';
+import { ReturnComponentType } from 'common/types';
 import { SortingButton } from 'components';
-import { TableFieldstype } from 'constants/table';
 import { generateArray } from 'utils';
-
-export type PackRowValues = {
-  name?: string;
-  cardsCount?: number;
-  updated: string;
-  user_name?: string;
-};
-
-export type CardRowValues = {
-  question?: string;
-  answer?: string;
-  updated: string;
-  rating?: ReactElement;
-};
-
-export type ItemValues = {
-  userId: string;
-  cardsPackId?: string;
-  id: string;
-  tableValues: CardRowValues & PackRowValues;
-};
-
-type TablePropsType = {
-  itemName: EntityType;
-  tableTitles: TableFieldstype;
-  tableItems?: ItemValues[];
-};
 
 const SKELETON_TABLE_ITEMS = generateArray(7);
 
 export const Table = memo(
   ({ tableTitles, tableItems, itemName }: TablePropsType): ReturnComponentType => {
+    const [searchParams] = useSearchParams();
+
+    const sortItems = searchParams.get('sort');
+
+    const currentSortingField = (): CommonFieldsValuesType => {
+      if (sortItems) {
+        return sortItems.slice(1) as CommonFieldsValuesType;
+      }
+
+      return 'updated' as CommonFieldsValuesType;
+    };
+
+    const currentSortingDirection = (): SortingDirecionType => {
+      if (sortItems) {
+        return sortItems.slice(0, 1) as SortingDirecionType;
+      }
+
+      return '0' as SortingDirecionType;
+    };
+
+    const [sortingField, setSortingField] = useState<CommonFieldsValuesType>(
+      currentSortingField(),
+    );
+    const [sortingDirection, setSortingDirection] = useState<SortingDirecionType>(
+      currentSortingDirection(),
+    );
+
+    const onToggleSortClick = (buttonTitle: CommonFieldsValuesType): void => {
+      if (buttonTitle === sortingField) {
+        setSortingDirection(state => {
+          if (state === '0') {
+            return '1';
+          }
+
+          return '0';
+        });
+      } else {
+        setSortingField(buttonTitle);
+      }
+    };
+
     return (
       <table className={style.table}>
         <thead>
@@ -52,7 +68,12 @@ export const Table = memo(
                     title === 'Count' ? style.smallWidth : ''
                   }`}
                 >
-                  <SortingButton sortingFieldNameFromProps={value}>
+                  <SortingButton
+                    sortingFieldNameFromProps={value}
+                    sortingField={sortingField}
+                    sortingDirection={sortingDirection}
+                    onToggleSortClick={onToggleSortClick}
+                  >
                     <div className={style.headerContent}>
                       <span className={style.tableTitle}>{title}</span>
                     </div>
