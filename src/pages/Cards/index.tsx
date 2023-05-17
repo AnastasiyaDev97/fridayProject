@@ -46,6 +46,7 @@ const Cards = memo((): ReturnComponentType => {
     data: cardsData,
     isSuccess,
     isLoading,
+    isFetching,
     isError,
   } = useGetCardsQuery(
     { cardsPack_id, page: currentPage, sortCards, pageCount: PAGE_COUNT },
@@ -60,7 +61,7 @@ const Cards = memo((): ReturnComponentType => {
   };
 
   useResponseHandler({
-    isLoading,
+    isLoading: isFetching || isLoading,
     isSuccess,
     isError,
   });

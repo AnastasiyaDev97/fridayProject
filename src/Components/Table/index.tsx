@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
@@ -42,19 +42,22 @@ export const Table = memo(
       currentSortingDirection(),
     );
 
-    const onToggleSortClick = (buttonTitle: CommonFieldsValuesType): void => {
-      if (buttonTitle === sortingField) {
-        setSortingDirection(state => {
-          if (state === '0') {
-            return '1';
-          }
+    const onToggleSortClick = useCallback(
+      (buttonTitle: CommonFieldsValuesType): void => {
+        if (buttonTitle === sortingField) {
+          setSortingDirection(state => {
+            if (state === '0') {
+              return '1';
+            }
 
-          return '0';
-        });
-      } else {
-        setSortingField(buttonTitle);
-      }
-    };
+            return '0';
+          });
+        } else {
+          setSortingField(buttonTitle);
+        }
+      },
+      [sortingField],
+    );
 
     return (
       <table className={style.table}>

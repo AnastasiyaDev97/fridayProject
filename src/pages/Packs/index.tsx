@@ -24,6 +24,7 @@ const Packs = memo(() => {
     data: packs,
     isSuccess,
     isLoading,
+    isFetching,
     isError,
   } = useGetPacksQuery({
     page: currentPage,
@@ -36,7 +37,7 @@ const Packs = memo(() => {
   });
 
   useResponseHandler({
-    isLoading,
+    isLoading: isFetching || isLoading,
     isSuccess,
     isError,
   });
