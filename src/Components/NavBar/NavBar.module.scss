@@ -42,18 +42,23 @@
     position: relative;
     z-index: 1;
   }
-  .active:before {
+  .activeLink:before {
     position: absolute;
     content: '';
     top: 0;
     right: 0;
     width: 100%;
-    background: black;
+    background: $backgrForPacks;
     height: 100%;
-    opacity: 0.4;
+   /*  opacity: 0.4; */
     z-index: -1;
     border-bottom: 3px solid $backgr;
+    /* &:hover {
+      font-size: 1.786;
+      color: white;
+    } */
   }
+  
 }
 .logout {
   cursor: pointer;

@@ -12,7 +12,6 @@ import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import styles from './NavBar.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
-import { EMPTY_STRING } from 'constants/index';
 import { ROUTES } from 'constants/routes';
 import { RoutesType } from 'constants/routes/types';
 import { useLogoutMutation } from 'dal/authorization';
@@ -29,9 +28,6 @@ export const NavBar: FC = (): ReturnComponentType => {
   const [logout] = useLogoutMutation();
 
   const itemName = currentPath.slice(1);
-
-  const classNameForLink = ({ isActive }: { isActive: boolean }): string =>
-    isActive ? `${styles.active}` : EMPTY_STRING;
 
   const NavLinkDataArray = [
     {
@@ -64,15 +60,16 @@ export const NavBar: FC = (): ReturnComponentType => {
         if (state) {
           linkPath = { ...linkPath, search: `?${state}` };
         }
+        console.log(currentPath === navlinkPath);
+        console.log(navlinkPath);
+        console.log(currentPath);
 
         return (
           <NavLink
             key={title}
             to={linkPath}
             state={{ [itemName]: searchParams }}
-            className={`${classNameForLink} ${
-              currentPath === navlinkPath && styles.activeLink
-            }`}
+            className={` ${currentPath === navlinkPath && styles.activeLink}`}
           >
             {isMobile ? <FontAwesomeIcon icon={icon} /> : title}
           </NavLink>
