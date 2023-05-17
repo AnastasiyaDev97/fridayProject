@@ -7,7 +7,7 @@ import type {
 } from '@reduxjs/toolkit/query/react';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:7542/2.0/',
+  baseUrl: process.env.REACT_APP_BASE_URL || 'http://localhost:7542/2.0/',
   credentials: 'include',
 });
 const baseQueryWithReauth: BaseQueryFn<
