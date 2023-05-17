@@ -1,15 +1,17 @@
-@import '../../common/sass/variables.scss';
-@import '../../common/sass/media.scss';
+@import '../../common/sass/variables';
+@import '../../common/sass/media';
 
 .usersPage {
   width: 100%;
   height: 100%;
   position: relative;
+
   .title {
     font-size: 1.8rem;
     padding-bottom: 15px;
   }
 }
+
 .usersContainer {
   display: flex;
   flex-direction: column;

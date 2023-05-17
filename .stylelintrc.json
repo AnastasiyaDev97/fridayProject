@@ -7,8 +7,7 @@
         "ignoreAtRules": ["extends"]
       }
     ],
-    "block-no-empty": null,
-    "unit-allowed-list": ["em", "rem", "s"],
+    "selector-class-pattern":null,
     "no-descending-specificity":true,
     "no-irregular-whitespace":true
 

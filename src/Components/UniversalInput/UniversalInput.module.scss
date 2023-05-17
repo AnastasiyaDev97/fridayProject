@@ -1,4 +1,4 @@
-@import '../../common/sass/variables.scss';
+@import '../../common/sass/variables';
 
 .inputWrapper {
   width: 100%;
@@ -8,7 +8,7 @@
   .input {
     font-size: inherit;
     line-height: 26px;
-    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0 15px 4px rgb(0 0 0 / 6%);
     border-radius: 10px;
     min-width: 200px;
     border: 1px solid #e7edf2;
@@ -18,7 +18,7 @@
     color: black;
 
     &:hover {
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 4px rgb(0 0 0 / 50%);
     }
 
     &:focus {
@@ -39,6 +39,7 @@
     right: 3em;
     cursor: pointer;
   }
+
   .error {
     position: absolute;
     content: '';

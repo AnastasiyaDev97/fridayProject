@@ -1,8 +1,10 @@
-@import '../../common/sass/variables.scss';
-@import '../../common/sass/media.scss';
+@import '../../common/sass/variables';
+@import '../../common/sass/media';
+
 .paginator {
   display: flex;
 }
+
 .pageNum {
   padding: 5px 8px;
   font-family: $NunitoFont;
@@ -23,6 +25,7 @@
     background: $buttonBackground;
   }
 }
+
 .activePage {
   font-weight: bold;
   background: $buttonBackground;

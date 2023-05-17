@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, createRef } from 'react';
 
 import {
   faUser,
@@ -7,7 +7,8 @@ import {
   faArrowRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink, useLocation, useSearchParams } from 'react-router-dom';
+import { NavLink, useLocation, useOutlet, useSearchParams } from 'react-router-dom';
+import { SwitchTransition } from 'react-transition-group';
 
 import styles from './NavBar.module.scss';
 
@@ -35,20 +36,32 @@ export const NavBar: FC = (): ReturnComponentType => {
       title: 'Profile',
       icon: faUser,
       state: state?.profile,
+      nodeRef: createRef(),
     },
     {
       navlinkPath: ROUTES.PACKS,
       title: 'Packs List',
       icon: faCirclePlay,
       state: state?.packs,
+      nodeRef: createRef(),
     },
-    { navlinkPath: ROUTES.USERS, title: 'Users', icon: faUsers, state: state?.users },
+    {
+      navlinkPath: ROUTES.USERS,
+      title: 'Users',
+      icon: faUsers,
+      state: state?.users,
+      nodeRef: createRef(),
+    },
   ];
+
+  const { nodeRef } =
+    NavLinkDataArray.find(route => route.navlinkPath === location.pathname) ?? {};
 
   const logoutHandler = (): void => {
     logout();
     dispatch(setLoginStatus(false));
   };
+  const currentOutlet = useOutlet();
 
   return (
     <div className={`${styles.navBarContainer} `}>
@@ -75,6 +88,22 @@ export const NavBar: FC = (): ReturnComponentType => {
       <span className={styles.logout} onClick={logoutHandler}>
         {isMobile ? <FontAwesomeIcon icon={faArrowRightFromBracket} /> : 'Logout'}
       </span>
+
+      {/*   <SwitchTransition>
+        <CSSTransition
+          key={location.pathname}
+          nodeRef={nodeRef}
+          timeout={300}
+          classNames="page"
+          unmountOnExit
+        >
+          {state => (
+            <div ref={nodeRef} className="page">
+              {currentOutlet}
+            </div>
+          )}
+        </CSSTransition>
+      </SwitchTransition> */}
     </div>
   );
 };

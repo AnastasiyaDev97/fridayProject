@@ -1,19 +1,22 @@
-@import '../../common/sass/media.scss';
+@import '../../common/sass/media';
 
 .listWrapper {
   display: flex;
   flex-direction: column;
   flex-basis: 80%;
   padding: 30px 0 30px 15px;
+
   .title {
     font-size: 1.5rem;
     padding-bottom: 15px;
   }
+
   .row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
+
     input {
       width: 60%;
       @include d-media(xs) {
@@ -27,6 +30,7 @@
   .listWrapper {
     width: 100%;
     flex-basis: 100%;
+
     .title {
       margin-top: 0;
       margin-bottom: 150px;
@@ -40,9 +44,11 @@
       width: auto;
     }
   }
+
    .listWrapper {
    padding: 0;}
 }
+
 .addButton {
   padding: 1rem 5rem;
   @include d-media(sm) {

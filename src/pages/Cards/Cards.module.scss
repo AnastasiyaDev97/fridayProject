@@ -1,12 +1,15 @@
-@import '../../common/sass/variables.scss';
-@import '../../common/sass/media.scss';
+@import '../../common/sass/variables';
+@import '../../common/sass/media';
+
 .wrapper {
   width: 80%;
   height: 100%;
   position: relative;
   margin: 0 100px;
   display: flex;
+
   /* background: $backgrForPacks; */
+
   /* padding: 30px; */
   flex-direction: column;
   @include d-media(sm) {
@@ -16,6 +19,7 @@
       margin: 0 10px;
     }
   }
+
   .btn {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -26,6 +30,7 @@
 .cursor {
   cursor: pointer;
 }
+
 .addButton {
   margin-bottom: 25px;
   padding: 1rem 5rem;

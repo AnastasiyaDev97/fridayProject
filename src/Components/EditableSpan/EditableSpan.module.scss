@@ -1,14 +1,16 @@
-@import '../../common/sass/variables.scss';
+@import '../../common/sass/variables';
 
 
 .textField {
   cursor: pointer;
   font-size: 2rem;
   font-family: $QuicksandFont;
+
   &:hover {
     color: grey;
   }
 }
+
 .inputField {
   background-color: transparent !important;
   font-size: 2rem !important;

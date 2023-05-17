@@ -1,5 +1,5 @@
 @import './../../common/sass/variables';
-@import '../../common/sass/media.scss';
+@import '../../common/sass/media';
 
 .navBarContainer {
   height: 100%;
@@ -11,17 +11,21 @@
     height: auto;
     right: 0;
     background: black;
+
     a,
     .logout {
       padding: 19px 0;
       font-size: 1.357rem;
       color: white;
+
       &:hover {
         font-size: 1.786;
         color: #6b8e23;
       }
+
       &.activeLink {
         background: $buttonBackground;
+
         &:hover {
           font-size: 1.786;
           color: white;
@@ -42,7 +46,8 @@
     position: relative;
     z-index: 1;
   }
-  .activeLink:before {
+
+  .activeLink::before {
     position: absolute;
     content: '';
     top: 0;
@@ -50,9 +55,11 @@
     width: 100%;
     background: $backgrForPacks;
     height: 100%;
+
    /*  opacity: 0.4; */
     z-index: -1;
     border-bottom: 3px solid $backgr;
+
     /* &:hover {
       font-size: 1.786;
       color: white;
@@ -60,6 +67,7 @@
   }
   
 }
+
 .logout {
   cursor: pointer;
   height: 100%;
@@ -73,6 +81,7 @@
   position: relative;
   z-index: 1;
 }
+
 /* .none {
   display: none;
 } */

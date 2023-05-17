@@ -1,5 +1,5 @@
-@import '../../common/sass/media.scss';
-@import '../../common/sass/variables.scss';
+@import '../../common/sass/media';
+@import '../../common/sass/variables';
 
 .sortButtons {
   height: 100%;
@@ -13,9 +13,11 @@
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
   }
+
   .sortArrowUp {
     border-top: 8px solid $buttonBackground;
   }
+
   .sortArrowDown {
     border-bottom: 8px solid $buttonBackground;
   }

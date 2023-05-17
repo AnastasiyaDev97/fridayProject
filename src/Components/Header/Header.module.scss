@@ -1,5 +1,5 @@
-@import '../../common/sass/variables.scss';
-@import '../../common/sass/media.scss';
+@import '../../common/sass/variables';
+@import '../../common/sass/media';
 
 .headerBlock {
   width: 100%;
@@ -28,6 +28,7 @@
       font-size: 1.4rem;
       margin-right: 20px;
     }
+
     .menu {
       width: 50px;
       height: 50px;
@@ -58,10 +59,12 @@
         color: $Text;
         font-size: 1.2rem;
       }
+
       .menu {
         width: 50px;
         height: 50px;
       }
+
       .logout {
         font-family: $QuicksandFont;
         color: $Text;
@@ -73,6 +76,7 @@
 
 .menuIcon {
   height: 1.2em;
+
   &.none {
     z-index: 1;
   }

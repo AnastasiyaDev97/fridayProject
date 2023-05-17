@@ -5,8 +5,8 @@
 
   "editor.formatOnSave": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+
+    "source.fixAll": true
   },
   "files.autoSaveDelay": 500,
   "eslint.validate": ["javascript", "javascriptreact","typescript"]

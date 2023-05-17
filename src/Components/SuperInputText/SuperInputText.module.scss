@@ -1,6 +1,6 @@
 
 
-*, *:before, *:after {
+*, *::before, *::after {
     box-sizing: border-box;
 }
 
@@ -9,7 +9,7 @@
     font-size: inherit;
     color: #626c72;
     line-height: 26px;
-    box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+    box-shadow:0 0 15px 4px rgb(0 0 0 / 6%);
     border-radius:10px;
     min-width: 200px;
     border: 1px solid #e7edf2;
@@ -17,9 +17,11 @@
     padding: 1rem 4em 1rem 2rem;
 
 }
+
 .input:hover{
-    box-shadow:0 0 4px rgba(0,0,0,0.5);
+    box-shadow:0 0 4px rgb(0 0 0 / 50%);
 }
+
 .input:focus{
     outline:none;
 }

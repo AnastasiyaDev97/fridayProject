@@ -1,13 +1,15 @@
-@import '../../common/sass/media.scss';
+@import '../../common/sass/media';
 
 .userBlock {
   display: flex;
   align-items: center;
   cursor: pointer;
+
   &:not(:last-of-type) {
     margin-bottom: 20px;
   }
 }
+
 .userDescription {
   width: 100%;
   display: flex;
@@ -19,11 +21,13 @@
     margin: 0;
     font-size: 1.4rem;
   }
+
   & .userInfo {
     margin-top: 15px;
     font-size: 1.2rem;
   }
 }
+
 .avatarContainer {
   min-width: 100px;
   min-height: 100px;

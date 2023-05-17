@@ -1,5 +1,5 @@
-@import '../../common/sass/media.scss';
-@import '../../common/sass/variables.scss';
+@import '../../common/sass/media';
+@import '../../common/sass/variables';
 
 table {
   width: 100%;
@@ -18,12 +18,13 @@ table tbody tr:nth-child(2n) {
   position: relative;
   background: $backgr;
 }
+
 .tableRowPointer {
   cursor: pointer;
 }
 
 table tbody tr:hover {
-  background: rgba(102, 98, 98, 0.6);
+  background: rgb(102 98 98 / 60%);
 }
 
 .tableHeader {
@@ -32,12 +33,14 @@ table tbody tr:hover {
 
 th {
   padding: 15px 5px;
+
   .headerContent {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 20px;
     font-weight: 600;
+
     .tableTitle {
       margin-right: 10px;
       @include d-media(xs) {
@@ -46,6 +49,7 @@ th {
         font-weight: 400;
       }
     }
+
     .sortButtons {
       height: 100%;
       display: flex;
@@ -58,9 +62,11 @@ th {
         border-left: 4px solid transparent;
         border-right: 4px solid transparent;
       }
+
       .sortArrowUp {
         border-top: 8px solid $buttonBackground;
       }
+
       .sortArrowDown {
         border-bottom: 8px solid $buttonBackground;
       }
@@ -69,7 +75,8 @@ th {
 }
 
 td {
-  padding: 13px 0px;
+  padding: 13px 0;
+
   .cell {
     height: 36px;
     overflow: hidden;
@@ -83,15 +90,19 @@ td {
 .btns {
   display: flex;
   width: 100%;
+
   & div {
     flex-grow: 1;
+
     & button {
       font-weight: normal;
       border-radius: 0;
       margin-right: 5px;
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
+
       /* cursor: pointer; */
+
       /* min-width: 58px; */
     }
   }
@@ -101,22 +112,27 @@ td {
   .tableHeader {
     margin-right: 3px;
   }
+
   th {
     font-size: 0.857rem;
     font-weight: 400;
   }
+
   td {
     padding: 5px 0;
+
     .cell {
       margin: 0 5px;
       text-align: left;
       font-size: 0.857rem;
       height: 18px;
+
       /* display: flex;
       align-items: center; */
     }
   }
 }
+
 .smallWidth {
   @include d-media(xs) {
     width: 30px;
