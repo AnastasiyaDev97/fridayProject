@@ -7,14 +7,14 @@ import { ReturnComponentType } from 'common/types';
 export const SkeletonUserListItem = (): ReturnComponentType => {
   return (
     <div className={style.userBlock}>
-      <Skeleton variant="circular" width={100} height={100} className={style.skeleton} />
+      <Skeleton variant="circular" className={style.circularSkeleton} />
       <div className={style.userDescription}>
-        <Skeleton className={style.skeleton} />
-        <Skeleton className={style.skeleton} />
+        <Skeleton />
+        <Skeleton />
 
         <div className={style.userInfo}>
           <span>Cards count: </span>
-          <Skeleton className={style.skeleton} />
+          <Skeleton />
         </div>
       </div>
     </div>

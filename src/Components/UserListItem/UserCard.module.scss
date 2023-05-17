@@ -39,6 +39,8 @@
   }
 }
 
-.skeleton{
-  background-color: rgba(0, 0, 0, 0.41) !important;
+
+.circularSkeleton{
+  min-width: 80px;
+  min-height: 80px;
 }
