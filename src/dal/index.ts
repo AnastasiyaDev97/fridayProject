@@ -4,33 +4,41 @@ import type {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
-  FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 
-const CLIENT_API_OPTIONS = {
-  baseUrl: process.env.REACT_APP_BASE_URL,
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'http://localhost:7542/2.0/',
+  credentials: 'include',
+});
+const baseQueryWithReauth: BaseQueryFn<
+  string | FetchArgs,
+  unknown,
+  FetchBaseQueryError
+> = async (args, api, extraOptions) => {
+  const result = await baseQuery(args, api, extraOptions);
+
+  if (
+    result.error &&
+    result.error.status === 401 &&
+    typeof args !== 'string' &&
+    args?.url !== 'auth/me'
+  ) {
+    window.location.replace(`/login`);
+  }
+
+  return result;
 };
 
 /* 'http://localhost:7542/2.0/' */
 export const clientAPI = createApi({
   reducerPath: 'clientAPI',
-  baseQuery: fetchBaseQuery({
-    ...CLIENT_API_OPTIONS,
-    credentials: 'include',
-  }),
-
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['Cards', 'Packs'],
   endpoints: () => ({}),
 });
 
 export type builderType = EndpointBuilder<
-  BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    FetchBaseQueryError,
-    Record<string, unknown>,
-    FetchBaseQueryMeta
-  >,
+  BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError>,
   'Cards' | 'Packs',
   'clientAPI'
 >;

@@ -60,9 +60,6 @@ export const NavBar: FC = (): ReturnComponentType => {
         if (state) {
           linkPath = { ...linkPath, search: `?${state}` };
         }
-        console.log(currentPath === navlinkPath);
-        console.log(navlinkPath);
-        console.log(currentPath);
 
         return (
           <NavLink

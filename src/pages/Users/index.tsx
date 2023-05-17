@@ -40,8 +40,9 @@ const Users = (): ReturnComponentType => {
       pageCount: PAGE_COUNT,
     });
 
-    setUsers(users => [...users, ...(newUsers?.data?.users as UserType[])]);
-
+    if (newUsers?.data?.users) {
+      setUsers(users => [...users, ...(newUsers?.data?.users as UserType[])]);
+    }
     if (totalCount === 0 && newUsers?.data) {
       setTotalCount(newUsers.data.usersTotalCount);
     }

@@ -28,7 +28,7 @@
 }
 
 /* стили при наведении курсора на checkbox */
-.checkbox>input:not(:disabled):not(:checked)+span:hover::before {
+.checkbox>input:not(:disabled, :checked)+span:hover::before {
     border-color: #b3d7ff;
 }
 
@@ -40,7 +40,7 @@
 
 /* стили для чекбокса, находящегося в фокусе */
 .checkbox>input:focus+span::before {
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 
 }
 
@@ -66,7 +66,9 @@
 .spanClassName {
 
 }
+
 .labelForCheckBox{
+    margin-left: 3px;
     font-size: 1em;
     font-weight: normal;
     margin-bottom: 0;
