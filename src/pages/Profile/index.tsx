@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
+import Skeleton from '@mui/material/Skeleton';
+
 import style from './Profile.module.scss';
 
 import initialAvatar from 'common/assets/images/noavatar.png';
@@ -50,12 +52,13 @@ const Profile = (): ReturnComponentType => {
     if (updatedProfileData) {
       dispatch(setProfileData(updatedProfileData.updatedUser));
     }
-  }, [updatedProfileData, dispatch]);
+  }, [updatedProfileData, dispatch, isError]);
 
   useResponseHandler({
     isLoading,
     isSuccess,
     isError,
+    errorText: 'Profile failed to update',
   });
 
   if (profileData) {
@@ -66,7 +69,11 @@ const Profile = (): ReturnComponentType => {
           profileData={profileData}
           nameChildren={<EditableSpan title={name} updateTitle={onUpdateTitle} />}
           avatarChildren={
-            <FileInput updateImage={onUpdateAvatar} image={avatar || initialAvatar} />
+            isLoading ? (
+              <Skeleton variant="circular" className={style.circularSkeleton} />
+            ) : (
+              <FileInput updateImage={onUpdateAvatar} image={avatar || initialAvatar} />
+            )
           }
         />
       </div>

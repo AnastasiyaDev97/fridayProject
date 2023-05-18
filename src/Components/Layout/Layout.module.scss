@@ -11,15 +11,15 @@
   right:0;
   background-image: url('../../common/assets/images/bck1.jpg');
   background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-box-shadow: 0 0 100px 100px rgb(15 15 15 / 70%) inset;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: 0 0 100px 100px rgb(15 15 15 / 70%) inset;
 }
 
 .mainContainer {
   max-width: 1200px;
   min-height: 70vh;
- position: relative;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -80,3 +80,4 @@ div {
   font-weight: 200;
   font-size: 1.143rem;
 }
+

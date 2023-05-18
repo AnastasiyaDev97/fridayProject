@@ -7,6 +7,7 @@ import style from './PacksParams.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { RangeSlider, SkeletonRangeSlider, SuperButton } from 'components';
+import { STATUS } from 'constants/app';
 import { useAppSelector } from 'store';
 
 type PacksParamsPropsT = {
@@ -23,7 +24,10 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
   }: PacksParamsPropsT): ReturnComponentType => {
     const [searchParams, setSearchParams] = useSearchParams();
 
+    const status = useAppSelector(state => state.app.status);
     const userId = useAppSelector(state => state.profile._id);
+
+    const isDisabled = status === STATUS.LOADING;
 
     const onShowMyCardsClick = useCallback(() => {
       setSearchParams({
@@ -60,8 +64,12 @@ export const PacksParams: FC<PacksParamsPropsT> = memo(
         <h4 className={style.title}>Show packs cards</h4>
 
         <div className={style.btnsWrapper}>
-          <SuperButton onClick={onShowMyCardsClick}>My</SuperButton>
-          <SuperButton onClick={onShowAllCardsClick}>All</SuperButton>
+          <SuperButton disabled={isDisabled} onClick={onShowMyCardsClick}>
+            My
+          </SuperButton>
+          <SuperButton disabled={isDisabled} onClick={onShowAllCardsClick}>
+            All
+          </SuperButton>
         </div>
 
         {maxCardsCount ? (

@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 import style from './Packs.module.scss';
 
 import { PacksList, PacksParams } from 'components';
+import { STATUS } from 'constants/app';
 import { SORT_CARDS_TYPE } from 'constants/data';
 import { PAGE_COUNT } from 'constants/table';
 import { useGetPacksQuery } from 'dal/packs';

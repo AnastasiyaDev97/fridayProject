@@ -8,6 +8,8 @@ import style from './SortingButton.module.scss';
 
 import { ReturnComponentType } from 'common/types';
 import { CommonFieldsValuesType, SortingDirecionType } from 'components/Table/types';
+import { STATUS } from 'constants/app';
+import { useAppSelector } from 'store';
 
 type SortingButtonPropsType = {
   sortingFieldNameFromProps: CommonFieldsValuesType;
@@ -28,11 +30,15 @@ export const SortingButton = memo(
     const [searchParams, setSearchParams] = useSearchParams();
     const location = useLocation();
 
+    const status = useAppSelector(state => state.app.status);
+
     const locationState = location?.state;
 
     const isSortingButtonExist = sortingField === sortingFieldNameFromProps;
 
-    const clsName = sortingDirection === '0' ? style.sortArrowUp : style.sortArrowDown;
+    const arrowClsName =
+      sortingDirection === '0' ? style.sortArrowUp : style.sortArrowDown;
+    const disableButtonClsName = status === STATUS.LOADING ? style.disabled : '';
 
     const onSortButtonClick = (): void => {
       onToggleSortClick(sortingFieldNameFromProps);
@@ -58,9 +64,14 @@ export const SortingButton = memo(
     ]);
 
     return (
-      <div className={style.sortButtons} onClick={onSortButtonClick}>
+      <div
+        className={classNames(style.sortButtons, disableButtonClsName)}
+        onClick={onSortButtonClick}
+      >
         {children}
-        {isSortingButtonExist && <div className={classNames(style.sortArrow, clsName)} />}
+        {isSortingButtonExist && (
+          <div className={classNames(style.sortArrow, arrowClsName)} />
+        )}
       </div>
     );
   },

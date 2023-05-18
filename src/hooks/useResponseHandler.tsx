@@ -8,12 +8,14 @@ type UseResponsePropsType = {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
+  errorText?: string;
 };
 
 export const useResponseHandler = ({
   isLoading,
   isSuccess,
   isError,
+  errorText,
 }: UseResponsePropsType): void => {
   const dispatch = useAppDispatch();
 
@@ -26,7 +28,7 @@ export const useResponseHandler = ({
     }
     if (isError) {
       dispatch(setAppStatus({ status: STATUS.FAILED }));
-      dispatch(setErrorText({ errorText: 'Something went wrong' }));
+      dispatch(setErrorText({ errorText: errorText || 'Something went wrong' }));
     }
-  }, [dispatch, isLoading, isSuccess, isError]);
+  }, [dispatch, isLoading, isSuccess, isError, errorText]);
 };
