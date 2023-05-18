@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/321.e4cb1655.chunk.css","mappings":"AAAA,sBAEE,iBADA,mBACA,CAGF,wBACE,aACA,sBACA","sources":["pages/Profile/Profile.module.scss"],"sourcesContent":[".title{\r\n  padding-bottom: 15px;\r\n  font-size: 1.5rem;\r\n}\r\n\r\n.wrapper{\r\n  display: flex;\r\n  flex-direction: column;\r\n  width: 100%;\r\n}"],"names":[],"sourceRoot":""}
