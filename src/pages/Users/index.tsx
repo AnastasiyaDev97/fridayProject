@@ -7,15 +7,22 @@ import style from './Users.module.scss';
 import initialAvatar from 'common/assets/images/noavatar.png';
 import { ReturnComponentType } from 'common/types';
 import { SkeletonUserListItem, UserListItem, InfiniteScroll } from 'components';
+import { STATUS } from 'constants/app';
 import { PAGE_COUNT } from 'constants/table';
 import { useLazyGetUsersQuery } from 'dal/users';
 import { UserType } from 'dal/users/types';
+import { useAppDispatch, useAppSelector } from 'store';
+import { setAppStatus } from 'store/reducers';
 import { generateArray } from 'utils';
 
 const SKELETON_LIST_ITEMS = generateArray(7);
 
 const Users = (): ReturnComponentType => {
   const [searchParams] = useSearchParams();
+
+  const dispatch = useAppDispatch();
+
+  const status = useAppSelector(state => state.app.status);
 
   const [users, setUsers] = useState<UserType[]>([]);
   const [loading, setLoading] = useState(false);
@@ -31,6 +38,7 @@ const Users = (): ReturnComponentType => {
   const loadMoreNumbers = async (): Promise<void> => {
     setPage(page => page + 1);
     setLoading(true);
+    dispatch(setAppStatus({ status: STATUS.LOADING }));
     const newUsers = await fetchUsers({
       page,
       min,
@@ -46,6 +54,7 @@ const Users = (): ReturnComponentType => {
     if (totalCount === 0 && newUsers?.data) {
       setTotalCount(newUsers.data.usersTotalCount);
     }
+    dispatch(setAppStatus({ status: STATUS.SUCCEEDED }));
     setLoading(false);
   };
 
@@ -73,7 +82,7 @@ const Users = (): ReturnComponentType => {
             );
           })}
         </InfiniteScroll>
-        {users?.length === 0 &&
+        {(users?.length === 0 || status === STATUS.LOADING) &&
           SKELETON_LIST_ITEMS.map(item => {
             return <SkeletonUserListItem key={item} />;
           })}

@@ -1,6 +1,6 @@
 import { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, memo } from 'react';
 
-import style from './SuperCheckbox.module.css';
+import style from './SuperCheckbox.module.scss';
 
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { EMPTY_STRING } from 'constants/index';

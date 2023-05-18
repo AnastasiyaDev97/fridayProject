@@ -23,7 +23,7 @@ const baseQueryWithReauth: BaseQueryFn<
     typeof args !== 'string' &&
     args?.url !== 'auth/me'
   ) {
-    window.location.pathname = `/login`;
+    await baseQuery(args?.url, api, extraOptions);
   }
 
   return result;

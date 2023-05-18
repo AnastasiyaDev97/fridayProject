@@ -19,10 +19,10 @@ const PackFieldsValues = PACK_TABLE_FIELDS.map(({ value }) => {
   return value;
 });
 
-export type PackFieldsValuesType = typeof PackFieldsValues[number];
+export type PackFieldsValuesType = (typeof PackFieldsValues)[number];
 
 const CardFieldsValues = CARD_TABLE_FIELDS.map(({ value }) => {
   return value;
 });
 
-export type CardFieldsValuesType = typeof CardFieldsValues[number];
+export type CardFieldsValuesType = (typeof CardFieldsValues)[number];

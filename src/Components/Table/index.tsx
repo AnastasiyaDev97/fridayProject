@@ -9,6 +9,8 @@ import { CommonFieldsValuesType, SortingDirecionType, TablePropsType } from './t
 
 import { ReturnComponentType } from 'common/types';
 import { SortingButton } from 'components';
+import { STATUS } from 'constants/app';
+import { useAppSelector } from 'store';
 import { generateArray } from 'utils';
 
 const SKELETON_TABLE_ITEMS = generateArray(7);
@@ -16,6 +18,8 @@ const SKELETON_TABLE_ITEMS = generateArray(7);
 export const Table = memo(
   ({ tableTitles, tableItems, itemName }: TablePropsType): ReturnComponentType => {
     const [searchParams] = useSearchParams();
+
+    const status = useAppSelector(state => state.app.status);
 
     const sortItems = searchParams.get('sort');
 
@@ -94,7 +98,7 @@ export const Table = memo(
             tableItems.map(row => {
               return <TableRow key={row.id} itemValues={row} itemName={itemName} />;
             })}
-          {!tableItems &&
+          {(!tableItems || status === STATUS.LOADING) &&
             SKELETON_TABLE_ITEMS.map(row => {
               return <SkeletonTableRow key={row} colSpan={tableTitles?.length + 1} />;
             })}

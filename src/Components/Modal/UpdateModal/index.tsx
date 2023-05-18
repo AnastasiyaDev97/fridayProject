@@ -5,7 +5,6 @@ import TextField from '@mui/material/TextField';
 import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
-import { Nullable } from 'common/types';
 import { EntityType } from 'common/types/EntityType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useUpdateCardMutation } from 'dal/cards';
