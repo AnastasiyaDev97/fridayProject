@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/371.d6f7d4b7.chunk.css","mappings":"AAGA,sBAIE,aAFA,YACA,kBAFA,UAGA","sources":["pages/Packs/Packs.module.scss"],"sourcesContent":["@import '../../common/sass/variables';\r\n@import '../../common/sass/media';\r\n\r\n.wrapper {\r\n  width: 100%;\r\n  height: 100%;\r\n  position: relative;\r\n  display: flex;\r\n}\r\n"],"names":[],"sourceRoot":""}
