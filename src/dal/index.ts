@@ -23,13 +23,12 @@ const baseQueryWithReauth: BaseQueryFn<
     typeof args !== 'string' &&
     args?.url !== 'auth/me'
   ) {
-    window.location.replace(`/login`);
+    window.location.pathname = `/login`;
   }
 
   return result;
 };
 
-/* 'http://localhost:7542/2.0/' */
 export const clientAPI = createApi({
   reducerPath: 'clientAPI',
   baseQuery: baseQueryWithReauth,

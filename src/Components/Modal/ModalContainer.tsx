@@ -1,10 +1,9 @@
 import { memo, useState, MouseEvent, ReactNode } from 'react';
 
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 
 import styles from './ModalContainer.module.scss';
 
@@ -71,40 +70,41 @@ export const ModalContainer = memo(
             {buttonTitle}
           </SuperButton>
         )}
-
-        <Dialog
+        <Modal
+          onClick={event => event.stopPropagation()}
           open={open}
           onClose={handleClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
         >
-          <DialogTitle sx={{ color: 'rgba(0, 0, 0, 0.87)' }} id="alert-dialog-title">
-            {modalTitle}
-          </DialogTitle>
-          <DialogContent
-            sx={{
-              marginBottom: '10px',
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            {open && children}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} variant="outlined">
-              Cancel
-            </Button>
-            {onActionButtonClick && (
-              <Button
-                disabled={isActionModalButtonDisabled}
-                onClick={handleActionClick}
-                variant="outlined"
-              >
-                {buttonTitle}
+          <Box className={styles.modalBox}>
+            <Typography
+              variant="h6"
+              component="h2"
+              sx={{ color: 'rgba(0, 0, 0, 0.87)' }}
+              id="modal-modal-title"
+            >
+              {modalTitle}
+            </Typography>
+            <div className={styles.modalDescription} id="modal-modal-description">
+              {open && children}
+            </div>
+            <div className={styles.buttonWrapper}>
+              <Button onClick={handleClose} variant="outlined">
+                Cancel
               </Button>
-            )}
-          </DialogActions>
-        </Dialog>
+              {onActionButtonClick && (
+                <Button
+                  disabled={isActionModalButtonDisabled}
+                  onClick={handleActionClick}
+                  variant="outlined"
+                >
+                  {buttonTitle}
+                </Button>
+              )}
+            </div>
+          </Box>
+        </Modal>
       </div>
     );
   },

@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 import { ModalContainer } from '../ModalContainer';
 import style from '../ModalContainer.module.scss';
 
+import { Nullable } from 'common/types';
 import { EntityType } from 'common/types/EntityType';
 import { ReturnComponentType } from 'common/types/ReturnComponentType';
 import { useUpdateCardMutation } from 'dal/cards';
@@ -30,7 +31,6 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
     answer,
     itemName,
     children,
-    cardsPackId,
     ...rest
   }: UpdateModalPropsType): ReturnComponentType => {
     const [updateCard /* { data: cardData, error: addCardError } */] =
@@ -45,30 +45,24 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
       useCustomInput(answer);
 
     const onUpdateButtonClick = useCallback(() => {
-      if (itemName === 'packs' && nameValue && cardsPackId) {
-        updatePack({ cardsPack: { _id: cardsPackId, name: nameValue } });
-        /* dispatch(updatePackTC(id, nameValue)); */
+      if (itemName === 'packs' && nameValue && id) {
+        updatePack({ cardsPack: { _id: id, name: nameValue } });
       }
       if (itemName === 'cards') {
         updateCard({ card: { _id: id, question: questionValue, answer: answerValue } });
-        /*  dispatch(
-          updateCardTC(cardsPackId, {
-            _id: id,
-            question: questionValue,
-            answer: answerValue,
-          }),
-        ); */
       }
-    }, [
-      itemName,
-      answerValue,
-      nameValue,
-      questionValue,
-      cardsPackId,
-      id,
-      updatePack,
-      updateCard,
-    ]);
+    }, [itemName, answerValue, nameValue, questionValue, updatePack, updateCard, id]);
+
+    const isActionModalButtonDisabled = useCallback((): boolean => {
+      if (itemName === 'packs') {
+        return nameValue === name;
+      }
+      if (itemName === 'cards') {
+        return questionValue === question && answerValue === answer;
+      }
+
+      return false;
+    }, [itemName, answer, answerValue, question, questionValue, name, nameValue]);
 
     const editableFields = (): ReturnComponentType => {
       if (itemName === 'packs') {
@@ -113,6 +107,7 @@ export const UpdateModal: React.FC<UpdateModalPropsType> = memo(
         modalTitle="Are you sure you want to update this record?"
         onActionButtonClick={onUpdateButtonClick}
         mainElement={children}
+        isActionModalButtonDisabled={isActionModalButtonDisabled()}
         {...rest}
       >
         {editableFields()}
