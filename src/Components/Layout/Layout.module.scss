@@ -51,7 +51,7 @@
 }
 
 .defaultError {
-  position: absolute;
+  position: fixed;
   color: rgb(254 254 255 / 90%);
   font-family: 'Nunito Sans', Arial, sans-serif;
   font-size: 1.2rem;
@@ -62,7 +62,12 @@
   padding: 10px 30px;
   border-radius: 8px;
   background: rgb(208 41 41 / 30%);
-  
+  @include d-media(xs) {
+    bottom:70px;
+    z-index: 20;
+    transform: none;
+    left:5%;
+  }
 }
 
 

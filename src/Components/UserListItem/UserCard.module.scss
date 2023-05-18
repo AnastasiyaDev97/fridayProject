@@ -3,7 +3,6 @@
 .userBlock {
   display: flex;
   align-items: center;
-  cursor: pointer;
 
   &:not(:last-of-type) {
     margin-bottom: 20px;
